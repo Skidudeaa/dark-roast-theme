@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+═══════════════════════════════════════════════════════════════════
+  ENHANCED DARK ROAST: BLACK LABEL — CANONICAL MASTER SPECIFICATION
+  Version: 2.0 (Amalgamated)
+  Status: CANONICAL — This document supersedes all prior versions.
+  
+  Sources merged:
+    1. DR-BLACK-LABEL-V1.0 (spec doc with OLED science + Plotly/Chart.js)
+    2. Enhanced Dark Roast evolution (theme session with fusion layer)
+  
+  Resolved conflicts:
+    - Background: Both #120C06 (void) AND #160E08 (floor) retained
+    - Fonts: Playfair Display / Instrument Sans / DM Sans / Fira Code
+    - Crater Brown: Full fusion layer preserved (Asparagus, Rustic, Rose)
+    - OLED rationale: Integrated from spec doc
+    
+  NO Mermaid JS. NO SVG charts. Plotly WebGL + Chart.js only.
+═══════════════════════════════════════════════════════════════════
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Dark Roast: Black Label — Master Specification v2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* ═══ DARK ROAST: BLACK LABEL (Primary System) ═══ */
+            --void:          #120C06;  /* The Void — deepest layer */
+            --obsidian:      #160E08;  /* Obsidian Espresso — elevated floor */
+            --grain:         #2A1C13;  /* Polished Grain — card surfaces */
+            --grain-hover:   #382818;  /* Warm lift on interaction */
+            
+            /* ═══ CRATER BROWN (Geological Accent Layer) ═══ */
+            --crater:        #3C2A21;  /* Crater Brown — geological primary */
+            --crater-lt:     #4D3B31;  /* Earth Taupe — spatial depth */
+            --bone:          #EBE1D7;  /* Off-White/Bone — reduced contrast text */
+            --asparagus:     #465945;  /* Desaturated Asparagus — tertiary text */
+            --rustic:        #480404;  /* Rustic Red — grounded interactive state */
+            --rose:          #480607;  /* Bulgarian Rose — contextual error state */
+            
+            /* ═══ TYPOGRAPHY ═══ */
+            --crema:         #FFF7EE;  /* Ivory Crema — primary text */
+            --mocha:         #8B7355;  /* Muted Mocha — secondary text */
+            
+            /* ═══ ACTION / STATE ═══ */
+            --amber:         #E69A4C;  /* Amber Gold — primary accent */
+            --amber-hot:     #D2691E;  /* High-Octane Amber — gradient terminal */
+            --gold:          #DAA520;  /* True Gold — success state */
+            --scarlet:       #C44C4C;  /* Roasted Scarlet — warning/error */
+            --teal:          #4CC4B4;  /* Kinetic Teal — liveDataFlow */
+            
+            /* ═══ DERIVED ═══ */
+            --divider:       rgba(255,247,238,0.04);
+            --glow-amber:    rgba(230,154,76,0.12);
+            --glow-teal:     rgba(76,196,180,0.15);
+            
+            /* ═══ FONT STACK (LOCKED) ═══ */
+            --font-display:  'Playfair Display', Georgia, serif;
+            --font-heading:  'Instrument Sans', -apple-system, sans-serif;
+            --font-body:     'DM Sans', -apple-system, sans-serif;
+            --font-mono:     'Fira Code', 'SF Mono', monospace;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--void);
+            color: var(--crema);
+            line-height: 1.6;
+        }
+        
+        ::selection { background: rgba(76, 196, 180, 0.35); color: var(--crema); }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--void); }
+        ::-webkit-scrollbar-thumb { background: var(--crater); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+        
+        .glass-panel {
+            background: linear-gradient(145deg, var(--grain), rgba(60,42,33,0.2));
+            border: 1px solid var(--crater);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 360px;
+        }
+        @media (max-width: 768px) {
+            .chart-container { height: 280px; }
+        }
+        
+        .pulse-teal {
+            animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(76, 196, 180, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(76, 196, 180, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 196, 180, 0); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 8px rgba(230,154,76,0.2); }
+            50% { box-shadow: 0 0 20px rgba(230,154,76,0.4); }
+        }
+        @keyframes grain-drift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-2px, -2px); }
+        }
+        
+        .fade-up { animation: fadeUp 0.7s ease-out both; }
+        .fade-up-1 { animation-delay: 0.05s; }
+        .fade-up-2 { animation-delay: 0.1s; }
+        .fade-up-3 { animation-delay: 0.15s; }
+        .fade-up-4 { animation-delay: 0.2s; }
+        .fade-up-5 { animation-delay: 0.25s; }
+        .fade-up-6 { animation-delay: 0.35s; }
+        .fade-up-7 { animation-delay: 0.45s; }
+        
+        /* Geological texture — Crater Brown sediment stripe */
+        .geo-stripe {
+            position: relative;
+        }
+        .geo-stripe::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--crater), var(--crater-lt), transparent);
+            opacity: 0.5;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        /* Fractal noise grain overlay */
+        .grain-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+            opacity: 0.025; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grain-drift 8s ease-in-out infinite;
+        }
+        
+        /* Token swatch */
+        .swatch {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .swatch:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+        
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--asparagus);
+        }
+        
+        h1, h2, h3 { font-family: var(--font-display); }
+        h4, h5 { font-family: var(--font-heading); }
+        code { font-family: var(--font-mono); font-size: 0.85em; }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+    
+    <!-- Grain -->
+    <div class="grain-overlay"></div>
+    
+    <!-- Background atmospheric bleeds -->
+    <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
+        <div style="position:absolute;top:-10%;left:-5%;width:50%;height:50%;background:radial-gradient(ellipse, rgba(60,42,33,0.35), transparent 65%);"></div>
+        <div style="position:absolute;bottom:-10%;right:-5%;width:40%;height:40%;background:radial-gradient(ellipse, rgba(72,4,4,0.1), transparent 55%);"></div>
+    </div>
+
+    <!-- ═══════════════════ NAV ═══════════════════ -->
+    <nav class="sticky top-0 z-50 backdrop-blur-lg border-b px-6 py-4 flex justify-between items-center" style="background:rgba(18,12,6,0.85);border-color:var(--crater);">
+        <div class="flex items-baseline gap-3">
+            <span style="font-family:var(--font-display);font-size:20px;font-weight:900;letter-spacing:-0.5px;">
+                <span style="color:var(--crema);">DR:</span> <span style="color:var(--amber);">BLACK LABEL</span>
+            </span>
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--teal);letter-spacing:2px;">MASTER SPEC v2.0</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full pulse-teal" style="background:var(--teal);"></div>
+            <span style="font-family:var(--font-mono);font-size:11px;color:var(--teal);">CANONICAL</span>
+        </div>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- ═══════════════════ HERO ═══════════════════ -->
+        <header class="text-center py-16 fade-up">
+            <p class="section-label mb-4">ENHANCED DARK ROAST: BLACK LABEL</p>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none mb-6">
+                <span style="background:linear-gradient(135deg, var(--crema), var(--amber), var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Luxurious Precision.</span>
+            </h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed" style="color:var(--mocha);font-family:var(--font-heading);">
+                Unified design system fusing Dark Roast computational velocity with Crater Brown geological sedation. 
+                Engineered for OLED optimization, clinical data density, and real-time music visualization.
+            </p>
+            <div class="flex justify-center gap-8 mt-10" style="font-family:var(--font-mono);font-size:11px;">
+                <div>
+                    <span style="color:var(--amber);font-weight:600;">16</span>
+                    <span style="color:var(--asparagus);margin-left:4px;">TOKENS</span>
+                </div>
+                <div>
+                    <span style="color:var(--teal);font-weight:600;">4</span>
+                    <span style="color:var(--asparagus);margin-left:4px;">FONT FACES</span>
+                </div>
+                <div>
+                    <span style="color:var(--gold);font-weight:600;">2</span>
+                    <span style="color:var(--asparagus);margin-left:4px;">APP TARGETS</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════ §1: OLED SCIENCE ═══════════════════ -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 fade-up fade-up-1">
+            <div class="lg:col-span-4">
+                <div class="glass-panel geo-stripe p-8 rounded-2xl h-full flex flex-col justify-center">
+                    <p class="section-label mb-3">SECTION 01</p>
+                    <h2 class="text-3xl font-bold mb-6" style="color:var(--amber);">The Obsidian Floor</h2>
+                    <p style="color:var(--mocha);line-height:1.8;margin-bottom:16px;">
+                        Absolute black (<code style="color:var(--crema);">#000000</code>) forces OLED pixels into a full power-off state. 
+                        Reactivation introduces measurable lag — <strong style="color:var(--scarlet);">18.5ms pixel wake delay</strong> — 
+                        causing visible purple-smearing artifacts during high-speed scrolling.
+                    </p>
+                    <p style="color:var(--mocha);line-height:1.8;margin-bottom:16px;">
+                        Black Label establishes a two-tier floor:
+                    </p>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:rgba(18,12,6,0.8);border:1px solid var(--crater);">
+                            <div style="width:28px;height:28px;border-radius:6px;background:#120C06;border:1px solid var(--crater);flex-shrink:0;"></div>
+                            <div>
+                                <code style="color:var(--crema);font-size:12px;">#120C06</code>
+                                <span style="color:var(--asparagus);font-family:var(--font-mono);font-size:10px;margin-left:6px;">THE VOID</span>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:rgba(22,14,8,0.8);border:1px solid var(--amber);box-shadow:0 0 12px rgba(230,154,76,0.08);">
+                            <div style="width:28px;height:28px;border-radius:6px;background:#160E08;border:1px solid var(--crater);flex-shrink:0;"></div>
+                            <div>
+                                <code style="color:var(--amber);font-size:12px;">#160E08</code>
+                                <span style="color:var(--asparagus);font-family:var(--font-mono);font-size:10px;margin-left:6px;">OBSIDIAN ESPRESSO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color:var(--asparagus);font-family:var(--font-mono);font-size:10px;margin-top:14px;line-height:1.6;">
+                        Both keep pixels energized above the power-off threshold. The Void is the deepest possible floor before smearing risk. 
+                        Obsidian Espresso is the standard background for content areas.
+                    </p>
+                </div>
+            </div>
+            <div class="lg:col-span-8">
+                <div class="glass-panel geo-stripe p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <p class="section-label">OLED PIXEL WAKE DELAY — SIMULATED BENCHMARKS</p>
+                        <span style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);">Lower = Better</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="oledChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §2: COMPLETE TOKEN MATRIX ═══════════════════ -->
+        <section class="fade-up fade-up-2">
+            <div class="glass-panel rounded-2xl p-8 lg:p-12 relative overflow-hidden">
+                <div style="position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle, rgba(76,196,180,0.04), transparent);pointer-events:none;"></div>
+                
+                <p class="section-label mb-3">SECTION 02</p>
+                <h2 class="text-3xl font-bold mb-3" style="color:var(--crema);">Complete Semantic Token Matrix</h2>
+                <p style="color:var(--mocha);margin-bottom:32px;max-width:640px;">
+                    16 tokens across four functional layers. Dark Roast provides the primary system. 
+                    Crater Brown provides geological accent sediment. All tokens are production-locked.
+                </p>
+                
+                <!-- Dark Roast Primary -->
+                <div style="margin-bottom:32px;">
+                    <h4 style="font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--amber);margin-bottom:14px;text-transform:uppercase;">
+                        ◆ Dark Roast: Black Label — Primary System
+                    </h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#120C06;margin-bottom:8px;border:1px solid var(--crater);"></div>
+                            <code style="font-size:11px;color:var(--crema);">#120C06</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">void</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#160E08;margin-bottom:8px;border:1px solid var(--crater);"></div>
+                            <code style="font-size:11px;color:var(--crema);">#160E08</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">obsidian</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#2A1C13;margin-bottom:8px;border:1px solid var(--crater);"></div>
+                            <code style="font-size:11px;color:var(--crema);">#2A1C13</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">grain</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#382818;margin-bottom:8px;border:1px solid var(--crater);"></div>
+                            <code style="font-size:11px;color:var(--crema);">#382818</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">grain-hover</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#FFF7EE;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#FFF7EE</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">crema</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#8B7355;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#8B7355</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">mocha</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Crater Brown Accent -->
+                <div style="margin-bottom:32px;">
+                    <h4 style="font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--bone);margin-bottom:14px;text-transform:uppercase;">
+                        ◆ Crater Brown — Geological Accent Layer
+                    </h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#3C2A21;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#3C2A21</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">crater</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#4D3B31;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#4D3B31</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">crater-lt</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#EBE1D7;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#EBE1D7</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">bone</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#465945;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#465945</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">asparagus</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#480404;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#480404</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">rustic</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#480607;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#480607</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">rose</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action / State -->
+                <div>
+                    <h4 style="font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--teal);margin-bottom:14px;text-transform:uppercase;">
+                        ◆ Action & State Tokens
+                    </h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--amber);box-shadow:0 0 12px rgba(230,154,76,0.08);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#E69A4C;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--amber);">#E69A4C</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">amber · accent</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#D2691E;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#D2691E</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">amber-hot · gradient</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--crater);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#DAA520;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--crema);">#DAA520</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">gold · success</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--scarlet);box-shadow:0 0 12px rgba(196,76,76,0.08);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#C44C4C;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--scarlet);">#C44C4C</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--asparagus);margin-top:2px;">scarlet · warning</div>
+                        </div>
+                        <div class="swatch p-3 rounded-xl" style="background:var(--void);border:1px solid var(--teal);box-shadow:0 0 12px rgba(76,196,180,0.1);">
+                            <div style="width:100%;height:40px;border-radius:6px;background:#4CC4B4;margin-bottom:8px;"></div>
+                            <code style="font-size:11px;color:var(--teal);">#4CC4B4</code>
+                            <div style="font-family:var(--font-mono);font-size:8px;color:var(--teal);margin-top:2px;">teal · liveDataFlow</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §3: TYPOGRAPHY ═══════════════════ -->
+        <section class="fade-up fade-up-3">
+            <div class="glass-panel geo-stripe rounded-2xl p-8 lg:p-12">
+                <p class="section-label mb-3">SECTION 03</p>
+                <h2 class="text-3xl font-bold mb-8" style="color:var(--crema);">Typography System</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Display -->
+                    <div style="padding:24px;border-radius:12px;background:var(--void);border:1px solid var(--crater);">
+                        <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--amber);">DISPLAY · HERO ELEMENTS</span>
+                        <p style="font-family:var(--font-display);font-size:48px;font-weight:900;color:var(--crema);line-height:1.1;margin-top:8px;">
+                            Playfair Display
+                        </p>
+                        <div style="margin-top:12px;display:flex;gap:12px;">
+                            <code style="font-size:10px;color:var(--mocha);padding:3px 8px;border-radius:4px;background:rgba(60,42,33,0.3);">W700</code>
+                            <code style="font-size:10px;color:var(--amber);padding:3px 8px;border-radius:4px;background:rgba(230,154,76,0.1);">W900</code>
+                        </div>
+                        <p style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);margin-top:10px;">
+                            Use: App titles, section heroes, brand identity. Signals premium tier.
+                        </p>
+                    </div>
+                    
+                    <!-- Heading -->
+                    <div style="padding:24px;border-radius:12px;background:var(--void);border:1px solid var(--crater);">
+                        <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--amber);">HEADING · SECTION TITLES</span>
+                        <p style="font-family:var(--font-heading);font-size:36px;font-weight:700;color:var(--crema);line-height:1.1;margin-top:8px;">
+                            Instrument Sans
+                        </p>
+                        <div style="margin-top:12px;display:flex;gap:12px;">
+                            <code style="font-size:10px;color:var(--mocha);padding:3px 8px;border-radius:4px;background:rgba(60,42,33,0.3);">W400–500</code>
+                            <code style="font-size:10px;color:var(--amber);padding:3px 8px;border-radius:4px;background:rgba(230,154,76,0.1);">W600–700</code>
+                        </div>
+                        <p style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);margin-top:10px;">
+                            Use: Patient names, track titles, card headers. Clean geometric sans.
+                        </p>
+                    </div>
+                    
+                    <!-- Body -->
+                    <div style="padding:24px;border-radius:12px;background:var(--void);border:1px solid var(--crater);">
+                        <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--amber);">BODY · DESCRIPTIVE TEXT</span>
+                        <p style="font-family:var(--font-body);font-size:28px;font-weight:500;color:var(--crema);line-height:1.2;margin-top:8px;">
+                            DM Sans — The workhorse
+                        </p>
+                        <div style="margin-top:12px;display:flex;gap:12px;">
+                            <code style="font-size:10px;color:var(--amber);padding:3px 8px;border-radius:4px;background:rgba(230,154,76,0.1);">W400–500</code>
+                            <code style="font-size:10px;color:var(--mocha);padding:3px 8px;border-radius:4px;background:rgba(60,42,33,0.3);">W700</code>
+                        </div>
+                        <p style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);margin-top:10px;">
+                            Use: Clinical descriptions, explanatory text, UI labels. High x-height for data density.
+                        </p>
+                    </div>
+                    
+                    <!-- Mono -->
+                    <div style="padding:24px;border-radius:12px;background:var(--void);border:1px solid var(--teal);box-shadow:0 0 15px rgba(76,196,180,0.05);">
+                        <span style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--teal);">MONOSPACE · DATA / CODE</span>
+                        <p style="font-family:var(--font-mono);font-size:24px;font-weight:600;color:var(--crema);line-height:1.2;margin-top:8px;">
+                            Fira Code → ligatures
+                        </p>
+                        <div style="margin-top:12px;display:flex;gap:12px;">
+                            <code style="font-size:10px;color:var(--amber);padding:3px 8px;border-radius:4px;background:rgba(230,154,76,0.1);">W400–500</code>
+                            <code style="font-size:10px;color:var(--teal);padding:3px 8px;border-radius:4px;background:rgba(76,196,180,0.08);">W600</code>
+                        </div>
+                        <p style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);margin-top:10px;">
+                            Use: Lab values, ISRC codes, JSON payloads, timestamps, vitals. Ligatures for => !== etc.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §4: PSYCHOMETRIC + TELEMETRY ═══════════════════ -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-up fade-up-4">
+            <div class="glass-panel geo-stripe p-6 rounded-2xl flex flex-col">
+                <p class="section-label mb-2">PSYCHOMETRIC EVALUATION</p>
+                <h3 class="text-xl font-bold mb-1" style="font-family:var(--font-heading);color:var(--crema);">Theme Comparison Radar</h3>
+                <p style="font-size:13px;color:var(--mocha);margin-bottom:16px;">
+                    Black Label vs Standard Dark Mode vs Crater Brown across five perceptual axes.
+                </p>
+                <div class="chart-container flex-grow">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-panel geo-stripe p-6 rounded-2xl flex flex-col">
+                <div class="flex justify-between items-center mb-2">
+                    <div>
+                        <p class="section-label mb-1">KINETIC TELEMETRY</p>
+                        <h3 class="text-xl font-bold" style="font-family:var(--font-heading);color:var(--crema);">Live Data Flow</h3>
+                    </div>
+                    <span style="padding:4px 12px;border-radius:20px;border:1px solid var(--teal);background:rgba(76,196,180,0.08);font-family:var(--font-mono);font-size:10px;color:var(--teal);">● LIVE</span>
+                </div>
+                <p style="font-size:13px;color:var(--mocha);margin-bottom:16px;">
+                    <code style="color:var(--teal);">#4CC4B4</code> — Kinetic Teal provides instant visual differentiation for real-time compute against the warm palette.
+                </p>
+                <div class="chart-container flex-grow">
+                    <canvas id="telemetryChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §5: 3D VELOCITY ═══════════════════ -->
+        <section class="fade-up fade-up-5">
+            <div class="glass-panel geo-stripe rounded-2xl p-6 lg:p-8">
+                <p class="section-label mb-2">COMPUTATIONAL VELOCITY PROFILE</p>
+                <h3 class="text-xl font-bold mb-1" style="font-family:var(--font-heading);color:var(--crema);">WebGL Topological Surface</h3>
+                <p style="font-size:13px;color:var(--mocha);margin-bottom:16px;">
+                    Multi-threaded metadata diffing visualization. Peak topology = high CPU allocation during orthographic string matching (Cyrillic sets, diacritical conflicts).
+                </p>
+                <div id="plotlySurface" style="width:100%;height:480px;border-radius:8px;overflow:hidden;background:var(--void);border:1px solid var(--crater);"></div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §6: APP INTEGRATION ═══════════════════ -->
+        <section class="fade-up fade-up-6">
+            <p class="section-label mb-3">SECTION 06</p>
+            <h2 class="text-3xl font-bold mb-8" style="font-family:var(--font-display);color:var(--crema);">Application Integration</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- somaCURA -->
+                <div class="glass-panel geo-stripe rounded-2xl p-8" style="border-color:var(--amber);">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div style="width:10px;height:10px;border-radius:3px;background:var(--amber);"></div>
+                        <h4 style="font-family:var(--font-heading);font-size:20px;font-weight:700;color:var(--amber);">somaCURA / somaNotes</h4>
+                    </div>
+                    <p style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);letter-spacing:1px;margin-bottom:14px;">
+                        LONGITUDINAL PATIENT-STATE ENGINE
+                    </p>
+                    
+                    <!-- Pipeline -->
+                    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--crater);font-family:var(--font-mono);font-size:10px;color:var(--crema);flex:1;text-align:center;">Clinical Update</div>
+                            <span style="color:var(--mocha);font-size:14px;">→</span>
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--amber);font-family:var(--font-mono);font-size:10px;color:var(--amber);flex:1;text-align:center;">HyperDrive NER</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--amber);font-family:var(--font-mono);font-size:10px;color:var(--amber);flex:1;text-align:center;">Problem Approval</div>
+                            <span style="color:var(--mocha);font-size:14px;">→</span>
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--teal);font-family:var(--font-mono);font-size:10px;color:var(--teal);flex:1;text-align:center;">SSE Stream → Note</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Token mapping -->
+                    <p style="font-family:var(--font-mono);font-size:9px;color:var(--asparagus);letter-spacing:1.5px;margin-bottom:8px;">TOKEN MAPPING</p>
+                    <div style="display:flex;flex-direction:column;gap:4px;font-family:var(--font-mono);font-size:11px;">
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Census background</span>
+                            <span style="color:var(--crema);">void / obsidian</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Patient cards</span>
+                            <span style="color:var(--crema);">grain + crater stripe</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Severity: Critical</span>
+                            <span style="color:var(--scarlet);">scarlet</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Severity: Worsening</span>
+                            <span style="color:var(--amber-hot);">amber-hot</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Severity: Improving</span>
+                            <span style="color:var(--amber);">amber</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Severity: Stable</span>
+                            <span style="color:var(--gold);">gold</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Severity: Resolved</span>
+                            <span style="color:var(--teal);">teal</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">NER status / SSE stream</span>
+                            <span style="color:var(--teal);">teal (pulsing)</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Lab values (flagged)</span>
+                            <span style="color:var(--scarlet);">scarlet</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Tertiary metadata</span>
+                            <span style="color:var(--asparagus);">asparagus</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Song Expanse -->
+                <div class="glass-panel geo-stripe rounded-2xl p-8" style="border-color:var(--teal);">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div style="width:10px;height:10px;border-radius:3px;background:var(--teal);"></div>
+                        <h4 style="font-family:var(--font-heading);font-size:20px;font-weight:700;color:var(--teal);">Song Expanse</h4>
+                    </div>
+                    <p style="font-family:var(--font-mono);font-size:10px;color:var(--asparagus);letter-spacing:1px;margin-bottom:14px;">
+                        SWIFTUI MUSIC VISUALIZATION · iOS
+                    </p>
+                    
+                    <!-- Pipeline -->
+                    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--crater);font-family:var(--font-mono);font-size:10px;color:var(--crema);flex:1;text-align:center;">Album Art → TextColors</div>
+                            <span style="color:var(--mocha);font-size:14px;">→</span>
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--teal);font-family:var(--font-mono);font-size:10px;color:var(--teal);flex:1;text-align:center;">Content Areas</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--amber);font-family:var(--font-mono);font-size:10px;color:var(--amber);flex:1;text-align:center;">AppTheme Tokens</div>
+                            <span style="color:var(--mocha);font-size:14px;">→</span>
+                            <div style="padding:6px 12px;border-radius:6px;background:var(--void);border:1px solid var(--amber);font-family:var(--font-mono);font-size:10px;color:var(--amber);flex:1;text-align:center;">Chrome / UI Shell</div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-family:var(--font-mono);font-size:9px;color:var(--asparagus);letter-spacing:1.5px;margin-bottom:8px;">
+                        CRITICAL: THEME ≠ TextColors. CHROME vs CONTENT SEPARATION.
+                    </p>
+                    
+                    <!-- Token mapping -->
+                    <div style="display:flex;flex-direction:column;gap:4px;font-family:var(--font-mono);font-size:11px;">
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Vinyl case bg</span>
+                            <span style="color:var(--crema);">void</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Platter shadow</span>
+                            <span style="color:var(--crema);">crater</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Tonearm metallic</span>
+                            <span style="color:var(--crema);">mocha</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Tonearm tip glow</span>
+                            <span style="color:var(--amber);">amber</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Play button</span>
+                            <span style="color:var(--amber);">amber</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Loading indicator</span>
+                            <span style="color:var(--teal);">teal (pulsing)</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Marquee scrim</span>
+                            <span style="color:var(--crema);">crater</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Marquee grid</span>
+                            <span style="color:var(--amber);">amber @30%</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;background:rgba(18,12,6,0.5);">
+                            <span style="color:var(--mocha);">Timeline rail track</span>
+                            <span style="color:var(--crema);">crater</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-radius:4px;">
+                            <span style="color:var(--mocha);">Timeline thumb</span>
+                            <span style="color:var(--amber);">amber</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §7: SongShift Pipeline ═══════════════════ -->
+        <section class="fade-up fade-up-6">
+            <div class="glass-panel geo-stripe p-8 rounded-2xl" style="border-color:var(--teal);">
+                <p class="section-label mb-2">SONGSHIFT MIDDLEWARE PIPELINE</p>
+                <h3 class="text-xl font-bold mb-6" style="font-family:var(--font-heading);color:var(--crema);">Data Flow Architecture</h3>
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center" style="font-family:var(--font-mono);font-size:12px;">
+                    <div style="width:100%;padding:16px;border-radius:10px;background:var(--void);border:1px solid var(--crater);">
+                        <div style="color:var(--crema);font-weight:600;margin-bottom:4px;">Source API</div>
+                        <div style="font-size:10px;color:var(--mocha);">JSON Payload Extraction</div>
+                    </div>
+                    <span class="hidden md:inline" style="color:var(--mocha);font-size:20px;">→</span>
+                    <div style="width:100%;padding:16px;border-radius:10px;background:var(--void);border:1px solid var(--amber);box-shadow:0 0 12px rgba(230,154,76,0.08);">
+                        <div style="color:var(--amber);font-weight:600;margin-bottom:4px;">AWS Lambda</div>
+                        <div style="font-size:10px;color:var(--mocha);">SpeedMatch Resolution</div>
+                    </div>
+                    <span class="hidden md:inline" style="color:var(--mocha);font-size:20px;">→</span>
+                    <div class="pulse-teal" style="width:100%;padding:16px;border-radius:10px;background:var(--void);border:1px solid var(--teal);box-shadow:0 0 12px rgba(76,196,180,0.1);">
+                        <div style="color:var(--teal);font-weight:600;margin-bottom:4px;">liveDataFlow</div>
+                        <div style="font-size:10px;color:var(--mocha);">Destination Injection</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════ §8: JSON EXPORT ═══════════════════ -->
+        <section class="fade-up fade-up-7">
+            <div class="glass-panel geo-stripe rounded-2xl p-8">
+                <p class="section-label mb-2">SECTION 08</p>
+                <h3 class="text-xl font-bold mb-6" style="font-family:var(--font-heading);color:var(--crema);">Canonical JSON Payload</h3>
+                <pre style="background:var(--void);border:1px solid var(--crater);border-radius:10px;padding:20px;overflow-x:auto;font-family:var(--font-mono);font-size:12px;line-height:1.8;"><code>{
+  <span style="color:var(--amber);">"themeName"</span>: <span style="color:var(--teal);">"Enhanced Dark Roast: Black Label"</span>,
+  <span style="color:var(--amber);">"version"</span>: <span style="color:var(--teal);">"2.0"</span>,
+  <span style="color:var(--amber);">"status"</span>: <span style="color:var(--teal);">"CANONICAL"</span>,
+  <span style="color:var(--amber);">"colors"</span>: {
+    <span style="color:var(--mocha);">// Dark Roast: Primary System</span>
+    <span style="color:var(--amber);">"void"</span>: <span style="color:var(--teal);">"#120C06"</span>,
+    <span style="color:var(--amber);">"obsidian"</span>: <span style="color:var(--teal);">"#160E08"</span>,
+    <span style="color:var(--amber);">"grain"</span>: <span style="color:var(--teal);">"#2A1C13"</span>,
+    <span style="color:var(--amber);">"grainHover"</span>: <span style="color:var(--teal);">"#382818"</span>,
+    <span style="color:var(--amber);">"crema"</span>: <span style="color:var(--teal);">"#FFF7EE"</span>,
+    <span style="color:var(--amber);">"mocha"</span>: <span style="color:var(--teal);">"#8B7355"</span>,
+
+    <span style="color:var(--mocha);">// Crater Brown: Geological Accent Layer</span>
+    <span style="color:var(--amber);">"crater"</span>: <span style="color:var(--teal);">"#3C2A21"</span>,
+    <span style="color:var(--amber);">"craterLight"</span>: <span style="color:var(--teal);">"#4D3B31"</span>,
+    <span style="color:var(--amber);">"bone"</span>: <span style="color:var(--teal);">"#EBE1D7"</span>,
+    <span style="color:var(--amber);">"asparagus"</span>: <span style="color:var(--teal);">"#465945"</span>,
+    <span style="color:var(--amber);">"rustic"</span>: <span style="color:var(--teal);">"#480404"</span>,
+    <span style="color:var(--amber);">"rose"</span>: <span style="color:var(--teal);">"#480607"</span>,
+
+    <span style="color:var(--mocha);">// Action & State</span>
+    <span style="color:var(--amber);">"amber"</span>: <span style="color:var(--teal);">"#E69A4C"</span>,
+    <span style="color:var(--amber);">"amberHot"</span>: <span style="color:var(--teal);">"#D2691E"</span>,
+    <span style="color:var(--amber);">"gold"</span>: <span style="color:var(--teal);">"#DAA520"</span>,
+    <span style="color:var(--amber);">"scarlet"</span>: <span style="color:var(--teal);">"#C44C4C"</span>,
+    <span style="color:var(--amber);">"teal"</span>: <span style="color:var(--teal);">"#4CC4B4"</span>
+  },
+  <span style="color:var(--amber);">"typography"</span>: {
+    <span style="color:var(--amber);">"display"</span>: { <span style="color:var(--amber);">"family"</span>: <span style="color:var(--teal);">"Playfair Display"</span>, <span style="color:var(--amber);">"weights"</span>: [<span style="color:var(--gold);">700</span>, <span style="color:var(--gold);">900</span>] },
+    <span style="color:var(--amber);">"heading"</span>: { <span style="color:var(--amber);">"family"</span>: <span style="color:var(--teal);">"Instrument Sans"</span>, <span style="color:var(--amber);">"weights"</span>: [<span style="color:var(--gold);">400</span>, <span style="color:var(--gold);">500</span>, <span style="color:var(--gold);">600</span>, <span style="color:var(--gold);">700</span>] },
+    <span style="color:var(--amber);">"body"</span>: { <span style="color:var(--amber);">"family"</span>: <span style="color:var(--teal);">"DM Sans"</span>, <span style="color:var(--amber);">"weights"</span>: [<span style="color:var(--gold);">400</span>, <span style="color:var(--gold);">500</span>, <span style="color:var(--gold);">700</span>] },
+    <span style="color:var(--amber);">"mono"</span>: { <span style="color:var(--amber);">"family"</span>: <span style="color:var(--teal);">"Fira Code"</span>, <span style="color:var(--amber);">"weights"</span>: [<span style="color:var(--gold);">400</span>, <span style="color:var(--gold);">500</span>, <span style="color:var(--gold);">600</span>] }
+  }
+}</code></pre>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer style="border-top:1px solid var(--crater);padding:32px 0;text-align:center;background:var(--void);">
+        <p style="font-family:var(--font-display);font-size:14px;font-weight:700;background:linear-gradient(90deg, var(--crater), var(--amber), var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+            ENHANCED DARK ROAST: BLACK LABEL — CANONICAL MASTER SPECIFICATION
+        </p>
+        <p style="font-family:var(--font-mono);font-size:9px;color:var(--asparagus);margin-top:6px;letter-spacing:1.5px;">
+            v2.0 · AMALGAMATED · CRATER BROWN FUSION · KINETIC TEAL LIVE DATA · somaCURA · SONG EXPANSE
+        </p>
+    </footer>
+
+    <!-- ═══════════════════ CHART.JS + PLOTLY ═══════════════════ -->
+    <script>
+        // ─── Shared config ───
+        const C = {
+            void: '#120C06', obsidian: '#160E08', grain: '#2A1C13',
+            crater: '#3C2A21', craterLt: '#4D3B31',
+            crema: '#FFF7EE', mocha: '#8B7355', asparagus: '#465945',
+            amber: '#E69A4C', amberHot: '#D2691E', gold: '#DAA520',
+            scarlet: '#C44C4C', teal: '#4CC4B4',
+        };
+        const mono = "'Fira Code', monospace";
+        const heading = "'Instrument Sans', sans-serif";
+
+        const formatLabel = (str) => {
+            if (str.length <= 16) return str;
+            const words = str.split(' ');
+            const lines = []; let cur = words[0];
+            for (let i = 1; i < words.length; i++) {
+                if (cur.length + 1 + words[i].length <= 16) { cur += ' ' + words[i]; }
+                else { lines.push(cur); cur = words[i]; }
+            }
+            lines.push(cur);
+            return lines;
+        };
+        const tooltipCfg = {
+            callbacks: {
+                title: (items) => {
+                    let l = items[0].chart.data.labels[items[0].dataIndex];
+                    return Array.isArray(l) ? l.join(' ') : l;
+                }
+            }
+        };
+
+        // ─── OLED Chart ───
+        new Chart(document.getElementById('oledChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Pure Black (#000000)', 'Deep Espresso (#1A110B)', 'Crater Brown (#3C2A21)', 'Obsidian (#160E08)', 'The Void (#120C06)'].map(formatLabel),
+                datasets: [{
+                    label: 'Pixel Wake Delay (ms)',
+                    data: [18.5, 4.2, 2.1, 1.8, 1.6],
+                    backgroundColor: ['#000000', '#1A110B', C.crater, C.amber, C.teal],
+                    borderColor: [C.crater, C.craterLt, C.craterLt, C.crema, C.crema],
+                    borderWidth: 1, borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: C.crater }, ticks: { color: C.mocha, font: { family: mono } }, title: { display: true, text: 'Milliseconds (ms)', color: C.mocha, font: { family: mono } } },
+                    x: { grid: { display: false }, ticks: { color: C.crema, font: { family: mono, size: 10 } } }
+                },
+                plugins: { legend: { display: false }, tooltip: tooltipCfg }
+            }
+        });
+
+        // ─── Radar Chart ───
+        new Chart(document.getElementById('radarChart').getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: ['Legibility (High Lux)', 'Ocular Comfort', 'State Awareness', 'Information Density', 'Premium Aesthetic'].map(formatLabel),
+                datasets: [
+                    {
+                        label: 'Standard Dark',
+                        data: [50, 40, 60, 70, 40],
+                        backgroundColor: 'rgba(255,255,255,0.03)',
+                        borderColor: C.mocha, borderDash: [5, 5],
+                        pointBackgroundColor: C.mocha, pointRadius: 3,
+                    },
+                    {
+                        label: 'Crater Brown',
+                        data: [65, 95, 50, 75, 70],
+                        backgroundColor: 'rgba(60,42,33,0.35)',
+                        borderColor: C.craterLt,
+                        pointBackgroundColor: C.craterLt, pointRadius: 3,
+                    },
+                    {
+                        label: 'Black Label',
+                        data: [95, 85, 100, 90, 100],
+                        backgroundColor: 'rgba(230,154,76,0.15)',
+                        borderColor: C.amber, borderWidth: 2,
+                        pointBackgroundColor: C.crema, pointRadius: 4,
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: C.crater },
+                        grid: { color: C.crater },
+                        pointLabels: { color: C.crema, font: { family: heading, size: 11 } },
+                        min: 0, max: 100,
+                        ticks: { display: false }
+                    }
+                },
+                plugins: { legend: { labels: { color: C.mocha, font: { family: mono, size: 10 } }, position: 'bottom' }, tooltip: tooltipCfg }
+            }
+        });
+
+        // ─── Telemetry (live) ───
+        const tData = Array.from({ length: 25 }, () => Math.floor(Math.random() * 40) + 55);
+        const tLabels = Array.from({ length: 25 }, (_, i) => `T-${25 - i}s`);
+        const telChart = new Chart(document.getElementById('telemetryChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: tLabels,
+                datasets: [{
+                    label: 'API Throughput (Req/s)',
+                    data: tData,
+                    borderColor: C.teal, backgroundColor: 'rgba(76,196,180,0.08)',
+                    borderWidth: 2, pointBackgroundColor: C.void,
+                    pointBorderColor: C.teal, pointRadius: 2.5,
+                    fill: true, tension: 0.35,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                animation: { duration: 0 },
+                scales: {
+                    y: { min: 0, max: 120, grid: { color: C.crater, borderDash: [2, 4] }, ticks: { color: C.mocha, font: { family: mono, size: 10 } } },
+                    x: { grid: { display: false }, ticks: { color: C.mocha, font: { family: mono, size: 9 }, maxTicksLimit: 8 } }
+                },
+                plugins: { legend: { display: false }, tooltip: tooltipCfg }
+            }
+        });
+        setInterval(() => {
+            telChart.data.datasets[0].data.shift();
+            telChart.data.datasets[0].data.push(Math.floor(Math.random() * 40) + 55);
+            telChart.update();
+        }, 1500);
+
+        // ─── Plotly 3D Surface ───
+        const zData = [];
+        for (let i = 0; i < 30; i++) {
+            const row = [];
+            for (let j = 0; j < 30; j++) {
+                row.push(Math.sin(i / 3.5) * Math.cos(j / 3.5) * 50 + Math.random() * 12);
+            }
+            zData.push(row);
+        }
+        Plotly.newPlot('plotlySurface', [{
+            z: zData, type: 'surface', showscale: false,
+            colorscale: [[0, C.void], [0.15, C.grain], [0.4, C.crater], [0.7, C.amber], [0.9, C.gold], [1, C.crema]],
+        }], {
+            paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+            margin: { l: 0, r: 0, b: 0, t: 0 },
+            scene: {
+                xaxis: { showgrid: false, zeroline: false, showticklabels: false },
+                yaxis: { showgrid: false, zeroline: false, showticklabels: false },
+                zaxis: { showgrid: false, zeroline: false, showticklabels: false },
+                camera: { eye: { x: 1.5, y: 1.5, z: 1.1 } }
+            }
+        }, { responsive: true, displayModeBar: false });
+    </script>
+</body>
+</html>

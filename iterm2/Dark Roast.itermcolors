@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  ============================================================================
+  Dark Roast: Black Label — iTerm2 Color Scheme
+  Version: 2.1
+
+  WHAT IS THIS
+  ------------
+  A complete iTerm2 color scheme (.itermcolors) implementing the Dark Roast
+  design system's ANSI-16 palette. Covers all 16 ANSI colors plus every iTerm2
+  chrome key (background, foreground, cursor, selection, bold, badge, tab, link).
+
+  INSTALL
+  -------
+  Option A (easiest — double-click):
+    1. Double-click "Dark Roast.itermcolors" in Finder
+       (or: open "Dark Roast.itermcolors" from Terminal)
+    2. iTerm2 will import it automatically under Preferences →
+       Profiles → Colors → Color Presets → "Dark Roast: Black Label"
+    3. Select it from the Color Presets dropdown in your profile
+
+  Option B (manual import):
+    1. iTerm2 → Settings (⌘,) → Profiles → Colors
+    2. Click "Color Presets..." dropdown → "Import..."
+    3. Select this file
+    4. Select "Dark Roast: Black Label" from the Color Presets dropdown
+
+  Option C (apply to all profiles):
+    Import as above, then go to each profile and select the preset.
+    To set as default for new sessions, update the "Default" profile.
+
+  ABOUT THE FORMAT
+  ----------------
+  iTerm2 stores colors as XML plists where each color is a dict with five keys:
+    Alpha Component  — float 0.0–1.0  (1.0 = fully opaque)
+    Blue Component   — float 0.0–1.0
+    Color Space      — string ("sRGB" for standard, "P3" for wide-gamut)
+    Green Component  — float 0.0–1.0
+    Red Component    — float 0.0–1.0
+
+  All Dark Roast colors are specified in sRGB. No P3 wide-gamut is used; the
+  palette is designed for warm espresso tones, not high-saturation display-P3.
+
+  PALETTE PHILOSOPHY
+  ------------------
+  All four Dark Roast terminal themes (Warp, Tabby, Terminal.app, iTerm2)
+  share an identical ANSI-16 palette so that ls, git diff, vim syntax,
+  tmux, and every other CLI tool produce exactly the same output regardless
+  of which emulator you're running in.
+
+  FULL COLOR REFERENCE
+  --------------------
+  Chrome:
+    background    #120C06   void      — OLED-safe deepest layer (1.6ms wake delay)
+    foreground    #FFF7EE   crema     — primary text (17.08:1 contrast vs void)
+    cursor        #4CC4B4   teal      — kinetic cursor, matches editor caret
+    cursor text   #120C06   void      — text inside cursor block (inverted)
+    selection bg  #2A1C13   grain     — warm polished grain surface
+    selection fg  #FFF7EE   crema     — text color on selection
+    bold          #FFF7EE   crema     — bold text color (same hue, higher weight)
+    badge         #C44C4C   scarlet   — iTerm2 badge/notification
+    tab           #160E08   obsidian  — tab bar background color
+    link          #4CC4B4   teal      — hyperlink color in terminal output
+
+  ANSI Normal (indices 0–7):
+    0  black       #160E08   obsidian  — dark floor (not as deep as void)
+    1  red         #C44C4C   scarlet   — error / critical
+    2  green       #8AAC6B   sage      — warm fern (terminal extension)
+    3  yellow      #E69A4C   amber     — warning / accent
+    4  blue        #6E8FAD   slate     — dusty steel blue (terminal extension)
+    5  magenta     #AD7FA8   mauve     — dried lavender (terminal extension)
+    6  cyan        #4CC4B4   teal      — live data flow / resolved
+    7  white       #EBE1D7   bone      — reduced-contrast light text
+
+  ANSI Bright (indices 8–15):
+    8  bright black    #3C2A21   crater    — comment gray, tmux inactive pane
+    9  bright red      #D46868   scarlet+  — scarlet lightened ~20%
+    10 bright green    #A3C484   sage+     — sage lightened ~20%
+    11 bright yellow   #DAA520   gold      — success / stable severity
+    12 bright blue     #8AABC4   slate+    — slate lightened ~20%
+    13 bright magenta  #C49BC0   mauve+    — mauve lightened ~20%
+    14 bright cyan     #6DD4C8   teal+     — teal brightened (lighter than #4CC4B4;
+                                             bright should be visibly brighter)
+    15 bright white    #FFF7EE   crema     — full brightness
+  ============================================================================
+-->
+<plist version="1.0">
+<dict>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       ANSI NORMAL COLORS (indices 0–7)
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- ANSI 0 — Black — obsidian #160E08 -->
+  <key>Ansi 0 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.031372549</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.054901961</real>
+    <key>Red Component</key>   <real>0.086274510</real>
+  </dict>
+
+  <!-- ANSI 1 — Red — scarlet #C44C4C -->
+  <key>Ansi 1 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.298039216</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.298039216</real>
+    <key>Red Component</key>   <real>0.768627451</real>
+  </dict>
+
+  <!-- ANSI 2 — Green — sage #8AAC6B -->
+  <key>Ansi 2 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.419607843</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.674509804</real>
+    <key>Red Component</key>   <real>0.541176471</real>
+  </dict>
+
+  <!-- ANSI 3 — Yellow — amber #E69A4C -->
+  <key>Ansi 3 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.298039216</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.603921569</real>
+    <key>Red Component</key>   <real>0.901960784</real>
+  </dict>
+
+  <!-- ANSI 4 — Blue — slate #6E8FAD -->
+  <key>Ansi 4 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.678431373</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.560784314</real>
+    <key>Red Component</key>   <real>0.431372549</real>
+  </dict>
+
+  <!-- ANSI 5 — Magenta — mauve #AD7FA8 -->
+  <key>Ansi 5 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.658823529</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.498039216</real>
+    <key>Red Component</key>   <real>0.678431373</real>
+  </dict>
+
+  <!-- ANSI 6 — Cyan — teal #4CC4B4 -->
+  <key>Ansi 6 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.705882353</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.768627451</real>
+    <key>Red Component</key>   <real>0.298039216</real>
+  </dict>
+
+  <!-- ANSI 7 — White — bone #EBE1D7 -->
+  <key>Ansi 7 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.843137255</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.882352941</real>
+    <key>Red Component</key>   <real>0.921568627</real>
+  </dict>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       ANSI BRIGHT COLORS (indices 8–15)
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- ANSI 8 — Bright Black — crater #3C2A21 -->
+  <key>Ansi 8 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.129411765</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.164705882</real>
+    <key>Red Component</key>   <real>0.235294118</real>
+  </dict>
+
+  <!-- ANSI 9 — Bright Red — scarlet lightened #D46868 -->
+  <key>Ansi 9 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.407843137</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.407843137</real>
+    <key>Red Component</key>   <real>0.831372549</real>
+  </dict>
+
+  <!-- ANSI 10 — Bright Green — sage lightened #A3C484 -->
+  <key>Ansi 10 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.517647059</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.768627451</real>
+    <key>Red Component</key>   <real>0.639215686</real>
+  </dict>
+
+  <!-- ANSI 11 — Bright Yellow — gold #DAA520 -->
+  <key>Ansi 11 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.125490196</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.647058824</real>
+    <key>Red Component</key>   <real>0.854901961</real>
+  </dict>
+
+  <!-- ANSI 12 — Bright Blue — slate lightened #8AABC4 -->
+  <key>Ansi 12 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.768627451</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.670588235</real>
+    <key>Red Component</key>   <real>0.541176471</real>
+  </dict>
+
+  <!-- ANSI 13 — Bright Magenta — mauve lightened #C49BC0 -->
+  <key>Ansi 13 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.752941176</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.607843137</real>
+    <key>Red Component</key>   <real>0.768627451</real>
+  </dict>
+
+  <!-- ANSI 14 — Bright Cyan — teal brightened #6DD4C8
+       NOTE: This is intentionally lighter than ANSI 6 teal (#4CC4B4).
+       The "bright" variants should be visibly brighter, not identical.
+       #6DD4C8 is ~15% lighter in luminance than #4CC4B4. -->
+  <key>Ansi 14 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.784313725</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.831372549</real>
+    <key>Red Component</key>   <real>0.427450980</real>
+  </dict>
+
+  <!-- ANSI 15 — Bright White — crema #FFF7EE -->
+  <key>Ansi 15 Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.933333333</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.968627451</real>
+    <key>Red Component</key>   <real>1.000000000</real>
+  </dict>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       CHROME COLORS
+       ════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Background — void #120C06
+       OLED-safe dark: 1.6ms pixel wake delay vs 18.5ms for pure #000000.
+       Not pure black — slightly warm to match the espresso aesthetic. -->
+  <key>Background Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.023529412</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.047058824</real>
+    <key>Red Component</key>   <real>0.070588235</real>
+  </dict>
+
+  <!-- Foreground — crema #FFF7EE
+       Ivory warm white. 17.08:1 contrast ratio vs void — comfortably above
+       WCAG AAA (7:1). Warmer than pure white to reduce eye strain on OLED. -->
+  <key>Foreground Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.933333333</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.968627451</real>
+    <key>Red Component</key>   <real>1.000000000</real>
+  </dict>
+
+  <!-- Bold Color — crema #FFF7EE
+       Bold text uses the same crema hue. Weight, not hue, carries the
+       emphasis. UseBrightBold is implicitly false with this setting. -->
+  <key>Bold Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.933333333</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.968627451</real>
+    <key>Red Component</key>   <real>1.000000000</real>
+  </dict>
+
+  <!-- Cursor Color — teal #4CC4B4
+       The cursor matches the DR teal token ("kinetic, live data flow").
+       Visually connects the terminal cursor to editor cursors in the app. -->
+  <key>Cursor Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.705882353</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.768627451</real>
+    <key>Red Component</key>   <real>0.298039216</real>
+  </dict>
+
+  <!-- Cursor Text Color — void #120C06
+       Text inside the cursor block is rendered in void — inverted relative
+       to the teal cursor, ensuring the character under the cursor is legible. -->
+  <key>Cursor Text Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.023529412</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.047058824</real>
+    <key>Red Component</key>   <real>0.070588235</real>
+  </dict>
+
+  <!-- Selection Color — grain #2A1C13
+       The warm polished grain surface. Visible against void without being
+       jarring. Matches the web UI selection highlight token. -->
+  <key>Selection Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.074509804</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.109803922</real>
+    <key>Red Component</key>   <real>0.164705882</real>
+  </dict>
+
+  <!-- Selected Text Color — crema #FFF7EE
+       Selected text stays at full crema brightness. Grain selection bg
+       at this level provides adequate contrast. -->
+  <key>Selected Text Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.933333333</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.968627451</real>
+    <key>Red Component</key>   <real>1.000000000</real>
+  </dict>
+
+  <!-- Badge Color — scarlet #C44C4C
+       iTerm2 badges appear in the top-right of a pane to show dynamic info
+       (like current git branch). Scarlet keeps it attention-drawing but
+       consistent with the DR error/critical color semantic. -->
+  <key>Badge Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>0.5</real>
+    <key>Blue Component</key>  <real>0.298039216</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.298039216</real>
+    <key>Red Component</key>   <real>0.768627451</real>
+  </dict>
+
+  <!-- Tab Color — obsidian #160E08
+       Tab bar strip is one step above void to provide subtle depth
+       separation without blowing the near-black aesthetic. -->
+  <key>Tab Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.031372549</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.054901961</real>
+    <key>Red Component</key>   <real>0.086274510</real>
+  </dict>
+
+  <!-- Link Color — teal #4CC4B4
+       Hyperlinks in terminal output are teal — consistent with the DR
+       "kinetic / live data flow" semantic. Matches cursor color, creating
+       a unified interactive-element language. -->
+  <key>Link Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.705882353</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.768627451</real>
+    <key>Red Component</key>   <real>0.298039216</real>
+  </dict>
+
+  <!-- Underline Color — amber #E69A4C
+       Underlined text (rare in terminals) uses amber, the DR primary accent.
+       Keeps it distinct from both normal text and hyperlinks. -->
+  <key>Underline Color</key>
+  <dict>
+    <key>Alpha Component</key> <real>1</real>
+    <key>Blue Component</key>  <real>0.298039216</real>
+    <key>Color Space</key>     <string>sRGB</string>
+    <key>Green Component</key> <real>0.603921569</real>
+    <key>Red Component</key>   <real>0.901960784</real>
+  </dict>
+
+</dict>
+</plist>

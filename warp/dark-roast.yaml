@@ -1,0 +1,90 @@
+# ============================================================================
+# Dark Roast: Black Label — Warp Terminal Theme
+# Version: 2.1
+#
+# INSTALL
+# -------
+#   1. Copy this file to ~/.warp/themes/dark-roast.yaml
+#      (create ~/.warp/themes/ if it doesn't exist)
+#   2. Open Warp → Settings → Appearance → Theme
+#   3. Select "dark-roast" from the dropdown
+#
+# PALETTE PHILOSOPHY
+# ------------------
+# All four Dark Roast terminal themes (Warp, Tabby, Terminal.app, iTerm2) share
+# an identical ANSI-16 palette so that ls, git diff, vim syntax, tmux, and every
+# other CLI tool produce exactly the same output regardless of which emulator
+# you're running.
+#
+# The palette is grounded in the Dark Roast design system:
+#   - Background/foreground pulled directly from DR tokens (void, crema)
+#   - Cursor matches the editor cursor (teal — "kinetic, live data flow")
+#   - Selection uses grain (#2A1C13) — warm but not glaring
+#   - ANSI normals and brights use the five DR action colors + three
+#     terminal-extension colors (sage, slate, mauve) that aren't in the core
+#     UI token set but sit squarely within the warm espresso aesthetic
+#
+# FULL COLOR REFERENCE
+# --------------------
+# Chrome:
+#   background    #120C06   void      — OLED-safe deepest layer (1.6ms wake)
+#   foreground    #FFF7EE   crema     — primary text (17.08:1 contrast on void)
+#   cursor        #4CC4B4   teal      — kinetic, matches editor caret
+#   cursor text   #120C06   void      — inverted on cursor block
+#   selection bg  #2A1C13   grain     — warm polished grain surface
+#   selection fg  #FFF7EE   crema     — full brightness on selection
+#
+# ANSI Normal (indices 0–7):
+#   0 black       #160E08   obsidian  — dark but not void; provides depth in dark bg
+#   1 red         #C44C4C   scarlet   — error / critical
+#   2 green       #8AAC6B   sage      — warm fern green (terminal extension)
+#   3 yellow      #E69A4C   amber     — warning / accent / CTA
+#   4 blue        #6E8FAD   slate     — dusty steel blue (terminal extension)
+#   5 magenta     #AD7FA8   mauve     — dried lavender (terminal extension)
+#   6 cyan        #4CC4B4   teal      — live data flow / resolved
+#   7 white       #EBE1D7   bone      — reduced-contrast light text
+#
+# ANSI Bright (indices 8–15):
+#   8  bright black    #3C2A21   crater        — comment gray / muted metadata
+#   9  bright red      #D46868   scarlet-lt    — scarlet lightened (~20%)
+#  10  bright green    #A3C484   sage-lt       — sage lightened (~20%)
+#  11  bright yellow   #DAA520   gold          — success / stable severity
+#  12  bright blue     #8AABC4   slate-lt      — slate lightened (~20%)
+#  13  bright magenta  #C49BC0   mauve-lt      — mauve lightened (~20%)
+#  14  bright cyan     #6DD4C8   teal-lt       — teal brightened (noticeably lighter
+#                                               than normal teal; brights should be
+#                                               brighter, not identical)
+#  15  bright white    #FFF7EE   crema         — full brightness
+# ============================================================================
+
+# ── Warp chrome ─────────────────────────────────────────────────────────────
+accent:     "#E69A4C"   # amber — selection highlights and Warp UI accent ring
+background: "#120C06"   # void — OLED-safe deepest layer (1.6ms pixel wake)
+foreground: "#FFF7EE"   # crema — primary text, 17.08:1 contrast vs void
+cursor:     "#4CC4B4"   # teal — kinetic live-data cursor, matches editor caret
+details:    darker      # Warp lightens or darkens chrome decoration; "darker"
+                        # keeps tab bar and sidebar darker than the background,
+                        # which is correct for a near-black bg
+
+# ── ANSI-16 terminal colors ──────────────────────────────────────────────────
+terminal_colors:
+  normal:
+    black:   "#160E08"  # ANSI 0 — obsidian (elevated floor, not as deep as void)
+    red:     "#C44C4C"  # ANSI 1 — scarlet (error / critical severity)
+    green:   "#8AAC6B"  # ANSI 2 — sage (warm fern, used by git diff +lines, ls dirs)
+    yellow:  "#E69A4C"  # ANSI 3 — amber (warning / accent; matches DR primary CTA)
+    blue:    "#6E8FAD"  # ANSI 4 — slate (dusty steel; git diff header, less prompt)
+    magenta: "#AD7FA8"  # ANSI 5 — mauve (dried lavender; grep matches, vim special)
+    cyan:    "#4CC4B4"  # ANSI 6 — teal (live data; matches cursor + DR teal token)
+    white:   "#EBE1D7"  # ANSI 7 — bone (reduced-contrast; comment-level brightness)
+
+  bright:
+    black:   "#3C2A21"  # ANSI 8  — crater (comment gray; git log graph, tmux inactive)
+    red:     "#D46868"  # ANSI 9  — scarlet lightened ~20% (diff removed, error paths)
+    green:   "#A3C484"  # ANSI 10 — sage lightened ~20% (diff added, success paths)
+    yellow:  "#DAA520"  # ANSI 11 — gold (success / stable; DR gold token, git branch)
+    blue:    "#8AABC4"  # ANSI 12 — slate lightened ~20% (links, prompt path segments)
+    magenta: "#C49BC0"  # ANSI 13 — mauve lightened ~20% (vim visual, special tokens)
+    cyan:    "#6DD4C8"  # ANSI 14 — teal lightened (brighter than normal teal #4CC4B4;
+                        #            satisfies "bright should look brighter" convention)
+    white:   "#FFF7EE"  # ANSI 15 — crema (full brightness; bold text, headings)

@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  DARK ROAST: BLACK LABEL — Xcode Theme
+  Version: 2.0 (Canonical)
+  Design System: somaNotes Dark Roast v2.0
+
+  Built to match dark-roast-tokens.css exactly. Every color and its
+  role in this file traces to a named token from that canonical source.
+
+  ────────────────────────────────────────────────────────────────────────
+  INSTALL:
+    mkdir -p ~/Library/Developer/Xcode/UserData/FontAndColorThemes/
+    cp "Dark Roast Black Label.dvtcolortheme" \
+       ~/Library/Developer/Xcode/UserData/FontAndColorThemes/
+    Restart Xcode → Settings → Themes → "Dark Roast Black Label"
+
+  ────────────────────────────────────────────────────────────────────────
+  FONT: SF Mono (ships with macOS/Xcode — zero install required).
+  To switch to Fira Code (matches --dr-font-mono in the design system):
+    1. Install Fira Code: https://github.com/tonsky/FiraCode/releases
+    2. In this file, find-replace all occurrences:
+         SFMono-Regular  →  FiraCode-Regular
+         SFMono-Bold     →  FiraCode-Bold
+    Fira Code Retina is the preferred weight; use FiraCode-Retina if
+    available, else FiraCode-Regular.
+
+  ────────────────────────────────────────────────────────────────────────
+  COLOR FORMAT: "R G B A" — normalized floats 0.0–1.0, space-separated.
+  Alpha is always 1 for solid colors.
+
+  NOTE ON APPLE TYPO: The key "DVTConsoleExectuableInputTextColor" is
+  Apple's actual key name (misspelled). It MUST match exactly or Xcode
+  will silently ignore it. Do NOT correct the spelling.
+
+  ────────────────────────────────────────────────────────────────────────
+  COLOR REFERENCE — all 18 canonical tokens (hex → normalized RGBA):
+
+    void         #120C06  →  0.071 0.047 0.024    Deepest bg, OLED-safe
+    obsidian     #160E08  →  0.086 0.055 0.031    Elevated surface
+    grain        #2A1C13  →  0.165 0.110 0.075    Card / panel surface
+    grain-hover  #382818  →  0.220 0.157 0.094    Hover lift
+    crema        #FFF7EE  →  1.000 0.969 0.933    Primary text
+    mocha        #8B7355  →  0.545 0.451 0.333    Secondary / caption text
+    bone         #EBE1D7  →  0.922 0.882 0.843    Reduced-contrast body text
+    asparagus    #465945  →  0.275 0.349 0.271    Tertiary metadata
+    crater       #3C2A21  →  0.235 0.165 0.129    Borders
+    crater-lt    #4D3B31  →  0.302 0.231 0.192    Strong borders
+    amber        #E69A4C  →  0.902 0.604 0.298    Primary accent (attributes, user macros)
+    amber-hot    #D2691E  →  0.824 0.412 0.118    Numbers, user constants, system constants
+    gold         #DAA520  →  0.855 0.647 0.125    User classes / structs / enums / type aliases
+    scarlet      #C44C4C  →  0.769 0.298 0.298    Errors / critical (NOT used for keywords)
+    teal         #4CC4B4  →  0.298 0.769 0.706    User functions, URLs, cursor, LLDB prompt
+    sage         #8AAC6B  →  0.541 0.675 0.420    Strings, characters, debug pointer
+    slate        #6E8FAD  →  0.431 0.561 0.678    System / SDK identifiers (cool contrast)
+    mauve        #AD7FA8  →  0.678 0.498 0.659    Keywords, preprocessor, system variables
+
+  ────────────────────────────────────────────────────────────────────────
+  DESIGN PHILOSOPHY — THE KILLER FEATURE:
+
+  Xcode uniquely separates user-defined from SDK/system identifiers.
+  This theme exploits that distinction as its primary visual grammar:
+
+    WARM PALETTE  →  YOUR code
+      gold   #DAA520  your classes, structs, enums, type aliases
+      teal   #4CC4B4  your functions and methods
+      amber  #E69A4C  your attributes (@State, @objc), your macros
+      amber-hot #D2691E  numeric literals, your constants, system constants
+
+    COOL SLATE  →  Apple's SDK
+      slate  #6E8FAD  UIViewController, Int, String, system funcs, etc.
+
+    STRUCTURAL MAUVE  →  Language itself
+      mauve  #AD7FA8  keywords (if/let/func/class), preprocessor (#import),
+                      system variables (self, super) — language-reserved
+
+    DATA COLORS:
+      sage   #8AAC6B  string and character literals (organic, universal)
+      mocha  #8B7355  comments (must recede completely)
+      bone   #EBE1D7  doc comment keywords (scannable above mocha base)
+      crema  #FFF7EE  plain text, user variables (most common token)
+
+  After 30 minutes of coding your eyes internalize: warm = mine, cool =
+  Apple's. This is the fastest way to read Swift/ObjC in a dark editor.
+
+  ════════════════════════════════════════════════════════════════════════
+-->
+<plist version="1.0">
+<dict>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         EDITOR CANVAS
+         ═══════════════════════════════════════════════════════════════════
+
+         Background: void (#120C06)
+         OLED science: void keeps pixels energized at 1.6ms wake delay,
+         avoiding the 18.5ms purple-smearing artifact of pure black.
+         Perceptually near-black while remaining above the OLED power-off
+         threshold. -->
+
+    <!-- Editor background: void -->
+    <key>DVTSourceTextBackground</key>
+    <string>0.071 0.047 0.024 1</string>
+
+    <!-- Cursor: teal (#4CC4B4) — kinetic, high-contrast, easy to track -->
+    <key>DVTSourceTextInsertionPointColor</key>
+    <string>0.298 0.769 0.706 1</string>
+
+    <!-- Selection: grain (#2A1C13) — warm surface lift, visible without
+         jarring. Grain is the card-surface level, one step above void. -->
+    <key>DVTSourceTextSelectionColor</key>
+    <string>0.165 0.110 0.075 1</string>
+
+    <!-- Invisibles (tabs, spaces, newlines): crater-lt (#4D3B31)
+         Visible enough to audit whitespace, recedes in normal editing. -->
+    <key>DVTSourceTextInvisiblesColor</key>
+    <string>0.302 0.231 0.192 1</string>
+
+    <!-- Dimmed code (inactive scope blocks): obsidian (#160E08)
+         Slightly lighter than void so the active block reads as elevated. -->
+    <key>DVTSourceTextBlockDimBackgroundColor</key>
+    <string>0.086 0.055 0.031 1</string>
+
+    <!-- Debug instruction pointer: sage (#8AAC6B)
+         Warm green arrow — alive and growing, not critical. -->
+    <key>DVTDebuggerInstructionPointerColor</key>
+    <string>0.541 0.675 0.420 1</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         CONSOLE / LLDB PANE
+
+         Hierarchy: teal (prompt) > crema bold (your input) >
+                    bone (debugger output) > mocha (app stdout)
+
+         This creates a clear visual stack: the most important interaction
+         (typing commands) glows brightest; app noise recedes into mocha.
+         ═══════════════════════════════════════════════════════════════════ -->
+
+    <!-- Console background: void — same canvas as editor for coherence -->
+    <key>DVTConsoleTextBackgroundColor</key>
+    <string>0.071 0.047 0.024 1</string>
+
+    <!-- Console cursor: teal — matches editor cursor for muscle memory -->
+    <key>DVTConsoleTextInsertionPointColor</key>
+    <string>0.298 0.769 0.706 1</string>
+
+    <!-- Console selection: grain — same grain lift as editor selection -->
+    <key>DVTConsoleTextSelectionColor</key>
+    <string>0.165 0.110 0.075 1</string>
+
+    <!-- LLDB prompt "(lldb)": teal bold
+         The prompt IS the cursor — same color signals "interactive, type
+         here." Bold weight increases weight without changing hue. -->
+    <key>DVTConsoleDebuggerPromptTextColor</key>
+    <string>0.298 0.769 0.706 1</string>
+    <key>DVTConsoleDebuggerPromptTextFont</key>
+    <string>SFMono-Bold - 13.0</string>
+
+    <!-- Debugger input (your typed LLDB commands): crema bold
+         Your input is the most intentional text in the console — it gets
+         primary text color AND bold weight for maximum legibility. -->
+    <key>DVTConsoleDebuggerInputTextColor</key>
+    <string>1.000 0.969 0.933 1</string>
+    <key>DVTConsoleDebuggerInputTextFont</key>
+    <string>SFMono-Bold - 13.0</string>
+
+    <!-- Debugger output (LLDB's responses): bone (#EBE1D7)
+         One step below crema — you can scan past it to find your next
+         prompt, but it's still highly legible for reading stack traces. -->
+    <key>DVTConsoleDebuggerOutputTextColor</key>
+    <string>0.922 0.882 0.843 1</string>
+    <key>DVTConsoleDebuggerOutputTextFont</key>
+    <string>SFMono-Regular - 13.0</string>
+
+    <!-- App executable INPUT (stdin piped into your process): crema
+         NOTE: Apple typo "Exectuable" is intentional — must match Apple's
+         misspelled key exactly or Xcode silently ignores this setting. -->
+    <key>DVTConsoleExectuableInputTextColor</key>
+    <string>1.000 0.969 0.933 1</string>
+    <key>DVTConsoleExectuableInputTextFont</key>
+    <string>SFMono-Regular - 13.0</string>
+
+    <!-- App executable OUTPUT (your process's stdout/stderr): mocha (#8B7355)
+         Secondary information — logs, print statements. Must recede so
+         LLDB interaction stands out. Same role as code comments: it's
+         noise until you need it. -->
+    <key>DVTConsoleExectuableOutputTextColor</key>
+    <string>0.545 0.451 0.333 1</string>
+    <key>DVTConsoleExectuableOutputTextFont</key>
+    <string>SFMono-Regular - 13.0</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SYNTAX COLORS
+
+         Full canonical mapping — see header for design rationale.
+         Every color traces to a named Dark Roast token.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <key>DVTSourceTextSyntaxColors</key>
+    <dict>
+
+        <!-- ── FOUNDATION ─────────────────────────────────────────────── -->
+
+        <!-- Plain / default text: crema (#FFF7EE)
+             The most common token. Warm ivory, not harsh white. High
+             contrast against void without being clinical. -->
+        <key>xcode.syntax.plain</key>
+        <string>1.000 0.969 0.933 1</string>
+
+        <!-- ── STRUCTURE: MAUVE ────────────────────────────────────────
+             Language structure uses mauve — distinct and gentle.
+             12-hour shifts mean scarlet keywords would burn eyes by hour 6.
+             Mauve is immediately recognizable as structural without being
+             aggressive. Clinical staff use dark editors for hours; so do
+             we. ──────────────────────────────────────────────────────── -->
+
+        <!-- Keywords (if, let, var, func, class, return, guard, switch,
+             import, @discardableResult, where, in, as, is, try, catch,
+             throw, async, await, some, any ...): mauve (#AD7FA8) -->
+        <key>xcode.syntax.keyword</key>
+        <string>0.678 0.498 0.659 1</string>
+
+        <!-- Preprocessor (#import, #define, #if, #endif, #pragma mark):
+             mauve — same as keywords, both are structural language
+             scaffolding, not runtime data. -->
+        <key>xcode.syntax.preprocessor</key>
+        <string>0.678 0.498 0.659 1</string>
+
+        <!-- ── DATA LITERALS ──────────────────────────────────────────── -->
+
+        <!-- String literals ("hello", "patient_id"): sage (#8AAC6B)
+             Organic green — universal convention for strings across
+             almost every professional dark theme. Data at rest. -->
+        <key>xcode.syntax.string</key>
+        <string>0.541 0.675 0.420 1</string>
+
+        <!-- Character literals ('a', '\n'): sage
+             Same family as strings — it's a string of length 1. -->
+        <key>xcode.syntax.character</key>
+        <string>0.541 0.675 0.420 1</string>
+
+        <!-- Numeric literals (42, 3.14, 0xFF, 1_000_000): amber-hot (#D2691E)
+             Warm orange-amber. Stands out from variable names (crema)
+             without the neon glare of pure orange. Numbers are values
+             you should notice while scanning. -->
+        <key>xcode.syntax.number</key>
+        <string>0.824 0.412 0.118 1</string>
+
+        <!-- ── COMMENTS ───────────────────────────────────────────────── -->
+
+        <!-- Inline and block comments (// and /* */): mocha (#8B7355)
+             Must recede completely. Mocha is below the crema/bone
+             foreground layer — it's background-adjacent, making comments
+             feel soft and ignorable during fast scanning. -->
+        <key>xcode.syntax.comment</key>
+        <string>0.545 0.451 0.333 1</string>
+
+        <!-- Documentation comments (/// and /** */): mocha
+             Same as inline comments. The doc comment BODY recedes; only
+             the structured keywords inside it need to stand out. -->
+        <key>xcode.syntax.comment.doc</key>
+        <string>0.545 0.451 0.333 1</string>
+
+        <!-- Doc comment keywords (- Parameter:, - Returns:, - Note:):
+             bone (#EBE1D7) — deliberately brighter than the surrounding
+             mocha comment text so you can scan parameter lists at a
+             glance without the doc being loud. Bone is the "annotated
+             comment" signal: still in comment territory, but structured. -->
+        <key>xcode.syntax.comment.doc.keyword</key>
+        <string>0.922 0.882 0.843 1</string>
+
+        <!-- ── META-PROGRAMMING: AMBER ────────────────────────────────── -->
+
+        <!-- Attributes (@objc, @IBOutlet, @State, @Published, @MainActor,
+             @discardableResult, @frozen, @inline ...): amber (#E69A4C)
+             Meta-programming constructs — the primary accent color.
+             Draws the eye: "something special happens at this call site."
+             Amber is the alert color without the alarm of scarlet. -->
+        <key>xcode.syntax.attribute</key>
+        <string>0.902 0.604 0.298 1</string>
+
+        <!-- ── NAVIGATION ─────────────────────────────────────────────── -->
+
+        <!-- URLs in comments: teal (#4CC4B4)
+             Navigable = kinetic. Same teal as user functions — both are
+             things you can jump to. Signals "this goes somewhere." -->
+        <key>xcode.syntax.url</key>
+        <string>0.298 0.769 0.706 1</string>
+
+        <!-- ── USER-DEFINED IDENTIFIERS: WARM PALETTE ────────────────────
+             Everything YOU wrote. The warm side of the palette.
+             Your eyes learn: warm = mine.
+             ─────────────────────────────────────────────────────────── -->
+
+        <!-- User class / struct / enum / protocol / actor: gold (#DAA520)
+             YOUR type blueprints — authoritative, stable. Gold is warm
+             and assertive without being hot. "These are my architecture." -->
+        <key>xcode.syntax.identifier.class</key>
+        <string>0.855 0.647 0.125 1</string>
+
+        <!-- User function / method: teal (#4CC4B4)
+             YOUR actions — kinetic. Functions DO things; teal is the
+             most energetic color in the palette. Also used for URLs
+             (both are navigable/actionable). -->
+        <key>xcode.syntax.identifier.function</key>
+        <string>0.298 0.769 0.706 1</string>
+
+        <!-- User type alias / generic parameter / associated type: gold
+             Same as user class — it's still YOUR named type, just
+             aliased or parameterized. Gold unifies all user type-level
+             constructs. -->
+        <key>xcode.syntax.identifier.type</key>
+        <string>0.855 0.647 0.125 1</string>
+
+        <!-- User variable / property: crema (#FFF7EE)
+             Default text. Variables are the most common identifier —
+             they don't need accent color. They ARE the text. -->
+        <key>xcode.syntax.identifier.variable</key>
+        <string>1.000 0.969 0.933 1</string>
+
+        <!-- User constant (let binding at file scope, static let): amber-hot
+             Constants are fixed values — same family as numeric literals.
+             Both are immutable data worth noticing at a glance. -->
+        <key>xcode.syntax.identifier.constant</key>
+        <string>0.824 0.412 0.118 1</string>
+
+        <!-- User macro (ObjC/C preprocessor macros you defined): amber (#E69A4C)
+             Your meta-programming. Amber because it's your construct,
+             one step calmer than system macros which live in Apple-land. -->
+        <key>xcode.syntax.identifier.macro</key>
+        <string>0.902 0.604 0.298 1</string>
+
+        <!-- ── SYSTEM / SDK IDENTIFIERS: COOL SLATE ──────────────────────
+             Everything Apple wrote. The cool side of the palette.
+             Your eyes learn: cool = Apple's.
+             ─────────────────────────────────────────────────────────── -->
+
+        <!-- System class (UIViewController, SwiftUI.View, NSObject,
+             DispatchQueue ...): slate (#6E8FAD)
+             Apple's type blueprints. Cool blue-grey — SDK = authoritative
+             external. You didn't write it; it just works. -->
+        <key>xcode.syntax.identifier.class.system</key>
+        <string>0.431 0.561 0.678 1</string>
+
+        <!-- System function (print(), stride(), zip(), withAnimation()):
+             slate — Apple's actions. Same cool logic as system classes. -->
+        <key>xcode.syntax.identifier.function.system</key>
+        <string>0.431 0.561 0.678 1</string>
+
+        <!-- System type (Int, String, Bool, Double, Array, Optional,
+             Result, Never ...): slate — Apple's type primitives. -->
+        <key>xcode.syntax.identifier.type.system</key>
+        <string>0.431 0.561 0.678 1</string>
+
+        <!-- System variable (self, super): mauve (#AD7FA8)
+             Language-reserved pronouns. Technically "yours" but the
+             compiler defines their semantics. Keyword treatment is
+             correct: they're part of the language machinery, not data. -->
+        <key>xcode.syntax.identifier.variable.system</key>
+        <string>0.678 0.498 0.659 1</string>
+
+        <!-- System constant (nil, true, false): amber-hot (#D2691E)
+             These are VALUES — same family as numeric literals and user
+             constants. `true`, `false`, and `nil` behave like literals,
+             so they get the literal color. -->
+        <key>xcode.syntax.identifier.constant.system</key>
+        <string>0.824 0.412 0.118 1</string>
+
+        <!-- System macro (NULL, YES, NO, NSLog, FOUNDATION_EXPORT,
+             CF_RETURNS_RETAINED ...): mauve (#AD7FA8)
+             Apple's macro conventions. Mauve signals "this is Apple's
+             structural machinery" — same treatment as keywords and
+             preprocessor directives. Distinct from your own macros
+             (amber) so the authorship distinction is preserved even in
+             legacy ObjC/C code. -->
+        <key>xcode.syntax.identifier.macro.system</key>
+        <string>0.678 0.498 0.659 1</string>
+
+    </dict>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SYNTAX FONTS
+
+         Primary: SF Mono — ships with every macOS/Xcode install.
+         See header comment for Fira Code switch instructions.
+
+         Bold weight policy:
+           BOLD    keywords          — structural landmarks, scan targets
+           BOLD    doc comment kw    — annotation structure inside docs
+           BOLD    system constants  — nil/true/false are critical values
+           BOLD    LLDB prompt       — "type here" signal
+           BOLD    debugger input    — your most intentional console text
+           REGULAR everything else  — visual calm for the most common tokens
+
+         Size: 13.0pt — legible at arm's length on Retina, standard for
+         professional Xcode workflows.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <key>DVTSourceTextSyntaxFonts</key>
+    <dict>
+
+        <key>xcode.syntax.plain</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <!-- Bold: keywords are the primary scan landmarks in source code -->
+        <key>xcode.syntax.keyword</key>
+        <string>SFMono-Bold - 13.0</string>
+
+        <key>xcode.syntax.string</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.character</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.number</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.comment</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.comment.doc</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <!-- Bold: doc comment keywords need to stand out above mocha body -->
+        <key>xcode.syntax.comment.doc.keyword</key>
+        <string>SFMono-Bold - 13.0</string>
+
+        <!-- Bold: preprocessor directives are structural, like keywords -->
+        <key>xcode.syntax.preprocessor</key>
+        <string>SFMono-Bold - 13.0</string>
+
+        <key>xcode.syntax.attribute</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.url</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <!-- User-defined identifiers: regular weight throughout.
+             Color alone carries the warm/cool distinction. Bold would
+             cause visual noise when reading dense identifier-heavy code. -->
+
+        <key>xcode.syntax.identifier.class</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.class.system</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.function</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.function.system</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.type</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.type.system</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.variable</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.variable.system</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.constant</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <!-- Bold: nil/true/false are critical value sentinels — they
+             should read as strongly as keywords like 'return'. -->
+        <key>xcode.syntax.identifier.constant.system</key>
+        <string>SFMono-Bold - 13.0</string>
+
+        <key>xcode.syntax.identifier.macro</key>
+        <string>SFMono-Regular - 13.0</string>
+
+        <key>xcode.syntax.identifier.macro.system</key>
+        <string>SFMono-Regular - 13.0</string>
+
+    </dict>
+
+</dict>
+</plist>

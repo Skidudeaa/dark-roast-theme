@@ -1,0 +1,22 @@
+{
+  "name": "dark-roast-theme",
+  "displayName": "Dark Roast: Black Label",
+  "description": "OLED-optimized dark theme — warm espresso palette with geological accents and kinetic teal",
+  "version": "3.0.0",
+  "publisher": "soma",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Dark Roast: Black Label",
+        "uiTheme": "vs-dark",
+        "path": "./themes/dark-roast-color-theme.json"
+      }
+    ]
+  },
+  "keywords": ["dark", "oled", "warm", "espresso", "theme"],
+  "license": "MIT"
+}

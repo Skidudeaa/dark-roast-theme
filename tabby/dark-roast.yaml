@@ -1,0 +1,126 @@
+# ============================================================================
+# Dark Roast: Black Label — Tabby Terminal Theme
+# Version: 2.1
+#
+# WHAT IS THIS
+# ------------
+# A complete color scheme for Tabby terminal (https://tabby.sh), implementing
+# the Dark Roast design system's ANSI-16 palette. Tabby is cross-platform
+# (macOS, Linux, Windows) and uses a YAML config file.
+#
+# INSTALL — ALL PLATFORMS (macOS / Linux / Windows)
+# --------------------------------------------------
+# Option A: Merge into your existing config.yaml
+#   1. Locate your Tabby config file:
+#        macOS:   ~/Library/Application Support/tabby/config.yaml
+#        Linux:   ~/.config/tabby/config.yaml
+#        Windows: %APPDATA%\tabby\config.yaml
+#   2. Under the top-level `terminal:` key, add or merge:
+#        - The `customColorSchemes:` block (the scheme definition)
+#        - The `colorScheme:` key to activate it
+#   3. Save. Tabby picks up changes automatically (no restart needed).
+#
+# Option B: Use Tabby's built-in config editor
+#   1. Open Tabby → Settings → Config File (opens the YAML editor)
+#   2. Find or create the `terminal:` key
+#   3. Paste this entire file's content, then save
+#
+# Option C: Start fresh from this file
+#   If you don't have a config.yaml yet, this file IS a valid minimal
+#   config. Place it at the platform path above.
+#
+# ACTIVATING THE SCHEME
+# ---------------------
+# After merging, ensure the `colorScheme` selector is set:
+#
+#   terminal:
+#     colorScheme:
+#       name: "Dark Roast: Black Label"
+#
+# Then in Settings → Appearance → Terminal, background should be set to
+# "From color scheme" for void (#120C06) to apply correctly.
+#
+# PALETTE PHILOSOPHY
+# ------------------
+# All four Dark Roast terminal themes (Warp, Tabby, Terminal.app, iTerm2)
+# share an identical ANSI-16 palette so that ls, git diff, vim syntax,
+# tmux, and every other CLI tool produce exactly the same visual output
+# regardless of which emulator you're in.
+#
+# FULL COLOR REFERENCE
+# --------------------
+# Chrome:
+#   foreground      #FFF7EE   crema     — primary text (17.08:1 contrast on void)
+#   background      #120C06   void      — OLED-safe deepest layer (1.6ms wake)
+#   cursor          #4CC4B4   teal      — kinetic, matches editor caret
+#   cursorAccent    #120C06   void      — text color inside cursor block (inverted)
+#   selection bg    #2A1C1366 grain+40% — warm grain at ~40% alpha (hex suffix 66)
+#   selectionFg     #FFF7EE   crema     — full brightness text on selection
+#
+# ANSI Normal (indices 0–7):
+#   0 black       #160E08   obsidian  — dark floor, provides depth against void
+#   1 red         #C44C4C   scarlet   — error / critical
+#   2 green       #8AAC6B   sage      — warm fern (terminal extension)
+#   3 yellow      #E69A4C   amber     — warning / accent / CTA
+#   4 blue        #6E8FAD   slate     — dusty steel blue (terminal extension)
+#   5 magenta     #AD7FA8   mauve     — dried lavender (terminal extension)
+#   6 cyan        #4CC4B4   teal      — live data flow / resolved
+#   7 white       #EBE1D7   bone      — reduced-contrast light text
+#
+# ANSI Bright (indices 8–15):
+#   8  bright black    #3C2A21   crater    — comment gray, tmux inactive pane
+#   9  bright red      #D46868   scarlet+  — scarlet lightened ~20%
+#  10  bright green    #A3C484   sage+     — sage lightened ~20%
+#  11  bright yellow   #DAA520   gold      — success / stable severity
+#  12  bright blue     #8AABC4   slate+    — slate lightened ~20%
+#  13  bright magenta  #C49BC0   mauve+    — mauve lightened ~20%
+#  14  bright cyan     #6DD4C8   teal+     — teal brightened (noticeably lighter
+#                                            than normal teal; "bright" means
+#                                            brighter, not identical)
+#  15  bright white    #FFF7EE   crema     — full brightness
+# ============================================================================
+
+# ── Tabby activation ─────────────────────────────────────────────────────────
+# This block tells Tabby which scheme to use at runtime. It must appear
+# somewhere in your config.yaml's `terminal:` section.
+terminal:
+  colorScheme:
+    name: "Dark Roast: Black Label"
+
+  # ── Scheme definition ────────────────────────────────────────────────────
+  customColorSchemes:
+    - name: "Dark Roast: Black Label"
+
+      # Chrome colors
+      foreground:          '#FFF7EE'    # crema — primary text
+      background:          '#120C06'    # void — OLED-safe deepest layer
+      cursor:              '#4CC4B4'    # teal — kinetic cursor, matches editor caret
+      cursorAccent:        '#120C06'    # void — text inside cursor block (inverted)
+      # Tabby uses CSS color strings; the trailing 66 is hex for ~40% alpha.
+      # Grain (#2A1C13) at 40% gives a warm visible selection without contrast clash.
+      selection:           '#2A1C1366'  # grain + 40% alpha — warm polished grain
+      selectionForeground: '#FFF7EE'    # crema — ensures legibility on selection bg
+
+      # ANSI-16 palette
+      # Tabby expects exactly 16 entries in order: 0–7 normal, 8–15 bright.
+      # Each entry corresponds to ANSI escape code \e[3Xm (normal) / \e[9Xm (bright).
+      colors:
+        # ── Normal (ANSI indices 0–7) ────────────────────────────────────
+        - '#160E08'    # 0  ANSI Black    — obsidian (dark floor, not as deep as void)
+        - '#C44C4C'    # 1  ANSI Red      — scarlet (error / critical severity)
+        - '#8AAC6B'    # 2  ANSI Green    — sage (warm fern; ls dirs, git diff +lines)
+        - '#E69A4C'    # 3  ANSI Yellow   — amber (warning / accent; DR primary CTA)
+        - '#6E8FAD'    # 4  ANSI Blue     — slate (dusty steel; git diff headers)
+        - '#AD7FA8'    # 5  ANSI Magenta  — mauve (dried lavender; grep matches)
+        - '#4CC4B4'    # 6  ANSI Cyan     — teal (live data; matches cursor token)
+        - '#EBE1D7'    # 7  ANSI White    — bone (reduced-contrast light text)
+        # ── Bright (ANSI indices 8–15) ───────────────────────────────────
+        - '#3C2A21'    # 8  Bright Black  — crater (comment gray; tmux inactive pane)
+        - '#D46868'    # 9  Bright Red    — scarlet lightened ~20% (diff removed)
+        - '#A3C484'    # 10 Bright Green  — sage lightened ~20% (diff added)
+        - '#DAA520'    # 11 Bright Yellow — gold (success / stable; git branch name)
+        - '#8AABC4'    # 12 Bright Blue   — slate lightened ~20% (links, paths)
+        - '#C49BC0'    # 13 Bright Magenta — mauve lightened ~20% (special tokens)
+        - '#6DD4C8'    # 14 Bright Cyan   — teal lightened (brighter than ANSI 6;
+                       #                    "bright" should be visually distinct)
+        - '#FFF7EE'    # 15 Bright White  — crema (full brightness; bold headings)

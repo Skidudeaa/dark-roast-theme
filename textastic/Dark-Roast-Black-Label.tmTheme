@@ -1,0 +1,2264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Dark Roast: Black Label — Textastic / Sublime Text Syntax Theme
+  Version: 2.0 (Canonical Overhaul)
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  DESIGN PHILOSOPHY                                                      │
+  │                                                                         │
+  │  This theme maps the somaNotes Dark Roast design system (dark-roast-    │
+  │  tokens.css) to TextMate .tmTheme format. The semantic color grammar    │
+  │  is CONSISTENT across all editors (Textastic, Sublime Text, VS Code     │
+  │  legacy, TextMate) so that code read on iPad matches code read on       │
+  │  desktop — same visual language, same cognitive load.                   │
+  │                                                                         │
+  │  OLED-SAFETY: void (#120C06) keeps pixels energized at 1.6ms wake      │
+  │  delay, avoiding the 18.5ms purple-smearing artifact of pure black.     │
+  │  All background alphas are designed for OLED display characteristics.   │
+  │                                                                         │
+  │  TWELVE-HOUR SHIFT DESIGN: Colors were chosen for low fatigue over      │
+  │  long sessions. Mauve for keywords avoids scarlet eye-strain. Sage      │
+  │  for strings is warm and organic. Slate for functions is cool contrast  │
+  │  without being electric. The warm void background prevents the "white   │
+  │  page in a dark room" syndrome of cool-dark themes.                     │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  CANONICAL SYNTAX COLOR MAP (must match all editor themes):
+  ┌─────────────────────┬───────────┬──────────┬──────────────────────────────┐
+  │ Role                │ Token     │ Hex      │ Why                          │
+  ├─────────────────────┼───────────┼──────────┼──────────────────────────────┤
+  │ Keywords            │ mauve     │ #AD7FA8  │ Structural but not fatiguing │
+  │ Strings             │ sage      │ #8AAC6B  │ Organic data, universal      │
+  │ Numbers             │ amber-hot │ #D2691E  │ Warm, stands out quietly     │
+  │ Language constants  │ amber-hot │ #D2691E  │ Same family as numbers       │
+  │ Functions           │ slate     │ #6E8FAD  │ Cool contrast, scannable     │
+  │ Types / Classes     │ gold      │ #DAA520  │ Warm, authoritative nouns    │
+  │ Variables           │ crema     │ #FFF7EE  │ Default — stays invisible    │
+  │ Parameters          │ crema     │ #FFF7EE  │ Italic signals input scope   │
+  │ Properties          │ bone      │ #EBE1D7  │ Slightly receded             │
+  │ self/this/super     │ mauve     │ #AD7FA8  │ Language-special = keyword   │
+  │ Operators           │ teal      │ #4CC4B4  │ Connective, eye-catching     │
+  │ Comments            │ mocha     │ #8B7355  │ Must recede completely       │
+  │ Decorators          │ amber     │ #E69A4C  │ Meta-programming = accent    │
+  │ HTML tags           │ scarlet   │ #C44C4C  │ Universal red-for-markup     │
+  │ HTML attributes     │ amber     │ #E69A4C  │ Constructive parameters      │
+  │ CSS properties      │ slate     │ #6E8FAD  │ Properties DO things         │
+  │ CSS selectors       │ gold      │ #DAA520  │ Define targets, like types   │
+  │ JSON keys           │ slate     │ #6E8FAD  │ Structural keys              │
+  │ Regex               │ amber-hot │ #D2691E  │ Patterns, not data           │
+  │ Escape sequences    │ scarlet   │ #C44C4C  │ Breaks string flow           │
+  │ Invalid / Error     │ scarlet   │ #C44C4C  │ THE correct use for scarlet  │
+  │ Deprecated          │ crater-lt │ #4D3B31  │ Visually dying               │
+  │ Markdown heading    │ amber     │ #E69A4C  │ Landmarks                    │
+  │ Markdown bold       │ gold      │ #DAA520  │ Emphasis                     │
+  │ Markdown italic     │ gold      │ #DAA520  │ Light emphasis               │
+  │ Markdown code       │ sage      │ #8AAC6B  │ Code = data = strings        │
+  │ Markdown link       │ teal      │ #4CC4B4  │ Navigable = kinetic          │
+  │ Diff inserted       │ sage      │ #8AAC6B  │ Green = added                │
+  │ Diff deleted        │ scarlet   │ #C44C4C  │ Red = removed                │
+  │ Diff changed        │ amber     │ #E69A4C  │ Amber = modified             │
+  └─────────────────────┴───────────┴──────────┴──────────────────────────────┘
+
+  FULL COLOR PALETTE (from dark-roast-tokens.css v2.0):
+    void        #120C06   Deepest background (OLED-safe)
+    obsidian    #160E08   Elevated surface
+    grain       #2A1C13   Card / panel surface
+    grain-hover #382818   Hover lift
+    crema       #FFF7EE   Primary text (17:1 contrast on void)
+    mocha       #8B7355   Secondary text
+    bone        #EBE1D7   Reduced-contrast text
+    asparagus   #465945   Tertiary metadata
+    crater      #3C2A21   Borders
+    crater-lt   #4D3B31   Strong borders
+    rustic      #480404   Atmospheric red
+    rose        #480607   Error bg tint
+    amber       #E69A4C   Primary accent
+    amber-hot   #D2691E   Gradient terminal
+    gold        #DAA520   Success / stable
+    scarlet     #C44C4C   Error / critical
+    teal        #4CC4B4   Live data
+    sage        #8AAC6B   Warm green (terminal ext)
+    slate       #6E8FAD   Dusty blue (terminal ext)
+    mauve       #AD7FA8   Dried lavender (terminal ext)
+
+  INSTALL (iOS / iPadOS Textastic):
+    1. Place this file in Textastic → Local Files → #Textastic/
+    2. Settings → Other → Reload Customizations (or Cmd-Shift-R)
+    3. Settings → Code Editor → Theme → "Dark Roast: Black Label"
+
+  INSTALL (macOS Textastic):
+    1. Copy to ~/Library/Containers/com.textasticapp.textastic-mac/
+       Data/Library/Application Support/Textastic/
+    2. Restart Textastic
+
+  INSTALL (Sublime Text):
+    1. Copy to Packages/User/
+    2. Preferences → Color Scheme → User → Dark Roast: Black Label
+-->
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>Dark Roast: Black Label</string>
+
+  <key>uuid</key>
+  <string>23707EF3-1F96-43C3-946F-4DFFA64AF02C</string>
+
+  <key>semanticClass</key>
+  <string>theme.dark.dark-roast</string>
+
+  <key>author</key>
+  <string>somaNotes / somaExpanse</string>
+
+  <key>settings</key>
+  <array>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §1  GLOBAL EDITOR CHROME
+         ════════════════════════════════════════════════════════════════════
+         These settings have no <scope> — they apply to the entire editor.
+         Every value maps to a named DR token. The warm void background
+         (#120C06) is the defining feature of the Dark Roast aesthetic:
+         near-black with brown undertones instead of purple or blue.
+         ════════════════════════════════════════════════════════════════════ -->
+    <dict>
+      <key>settings</key>
+      <dict>
+
+        <!-- BACKGROUNDS ─────────────────────────────────────────────────── -->
+        <key>background</key>
+        <string>#120C06</string>
+        <!-- DR void — OLED-safe warm near-black. Avoids purple smear of #000. -->
+
+        <!-- FOREGROUNDS ─────────────────────────────────────────────────── -->
+        <key>foreground</key>
+        <string>#FFF7EE</string>
+        <!-- DR crema — 17.08:1 contrast ratio against void. Warm ivory. -->
+
+        <!-- CARET ───────────────────────────────────────────────────────── -->
+        <key>caret</key>
+        <string>#4CC4B4</string>
+        <!-- DR teal — kinetic, easy to track. Changed from amber to teal
+             per canonical spec: caret = teal (live cursor = live data). -->
+
+        <!-- CURRENT LINE HIGHLIGHT ──────────────────────────────────────── -->
+        <key>lineHighlight</key>
+        <string>#160E0880</string>
+        <!-- DR obsidian @ 50% alpha — barely perceptible lift from void.
+             Gentle enough to not distract during reading, visible enough
+             to anchor the active line during editing. -->
+
+        <!-- SELECTION ───────────────────────────────────────────────────── -->
+        <key>selection</key>
+        <string>#2A1C13CC</string>
+        <!-- DR grain @ 80% alpha — warm selection well above void floor. -->
+
+        <key>selectionForeground</key>
+        <string>#FFF7EE</string>
+        <!-- DR crema — keep text fully legible within selection. -->
+
+        <key>selectionBorder</key>
+        <string>#4D3B3166</string>
+        <!-- DR crater-lt @ 40% — subtle warm edge on selection block. -->
+
+        <key>inactiveSelection</key>
+        <string>#2A1C1366</string>
+        <!-- DR grain @ 40% — faded when window loses focus. -->
+
+        <!-- INVISIBLES (whitespace / tab markers) ───────────────────────── -->
+        <key>invisibles</key>
+        <string>#3C2A2180</string>
+        <!-- DR crater @ 50% — present when "show invisibles" is on,
+             recedes completely when off. -->
+
+        <!-- FIND / SEARCH HIGHLIGHTS ────────────────────────────────────── -->
+        <key>findHighlight</key>
+        <string>#E69A4C</string>
+        <!-- DR amber — matches pop against void without screaming. -->
+
+        <key>findHighlightForeground</key>
+        <string>#120C06</string>
+        <!-- DR void — inverted for maximum contrast on amber highlight. -->
+
+        <!-- BRACKET MATCHING ────────────────────────────────────────────── -->
+        <key>bracketsForeground</key>
+        <string>#4CC4B4</string>
+        <!-- DR teal — kinetic pairing: brackets light up when matched. -->
+
+        <key>bracketsOptions</key>
+        <string>underline</string>
+
+        <key>bracketsContentsForeground</key>
+        <string>#4CC4B480</string>
+        <!-- DR teal @ 50% — contents of matched bracket subtly highlighted. -->
+
+        <key>bracketsContentsOptions</key>
+        <string>underline</string>
+
+        <!-- GUTTER (LINE NUMBERS) ───────────────────────────────────────── -->
+        <key>gutter</key>
+        <string>#120C06</string>
+        <!-- DR void — gutter flush with editor bg for seamless appearance. -->
+
+        <key>gutterForeground</key>
+        <string>#8B735580</string>
+        <!-- DR mocha @ 50% — line numbers recede from code entirely. -->
+
+        <!-- INDENT GUIDES ───────────────────────────────────────────────── -->
+        <key>guide</key>
+        <string>#3C2A2140</string>
+        <!-- DR crater @ 25% — barely visible passive indent guides. -->
+
+        <key>activeGuide</key>
+        <string>#4D3B31CC</string>
+        <!-- DR crater-lt @ 80% — active guide for current nesting scope. -->
+
+        <key>stackGuide</key>
+        <string>#3C2A2130</string>
+        <!-- DR crater @ 19% — grandparent scope guides, ultra-faint. -->
+
+        <!-- RULERS / COLUMN GUIDES ──────────────────────────────────────── -->
+        <key>rulers</key>
+        <string>#3C2A2160</string>
+        <!-- DR crater @ 38% — column ruler visible but not distracting. -->
+
+        <!-- MISSPELLING INDICATOR ───────────────────────────────────────── -->
+        <key>misspelling</key>
+        <string>#C44C4C</string>
+        <!-- DR scarlet — same color as invalid code; error is error. -->
+
+        <!-- SHADOW (Sublime Text minimap + scroll shadow) ───────────────── -->
+        <key>shadow</key>
+        <string>#120C0640</string>
+        <!-- DR void @ 25% — subtle panel separator shadow. -->
+
+        <key>shadowWidth</key>
+        <string>4</string>
+
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §2  COMMENTS
+         ════════════════════════════════════════════════════════════════════
+         Comments are context, not executable code. They MUST recede from
+         the visual hierarchy. Mocha (#8B7355) is warm enough to stay
+         readable under gaze but dim enough to never compete with code.
+         Italic is the universal typographic signal for "annotation".
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>Comment — Inline / Block</string>
+      <key>scope</key>   <string>comment, comment.line, comment.block</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Documentation comments (JSDoc, PyDoc, RustDoc, Swift ///):
+         Same mocha/italic treatment — they ARE comments, just structured ones.
+         Individual doc-tags (e.g. @param, @returns) get amber below. -->
+    <dict>
+      <key>name</key>    <string>Comment — Documentation</string>
+      <key>scope</key>   <string>comment.block.documentation, comment.line.documentation</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Doc-comment tags: @param, @returns, @throws, @see, @deprecated -->
+    <dict>
+      <key>name</key>    <string>Comment — Doc Tag</string>
+      <key>scope</key>   <string>keyword.other.documentation, storage.type.annotation.java,
+        punctuation.definition.comment.doc-tag, entity.name.tag.documentation</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — tags stand out within comments -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- TODO / FIXME / HACK / NOTE markers within comments -->
+    <dict>
+      <key>name</key>    <string>Comment — TODO / FIXME Marker</string>
+      <key>scope</key>   <string>comment keyword.codetag.notation,
+        comment.line keyword.todo, comment.line keyword.fixme,
+        comment.block keyword.todo, comment.block keyword.fixme</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — demands attention inside a comment -->
+        <key>fontStyle</key>   <string>bold italic</string>
+      </dict>
+    </dict>
+
+    <!-- Shebang lines (#! /usr/bin/env python3) -->
+    <dict>
+      <key>name</key>    <string>Comment — Shebang</string>
+      <key>scope</key>   <string>comment.line.shebang</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — almost invisible -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §3  STRINGS
+         ════════════════════════════════════════════════════════════════════
+         Strings are inert data — they hold values but don't execute.
+         Sage (#8AAC6B) is warm green, the universal "data/string" signal.
+         The sage family groups: raw strings, byte strings, template strings,
+         heredocs, and multiline strings all in the same visual bucket.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>String — All Variants</string>
+      <key>scope</key>   <string>string,
+        string.quoted.single, string.quoted.double,
+        string.quoted.triple, string.quoted.other,
+        string.unquoted, string.other</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage -->
+      </dict>
+    </dict>
+
+    <!-- String punctuation (opening/closing quotes): slightly dimmer sage -->
+    <dict>
+      <key>name</key>    <string>String — Punctuation (Quotes)</string>
+      <key>scope</key>   <string>punctuation.definition.string.begin,
+        punctuation.definition.string.end</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage — unified with string body -->
+      </dict>
+    </dict>
+
+    <!-- Template string / interpolated string containers -->
+    <dict>
+      <key>name</key>    <string>String — Template / Interpolated</string>
+      <key>scope</key>   <string>string.template, string.interpolated</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage -->
+      </dict>
+    </dict>
+
+    <!-- Template expression delimiters: ${...} `${` / `}` / #{} / \(...) -->
+    <dict>
+      <key>name</key>    <string>String — Template Expression Punctuation</string>
+      <key>scope</key>   <string>punctuation.definition.template-expression.begin,
+        punctuation.definition.template-expression.end,
+        punctuation.section.embedded.begin, punctuation.section.embedded.end,
+        punctuation.definition.interpolation.begin,
+        punctuation.definition.interpolation.end</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — evaluated = live -->
+      </dict>
+    </dict>
+
+    <!-- Escape sequences (\n \t \u0041 \' \") — scarlet: breaks string flow -->
+    <dict>
+      <key>name</key>    <string>String — Escape Sequence</string>
+      <key>scope</key>   <string>constant.character.escape,
+        constant.character.escape.unicode,
+        constant.character.escape.hex,
+        constant.character.escape.octal</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — demands attention -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Regular expressions -->
+    <dict>
+      <key>name</key>    <string>String — Regular Expression</string>
+      <key>scope</key>   <string>string.regexp,
+        string.regexp.python, string.regexp.ruby,
+        source.regexp, source.js.regexp</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot italic — patterns, not data -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Regex special characters (. * + ? | ^ $ [ ] { } \) -->
+    <dict>
+      <key>name</key>    <string>String — Regex Special Chars</string>
+      <key>scope</key>   <string>keyword.operator.quantifier.regexp,
+        keyword.operator.or.regexp, keyword.operator.negation.regexp,
+        punctuation.definition.character-class.regexp</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — sub-structure within pattern -->
+      </dict>
+    </dict>
+
+    <!-- Heredoc / raw string / byte string labels (Python b"", r"", Swift #""#) -->
+    <dict>
+      <key>name</key>    <string>String — Raw / Byte Prefix</string>
+      <key>scope</key>   <string>storage.type.string.python,
+        punctuation.definition.string.raw.begin,
+        punctuation.definition.string.raw.end</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — modifier signals "not plain string" -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §4  NUMBERS & LANGUAGE CONSTANTS
+         ════════════════════════════════════════════════════════════════════
+         Numbers are literal values — amber-hot (#D2691E) makes them
+         stand out from surrounding crema text without screaming.
+         Language constants (true/false/null/nil/None) belong in the
+         same visual family as numbers: they ARE constant values.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>Number — All Numeric Literals</string>
+      <key>scope</key>   <string>constant.numeric,
+        constant.numeric.integer, constant.numeric.float,
+        constant.numeric.hex, constant.numeric.octal,
+        constant.numeric.binary, constant.numeric.complex</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot -->
+      </dict>
+    </dict>
+
+    <!-- Language constants: true, false, null, nil, None, undefined, NaN, Infinity -->
+    <dict>
+      <key>name</key>    <string>Constant — Language (true/false/null/nil)</string>
+      <key>scope</key>   <string>constant.language,
+        constant.language.boolean, constant.language.null,
+        constant.language.undefined, constant.language.nan</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Symbolic constants (enum variants, compile-time constants, Ruby symbols) -->
+    <dict>
+      <key>name</key>    <string>Constant — Other (enum variants, symbols)</string>
+      <key>scope</key>   <string>constant.other,
+        constant.other.symbol, constant.other.enum,
+        constant.other.ruby</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot -->
+      </dict>
+    </dict>
+
+    <!-- Built-in/library constants (Math.PI, std::INT_MAX, UIColor.red) -->
+    <dict>
+      <key>name</key>    <string>Constant — Built-in / Support</string>
+      <key>scope</key>   <string>support.constant,
+        support.constant.math, support.constant.dom,
+        support.constant.color, support.constant.font-name,
+        support.constant.property-value</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — library-provided, stable -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §5  KEYWORDS
+         ════════════════════════════════════════════════════════════════════
+         Keywords are structural control words — they define program flow.
+         Mauve (#AD7FA8) is the canonical keyword color: lavender-purple
+         that is structurally distinct without the fatigue of scarlet.
+         12-hour shift design: scarlet is reserved for ACTUAL errors.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Base keyword catch-all (import, export, return, yield, async, await,
+         pass, break, continue, throw, raise, delete, typeof, instanceof,
+         new, void, in, of, as, from, where, select, …) -->
+    <dict>
+      <key>name</key>    <string>Keyword — General</string>
+      <key>scope</key>   <string>keyword, keyword.other</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve -->
+      </dict>
+    </dict>
+
+    <!-- Control flow: if, else, elif, for, while, do, switch, case,
+         default, guard, try, catch, finally, with, match, when -->
+    <dict>
+      <key>name</key>    <string>Keyword — Control Flow</string>
+      <key>scope</key>   <string>keyword.control,
+        keyword.control.flow, keyword.control.conditional,
+        keyword.control.loop, keyword.control.exception,
+        keyword.control.import, keyword.control.return</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve bold -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Operators: = == === != !== < > <= >= + - * / % ** & | ^ ~ << >>
+         && || ! ? : ?. ?? ... -> => -->
+    <dict>
+      <key>name</key>    <string>Keyword — Operator</string>
+      <key>scope</key>   <string>keyword.operator,
+        keyword.operator.arithmetic, keyword.operator.assignment,
+        keyword.operator.comparison, keyword.operator.logical,
+        keyword.operator.bitwise, keyword.operator.ternary,
+        keyword.operator.spread, keyword.operator.rest,
+        keyword.operator.range, keyword.operator.optional-chaining,
+        keyword.operator.nullish, keyword.operator.relational,
+        keyword.operator.type, keyword.operator.cast</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — connective tissue, eye-catching -->
+      </dict>
+    </dict>
+
+    <!-- Namespace/resolution operators (::, ., ->, .?) — quieter variant -->
+    <dict>
+      <key>name</key>    <string>Keyword — Accessor / Resolution Operator</string>
+      <key>scope</key>   <string>keyword.operator.accessor,
+        keyword.operator.namespace, keyword.operator.member,
+        punctuation.accessor, meta.path punctuation</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — structural but quiet -->
+      </dict>
+    </dict>
+
+    <!-- Word-form operators: and, or, not, is, in, as, instanceof, typeof -->
+    <dict>
+      <key>name</key>    <string>Keyword — Word Operator</string>
+      <key>scope</key>   <string>keyword.operator.word,
+        keyword.operator.logical.python,
+        keyword.operator.comparison.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — same as symbol operators -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §6  STORAGE (type declarations, modifiers)
+         ════════════════════════════════════════════════════════════════════
+         Storage types (var, let, const, func, def, fn, class, struct,
+         enum, interface, type, pub, private, static, async, mut, …) are
+         declaration-level keywords. They belong in the mauve family with
+         keywords, italic to signal "modifier/declarator" semantics.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Type declaration keywords: class, struct, enum, interface, protocol,
+         trait, type (Swift/TS typedef), union, impl, extension, namespace -->
+    <dict>
+      <key>name</key>    <string>Storage — Type Declaration</string>
+      <key>scope</key>   <string>storage.type,
+        storage.type.class, storage.type.struct, storage.type.enum,
+        storage.type.interface, storage.type.function,
+        storage.type.annotation, storage.type.generic,
+        storage.type.primitive, storage.type.namespace</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Access/visibility modifiers: public, private, protected, internal,
+         static, final, abstract, override, readonly, const, mut, unsafe,
+         async, virtual, extern, inline, export, default -->
+    <dict>
+      <key>name</key>    <string>Storage — Modifier</string>
+      <key>scope</key>   <string>storage.modifier,
+        storage.modifier.access, storage.modifier.async,
+        storage.modifier.static, storage.modifier.abstract,
+        storage.modifier.final, storage.modifier.const,
+        storage.modifier.export, storage.modifier.import</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §7  FUNCTIONS
+         ════════════════════════════════════════════════════════════════════
+         Functions are the VERBS of code — they DO things. Slate (#6E8FAD)
+         is a cool dusty blue that creates natural contrast against the warm
+         amber/gold type and sage string colors. Functions are immediately
+         scannable against the warm backdrop.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Function / method declarations (the name being defined) -->
+    <dict>
+      <key>name</key>    <string>Function — Declaration Name</string>
+      <key>scope</key>   <string>entity.name.function,
+        entity.name.function.python, entity.name.function.ruby,
+        entity.name.function.php, entity.name.method,
+        entity.name.function.member</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate -->
+      </dict>
+    </dict>
+
+    <!-- Function calls / invocations -->
+    <dict>
+      <key>name</key>    <string>Function — Call / Invocation</string>
+      <key>scope</key>   <string>meta.function-call,
+        meta.function-call.generic, variable.function,
+        support.function.call, meta.method-call</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate -->
+      </dict>
+    </dict>
+
+    <!-- Built-in / standard library functions -->
+    <dict>
+      <key>name</key>    <string>Function — Built-in / Support</string>
+      <key>scope</key>   <string>support.function,
+        support.function.builtin, support.function.console,
+        support.function.string, support.function.array,
+        support.function.math, support.function.misc,
+        support.function.kernel, support.function.print</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate italic — builtin = provided by runtime -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Constructor calls: new Foo(), Class(), __init__ -->
+    <dict>
+      <key>name</key>    <string>Function — Constructor</string>
+      <key>scope</key>   <string>entity.name.function.constructor,
+        meta.instance.constructor, keyword.operator.new</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate bold — construction = important call -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Anonymous / arrow functions (visual body — the => token) -->
+    <dict>
+      <key>name</key>    <string>Function — Arrow / Lambda</string>
+      <key>scope</key>   <string>storage.type.arrow, keyword.declaration.arrow,
+        punctuation.definition.arrow, keyword.operator.arrow</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — arrow is an operator -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §8  TYPES, CLASSES, STRUCTS
+         ════════════════════════════════════════════════════════════════════
+         Types are structural NOUNS — they describe shape and capability.
+         Gold (#DAA520) is warm and authoritative. It maps to the "stable"
+         state in the clinical severity gradient: types don't change at
+         runtime, they ground everything else.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Named types: class names, struct names, enum names being defined -->
+    <dict>
+      <key>name</key>    <string>Type — Class / Struct / Enum Name (Definition)</string>
+      <key>scope</key>   <string>entity.name.class, entity.name.struct,
+        entity.name.enum, entity.name.type, entity.name.interface,
+        entity.name.trait, entity.name.union, entity.name.protocol</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold bold -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Inherited class / protocol conformance -->
+    <dict>
+      <key>name</key>    <string>Type — Inherited Class / Conforms To</string>
+      <key>scope</key>   <string>entity.other.inherited-class</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold italic — subordinate to definition -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Type references (used as annotations, casts, generic params) -->
+    <dict>
+      <key>name</key>    <string>Type — Reference / Support Type</string>
+      <key>scope</key>   <string>support.type, support.class,
+        support.type.primitive, support.type.builtin,
+        support.type.sys-types, support.other.namespace</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold -->
+      </dict>
+    </dict>
+
+    <!-- Type annotations / generic parameters (Python hints, TS generics) -->
+    <dict>
+      <key>name</key>    <string>Type — Annotation / Generic Parameter</string>
+      <key>scope</key>   <string>meta.type.annotation, meta.type.parameters,
+        meta.generic, meta.type-alias,
+        support.type.python, support.type.swift,
+        entity.name.type.go, entity.name.type.rust</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Namespace / module names (used in imports, qualified references) -->
+    <dict>
+      <key>name</key>    <string>Type — Namespace / Module</string>
+      <key>scope</key>   <string>entity.name.namespace, entity.name.module,
+        entity.name.package, meta.namespace,
+        support.module, support.other.module</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold -->
+      </dict>
+    </dict>
+
+    <!-- Enum variants / cases (used as values, not definitions) -->
+    <dict>
+      <key>name</key>    <string>Type — Enum Variant / Case</string>
+      <key>scope</key>   <string>entity.name.enum-member, variable.other.enummember,
+        support.constant.enum, entity.name.case</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — same family as types -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §9  VARIABLES
+         ════════════════════════════════════════════════════════════════════
+         Variables are the most common token in any file — they MUST stay
+         invisible (blend with foreground). Crema (#FFF7EE) IS the default
+         text color. Parameters get italic to signal "input to this scope".
+         Properties are slightly receded (bone) since they're object-owned.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- General variables (local vars, identifiers) — crema = default text -->
+    <dict>
+      <key>name</key>    <string>Variable — General</string>
+      <key>scope</key>   <string>variable, variable.other,
+        variable.other.readwrite, variable.other.local,
+        variable.other.block, variable.other.captured</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#FFF7EE</string>  <!-- DR crema -->
+      </dict>
+    </dict>
+
+    <!-- Function / method parameters — italic distinguishes "input" from "local" -->
+    <dict>
+      <key>name</key>    <string>Variable — Parameter</string>
+      <key>scope</key>   <string>variable.parameter,
+        variable.parameter.function, variable.parameter.rest,
+        variable.other.jsdoc</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#FFF7EE</string>  <!-- DR crema italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Language-special variables: self, this, super, cls, Self, base -->
+    <dict>
+      <key>name</key>    <string>Variable — Language (self/this/super)</string>
+      <key>scope</key>   <string>variable.language,
+        variable.language.this, variable.language.self,
+        variable.language.super, variable.language.base,
+        variable.language.special</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve italic — language-special = keyword treatment -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Object property access (obj.property) — bone: present but receded -->
+    <dict>
+      <key>name</key>    <string>Variable — Object Property / Member</string>
+      <key>scope</key>   <string>variable.other.property,
+        variable.other.object.property, variable.other.member,
+        variable.other.field, meta.property.object</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone -->
+      </dict>
+    </dict>
+
+    <!-- Constant variables (JS const, Rust const, Go const) -->
+    <dict>
+      <key>name</key>    <string>Variable — Constant / Immutable Binding</string>
+      <key>scope</key>   <string>variable.other.constant,
+        variable.other.constant.object,
+        support.constant.handlebars</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — immutable = constant family -->
+      </dict>
+    </dict>
+
+    <!-- Destructured / pattern binding variables -->
+    <dict>
+      <key>name</key>    <string>Variable — Destructured / Pattern</string>
+      <key>scope</key>   <string>variable.other.binding, variable.other.pattern</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#FFF7EE</string>  <!-- DR crema — still just a local var -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §10  DECORATORS & ANNOTATIONS
+         ════════════════════════════════════════════════════════════════════
+         Decorators (@) are meta-programming constructs — they modify code
+         without being code themselves. Amber (#E69A4C) is the primary accent
+         and draws the eye to these structural annotations.
+         Covers: Python @decorator, JS/TS @decorator, Java @Annotation,
+         C# [Attribute], Rust #[derive(...)], Go struct tags.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>Decorator / Annotation — @ Symbol</string>
+      <key>scope</key>   <string>punctuation.definition.decorator,
+        punctuation.definition.annotation,
+        keyword.decorator, keyword.decorator.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber -->
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>Decorator / Annotation — Name</string>
+      <key>scope</key>   <string>entity.name.function.decorator,
+        entity.name.type.annotation, meta.decorator,
+        meta.annotation, support.other.attribute</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- C# / Java attributes in brackets [SerializeField] [Required] -->
+    <dict>
+      <key>name</key>    <string>Decorator — Attribute Bracket</string>
+      <key>scope</key>   <string>meta.attribute.csharp, meta.attribute.java,
+        punctuation.definition.attribute.begin,
+        punctuation.definition.attribute.end</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber -->
+      </dict>
+    </dict>
+
+    <!-- Rust attributes: #[derive(Debug)], #[cfg(test)], #![allow(dead_code)] -->
+    <dict>
+      <key>name</key>    <string>Decorator — Rust Attribute</string>
+      <key>scope</key>   <string>meta.attribute.rust, keyword.attribute.rust,
+        punctuation.definition.attribute.rust</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §11  PYTHON-SPECIFIC
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Magic / dunder methods (__init__, __repr__, __enter__, __exit__) -->
+    <dict>
+      <key>name</key>    <string>Python — Magic Method</string>
+      <key>scope</key>   <string>support.function.magic.python,
+        entity.name.function.magic.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate — still a function, but special -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Python built-in functions: print(), len(), range(), type(), … -->
+    <dict>
+      <key>name</key>    <string>Python — Built-in Function</string>
+      <key>scope</key>   <string>support.function.builtin.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Python f-string expression braces {name:.2f} -->
+    <dict>
+      <key>name</key>    <string>Python — F-String Expression</string>
+      <key>scope</key>   <string>meta.fstring.python constant.character.format.placeholder.other.python,
+        punctuation.definition.template-expression.begin.python,
+        punctuation.definition.template-expression.end.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — evaluated expression -->
+      </dict>
+    </dict>
+
+    <!-- Python type hints in annotations (→ int, : str, Optional[int]) -->
+    <dict>
+      <key>name</key>    <string>Python — Type Hint</string>
+      <key>scope</key>   <string>meta.type.annotation.python, support.type.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold italic — types = gold -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Python exception names (ValueError, TypeError, except clauses) -->
+    <dict>
+      <key>name</key>    <string>Python — Exception Class</string>
+      <key>scope</key>   <string>support.type.exception.python,
+        entity.name.exception.python</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — exceptions are error-adjacent -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §12  JAVASCRIPT & TYPESCRIPT
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- JS/TS: import/export keywords already covered by §5 keyword.control -->
+
+    <!-- TS: type keyword, interface, declare, abstract -->
+    <dict>
+      <key>name</key>    <string>TypeScript — Type Keyword</string>
+      <key>scope</key>   <string>keyword.control.type.typescript,
+        keyword.declaration.type.typescript,
+        storage.type.type.typescript,
+        keyword.operator.type.annotation.typescript</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- TS: generic type brackets <T, K extends U> -->
+    <dict>
+      <key>name</key>    <string>TypeScript — Generic Bracket</string>
+      <key>scope</key>   <string>punctuation.definition.typeparameters.begin.typescript,
+        punctuation.definition.typeparameters.end.typescript</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — type-family punctuation -->
+      </dict>
+    </dict>
+
+    <!-- JS/TS: console.log, process.env — support namespace -->
+    <dict>
+      <key>name</key>    <string>JavaScript — Support Object</string>
+      <key>scope</key>   <string>support.class.console, variable.other.global,
+        support.variable.object.process, support.variable.object.node</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — global objects are type-like -->
+      </dict>
+    </dict>
+
+    <!-- JSX component tags (uppercase = component, treated as type) -->
+    <dict>
+      <key>name</key>    <string>JSX — Component Tag</string>
+      <key>scope</key>   <string>entity.name.tag.tsx, entity.name.tag.jsx,
+        support.class.component.tsx, support.class.component.jsx</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — component = type -->
+      </dict>
+    </dict>
+
+    <!-- JSX lower-case HTML element tags inside JSX files -->
+    <dict>
+      <key>name</key>    <string>JSX — HTML Element Tag</string>
+      <key>scope</key>   <string>entity.name.tag.html.tsx, entity.name.tag.html.jsx</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — markup = HTML convention -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §13  SWIFT
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Swift: @available, @objc, @IBOutlet, @IBAction, @discardableResult -->
+    <dict>
+      <key>name</key>    <string>Swift — Attribute</string>
+      <key>scope</key>   <string>keyword.operator.attribute.swift,
+        storage.modifier.attribute.swift</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — attribute = decorator -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Swift: #selector, #keyPath, #file, #line, #function -->
+    <dict>
+      <key>name</key>    <string>Swift — Pound Literal / Directive</string>
+      <key>scope</key>   <string>keyword.operator.pound.swift, support.variable.swift,
+        keyword.other.hash.swift</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — compiler magic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Swift: guard, defer, fallthrough -->
+    <dict>
+      <key>name</key>    <string>Swift — Special Control Keywords</string>
+      <key>scope</key>   <string>keyword.control.guard.swift,
+        keyword.control.defer.swift,
+        keyword.control.fallthrough.swift</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve bold — control family -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §14  GO
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Go: goroutine / channel operators: go, chan, select, defer, fallthrough -->
+    <dict>
+      <key>name</key>    <string>Go — Concurrency Keywords</string>
+      <key>scope</key>   <string>keyword.control.go, keyword.channel.go</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve bold -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Go: built-in functions: make, len, cap, append, copy, close, delete,
+         new, panic, recover, print, println, real, imag, complex -->
+    <dict>
+      <key>name</key>    <string>Go — Built-in Function</string>
+      <key>scope</key>   <string>support.function.builtin.go</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Go: blank identifier _ -->
+    <dict>
+      <key>name</key>    <string>Go — Blank Identifier</string>
+      <key>scope</key>   <string>variable.other.blank.go</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — intentionally invisible -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §15  RUST
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Rust: lifetime annotations 'a, 'static, 'self -->
+    <dict>
+      <key>name</key>    <string>Rust — Lifetime</string>
+      <key>scope</key>   <string>storage.modifier.lifetime.rust,
+        entity.name.lifetime.rust, punctuation.definition.lifetime.rust</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot italic — special borrow annotation -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Rust: macros: println!, vec!, format!, panic!, assert! -->
+    <dict>
+      <key>name</key>    <string>Rust — Macro Invocation</string>
+      <key>scope</key>   <string>support.other.macro.rust,
+        entity.name.function.macro.rust, keyword.operator.macro.rust,
+        variable.other.macro.rust, meta.macro.rust</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — macros = meta-programming like decorators -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Rust: unsafe keyword -->
+    <dict>
+      <key>name</key>    <string>Rust — unsafe Keyword</string>
+      <key>scope</key>   <string>keyword.other.unsafe.rust,
+        storage.modifier.unsafe.rust</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet bold — unsafe is CRITICAL -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Rust: impl block -->
+    <dict>
+      <key>name</key>    <string>Rust — impl / trait / where</string>
+      <key>scope</key>   <string>keyword.other.rust, storage.type.rust</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §16  HTML / XML / JSX
+         ════════════════════════════════════════════════════════════════════
+         HTML tags are structural markup — scarlet is the universal red-for-
+         HTML-tags convention that nearly every major theme uses. Attributes
+         are amber: they parametrize the tag (constructive). Angle brackets
+         are crater-lt: structure without noise.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- HTML / XML element tag names: <div>, <p>, <span>, <table>, <svg> -->
+    <dict>
+      <key>name</key>    <string>HTML / XML — Tag Name</string>
+      <key>scope</key>   <string>entity.name.tag,
+        entity.name.tag.html, entity.name.tag.xml,
+        entity.name.tag.svg, entity.name.tag.other</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet -->
+      </dict>
+    </dict>
+
+    <!-- Attribute names: class="…" id="…" href="…" data-* aria-* -->
+    <dict>
+      <key>name</key>    <string>HTML / XML — Attribute Name</string>
+      <key>scope</key>   <string>entity.other.attribute-name,
+        entity.other.attribute-name.html,
+        entity.other.attribute-name.xml,
+        entity.other.attribute-name.id.html</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber -->
+      </dict>
+    </dict>
+
+    <!-- Attribute values: ="value" (non-string, e.g. unquoted) -->
+    <dict>
+      <key>name</key>    <string>HTML / XML — Attribute Value (unquoted)</string>
+      <key>scope</key>   <string>string.unquoted.html, string.unquoted.attribute-value</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage — values are strings -->
+      </dict>
+    </dict>
+
+    <!-- Tag angle brackets < > </ /> -->
+    <dict>
+      <key>name</key>    <string>HTML / XML — Tag Punctuation</string>
+      <key>scope</key>   <string>punctuation.definition.tag,
+        punctuation.definition.tag.begin,
+        punctuation.definition.tag.end,
+        punctuation.definition.tag.html,
+        punctuation.definition.tag.xml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — structural but quiet -->
+      </dict>
+    </dict>
+
+    <!-- DOCTYPE, XML prolog, XML namespace -->
+    <dict>
+      <key>name</key>    <string>HTML / XML — DOCTYPE / Prolog</string>
+      <key>scope</key>   <string>meta.tag.sgml.doctype, entity.name.tag.doctype,
+        meta.tag.preprocessor.xml, keyword.operator.less-than.xml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha italic — boilerplate -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- HTML/XML: &nbsp; &amp; &lt; entity references -->
+    <dict>
+      <key>name</key>    <string>HTML / XML — Character Entity</string>
+      <key>scope</key>   <string>constant.character.entity.html,
+        constant.character.entity.xml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — breaks normal text flow -->
+      </dict>
+    </dict>
+
+    <!-- Embedded script and style blocks -->
+    <dict>
+      <key>name</key>    <string>HTML — Embedded Script / Style Tag</string>
+      <key>scope</key>   <string>entity.name.tag.script.html,
+        entity.name.tag.style.html</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — still a tag name -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §17  CSS / SCSS / LESS
+         ════════════════════════════════════════════════════════════════════
+         CSS selectors define structural targets (like types → gold).
+         CSS properties DO things (like functions → slate).
+         CSS values are data (crema/bone depending on context).
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- CSS selectors: .class, #id, element, :pseudo, ::pseudo-element -->
+    <dict>
+      <key>name</key>    <string>CSS — Selector (element / tag)</string>
+      <key>scope</key>   <string>entity.name.tag.css, entity.name.tag.scss,
+        entity.name.tag.wildcard.css</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold -->
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>CSS — Selector (class / ID)</string>
+      <key>scope</key>   <string>entity.other.attribute-name.class.css,
+        entity.other.attribute-name.class.scss,
+        entity.other.attribute-name.id.css,
+        entity.other.attribute-name.id.scss</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold -->
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>CSS — Pseudo-class / Pseudo-element</string>
+      <key>scope</key>   <string>entity.other.attribute-name.pseudo-class.css,
+        entity.other.attribute-name.pseudo-element.css,
+        entity.other.pseudo-class.css,
+        entity.other.pseudo-element.css</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold italic — derived selector -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- CSS property names: color, margin, display, flex-direction, … -->
+    <dict>
+      <key>name</key>    <string>CSS — Property Name</string>
+      <key>scope</key>   <string>support.type.property-name.css,
+        support.type.property-name.scss,
+        support.type.property-name.less,
+        meta.property-name.css</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate — properties DO things -->
+      </dict>
+    </dict>
+
+    <!-- CSS custom properties / variables: (-\-color-primary), var(-\-font-size) -->
+    <dict>
+      <key>name</key>    <string>CSS — Custom Property (variable)</string>
+      <key>scope</key>   <string>variable.css, variable.argument.css,
+        support.type.custom-property.css,
+        variable.other.custom-property.css,
+        variable.scss, variable.less</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — CSS vars are accent-level constructs -->
+      </dict>
+    </dict>
+
+    <!-- CSS property values: red, block, flex, none, inherit, … -->
+    <dict>
+      <key>name</key>    <string>CSS — Property Value (keyword)</string>
+      <key>scope</key>   <string>support.constant.property-value.css,
+        support.constant.property-value.scss,
+        meta.property-value.css keyword,
+        meta.property-value.scss keyword</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone — values are data, slightly receded -->
+      </dict>
+    </dict>
+
+    <!-- CSS at-rules: @media, @keyframes, @import, @mixin, @include -->
+    <dict>
+      <key>name</key>    <string>CSS — At-Rule Keyword</string>
+      <key>scope</key>   <string>keyword.control.at-rule.css,
+        keyword.control.at-rule.scss,
+        keyword.control.at-rule.less,
+        punctuation.definition.keyword.css</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve — at-rules = keyword family -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- CSS units: px, em, rem, vh, vw, %, ms, deg -->
+    <dict>
+      <key>name</key>    <string>CSS — Unit</string>
+      <key>scope</key>   <string>keyword.other.unit.css,
+        keyword.other.unit.scss, keyword.other.unit.less</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — unit modifies the number -->
+      </dict>
+    </dict>
+
+    <!-- CSS color values: #fff, #120C06, rgb(), hsl() -->
+    <dict>
+      <key>name</key>    <string>CSS — Color Value</string>
+      <key>scope</key>   <string>constant.other.color.rgb-value.css,
+        constant.other.color.rgb-value.hex.css,
+        support.constant.color.w3c-standard-color-name.css</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — color = numeric literal family -->
+      </dict>
+    </dict>
+
+    <!-- SCSS @mixin name, @function name, @include argument -->
+    <dict>
+      <key>name</key>    <string>SCSS — Mixin / Function Name</string>
+      <key>scope</key>   <string>entity.name.function.scss, entity.name.mixin.scss,
+        meta.function.scss entity.name</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate — SCSS functions = functions -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §18  JSON
+         ════════════════════════════════════════════════════════════════════
+         JSON keys are structural identifiers — slate for scannability.
+         JSON values: strings=sage, numbers=amber-hot, booleans=amber-hot italic,
+         null=amber-hot italic (consistent with language constants).
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- JSON object keys: "name", "version", "dependencies" -->
+    <dict>
+      <key>name</key>    <string>JSON — Key</string>
+      <key>scope</key>   <string>support.type.property-name.json,
+        string.quoted.double.json meta.structure.dictionary.key.json string.quoted.double.json,
+        meta.mapping.key.json string.quoted.double.json</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate -->
+      </dict>
+    </dict>
+
+    <!-- JSON string values: "hello", "https://…" -->
+    <dict>
+      <key>name</key>    <string>JSON — String Value</string>
+      <key>scope</key>   <string>meta.structure.dictionary.value.json string.quoted.double.json,
+        meta.mapping.value.json string.quoted.double.json,
+        string.quoted.double.json</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage — strings = sage universally -->
+      </dict>
+    </dict>
+
+    <!-- JSON boolean and null constants -->
+    <dict>
+      <key>name</key>    <string>JSON — Boolean / Null</string>
+      <key>scope</key>   <string>constant.language.json</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot italic — same as language constants -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- JSON structure punctuation: { } [ ] : , -->
+    <dict>
+      <key>name</key>    <string>JSON — Structural Punctuation</string>
+      <key>scope</key>   <string>punctuation.definition.dictionary.begin.json,
+        punctuation.definition.dictionary.end.json,
+        punctuation.definition.array.begin.json,
+        punctuation.definition.array.end.json,
+        punctuation.separator.dictionary.key-value.json,
+        punctuation.separator.array.json</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — structure, quietly -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §19  YAML
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- YAML keys: name:, version:, dependencies: -->
+    <dict>
+      <key>name</key>    <string>YAML — Key</string>
+      <key>scope</key>   <string>entity.name.tag.yaml,
+        string.unquoted.plain.out.yaml,
+        meta.mapping.key.yaml string</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate — structural keys -->
+      </dict>
+    </dict>
+
+    <!-- YAML values: hello, 42, true, null -->
+    <dict>
+      <key>name</key>    <string>YAML — Value (string/unquoted)</string>
+      <key>scope</key>   <string>string.unquoted.plain.in.yaml,
+        string.quoted.single.yaml, string.quoted.double.yaml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage -->
+      </dict>
+    </dict>
+
+    <!-- YAML anchors & aliases: &anchor, *ref -->
+    <dict>
+      <key>name</key>    <string>YAML — Anchor / Alias</string>
+      <key>scope</key>   <string>entity.name.type.anchor.yaml,
+        variable.other.alias.yaml,
+        punctuation.definition.anchor.yaml,
+        punctuation.definition.alias.yaml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — references = meta-programming -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- YAML directives: (triple dash) ... %YAML -->
+    <dict>
+      <key>name</key>    <string>YAML — Directive / Document Marker</string>
+      <key>scope</key>   <string>meta.document.yaml, punctuation.definition.document.yaml,
+        keyword.other.directive.yaml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — structural boilerplate -->
+      </dict>
+    </dict>
+
+    <!-- YAML block scalars: | > -->
+    <dict>
+      <key>name</key>    <string>YAML — Block Scalar Indicator</string>
+      <key>scope</key>   <string>keyword.control.flow.block-scalar.literal.yaml,
+        keyword.control.flow.block-scalar.folded.yaml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — multi-line string delimiter -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §20  MARKDOWN
+         ════════════════════════════════════════════════════════════════════
+         Markdown is a writing format as much as a code format. The color
+         scheme treats it as structured content: headings are landmarks
+         (amber bold), bold/italic are emphasis (gold), code is data (sage),
+         links are navigable (teal underline), blockquotes are quotes (mocha).
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ATX and Setext headings: # H1 ## H2 ### H3 === (setext underline) -->
+    <dict>
+      <key>name</key>    <string>Markdown — Heading</string>
+      <key>scope</key>   <string>markup.heading,
+        markup.heading.1, markup.heading.2,
+        markup.heading.3, markup.heading.4,
+        markup.heading.5, markup.heading.6,
+        entity.name.section.markdown</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber bold — landmarks -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- Heading # punctuation -->
+    <dict>
+      <key>name</key>    <string>Markdown — Heading Punctuation</string>
+      <key>scope</key>   <string>punctuation.definition.heading.markdown,
+        punctuation.definition.heading.setext</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — unified with heading -->
+      </dict>
+    </dict>
+
+    <!-- **bold** and __bold__ -->
+    <dict>
+      <key>name</key>    <string>Markdown — Bold</string>
+      <key>scope</key>   <string>markup.bold, markup.bold string</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold bold -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- *italic* and _italic_ -->
+    <dict>
+      <key>name</key>    <string>Markdown — Italic</string>
+      <key>scope</key>   <string>markup.italic, markup.italic string</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold italic -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- ***bold italic*** -->
+    <dict>
+      <key>name</key>    <string>Markdown — Bold Italic</string>
+      <key>scope</key>   <string>markup.bold markup.italic, markup.italic markup.bold</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold bold italic -->
+        <key>fontStyle</key>   <string>bold italic</string>
+      </dict>
+    </dict>
+
+    <!-- `inline code` -->
+    <dict>
+      <key>name</key>    <string>Markdown — Inline Code</string>
+      <key>scope</key>   <string>markup.inline.raw,
+        markup.raw.inline, markup.inline.raw.string.markdown</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage — code = strings = data -->
+      </dict>
+    </dict>
+
+    <!-- ```code blocks``` -->
+    <dict>
+      <key>name</key>    <string>Markdown — Code Block / Fenced</string>
+      <key>scope</key>   <string>markup.raw.block, markup.fenced_code.block.markdown,
+        markup.code.fenced, markup.raw.code-fence</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage -->
+      </dict>
+    </dict>
+
+    <!-- Fenced code block language identifier: ```python, ```typescript -->
+    <dict>
+      <key>name</key>    <string>Markdown — Fenced Code Language</string>
+      <key>scope</key>   <string>constant.other.language-name.markdown,
+        variable.language.fenced.markdown, fenced_code.block.language</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber italic — language tag is a label -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- [link text](url) and ![alt](url) — URL portion -->
+    <dict>
+      <key>name</key>    <string>Markdown — Link / URL</string>
+      <key>scope</key>   <string>markup.underline.link,
+        markup.underline.link.image, string.other.link.description.markdown,
+        string.other.link.title.markdown</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal underline — navigable = kinetic -->
+        <key>fontStyle</key>   <string>underline</string>
+      </dict>
+    </dict>
+
+    <!-- [link text] — the visible text of a link -->
+    <dict>
+      <key>name</key>    <string>Markdown — Link Label Text</string>
+      <key>scope</key>   <string>string.other.link.description.title.markdown,
+        meta.image.inline.markdown string, meta.link.inline.markdown string</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone — link text stays readable -->
+      </dict>
+    </dict>
+
+    <!-- - and * list bullets, 1. numbered lists -->
+    <dict>
+      <key>name</key>    <string>Markdown — List Bullet</string>
+      <key>scope</key>   <string>markup.list, punctuation.definition.list.begin.markdown,
+        markup.list.unnumbered, markup.list.numbered</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — list structure is stable -->
+      </dict>
+    </dict>
+
+    <!-- > blockquotes -->
+    <dict>
+      <key>name</key>    <string>Markdown — Blockquote</string>
+      <key>scope</key>   <string>markup.quote, punctuation.definition.blockquote.markdown</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha italic — cited text recedes -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Horizontal rule (triple dash/asterisk) -->
+    <dict>
+      <key>name</key>    <string>Markdown — Horizontal Rule</string>
+      <key>scope</key>   <string>meta.separator.markdown, punctuation.definition.thematic-break</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — structural divider -->
+      </dict>
+    </dict>
+
+    <!-- []: reference link definitions -->
+    <dict>
+      <key>name</key>    <string>Markdown — Reference / Label</string>
+      <key>scope</key>   <string>constant.other.reference.link.markdown,
+        meta.link.reference.markdown</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — references like anchors/decorators -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §21  SHELL / BASH / ZSH
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Shell built-in commands: cd, echo, export, source, eval -->
+    <dict>
+      <key>name</key>    <string>Shell — Built-in Command</string>
+      <key>scope</key>   <string>support.function.builtin.shell,
+        support.function.builtin.bash, keyword.other.shell</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate italic — built-in functions -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Shell variables: $HOME, $USER, ${VAR}, $0 $1 $@ $# -->
+    <dict>
+      <key>name</key>    <string>Shell — Variable / Parameter</string>
+      <key>scope</key>   <string>variable.other.normal.shell,
+        variable.other.special.shell, variable.other.positional.shell,
+        variable.other.bracket.shell, variable.other.readwrite.shell</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — shell vars are accent-level -->
+      </dict>
+    </dict>
+
+    <!-- Shell variable punctuation: ${ } -->
+    <dict>
+      <key>name</key>    <string>Shell — Variable Punctuation</string>
+      <key>scope</key>   <string>punctuation.definition.variable.shell</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber -->
+      </dict>
+    </dict>
+
+    <!-- Here-doc: <<EOF ... EOF -->
+    <dict>
+      <key>name</key>    <string>Shell — Heredoc Delimiter</string>
+      <key>scope</key>   <string>keyword.operator.heredoc.shell,
+        punctuation.definition.string.heredoc.shell</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — heredoc delimiter marks evaluated block -->
+      </dict>
+    </dict>
+
+    <!-- Command substitution: $(cmd) `cmd` -->
+    <dict>
+      <key>name</key>    <string>Shell — Command Substitution</string>
+      <key>scope</key>   <string>meta.command-substitution.shell,
+        punctuation.definition.command-substitution.shell</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — evaluated = live -->
+      </dict>
+    </dict>
+
+    <!-- Flags and options: -v, (-\-verbose), (-\-port) -->
+    <dict>
+      <key>name</key>    <string>Shell — Flag / Option</string>
+      <key>scope</key>   <string>string.unquoted.argument.shell,
+        variable.language.special.dash.shell</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone — arguments slightly receded -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §22  SQL
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- SQL keywords: SELECT FROM WHERE GROUP BY ORDER HAVING JOIN ON
+         INSERT UPDATE DELETE CREATE DROP ALTER INDEX UNIQUE -->
+    <dict>
+      <key>name</key>    <string>SQL — Keyword</string>
+      <key>scope</key>   <string>keyword.other.sql, keyword.dml.sql,
+        keyword.ddl.sql, keyword.other.create.sql,
+        keyword.other.drop.sql, keyword.other.alter.sql</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve bold — SQL keywords = keyword family -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- SQL functions: COUNT(), SUM(), AVG(), COALESCE(), NOW() -->
+    <dict>
+      <key>name</key>    <string>SQL — Function</string>
+      <key>scope</key>   <string>support.function.aggregate.sql,
+        support.function.scalar.sql, support.function.window.sql</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate — functions = slate -->
+      </dict>
+    </dict>
+
+    <!-- SQL table / column names (identifiers) -->
+    <dict>
+      <key>name</key>    <string>SQL — Identifier</string>
+      <key>scope</key>   <string>entity.name.table.sql, entity.name.column.sql</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — schema objects = types -->
+      </dict>
+    </dict>
+
+    <!-- SQL operators: =, !=, <, >, LIKE, IN, BETWEEN, IS NULL, AND, OR, NOT -->
+    <dict>
+      <key>name</key>    <string>SQL — Operator</string>
+      <key>scope</key>   <string>keyword.operator.comparison.sql,
+        keyword.operator.logical.sql</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — operators = teal -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §23  RUBY
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Ruby symbols: :name, :key, :"string-sym" -->
+    <dict>
+      <key>name</key>    <string>Ruby — Symbol</string>
+      <key>scope</key>   <string>constant.other.symbol.ruby,
+        constant.other.symbol.hashkey.ruby,
+        punctuation.definition.symbol.ruby</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — symbols are constants -->
+      </dict>
+    </dict>
+
+    <!-- Ruby string interpolation: #{expr} -->
+    <dict>
+      <key>name</key>    <string>Ruby — String Interpolation</string>
+      <key>scope</key>   <string>punctuation.section.embedded.ruby,
+        source.ruby.embedded.source</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — embedded expression = live -->
+      </dict>
+    </dict>
+
+    <!-- Ruby blocks: do |x| ... end, { |x| ... } -->
+    <dict>
+      <key>name</key>    <string>Ruby — Block Parameter Pipes</string>
+      <key>scope</key>   <string>punctuation.separator.variable.ruby,
+        punctuation.definition.parameters.ruby</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — structural framing -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §24  PHP
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- PHP variables: $name, $this, $POST, $GLOBALS -->
+    <dict>
+      <key>name</key>    <string>PHP — Variable</string>
+      <key>scope</key>   <string>variable.other.php, variable.parameter.php</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#FFF7EE</string>  <!-- DR crema — PHP vars are just vars -->
+      </dict>
+    </dict>
+
+    <!-- PHP $ sigil -->
+    <dict>
+      <key>name</key>    <string>PHP — Variable Dollar Sign</string>
+      <key>scope</key>   <string>punctuation.definition.variable.php</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — sigil is accent -->
+      </dict>
+    </dict>
+
+    <!-- PHP: echo, print, list, empty, isset, unset — language constructs -->
+    <dict>
+      <key>name</key>    <string>PHP — Language Construct</string>
+      <key>scope</key>   <string>support.function.construct.php,
+        keyword.other.new.php</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve — language-level constructs -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- PHP open/close tags: <?php ?> -->
+    <dict>
+      <key>name</key>    <string>PHP — Open / Close Tags</string>
+      <key>scope</key>   <string>punctuation.section.embedded.begin.php,
+        punctuation.section.embedded.end.php,
+        meta.embedded.line.php punctuation</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — tag = markup family -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §25  JAVA
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Java annotations: @Override, @NonNull, @SuppressWarnings -->
+    <dict>
+      <key>name</key>    <string>Java — Annotation</string>
+      <key>scope</key>   <string>storage.type.annotation.java,
+        punctuation.definition.annotation.java,
+        entity.name.type.annotation.java</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — annotations = decorators -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Java import paths -->
+    <dict>
+      <key>name</key>    <string>Java — Import Path</string>
+      <key>scope</key>   <string>storage.modifier.import.java,
+        storage.modifier.package.java</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone — import paths are context -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §26  C / C++ / OBJECTIVE-C
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Preprocessor directives: #include, #define, #ifdef, #pragma -->
+    <dict>
+      <key>name</key>    <string>C/C++ — Preprocessor Directive</string>
+      <key>scope</key>   <string>keyword.control.import.c, keyword.control.import.c++,
+        keyword.control.directive, meta.preprocessor keyword,
+        punctuation.definition.directive</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — preprocessor = meta-programming -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Preprocessor macro names: #define MACRO_NAME -->
+    <dict>
+      <key>name</key>    <string>C/C++ — Macro / Defined Constant</string>
+      <key>scope</key>   <string>entity.name.function.preprocessor.c,
+        entity.name.function.preprocessor.c++,
+        entity.name.constant.preprocessor.c</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#D2691E</string>  <!-- DR amber-hot — macros are constant-like -->
+      </dict>
+    </dict>
+
+    <!-- ObjC message send: [object message] brackets -->
+    <dict>
+      <key>name</key>    <string>Objective-C — Message Send</string>
+      <key>scope</key>   <string>meta.brackets.objc, keyword.other.property.objc</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — message brackets are structure -->
+      </dict>
+    </dict>
+
+    <!-- ObjC / C++ nullptr, NULL, YES, NO, true, false — covered by constant.language -->
+
+    <!-- C/C++ primitive types: int, char, float, double, void, bool, long, short -->
+    <dict>
+      <key>name</key>    <string>C/C++ — Primitive Type</string>
+      <key>scope</key>   <string>storage.type.c, storage.type.c++,
+        storage.type.primitive.c, storage.type.primitive.c++</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — primitive types = type family -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- C/C++ pointer operator: * & (as type qualifiers) -->
+    <dict>
+      <key>name</key>    <string>C/C++ — Pointer / Reference Qualifier</string>
+      <key>scope</key>   <string>storage.modifier.pointer.c, storage.modifier.reference.c++,
+        keyword.operator.pointer.c, keyword.operator.address.c++</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — pointer ops = operator family -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §27  PUNCTUATION & STRUCTURAL CHARACTERS
+         ════════════════════════════════════════════════════════════════════
+         Punctuation should recede. Separators and terminators use crater-lt
+         so they're visible but never compete with code tokens.
+         Brackets/braces/parens use mocha — they frame code without becoming
+         part of the semantic color vocabulary.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Separators: , ; — -->
+    <dict>
+      <key>name</key>    <string>Punctuation — Separator / Terminator</string>
+      <key>scope</key>   <string>punctuation.separator, punctuation.terminator,
+        punctuation.separator.comma, punctuation.separator.key-value,
+        punctuation.separator.sequence</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — quiet structural separator -->
+      </dict>
+    </dict>
+
+    <!-- Braces, brackets, parentheses: { } [ ] ( ) -->
+    <dict>
+      <key>name</key>    <string>Punctuation — Braces / Brackets / Parens</string>
+      <key>scope</key>   <string>punctuation.definition.block,
+        punctuation.definition.parameters.begin,
+        punctuation.definition.parameters.end,
+        punctuation.definition.array.begin,
+        punctuation.definition.array.end,
+        punctuation.section.block.begin,
+        punctuation.section.block.end,
+        punctuation.section.parens.begin,
+        punctuation.section.parens.end,
+        meta.brace.round, meta.brace.square, meta.brace.curly</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — structural framing -->
+      </dict>
+    </dict>
+
+    <!-- String definition punctuation (quote marks) — handled per-string above -->
+
+    <!-- Comment definition punctuation: //, /*, #, (double dash) -->
+    <dict>
+      <key>name</key>    <string>Punctuation — Comment Definition</string>
+      <key>scope</key>   <string>punctuation.definition.comment</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — same as comment body -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §28  INVALID & DEPRECATED
+         ════════════════════════════════════════════════════════════════════
+         Scarlet (#C44C4C) is the ONLY correct use for error-state code.
+         The canonical spec reserves scarlet for actual errors — which is
+         why keywords were deliberately moved to mauve.
+         Deprecated tokens get crater-lt + strikethrough: they are "dying".
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>Invalid — Error / Illegal</string>
+      <key>scope</key>   <string>invalid, invalid.illegal</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet -->
+        <key>background</key>  <string>#48060720</string> <!-- DR rose bg @ ~12% — tinted error bg -->
+        <key>fontStyle</key>   <string>underline</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>Invalid — Deprecated</string>
+      <key>scope</key>   <string>invalid.deprecated</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4D3B31</string>  <!-- DR crater-lt — visually dying -->
+        <key>fontStyle</key>   <string>strikethrough</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §29  DIFF / VERSION CONTROL
+         ════════════════════════════════════════════════════════════════════
+         Green = added (sage), Red = removed (scarlet), Amber = modified/changed.
+         This is the universal semantic of diff colors.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>Diff — Inserted / Added</string>
+      <key>scope</key>   <string>markup.inserted,
+        markup.inserted.diff, markup.inserted.git_gutter</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8AAC6B</string>  <!-- DR sage — green = added -->
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>Diff — Deleted / Removed</string>
+      <key>scope</key>   <string>markup.deleted,
+        markup.deleted.diff, markup.deleted.git_gutter</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#C44C4C</string>  <!-- DR scarlet — red = removed -->
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>Diff — Modified / Changed</string>
+      <key>scope</key>   <string>markup.changed,
+        markup.changed.diff, markup.changed.git_gutter</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#E69A4C</string>  <!-- DR amber — amber = modified -->
+      </dict>
+    </dict>
+
+    <!-- Diff file headers: old/file.py new/file.py and @@ hunk markers -->
+    <dict>
+      <key>name</key>    <string>Diff — Header / Hunk</string>
+      <key>scope</key>   <string>meta.diff.header, meta.diff.range,
+        punctuation.definition.range.diff</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha italic — metadata, recedes -->
+        <key>fontStyle</key>   <string>italic</string>
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §30  TOML
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- TOML section headers: [section] [[array-of-tables]] -->
+    <dict>
+      <key>name</key>    <string>TOML — Table Header</string>
+      <key>scope</key>   <string>entity.name.section.toml,
+        punctuation.definition.table.toml,
+        support.type.property-name.table.toml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — sections define structure like types -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <!-- TOML keys: key = value -->
+    <dict>
+      <key>name</key>    <string>TOML — Key</string>
+      <key>scope</key>   <string>support.type.property-name.toml,
+        keyword.key.toml</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate — structural keys -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §31  INI / PROPERTIES FILES
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <dict>
+      <key>name</key>    <string>INI / Properties — Section</string>
+      <key>scope</key>   <string>entity.name.section.group-title.ini,
+        entity.name.section.ini</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold bold -->
+        <key>fontStyle</key>   <string>bold</string>
+      </dict>
+    </dict>
+
+    <dict>
+      <key>name</key>    <string>INI / Properties — Key</string>
+      <key>scope</key>   <string>keyword.other.definition.ini,
+        support.type.property-name.ini</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#6E8FAD</string>  <!-- DR slate -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §32  TEMPLATE LANGUAGES (Jinja2, Django, Handlebars, Twig)
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Template tags: {% block %} {% extends %} {% for %} {% if %} -->
+    <dict>
+      <key>name</key>    <string>Template — Tag</string>
+      <key>scope</key>   <string>entity.name.tag.template,
+        keyword.control.template, keyword.control.jinja,
+        meta.tag.template entity.name.tag</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#AD7FA8</string>  <!-- DR mauve — template control = keyword family -->
+      </dict>
+    </dict>
+
+    <!-- Template expression delimiters: {{ }} {# #} {% %} -->
+    <dict>
+      <key>name</key>    <string>Template — Expression Delimiter</string>
+      <key>scope</key>   <string>punctuation.definition.template-expression.jinja,
+        punctuation.definition.block.jinja,
+        punctuation.definition.comment.jinja,
+        entity.other.jinja2.delimiter.statement,
+        entity.other.jinja2.delimiter.variable</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — evaluated expressions -->
+      </dict>
+    </dict>
+
+    <!-- Handlebars expressions: {{name}} {{#each}} {{/each}} -->
+    <dict>
+      <key>name</key>    <string>Template — Handlebars Expression</string>
+      <key>scope</key>   <string>expression.handlebars, meta.function.handlebars,
+        support.constant.handlebars</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#4CC4B4</string>  <!-- DR teal — evaluated = live -->
+      </dict>
+    </dict>
+
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         §33  ADDITIONAL SCOPES (catchall completeness)
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Generic entity names (fallback for entity.name.* not covered above) -->
+    <dict>
+      <key>name</key>    <string>Entity — Generic Name</string>
+      <key>scope</key>   <string>entity.name</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#DAA520</string>  <!-- DR gold — named entities default to type family -->
+      </dict>
+    </dict>
+
+    <!-- Support catch-all (library/framework provided identifiers) -->
+    <dict>
+      <key>name</key>    <string>Support — Other</string>
+      <key>scope</key>   <string>support.other, support.variable</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone — library vars slightly receded -->
+      </dict>
+    </dict>
+
+    <!-- Generic markup (catch-all for markup.* not otherwise specified) -->
+    <dict>
+      <key>name</key>    <string>Markup — Other</string>
+      <key>scope</key>   <string>markup.other</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#EBE1D7</string>  <!-- DR bone -->
+      </dict>
+    </dict>
+
+    <!-- meta.output — terminal output blocks (e.g. in literate programming) -->
+    <dict>
+      <key>name</key>    <string>Meta — Output / Terminal</string>
+      <key>scope</key>   <string>meta.output</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>  <string>#8B7355</string>  <!-- DR mocha — output is context, not code -->
+      </dict>
+    </dict>
+
+  </array>
+</dict>
+</plist>
