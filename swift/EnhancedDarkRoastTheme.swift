@@ -106,8 +106,8 @@ enum DarkRoast {
     // ── Structural Derived ──────────────────────────────────
 
     /// Ultra-subtle divider — crema at 4% opacity.
-    static let divider     = Color(hex: 0xFFF7EE).opacity(0.04)
-    /// Input field background.
+    static let divider     = Color(hex: 0xFFF7EE, alpha: 0.04)
+    /// Input field background (Swift-only extension — midpoint between void and grain).
     static let inputBg     = Color(hex: 0x1E140C)
 }
 
@@ -122,29 +122,29 @@ enum DarkRoast {
 extension DarkRoast {
 
     // ── Amber ───────────────────────────────────────────────
-    static let amberDim       = Color(hex: 0xE69A4C).opacity(0.40)
-    static let amberSubtle    = Color(hex: 0xE69A4C).opacity(0.10)
-    static let amberGhost     = Color(hex: 0xE69A4C).opacity(0.05)
+    static let amberDim       = Color(hex: 0xE69A4C, alpha: 0.40)
+    static let amberSubtle    = Color(hex: 0xE69A4C, alpha: 0.10)
+    static let amberGhost     = Color(hex: 0xE69A4C, alpha: 0.05)
 
     // ── Amber-Hot ───────────────────────────────────────────
-    static let amberHotDim    = Color(hex: 0xD2691E).opacity(0.40)
-    static let amberHotSubtle = Color(hex: 0xD2691E).opacity(0.10)
-    static let amberHotGhost  = Color(hex: 0xD2691E).opacity(0.05)
+    static let amberHotDim    = Color(hex: 0xD2691E, alpha: 0.40)
+    static let amberHotSubtle = Color(hex: 0xD2691E, alpha: 0.10)
+    static let amberHotGhost  = Color(hex: 0xD2691E, alpha: 0.05)
 
     // ── Gold ────────────────────────────────────────────────
-    static let goldDim        = Color(hex: 0xDAA520).opacity(0.40)
-    static let goldSubtle     = Color(hex: 0xDAA520).opacity(0.10)
-    static let goldGhost      = Color(hex: 0xDAA520).opacity(0.05)
+    static let goldDim        = Color(hex: 0xDAA520, alpha: 0.40)
+    static let goldSubtle     = Color(hex: 0xDAA520, alpha: 0.10)
+    static let goldGhost      = Color(hex: 0xDAA520, alpha: 0.05)
 
     // ── Scarlet ─────────────────────────────────────────────
-    static let scarletDim     = Color(hex: 0xC44C4C).opacity(0.40)
-    static let scarletSubtle  = Color(hex: 0xC44C4C).opacity(0.10)
-    static let scarletGhost   = Color(hex: 0xC44C4C).opacity(0.05)
+    static let scarletDim     = Color(hex: 0xC44C4C, alpha: 0.40)
+    static let scarletSubtle  = Color(hex: 0xC44C4C, alpha: 0.10)
+    static let scarletGhost   = Color(hex: 0xC44C4C, alpha: 0.05)
 
     // ── Teal ────────────────────────────────────────────────
-    static let tealDim        = Color(hex: 0x4CC4B4).opacity(0.40)
-    static let tealSubtle     = Color(hex: 0x4CC4B4).opacity(0.10)
-    static let tealGhost      = Color(hex: 0x4CC4B4).opacity(0.05)
+    static let tealDim        = Color(hex: 0x4CC4B4, alpha: 0.40)
+    static let tealSubtle     = Color(hex: 0x4CC4B4, alpha: 0.10)
+    static let tealGhost      = Color(hex: 0x4CC4B4, alpha: 0.05)
 }
 
 
@@ -451,7 +451,63 @@ enum ClinicalStatus: String, CaseIterable {
 }
 
 
-// MARK: - § 10 · Theme Protocol & Environment
+// MARK: - § 10 · CExE Component Tokens (Clinical Expression Engine)
+
+// WHY: Semantic aliases for the CExE UI, mirroring CSS --dr-cexe-*
+// custom properties. Using aliases (not raw colors) so CExE views
+// read as domain language: `DarkRoast.CExE.runningTotal` not
+// `DarkRoast.gold`. Changes to the underlying palette propagate
+// automatically without touching CExE call sites.
+
+extension DarkRoast {
+
+    enum CExE {
+        // ── Evaluation Badges ─────────────────────────────────
+        /// Badge surface behind severity/eval indicators.
+        static let evalBadgeBg       = DarkRoast.grain
+        /// Badge border — geological primary.
+        static let evalBadgeBorder   = DarkRoast.crater
+        /// Answer text — full contrast for readability.
+        static let answerText        = DarkRoast.crema
+        /// Highlighted answer fragment — primary accent.
+        static let answerHighlight   = DarkRoast.amber
+
+        // ── Scope & What-If ───────────────────────────────────
+        /// Scope boundary indicator — tertiary metadata color.
+        static let scopeIndicator    = DarkRoast.asparagus
+        /// What-if highlight fill (10% amber).
+        static let whatIfHighlight   = DarkRoast.amberSubtle
+        /// What-if container border (40% amber).
+        static let whatIfBorder      = DarkRoast.amberDim
+
+        // ── Provenance ────────────────────────────────────────
+        /// Provenance hover lift — interactive card state.
+        static let provenanceHover   = DarkRoast.grainHover
+        /// Provenance container border — earth taupe.
+        static let provenanceBorder  = DarkRoast.craterLt
+
+        // ── Running Totals ────────────────────────────────────
+        /// Running total text — gold for stable/computed values.
+        static let runningTotal      = DarkRoast.gold
+        /// Running total background (5% gold).
+        static let runningTotalBg    = DarkRoast.goldGhost
+
+        // ── ABx Badges ────────────────────────────────────────
+        /// Antibiotic badge text — caution tier.
+        static let abxBadge          = DarkRoast.amberHot
+        /// Antibiotic badge background (10% amber-hot).
+        static let abxBadgeBg        = DarkRoast.amberHotSubtle
+
+        // ── Expression Detection ──────────────────────────────
+        /// Detected expression highlight (10% teal).
+        static let exprDetect        = DarkRoast.tealSubtle
+        /// Detected expression border (40% teal).
+        static let exprDetectBorder  = DarkRoast.tealDim
+    }
+}
+
+
+// MARK: - § 11 · Theme Protocol & Environment
 
 // ARCHITECTURE: Semantic theme contract. Any future theme (light
 // mode, high contrast, etc.) conforms to ThemeProvider. The enum
@@ -583,7 +639,7 @@ enum AppTheme: ThemeProvider {
 }
 
 
-// MARK: - § 11 · Environment Key
+// MARK: - § 12 · Environment Key
 
 /// Inject theme into the SwiftUI environment for any view to consume.
 ///
@@ -601,7 +657,7 @@ extension EnvironmentValues {
 }
 
 
-// MARK: - § 12 · View Modifiers
+// MARK: - § 13 · View Modifiers
 
 // ── Phosphor Glow ───────────────────────────────────────────
 
@@ -763,6 +819,97 @@ struct SectionLabelModifier: ViewModifier {
 }
 
 
+// ── Animations (match CSS @keyframes) ───────────────────────
+
+// WHY: SwiftUI has no CSS @keyframes equivalent. These modifiers
+// use @State-driven animations triggered on appear. Each respects
+// accessibilityReduceMotion (matching CSS prefers-reduced-motion).
+// TRADEOFF: Each modifier owns its animation state independently.
+// Composing multiple animated modifiers works but adds draw calls.
+
+/// Pulsing teal ring — matches CSS `.dr-pulse-teal` (2.5s infinite).
+/// Ring expands outward from the view and fades, then repeats.
+struct PulseTealModifier: ViewModifier {
+    @State private var isPulsing = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                Circle()
+                    .stroke(DarkRoast.teal, lineWidth: 2)
+                    .scaleEffect(isPulsing ? 2.0 : 1.0)
+                    .opacity(isPulsing ? 0 : 0.6)
+                    .animation(
+                        reduceMotion ? nil :
+                            .easeOut(duration: 2.5)
+                            .repeatForever(autoreverses: false),
+                        value: isPulsing
+                    )
+            )
+            .onAppear { isPulsing = true }
+    }
+}
+
+/// Fade-up entrance — matches CSS `.dr-fade-up` (0.7s ease-out).
+/// Content fades in while translating 24pt upward.
+struct FadeUpModifier: ViewModifier {
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 24)
+            .animation(
+                reduceMotion ? nil : .easeOut(duration: 0.7),
+                value: appeared
+            )
+            .onAppear { appeared = true }
+    }
+}
+
+/// Slide-in entrance — matches CSS `.dr-slide-in` (0.5s ease-out).
+/// Content fades in while translating 20pt from the leading edge.
+struct SlideInModifier: ViewModifier {
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(appeared ? 1 : 0)
+            .offset(x: appeared ? 0 : -20)
+            .animation(
+                reduceMotion ? nil :
+                    .easeOut(duration: DarkRoast.Duration.theatrical),
+                value: appeared
+            )
+            .onAppear { appeared = true }
+    }
+}
+
+/// Amber breathing glow — matches CSS `.dr-glow-breathe` (3s infinite).
+/// Shadow radius oscillates between 8pt and 20pt at 30% amber.
+struct GlowBreatheModifier: ViewModifier {
+    @State private var isExpanded = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: Color(hex: 0xE69A4C, alpha: 0.3),
+                radius: isExpanded ? 20 : 8
+            )
+            .animation(
+                reduceMotion ? nil :
+                    .easeInOut(duration: 3.0).repeatForever(),
+                value: isExpanded
+            )
+            .onAppear { isExpanded = true }
+    }
+}
+
+
 // ── Convenience Extensions ──────────────────────────────────
 
 extension View {
@@ -790,10 +937,30 @@ extension View {
     func sectionLabel() -> some View {
         modifier(SectionLabelModifier())
     }
+
+    /// Pulsing teal ring for live data indicators.
+    func pulseTeal() -> some View {
+        modifier(PulseTealModifier())
+    }
+
+    /// Fade-up entrance animation (0.7s, 24pt travel).
+    func fadeUp() -> some View {
+        modifier(FadeUpModifier())
+    }
+
+    /// Slide-in entrance animation (0.5s, 20pt travel).
+    func slideIn() -> some View {
+        modifier(SlideInModifier())
+    }
+
+    /// Amber breathing glow (3s infinite cycle).
+    func glowBreathe() -> some View {
+        modifier(GlowBreatheModifier())
+    }
 }
 
 
-// MARK: - § 13 · Conditional View Modifier
+// MARK: - § 14 · Conditional View Modifier
 
 // WHY: SwiftUI doesn't have a built-in conditional modifier.
 // This lets us write `.if(condition) { $0.someModifier() }`.
@@ -813,7 +980,7 @@ extension View {
 }
 
 
-// MARK: - § 14 · JSON Export
+// MARK: - § 15 · JSON Export
 
 extension AppTheme {
     /// Export current theme as JSON-compatible dictionary.
@@ -869,7 +1036,7 @@ extension AppTheme {
 }
 
 
-// MARK: - § 15 · Song Expanse Integration Guide
+// MARK: - § 16 · Song Expanse Integration Guide
 //
 // Song Expanse uses a dynamic `TextColors` struct derived from album art.
 // The theme system intentionally does NOT override TextColors.
@@ -930,7 +1097,7 @@ extension AppTheme {
 //   sun gradient      → [DarkRoast.amber, .gold, .amberHot]
 
 
-// MARK: - § 16 · Preview
+// MARK: - § 17 · Preview
 
 #if DEBUG
 struct DarkRoastPreview: View {
