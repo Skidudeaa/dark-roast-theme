@@ -1,15 +1,89 @@
-# Enhanced Dark Roast: Black Label -- Design System Reference
+# Dark Roast: Black Label -- Design System Reference
 
-**Version**: 2.0
+**Version**: 4.0.0
 **Status**: CANONICAL
-**Date**: 2026-02-22
+**Date**: 2026-04-20
 **Applies to**: somaCURA (web, clinical data), Song Expanse (iOS, music visualization)
+
+---
+
+## 0. v4.0.0 Migration Notes (from v3 / v2)
+
+v4 is a breaking rename + expansion. **Hex values are unchanged.** Only token names change, plus additive new primitives and new primitive categories.
+
+### Renamed tokens (hex unchanged)
+
+| v3 name | v4 name | Hex | CSS var |
+|---|---|---|---|
+| `grain` | `espresso` | `#2A1C13` | `--dr-espresso` |
+| `grainHover` | `espressoHover` | `#382818` | `--dr-espresso-hover` |
+| `crater` (dark) | `craterDeep` | `#3C2A21` | `--dr-crater-deep` |
+| `craterLt` | `crater` (top of surface scale) | `#4D3B31` | `--dr-crater` |
+
+Deprecated v3 CSS vars (`--dr-grain`, `--dr-grain-hover`, `--dr-crater-lt`) are retained as aliases pointing at the v4 names. They will be removed in v5. Note: `--dr-crater` in v3 meant `#3C2A21`; in v4 it means `#4D3B31`. Audit direct uses.
+
+### New primitives
+
+| Name | Hex | Role |
+|---|---|---|
+| `darkCacao` | `#1E140E` | Elevated surfaces (modals, sheets, popovers) |
+| `roastedBean` | `#3C2A1E` | Borders, dividers |
+| `amberMuted` | `#C07A4A` | Reader contexts, Mystic2 parity |
+| `brass` | `#BFA162` | Warning, caution |
+| `burntSienna` | `#C75B39` | Terminal error, UI error (ANSI red) |
+| `warmWhite` | `#F0E6D0` | Bright callouts, ANSI 15 |
+
+### Semantic role aliases (pointers into primitives)
+
+Prefer in new code for portability; color-name primitives remain canonical.
+
+| Role | Points at |
+|---|---|
+| `accent` | `amber` |
+| `accentHot` | `amberHot` |
+| `accentMuted` | `amberMuted` |
+| `success` | `teal` |
+| `warning` | `brass` |
+| `error` | `burntSienna` |
+| `critical` | `scarlet` |
+| `stable` | `gold` |
+| `live` | `teal` |
+
+### New primitive categories
+
+All additive. See `tokens/tokens.json` v4.0.0 for full detail.
+
+- `opacity` -- 12-step alpha scale (0/4/5/8/10/12/15/24/40/60/85/100)
+- `spacing` -- expanded to 15 steps (`0` -> `24` in px increments; numeric keys + legacy aliases)
+- `radii` -- 8 steps (`none, xs, sm, md, lg, xl, 2xl, full`)
+- `elevation` -- 5 variants (`flat/raised/floating/critical/live`) pairing shadow + border + optional glow
+- `typography.scale` -- 10 steps (`xs -> 5xl`) each with size/line-height/letter-spacing/weight
+- `typography.roles` -- 12 semantic roles (hero, pageTitle, cardTitle, labValue, vitalSign, etc.)
+- `motion.keyframes` -- named breatheAmber / pulseScarlet / pulseTeal / shimmerSkeleton / fadeUp / slideIn / glow / grainDrift
+- `zIndex` -- named scale (`base -> debug`, 0 -> 9999)
+- `icon` -- size scale (`xs -> 3xl`) + stroke widths
+- `stateVariants` -- hover/active/focus/disabled/selected overlay specs
+- `accessibility.contrastTargets` -- per-role WCAG minimums + measured actuals
+- `printExport` -- substrate-inversion mappings for paper output
+
+### What didn't change
+
+- All hex values for existing tokens
+- Font stacks (Playfair Display / Instrument Sans / DM Sans / Fira Code)
+- OLED wake-delay science (void 1.6ms, obsidian 1.8ms, crater 2.1ms)
+- Glow structure (3-layer phosphor: white hotspot + color midband + color wash)
+- somaCURA severity mapping semantics
+- Song Expanse chrome-vs-content token separation
+
+### Editor theme files
+
+Hex values in editor themes (vscode/xcode/textastic/warp/tabby/terminal-app/iterm2) are unchanged. Header palette references were updated to v4 names; inline comments that use v3 names (e.g., `-- crater-lt barely visible passive indent guides`) were left alone -- they describe color *role*, which is orthogonal to the rename.
 
 ---
 
 ## 1. Overview and Design DNA
 
-Enhanced Dark Roast: Black Label is the unified design system for the soma product family. It fuses three distinct visual identities into a single production-locked token system:
+Dark Roast: Black Label is the unified design system for the soma product family. It fuses three distinct visual identities into a single production-locked token system:
 
 - **Dark Roast** -- Computational velocity. The deep espresso foundation that enables data-dense clinical interfaces with zero eye strain during 12-hour shifts.
 - **Crater Brown** -- Geological sedation. A warm accent sediment layer drawn from volcanic earth tones that provides spatial hierarchy without competing with action states.
@@ -19,11 +93,14 @@ Enhanced Dark Roast: Black Label is the unified design system for the soma produ
 
 | Attribute | Value |
 |-----------|-------|
-| Theme name | Enhanced Dark Roast: Black Label |
-| Version | 2.0 |
+| Theme name | Dark Roast: Black Label |
+| Version | 4.0.0 |
 | Status | CANONICAL (production-locked) |
-| Color tokens | 16 base + 15 opacity variants + 11 glows + 10 severity + 5 status + 14 CExE |
-| Font faces | 4 |
+| Color primitives | 6 surface + 4 foreground + 4 geological + 8 action = 22 colors |
+| Opacity variants | 21 (3 tiers x 7 action colors) |
+| Glows | 11 multi-layer box-shadows |
+| Typography | 4 families, 10-step scale, 12 semantic roles |
+| Primitive categories | 11 (color, opacity, spacing, radii, elevation, typography, motion, z-index, icon, state, accessibility) |
 | App targets | 2 (somaCURA, Song Expanse) |
 | OLED optimized | Yes (two-tier floor strategy) |
 
@@ -37,41 +114,68 @@ Enhanced Dark Roast: Black Label is the unified design system for the soma produ
 
 ## 2. Token Matrix
 
-All 16 tokens organized by functional layer. Every token is production-locked -- changes require a version bump.
+All 22 color primitives organized by functional layer. Every token is production-locked -- changes require a version bump.
 
-### 2.1 Dark Roast Primary (Depth and Text)
+### 2.1 Surface Scale (6 steps, monotonic dark -> light)
 
-| Token | CSS Variable | Hex | Role | Notes |
-|-------|-------------|-----|------|-------|
-| void | `--dr-void` | `#120C06` | Deepest background layer | The Void -- OLED-safe floor |
-| obsidian | `--dr-obsidian` | `#160E08` | Elevated background | Obsidian Espresso -- content area floor |
-| grain | `--dr-grain` | `#2A1C13` | Card surfaces | Polished Grain |
-| grain-hover | `--dr-grain-hover` | `#382818` | Interactive card lift | Warm shift on hover/focus |
-| crema | `--dr-crema` | `#FFF7EE` | Primary text | Ivory Crema -- high legibility |
-| mocha | `--dr-mocha` | `#8B7355` | Secondary text | Muted Mocha -- reduced emphasis |
+| Token | CSS Variable | Hex | Role |
+|-------|-------------|-----|------|
+| void | `--dr-void` | `#120C06` | Deepest background layer. OLED-safe floor (1.6ms wake) |
+| obsidian | `--dr-obsidian` | `#160E08` | Content area background (1.8ms wake) |
+| darkCacao | `--dr-dark-cacao` | `#1E140E` | Elevated: modals, sheets, popovers |
+| espresso | `--dr-espresso` | `#2A1C13` | Card / panel surfaces (v4: was `grain`) |
+| espressoHover | `--dr-espresso-hover` | `#382818` | Warm lift on hover/focus (v4: was `grainHover`) |
+| roastedBean | `--dr-roasted-bean` | `#3C2A1E` | Borders, dividers |
+| crater | `--dr-crater` | `#4D3B31` | Top of surface scale (v4: was `craterLt`, 2.1ms wake) |
 
-### 2.2 Crater Brown Geological (Accent Sediment)
+### 2.2 Foregrounds
 
-| Token | CSS Variable | Hex | Role | Notes |
-|-------|-------------|-----|------|-------|
-| crater | `--dr-crater` | `#3C2A21` | Geological primary | Border, stripe, divider base |
-| crater-lt | `--dr-crater-lt` | `#4D3B31` | Spatial depth | Earth Taupe -- gradient terminal |
-| bone | `--dr-bone` | `#EBE1D7` | Reduced-contrast text | Off-White -- used where crema is too bright |
-| asparagus | `--dr-asparagus` | `#465945` | Tertiary text / labels | Desaturated green -- metadata, timestamps |
-| rustic | `--dr-rustic` | `#480404` | Grounded interactive state | Deep red -- atmospheric bleed only |
-| rose | `--dr-rose` | `#480607` | Contextual error state | Bulgarian Rose -- background tint for errors |
+| Token | CSS Variable | Hex | Role |
+|-------|-------------|-----|------|
+| crema | `--dr-crema` | `#FFF7EE` | Hero text, brand chrome, highest contrast (17.08:1 on void) |
+| warmWhite | `--dr-warm-white` | `#F0E6D0` | Bright callouts, ANSI 15 |
+| bone | `--dr-bone` | `#EBE1D7` | Body reading, codex ink |
+| mocha | `--dr-mocha` | `#8B7355` | Muted secondary, captions, labels |
 
-### 2.3 Action and State
+### 2.3 Geological Accent Layer
 
-| Token | CSS Variable | Hex | Role | Notes |
-|-------|-------------|-----|------|-------|
-| amber | `--dr-amber` | `#E69A4C` | Primary accent | Amber Gold -- buttons, links, highlights |
-| amber-hot | `--dr-amber-hot` | `#D2691E` | Gradient terminal | High-Octane Amber -- gradient end point |
-| gold | `--dr-gold` | `#DAA520` | Success state | True Gold -- confirmations, completed actions |
-| scarlet | `--dr-scarlet` | `#C44C4C` | Warning/error/critical | Roasted Scarlet -- alerts, flagged labs |
-| teal | `--dr-teal` | `#4CC4B4` | Live data flow | Kinetic Teal -- SSE, NER, real-time |
+| Token | CSS Variable | Hex | Role |
+|-------|-------------|-----|------|
+| craterDeep | `--dr-crater-deep` | `#3C2A21` | Geological accent, darker (v4: was `crater`) |
+| asparagus | `--dr-asparagus` | `#465945` | Tertiary text / metadata / timestamps |
+| rustic | `--dr-rustic` | `#480404` | Grounded interactive state -- atmospheric bleed only |
+| rose | `--dr-rose` | `#480607` | Contextual error background tint |
 
-### 2.4 Derived Tokens: Opacity Variants
+### 2.4 Action and State (color-name primitives)
+
+| Token | CSS Variable | Hex | Role |
+|-------|-------------|-----|------|
+| amber | `--dr-amber` | `#E69A4C` | Primary accent, cursor, CTAs |
+| amberHot | `--dr-amber-hot` | `#D2691E` | Worsening severity, gradient terminal |
+| amberMuted | `--dr-amber-muted` | `#C07A4A` | Reader contexts, Mystic2 parity (new in v4) |
+| gold | `--dr-gold` | `#DAA520` | Stable severity |
+| brass | `--dr-brass` | `#BFA162` | Warning, caution (new in v4) |
+| scarlet | `--dr-scarlet` | `#C44C4C` | Clinical critical severity |
+| burntSienna | `--dr-burnt-sienna` | `#C75B39` | Terminal error, UI error (ANSI red, new in v4) |
+| teal | `--dr-teal` | `#4CC4B4` | Success, live data, kinetic teal |
+
+### 2.5 Semantic Role Aliases
+
+Pointers into color primitives. Prefer in new code.
+
+| Role | CSS Variable | Points at |
+|------|-------------|-----------|
+| accent | `--dr-accent` | `--dr-amber` |
+| accentHot | `--dr-accent-hot` | `--dr-amber-hot` |
+| accentMuted | `--dr-accent-muted` | `--dr-amber-muted` |
+| success | `--dr-success` | `--dr-teal` |
+| warning | `--dr-warning` | `--dr-brass` |
+| error | `--dr-error` | `--dr-burnt-sienna` |
+| critical | `--dr-critical` | `--dr-scarlet` |
+| stable | `--dr-stable` | `--dr-gold` |
+| live | `--dr-live` | `--dr-teal` |
+
+### 2.6 Derived Tokens: Opacity Variants
 
 Each action color has three opacity tiers for layered UI states:
 
@@ -81,7 +185,9 @@ Each action color has three opacity tiers for layered UI states:
 | subtle | 10% | Hover backgrounds, light fills, severity badge bg |
 | ghost | 5% | Skeleton loads, faint state indicators |
 
-### 2.5 Derived Tokens: Multi-Layer Glow System
+v4 extends the tier system to `brass` (warning) and `burntSienna` (error) in addition to the original 5 action colors.
+
+### 2.7 Derived Tokens: Multi-Layer Glow System
 
 Glows are `box-shadow` values (not colors). Each has three phosphor layers: white hotspot, color midband, color wash.
 
@@ -100,13 +206,22 @@ Four locked font faces, each with a distinct role. No substitutions.
 | Body | `--dr-font-body` | `'DM Sans', -apple-system, sans-serif` | 400, 500, 700 |
 | Mono | `--dr-font-mono` | `'Fira Code', 'SF Mono', monospace` | 400, 500, 600 |
 
-### Type Scale
+### Type Scale (v4 -- 10 steps, 1.25 minor-third ratio)
 
 | Token | Size | Use |
 |-------|------|-----|
-| `--dr-text-xs` | 0.6875rem (11px) | Metadata labels, timestamps |
-| `--dr-text-sm` | 0.8125rem (13px) | Captions, secondary info |
-| `--dr-text-base` | 0.9375rem (15px) | Body text |
+| `--dr-text-xs` | 0.625rem (10px) | Badges, micro-labels, legal |
+| `--dr-text-sm` | 0.75rem (12px) | Metadata, timestamps, captions |
+| `--dr-text-base` | 0.875rem (14px) | Body copy, UI default |
+| `--dr-text-md` | 1rem (16px) | Primary content |
+| `--dr-text-lg` | 1.125rem (18px) | Card titles, subsection headers |
+| `--dr-text-xl` | 1.375rem (22px) | Section headers |
+| `--dr-text-2xl` | 1.75rem (28px) | Page titles |
+| `--dr-text-3xl` | 2.25rem (36px) | Hero subheads |
+| `--dr-text-4xl` | 3rem (48px) | Hero display (Playfair) |
+| `--dr-text-5xl` | 4rem (64px) | Marketing hero only |
+
+Each step carries matching `--dr-leading-*` line-height values tuned for dense clinical/technical reading (see `tokens/tokens.json` `typography.scale`). Semantic typography *roles* (`hero`, `cardTitle`, `labValue`, `vitalSign`, `timestamp`, etc.) map role -> family + scale + color, see `typography.roles`.
 | `--dr-text-lg` | 1.125rem (18px) | Subheadings |
 | `--dr-text-xl` | 1.5rem (24px) | Section headers |
 | `--dr-text-2xl` | 2rem (32px) | Page titles |

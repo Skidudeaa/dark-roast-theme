@@ -1,6 +1,6 @@
 # ============================================================================
 # Dark Roast: Black Label — Tabby Terminal Theme
-# Version: 2.1
+# Version: 4.0.0
 #
 # WHAT IS THIS
 # ------------
@@ -54,7 +54,7 @@
 #   background      #120C06   void      — OLED-safe deepest layer (1.6ms wake)
 #   cursor          #4CC4B4   teal      — kinetic, matches editor caret
 #   cursorAccent    #120C06   void      — text color inside cursor block (inverted)
-#   selection bg    #2A1C1366 grain+40% — warm grain at ~40% alpha (hex suffix 66)
+#   selection bg    #2A1C1366 espresso+40% — warm espresso at ~40% alpha (v4: was `grain`)
 #   selectionFg     #FFF7EE   crema     — full brightness text on selection
 #
 # ANSI Normal (indices 0–7):
@@ -68,7 +68,7 @@
 #   7 white       #EBE1D7   bone      — reduced-contrast light text
 #
 # ANSI Bright (indices 8–15):
-#   8  bright black    #3C2A21   crater    — comment gray, tmux inactive pane
+#   8  bright black    #3C2A21   crater-deep — comment gray, tmux inactive (v4: was `crater`)
 #   9  bright red      #D46868   scarlet+  — scarlet lightened ~20%
 #  10  bright green    #A3C484   sage+     — sage lightened ~20%
 #  11  bright yellow   #DAA520   gold      — success / stable severity
@@ -97,8 +97,8 @@ terminal:
       cursor:              '#4CC4B4'    # teal — kinetic cursor, matches editor caret
       cursorAccent:        '#120C06'    # void — text inside cursor block (inverted)
       # Tabby uses CSS color strings; the trailing 66 is hex for ~40% alpha.
-      # Grain (#2A1C13) at 40% gives a warm visible selection without contrast clash.
-      selection:           '#2A1C1366'  # grain + 40% alpha — warm polished grain
+      # Espresso (#2A1C13) at 40% gives a warm visible selection without contrast clash.
+      selection:           '#2A1C1366'  # espresso + 40% alpha — warm polished surface
       selectionForeground: '#FFF7EE'    # crema — ensures legibility on selection bg
 
       # ANSI-16 palette
@@ -115,7 +115,7 @@ terminal:
         - '#4CC4B4'    # 6  ANSI Cyan     — teal (live data; matches cursor token)
         - '#EBE1D7'    # 7  ANSI White    — bone (reduced-contrast light text)
         # ── Bright (ANSI indices 8–15) ───────────────────────────────────
-        - '#3C2A21'    # 8  Bright Black  — crater (comment gray; tmux inactive pane)
+        - '#3C2A21'    # 8  Bright Black  — crater-deep (comment gray; tmux inactive pane)
         - '#D46868'    # 9  Bright Red    — scarlet lightened ~20% (diff removed)
         - '#A3C484'    # 10 Bright Green  — sage lightened ~20% (diff added)
         - '#DAA520'    # 11 Bright Yellow — gold (success / stable; git branch name)

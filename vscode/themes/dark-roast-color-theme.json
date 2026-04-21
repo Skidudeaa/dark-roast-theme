@@ -1,9 +1,15 @@
 {
   // Dark Roast: Black Label — VS Code / Cursor Color Theme
-  // Version: 3.0
+  // Version: 4.0.0
   //
-  // Design system: 16 canonical tokens (void, obsidian, grain, crema, mocha, bone,
-  // asparagus, crater, crater-lt, amber, amber-hot, gold, scarlet, teal, sage, slate, mauve)
+  // Design system: surface scale (void, obsidian, dark-cacao, espresso, espresso-hover,
+  // roasted-bean, crater), foregrounds (crema, warm-white, bone, mocha), geological
+  // (crater-deep, asparagus, rustic, rose), action (amber, amber-hot, amber-muted, gold,
+  // brass, scarlet, burnt-sienna, teal), and syntax extras (sage, slate, mauve).
+  //
+  // v4 migration (hex unchanged; only names changed):
+  //   grain → espresso (#2A1C13), grain-hover → espresso-hover (#382818)
+  //   crater (old) → crater-deep (#3C2A21), crater-lt → crater (#4D3B31)
   //
   // Philosophy: 12-hour-shift optimization. Every color chosen for minimal eye fatigue
   // over extended sessions. Warm-toned backgrounds (void #120C06) keep OLED pixels
@@ -11,24 +17,28 @@
   // between functions (slate) and types (gold) makes code scannable without conscious effort.
   //
   // Palette quick reference:
-  //   void       #120C06   deepest background (L0: editor)
-  //   obsidian   #1E140C   elevated surface (L1: sidebar, terminal, agent panel)
-  //   grain      #2A1C13   window frame (L2: title bar, activity bar, status bar, tab strip)
-  //   grain-hover#382818   hover / active widgets (L3)
-  //   crema      #FFF7EE   primary text
-  //   bone       #EBE1D7   reduced-contrast text
-  //   mocha      #8B7355   secondary / captions
-  //   asparagus  #465945   tertiary metadata
-  //   crater     #3C2A21   borders
-  //   crater-lt  #4D3B31   strong borders / inactive text
-  //   amber      #E69A4C   primary accent / decorators
-  //   amber-hot  #D2691E   numbers / constants / regex
-  //   gold       #DAA520   types / success
-  //   scarlet    #C44C4C   errors / HTML tags / escape chars
-  //   teal       #4CC4B4   operators / live data / links
-  //   sage       #8AAC6B   strings / diff-added
-  //   slate      #6E8FAD   functions / JSON keys / CSS props
-  //   mauve      #AD7FA8   keywords / self/this
+  //   void         #120C06   deepest background (L0: editor)
+  //   obsidian     #1E140C   elevated surface (L1: sidebar, terminal, agent panel)
+  //   espresso     #2A1C13   window frame (L2: title bar, activity bar, status bar, tab strip)
+  //   espresso-hov #382818   hover / active widgets (L3)
+  //   crema        #FFF7EE   primary text
+  //   bone         #EBE1D7   reduced-contrast text
+  //   mocha        #8B7355   secondary / captions
+  //   asparagus    #465945   tertiary metadata
+  //   crater-deep  #3C2A21   borders (was `crater` in v3 comments below)
+  //   crater       #4D3B31   strong borders / inactive text (was `crater-lt`)
+  //   amber        #E69A4C   primary accent / decorators
+  //   amber-hot    #D2691E   numbers / constants / regex
+  //   gold         #DAA520   types / success
+  //   scarlet      #C44C4C   errors / HTML tags / escape chars
+  //   burnt-sienna #C75B39   terminal red (new in v4)
+  //   teal         #4CC4B4   operators / live data / links
+  //   sage         #8AAC6B   strings / diff-added
+  //   slate        #6E8FAD   functions / JSON keys / CSS props
+  //   mauve        #AD7FA8   keywords / self/this
+  //
+  // NOTE: Inline comments below still use v3 names (grain/crater/crater-lt) as role
+  // descriptors — they're cosmetic. Hex values are authoritative.
 
   "name": "Dark Roast: Black Label",
   "type": "dark",

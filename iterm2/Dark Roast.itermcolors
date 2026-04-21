@@ -56,7 +56,7 @@
     foreground    #FFF7EE   crema     — primary text (17.08:1 contrast vs void)
     cursor        #4CC4B4   teal      — kinetic cursor, matches editor caret
     cursor text   #120C06   void      — text inside cursor block (inverted)
-    selection bg  #2A1C13   grain     — warm polished grain surface
+    selection bg  #2A1C13   espresso  — warm polished surface (v4: was `grain`)
     selection fg  #FFF7EE   crema     — text color on selection
     bold          #FFF7EE   crema     — bold text color (same hue, higher weight)
     badge         #C44C4C   scarlet   — iTerm2 badge/notification
@@ -74,7 +74,7 @@
     7  white       #EBE1D7   bone      — reduced-contrast light text
 
   ANSI Bright (indices 8–15):
-    8  bright black    #3C2A21   crater    — comment gray, tmux inactive pane
+    8  bright black    #3C2A21   crater-deep — comment gray, tmux inactive (v4: was `crater`)
     9  bright red      #D46868   scarlet+  — scarlet lightened ~20%
     10 bright green    #A3C484   sage+     — sage lightened ~20%
     11 bright yellow   #DAA520   gold      — success / stable severity
@@ -176,7 +176,7 @@
        ANSI BRIGHT COLORS (indices 8–15)
        ════════════════════════════════════════════════════════════════════════ -->
 
-  <!-- ANSI 8 — Bright Black — crater #3C2A21 -->
+  <!-- ANSI 8 — Bright Black — crater-deep #3C2A21 -->
   <key>Ansi 8 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
@@ -323,8 +323,8 @@
     <key>Red Component</key>   <real>0.070588235</real>
   </dict>
 
-  <!-- Selection Color — grain #2A1C13
-       The warm polished grain surface. Visible against void without being
+  <!-- Selection Color — espresso #2A1C13 (v4 name; was `grain` in v3)
+       The warm polished espresso surface. Visible against void without being
        jarring. Matches the web UI selection highlight token. -->
   <key>Selection Color</key>
   <dict>

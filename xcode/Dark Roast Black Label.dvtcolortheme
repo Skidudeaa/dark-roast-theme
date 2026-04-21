@@ -40,14 +40,14 @@
 
     void         #120C06  →  0.071 0.047 0.024    Deepest bg, OLED-safe
     obsidian     #160E08  →  0.086 0.055 0.031    Elevated surface
-    grain        #2A1C13  →  0.165 0.110 0.075    Card / panel surface
-    grain-hover  #382818  →  0.220 0.157 0.094    Hover lift
+    espresso     #2A1C13  →  0.165 0.110 0.075    Card / panel surface (v4: was `grain`)
+    espresso-hov #382818  →  0.220 0.157 0.094    Hover lift
     crema        #FFF7EE  →  1.000 0.969 0.933    Primary text
     mocha        #8B7355  →  0.545 0.451 0.333    Secondary / caption text
     bone         #EBE1D7  →  0.922 0.882 0.843    Reduced-contrast body text
     asparagus    #465945  →  0.275 0.349 0.271    Tertiary metadata
-    crater       #3C2A21  →  0.235 0.165 0.129    Borders
-    crater-lt    #4D3B31  →  0.302 0.231 0.192    Strong borders
+    crater-deep  #3C2A21  →  0.235 0.165 0.129    Borders (v4: was `crater`)
+    crater       #4D3B31  →  0.302 0.231 0.192    Strong borders (v4: was `crater-lt`)
     amber        #E69A4C  →  0.902 0.604 0.298    Primary accent (attributes, user macros)
     amber-hot    #D2691E  →  0.824 0.412 0.118    Numbers, user constants, system constants
     gold         #DAA520  →  0.855 0.647 0.125    User classes / structs / enums / type aliases

@@ -61,7 +61,7 @@ export const glowTealGhost =
 // ── Glass Panel Gradient ────────────────────────────────────
 // NOTE: Uses var() references — only works in CSS context.
 // For JS use, compose with the color values from colors.js.
-export const glassGradientCSS = 'linear-gradient(145deg, var(--dr-grain), rgba(60, 42, 33, 0.2))';
+export const glassGradientCSS = 'linear-gradient(145deg, var(--dr-espresso), rgba(60, 42, 33, 0.2))';
 export const glassGradient = 'linear-gradient(145deg, #2A1C13, rgba(60, 42, 33, 0.2))';
 
 // ── Collected object for iteration ──────────────────────────

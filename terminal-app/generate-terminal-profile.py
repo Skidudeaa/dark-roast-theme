@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Dark Roast: Black Label — Terminal.app Profile Generator
-Version: 2.1
+Version: 4.0.0
 
 WHAT THIS SCRIPT DOES
 ---------------------
@@ -55,7 +55,7 @@ Chrome:
   foreground    #FFF7EE   crema     — primary text (17.08:1 contrast on void)
   cursor        #4CC4B4   teal      — kinetic cursor, matches editor caret
   cursor text   #120C06   void      — text color inside cursor block
-  selection     #2A1C13   grain     — warm polished grain (opaque selection bg)
+  selection     #2A1C13   espresso  — warm polished surface (v4: was `grain`)
   bold          #FFF7EE   crema     — same as foreground (bold = same weight)
 
 ANSI Normal (indices 0–7):
@@ -69,7 +69,7 @@ ANSI Normal (indices 0–7):
   7  white       #EBE1D7   bone      — reduced-contrast light text
 
 ANSI Bright (indices 8–15):
-  8  bright black    #3C2A21   crater    — comment gray
+  8  bright black    #3C2A21   crater-deep — comment gray (v4: was `crater`)
   9  bright red      #D46868   scarlet+  — scarlet lightened ~20%
   10 bright green    #A3C484   sage+     — sage lightened ~20%
   11 bright yellow   #DAA520   gold      — success / stable severity
@@ -115,7 +115,7 @@ PALETTE = {
     "foreground":     "#FFF7EE",   # crema
     "cursor":         "#4CC4B4",   # teal
     "cursor_text":    "#120C06",   # void (inverted on cursor block)
-    "selection":      "#2A1C13",   # grain (Terminal.app uses opaque selection bg)
+    "selection":      "#2A1C13",   # espresso (Terminal.app uses opaque selection bg)
     "bold_text":      "#FFF7EE",   # crema (bold = same color, different weight)
 
     # ANSI Normal 0–7
@@ -129,7 +129,7 @@ PALETTE = {
     "ansi_white":     "#EBE1D7",   # bone
 
     # ANSI Bright 8–15
-    "ansi_bright_black":   "#3C2A21",  # crater
+    "ansi_bright_black":   "#3C2A21",  # crater-deep
     "ansi_bright_red":     "#D46868",  # scarlet lightened
     "ansi_bright_green":   "#A3C484",  # sage lightened
     "ansi_bright_yellow":  "#DAA520",  # gold
@@ -300,7 +300,7 @@ def main():
         ("5 magenta (mauve)",         "ansi_magenta"),
         ("6 cyan (teal)",             "ansi_cyan"),
         ("7 white (bone)",            "ansi_white"),
-        ("8 br.black (crater)",       "ansi_bright_black"),
+        ("8 br.black (crater-deep)",  "ansi_bright_black"),
         ("9 br.red",                  "ansi_bright_red"),
         ("10 br.green",               "ansi_bright_green"),
         ("11 br.yellow (gold)",       "ansi_bright_yellow"),

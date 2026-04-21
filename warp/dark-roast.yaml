@@ -1,6 +1,6 @@
 # ============================================================================
 # Dark Roast: Black Label — Warp Terminal Theme
-# Version: 2.1
+# Version: 4.0.0
 #
 # INSTALL
 # -------
@@ -19,7 +19,7 @@
 # The palette is grounded in the Dark Roast design system:
 #   - Background/foreground pulled directly from DR tokens (void, crema)
 #   - Cursor matches the editor cursor (teal — "kinetic, live data flow")
-#   - Selection uses grain (#2A1C13) — warm but not glaring
+#   - Selection uses espresso (#2A1C13) — warm but not glaring (v4: was `grain`)
 #   - ANSI normals and brights use the five DR action colors + three
 #     terminal-extension colors (sage, slate, mauve) that aren't in the core
 #     UI token set but sit squarely within the warm espresso aesthetic
@@ -31,7 +31,7 @@
 #   foreground    #FFF7EE   crema     — primary text (17.08:1 contrast on void)
 #   cursor        #4CC4B4   teal      — kinetic, matches editor caret
 #   cursor text   #120C06   void      — inverted on cursor block
-#   selection bg  #2A1C13   grain     — warm polished grain surface
+#   selection bg  #2A1C13   espresso  — warm polished surface (v4: was `grain`)
 #   selection fg  #FFF7EE   crema     — full brightness on selection
 #
 # ANSI Normal (indices 0–7):
@@ -45,7 +45,7 @@
 #   7 white       #EBE1D7   bone      — reduced-contrast light text
 #
 # ANSI Bright (indices 8–15):
-#   8  bright black    #3C2A21   crater        — comment gray / muted metadata
+#   8  bright black    #3C2A21   crater-deep   — comment gray / muted metadata (v4: was `crater`)
 #   9  bright red      #D46868   scarlet-lt    — scarlet lightened (~20%)
 #  10  bright green    #A3C484   sage-lt       — sage lightened (~20%)
 #  11  bright yellow   #DAA520   gold          — success / stable severity
@@ -79,7 +79,7 @@ terminal_colors:
     white:   "#EBE1D7"  # ANSI 7 — bone (reduced-contrast; comment-level brightness)
 
   bright:
-    black:   "#3C2A21"  # ANSI 8  — crater (comment gray; git log graph, tmux inactive)
+    black:   "#3C2A21"  # ANSI 8  — crater-deep (comment gray; git log graph, tmux inactive)
     red:     "#D46868"  # ANSI 9  — scarlet lightened ~20% (diff removed, error paths)
     green:   "#A3C484"  # ANSI 10 — sage lightened ~20% (diff added, success paths)
     yellow:  "#DAA520"  # ANSI 11 — gold (success / stable; DR gold token, git branch)

@@ -1,33 +1,39 @@
 // Dark Roast: Black Label — Color Tokens
-// Generated from tokens.json v2.0
-// 16 base colors + 15 opacity variants + 1 structural derived
+// Generated from tokens.json v4.0.0
+// Surface scale (6 steps) + foregrounds + geological accents + action colors + opacity variants + semantic roles.
 
-// ── Backgrounds: Dark Roast Primary System ──────────────────
+// ── Surface Scale (monotonic dark → light) ──────────────────
 // OLED science: void (#120C06) keeps pixels at 1.6ms wake delay,
 // avoiding 18.5ms purple-smearing of pure black (#000000).
-export const void_ = '#120C06';
-export const obsidian = '#160E08';
-export const grain = '#2A1C13';
-export const grainHover = '#382818';
+export const void_ = '#120C06';           // Page/app background, deepest layer
+export const obsidian = '#160E08';        // Content background, elevated floor
+export const darkCacao = '#1E140E';       // Elevated surfaces: modals, sheets, popovers
+export const espresso = '#2A1C13';        // Card/panel backgrounds (was `grain` in v3)
+export const espressoHover = '#382818';   // Warm lift on hover/focus (was `grainHover` in v3)
+export const roastedBean = '#3C2A1E';     // Borders, dividers
+export const crater = '#4D3B31';          // Top of surface scale, geological accent (was `craterLt` in v3)
 
-// ── Foregrounds: Crema & Mocha ──────────────────────────────
-export const crema = '#FFF7EE';
-export const mocha = '#8B7355';
+// ── Foregrounds ─────────────────────────────────────────────
+export const crema = '#FFF7EE';           // Hero text, brand chrome, highest contrast
+export const warmWhite = '#F0E6D0';       // Bright callouts, ANSI 15
+export const bone = '#EBE1D7';            // Reduced-contrast body, codex ink
+export const mocha = '#8B7355';           // Muted secondary, captions, labels
 
-// ── Geological Accent Layer: Crater Brown ───────────────────
-export const crater = '#3C2A21';
-export const craterLt = '#4D3B31';
-export const bone = '#EBE1D7';
-export const asparagus = '#465945';
-export const rustic = '#480404';
-export const rose = '#480607';
+// ── Geological Accent Layer ─────────────────────────────────
+export const craterDeep = '#3C2A21';      // Geological accent, darker (was `crater` in v3)
+export const asparagus = '#465945';       // Tertiary metadata, timestamps
+export const rustic = '#480404';          // Grounded interactive red state
+export const rose = '#480607';            // Contextual error background
 
-// ── Action & State ──────────────────────────────────────────
-export const amber = '#E69A4C';
-export const amberHot = '#D2691E';
-export const gold = '#DAA520';
-export const scarlet = '#C44C4C';
-export const teal = '#4CC4B4';
+// ── Action & State (color-name primitives) ──────────────────
+export const amber = '#E69A4C';           // Primary accent, cursor, CTAs
+export const amberHot = '#D2691E';        // Worsening state, gradient terminal
+export const amberMuted = '#C07A4A';      // Reader contexts, Mystic2 parity
+export const gold = '#DAA520';            // Stable severity, true gold
+export const brass = '#BFA162';           // Warning, caution
+export const scarlet = '#C44C4C';         // Clinical critical severity
+export const burntSienna = '#C75B39';     // Terminal error, UI error (ANSI red)
+export const teal = '#4CC4B4';            // Success, live data, kinetic teal
 
 // ── Opacity Variants ────────────────────────────────────────
 // dim (40%) — focused borders, active rings
@@ -54,45 +60,100 @@ export const tealDim = 'rgba(76, 196, 180, 0.40)';
 export const tealSubtle = 'rgba(76, 196, 180, 0.10)';
 export const tealGhost = 'rgba(76, 196, 180, 0.05)';
 
+export const brassDim = 'rgba(191, 161, 98, 0.40)';
+export const brassSubtle = 'rgba(191, 161, 98, 0.10)';
+export const brassGhost = 'rgba(191, 161, 98, 0.05)';
+
+export const burntSiennaDim = 'rgba(199, 91, 57, 0.40)';
+export const burntSiennaSubtle = 'rgba(199, 91, 57, 0.10)';
+export const burntSiennaGhost = 'rgba(199, 91, 57, 0.05)';
+
 // ── Structural Derived ──────────────────────────────────────
 export const divider = 'rgba(255, 247, 238, 0.04)';
 
-// ── Collected object for iteration ──────────────────────────
+// ── Semantic Roles (pointers into primitives) ───────────────
+// Prefer these in new code for portability; primitives remain canonical.
+export const accent = amber;
+export const accentHot = amberHot;
+export const accentMuted = amberMuted;
+export const success = teal;
+export const warning = brass;
+export const error = burntSienna;
+export const critical = scarlet;
+export const stable = gold;
+export const live = teal;
+
+// ── Collected objects for iteration ─────────────────────────
 export const colors = {
+  // Surface scale
   void: void_,
   obsidian,
-  grain,
-  grainHover,
-  crema,
-  mocha,
+  darkCacao,
+  espresso,
+  espressoHover,
+  roastedBean,
   crater,
-  craterLt,
+  // Foregrounds
+  crema,
+  warmWhite,
   bone,
+  mocha,
+  // Geological accents
+  craterDeep,
   asparagus,
   rustic,
   rose,
+  // Action colors
   amber,
   amberHot,
+  amberMuted,
   gold,
+  brass,
   scarlet,
+  burntSienna,
   teal,
 };
 
+export const roles = {
+  accent,
+  accentHot,
+  accentMuted,
+  success,
+  warning,
+  error,
+  critical,
+  stable,
+  live,
+  display: crema,
+  workhorse: bone,
+  secondary: mocha,
+  tertiary: asparagus,
+};
+
 export const opacityVariants = {
-  amberDim,
-  amberSubtle,
-  amberGhost,
-  amberHotDim,
-  amberHotSubtle,
-  amberHotGhost,
-  goldDim,
-  goldSubtle,
-  goldGhost,
-  scarletDim,
-  scarletSubtle,
-  scarletGhost,
-  tealDim,
-  tealSubtle,
-  tealGhost,
+  amberDim, amberSubtle, amberGhost,
+  amberHotDim, amberHotSubtle, amberHotGhost,
+  goldDim, goldSubtle, goldGhost,
+  scarletDim, scarletSubtle, scarletGhost,
+  tealDim, tealSubtle, tealGhost,
+  brassDim, brassSubtle, brassGhost,
+  burntSiennaDim, burntSiennaSubtle, burntSiennaGhost,
   divider,
+};
+
+// ── Opacity Scale (alpha channel, hex suffix form) ──────────
+// Use for composing rgba() dynamically or hex-suffix overlays.
+export const opacityScale = {
+  0: 0.0,
+  4: 0.04,
+  5: 0.05,
+  8: 0.08,
+  10: 0.10,
+  12: 0.12,
+  15: 0.15,
+  24: 0.24,
+  40: 0.40,
+  60: 0.60,
+  85: 0.85,
+  100: 1.0,
 };

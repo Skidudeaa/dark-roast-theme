@@ -51,38 +51,53 @@ extension Color {
 /// Complete token set for Enhanced Dark Roast: Black Label v2.0.
 enum DarkRoast {
 
-    // ── Layer 1: Dark Roast Primary (Depth & Text) ──────────
+    // ── Layer 1: Surface Scale (6 steps, monotonic dark → light) ─
     //
     // OLED science: void (#120C06) keeps pixels energized at
     // 1.6ms wake delay, avoiding the 18.5ms purple-smearing
     // artifact of pure black (#000000). obsidian (#160E08) is
     // the elevated floor at 1.8ms. Both are above the OLED
     // power-off threshold while remaining perceptually near-black.
+    //
+    // v4.0.0 renames:
+    //   grain        → espresso        (#2A1C13 unchanged)
+    //   grainHover   → espressoHover   (#382818 unchanged)
+    //   crater       → craterDeep      (#3C2A21 unchanged)
+    //   craterLt     → crater          (#4D3B31 unchanged — now top of surface scale)
 
     /// The Void — deepest background layer. OLED-safe floor.
-    static let void_       = Color(hex: 0x120C06)
-    /// Obsidian Espresso — elevated content area background.
-    static let obsidian    = Color(hex: 0x160E08)
-    /// Polished Grain — card/panel surfaces.
-    static let grain       = Color(hex: 0x2A1C13)
-    /// Warm lift on hover/focus interaction.
-    static let grainHover  = Color(hex: 0x382818)
-    /// Ivory Crema — primary text, high contrast (17.08:1 on void).
+    static let void_         = Color(hex: 0x120C06)
+    /// Obsidian — elevated content area background.
+    static let obsidian      = Color(hex: 0x160E08)
+    /// Dark Cacao — elevated surfaces (modals, sheets, popovers).
+    static let darkCacao     = Color(hex: 0x1E140E)
+    /// Espresso — card/panel surfaces (was `grain` pre-v4).
+    static let espresso      = Color(hex: 0x2A1C13)
+    /// Warm lift on hover/focus interaction (was `grainHover` pre-v4).
+    static let espressoHover = Color(hex: 0x382818)
+    /// Roasted Bean — borders, dividers.
+    static let roastedBean   = Color(hex: 0x3C2A1E)
+    /// Crater — top of surface scale, geological accent (was `craterLt` pre-v4).
+    static let crater        = Color(hex: 0x4D3B31)
+
+    // ── Layer 2: Foregrounds ────────────────────────────────
+
+    /// Ivory Crema — hero text, brand chrome, highest contrast.
     static let crema       = Color(hex: 0xFFF7EE)
-    /// Muted Mocha — secondary/caption text (4.33:1 on void).
+    /// Warm White — bright callouts, ANSI 15.
+    static let warmWhite   = Color(hex: 0xF0E6D0)
+    /// Off-White/Bone — reduced-contrast body text, codex ink.
+    static let bone        = Color(hex: 0xEBE1D7)
+    /// Muted Mocha — secondary/caption text.
     static let mocha       = Color(hex: 0x8B7355)
 
-    // ── Layer 2: Crater Brown Geological (Accent Sediment) ──
+    // ── Layer 3: Crater Brown Geological (Accent Sediment) ──
     //
     // Warm accent sediment layer providing structural depth.
     // Never carries semantic meaning — purely spatial hierarchy.
 
-    /// Crater Brown — geological primary, borders, stripes.
-    static let crater      = Color(hex: 0x3C2A21)
-    /// Earth Taupe — spatial depth, hover borders.
-    static let craterLt    = Color(hex: 0x4D3B31)
-    /// Off-White/Bone — reduced-contrast body text where crema is too bright.
-    static let bone        = Color(hex: 0xEBE1D7)
+    /// Crater Deep — geological accent, darker (was `crater` pre-v4).
+    static let craterDeep  = Color(hex: 0x3C2A21)
     /// Desaturated Asparagus — tertiary metadata, timestamps.
     static let asparagus   = Color(hex: 0x465945)
     /// Rustic Red — grounded interactive state, atmospheric bleed.
@@ -90,25 +105,46 @@ enum DarkRoast {
     /// Bulgarian Rose — contextual error background tint.
     static let rose        = Color(hex: 0x480607)
 
-    // ── Layer 3: Action & State ─────────────────────────────
+    // ── Layer 4: Action & State ─────────────────────────────
 
     /// Amber Gold — primary accent, CTA, buttons, links.
     static let amber       = Color(hex: 0xE69A4C)
     /// High-Octane Amber — gradient terminal, worsening severity.
     static let amberHot    = Color(hex: 0xD2691E)
-    /// True Gold — success state, stable severity.
+    /// Muted Amber — reader contexts, Mystic2 parity.
+    static let amberMuted  = Color(hex: 0xC07A4A)
+    /// True Gold — stable severity.
     static let gold        = Color(hex: 0xDAA520)
-    /// Roasted Scarlet — warning/error, critical severity.
+    /// Brass — warning, caution.
+    static let brass       = Color(hex: 0xBFA162)
+    /// Roasted Scarlet — clinical critical severity.
     static let scarlet     = Color(hex: 0xC44C4C)
-    /// Kinetic Teal — live data flow, resolved severity, SSE streams.
+    /// Burnt Sienna — terminal error, UI error (ANSI red).
+    static let burntSienna = Color(hex: 0xC75B39)
+    /// Kinetic Teal — live data flow, success, SSE streams.
     static let teal        = Color(hex: 0x4CC4B4)
 
     // ── Structural Derived ──────────────────────────────────
 
     /// Ultra-subtle divider — crema at 4% opacity.
     static let divider     = Color(hex: 0xFFF7EE, alpha: 0.04)
-    /// Input field background (Swift-only extension — midpoint between void and grain).
+    /// Input field background (Swift-only extension — midpoint between void and espresso).
     static let inputBg     = Color(hex: 0x1E140C)
+
+    // ── Deprecated v3 aliases (removed in v5) ───────────────
+    //
+    // Kept so existing Song Expanse / somaCURA call sites compile
+    // unchanged. Migrate to the new names at next refactor.
+
+    /// @available v3.0.0; use `espresso` in v4+.
+    @available(*, deprecated, renamed: "espresso")
+    static var grain: Color { espresso }
+    /// @available v3.0.0; use `espressoHover` in v4+.
+    @available(*, deprecated, renamed: "espressoHover")
+    static var grainHover: Color { espressoHover }
+    /// @available v3.0.0; use `crater` in v4+ (name moved to surface top).
+    @available(*, deprecated, renamed: "crater")
+    static var craterLt: Color { crater }
 }
 
 
@@ -464,9 +500,9 @@ extension DarkRoast {
     enum CExE {
         // ── Evaluation Badges ─────────────────────────────────
         /// Badge surface behind severity/eval indicators.
-        static let evalBadgeBg       = DarkRoast.grain
-        /// Badge border — geological primary.
-        static let evalBadgeBorder   = DarkRoast.crater
+        static let evalBadgeBg       = DarkRoast.espresso
+        /// Badge border — geological primary (crater deep).
+        static let evalBadgeBorder   = DarkRoast.craterDeep
         /// Answer text — full contrast for readability.
         static let answerText        = DarkRoast.crema
         /// Highlighted answer fragment — primary accent.
@@ -482,9 +518,9 @@ extension DarkRoast {
 
         // ── Provenance ────────────────────────────────────────
         /// Provenance hover lift — interactive card state.
-        static let provenanceHover   = DarkRoast.grainHover
-        /// Provenance container border — earth taupe.
-        static let provenanceBorder  = DarkRoast.craterLt
+        static let provenanceHover   = DarkRoast.espressoHover
+        /// Provenance container border — earth taupe (crater, top of surface scale).
+        static let provenanceBorder  = DarkRoast.crater
 
         // ── Running Totals ────────────────────────────────────
         /// Running total text — gold for stable/computed values.
@@ -565,10 +601,10 @@ enum AppTheme: ThemeProvider {
         switch self { case .enhancedDarkRoast: return DarkRoast.obsidian }
     }
     var cardBackground: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.grain }
+        switch self { case .enhancedDarkRoast: return DarkRoast.espresso }
     }
     var cardBackgroundHover: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.grainHover }
+        switch self { case .enhancedDarkRoast: return DarkRoast.espressoHover }
     }
     var inputBackground: Color {
         switch self { case .enhancedDarkRoast: return DarkRoast.inputBg }
@@ -598,13 +634,13 @@ enum AppTheme: ThemeProvider {
         switch self { case .enhancedDarkRoast: return DarkRoast.amberHot }
     }
     var success: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.gold }
+        switch self { case .enhancedDarkRoast: return DarkRoast.teal }
     }
     var warning: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.scarlet }
+        switch self { case .enhancedDarkRoast: return DarkRoast.brass }
     }
     var error: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.scarlet }
+        switch self { case .enhancedDarkRoast: return DarkRoast.burntSienna }
     }
     var liveData: Color {
         switch self { case .enhancedDarkRoast: return DarkRoast.teal }
@@ -622,10 +658,10 @@ enum AppTheme: ThemeProvider {
     // ── Geological Accent ───────────────────────────────────
 
     var geologicalBase: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.crater }
+        switch self { case .enhancedDarkRoast: return DarkRoast.craterDeep }
     }
     var geologicalLight: Color {
-        switch self { case .enhancedDarkRoast: return DarkRoast.craterLt }
+        switch self { case .enhancedDarkRoast: return DarkRoast.crater }
     }
 
     // ── Severity ────────────────────────────────────────────
@@ -735,7 +771,7 @@ struct DarkRoastBackground: ViewModifier {
                     )
                     // Crater Brown radial bleed (top-left corner)
                     RadialGradient(
-                        colors: [DarkRoast.crater.opacity(0.3), .clear],
+                        colors: [DarkRoast.craterDeep.opacity(0.3), .clear],
                         center: .topLeading,
                         startRadius: 0,
                         endRadius: 400
@@ -757,13 +793,13 @@ struct DarkRoastBackground: ViewModifier {
 // ── Glass Panel ─────────────────────────────────────────────
 
 /// Glass morphism panel — standard Dark Roast card surface with
-/// deep drop shadow and crater border.
+/// deep drop shadow and crater-deep border.
 struct DarkRoastGlassPanel: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
                 LinearGradient(
-                    colors: [DarkRoast.grain, DarkRoast.crater.opacity(0.2)],
+                    colors: [DarkRoast.espresso, DarkRoast.craterDeep.opacity(0.2)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -771,7 +807,7 @@ struct DarkRoastGlassPanel: ViewModifier {
             .clipShape(RoundedRectangle(cornerRadius: DarkRoast.Radius.lg))
             .overlay(
                 RoundedRectangle(cornerRadius: DarkRoast.Radius.lg)
-                    .stroke(DarkRoast.crater, lineWidth: 1)
+                    .stroke(DarkRoast.craterDeep, lineWidth: 1)
             )
             .shadow(color: .black.opacity(0.5), radius: 20, y: 10)
     }
@@ -986,25 +1022,31 @@ extension AppTheme {
     /// Export current theme as JSON-compatible dictionary.
     var jsonDictionary: [String: Any] {
         [
-            "themeName": "Enhanced Dark Roast: Black Label",
-            "version": "2.0",
+            "themeName": "Dark Roast: Black Label",
+            "version": "4.0.0",
             "colors": [
                 "void": "#120C06",
                 "obsidian": "#160E08",
-                "grain": "#2A1C13",
-                "grainHover": "#382818",
+                "darkCacao": "#1E140E",
+                "espresso": "#2A1C13",
+                "espressoHover": "#382818",
+                "roastedBean": "#3C2A1E",
+                "crater": "#4D3B31",
                 "crema": "#FFF7EE",
-                "mocha": "#8B7355",
-                "crater": "#3C2A21",
-                "craterLight": "#4D3B31",
+                "warmWhite": "#F0E6D0",
                 "bone": "#EBE1D7",
+                "mocha": "#8B7355",
+                "craterDeep": "#3C2A21",
                 "asparagus": "#465945",
                 "rustic": "#480404",
                 "rose": "#480607",
                 "amber": "#E69A4C",
                 "amberHot": "#D2691E",
+                "amberMuted": "#C07A4A",
                 "gold": "#DAA520",
+                "brass": "#BFA162",
                 "scarlet": "#C44C4C",
+                "burntSienna": "#C75B39",
                 "teal": "#4CC4B4"
             ],
             "severity": [
@@ -1080,16 +1122,16 @@ extension AppTheme {
 //
 // Vinyl Renderer (Metal GPU) token mapping:
 //   case background   → DarkRoast.void_
-//   platter shadow    → DarkRoast.crater
+//   platter shadow    → DarkRoast.craterDeep
 //   tonearm metallic  → DarkRoast.mocha
 //   tonearm tip glow  → DarkRoast.amber
-//   controls bg       → DarkRoast.grain
+//   controls bg       → DarkRoast.espresso
 //   play button       → DarkRoast.amber
 //   loading indicator → DarkRoast.teal (Kinetic Teal)
 //
 // MarqueeOverlayView integration:
 //   soft phase bg     → DarkRoast.void_ (with blur)
-//   full phase scrim  → DarkRoast.crater
+//   full phase scrim  → DarkRoast.craterDeep
 //   title text        → DarkRoast.crema
 //   artist text       → DarkRoast.mocha
 //   loading indicator → DarkRoast.teal (pulsing)
@@ -1108,7 +1150,7 @@ struct DarkRoastPreview: View {
             VStack(spacing: DarkRoast.Space.xl) {
 
                 // ── Section Label ────────────────────────
-                Text("Design System v2.0")
+                Text("Design System v4.0")
                     .sectionLabel()
                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -1121,7 +1163,7 @@ struct DarkRoastPreview: View {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: DarkRoast.Space.sm) {
                     colorSwatch("void", DarkRoast.void_)
                     colorSwatch("obsidian", DarkRoast.obsidian)
-                    colorSwatch("grain", DarkRoast.grain)
+                    colorSwatch("espresso", DarkRoast.espresso)
                     colorSwatch("crater", DarkRoast.crater)
                     colorSwatch("crema", DarkRoast.crema)
                     colorSwatch("mocha", DarkRoast.mocha)

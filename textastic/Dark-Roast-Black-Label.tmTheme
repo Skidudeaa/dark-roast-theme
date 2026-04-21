@@ -61,27 +61,37 @@
   │ Diff changed        │ amber     │ #E69A4C  │ Amber = modified             │
   └─────────────────────┴───────────┴──────────┴──────────────────────────────┘
 
-  FULL COLOR PALETTE (from dark-roast-tokens.css v2.0):
-    void        #120C06   Deepest background (OLED-safe)
-    obsidian    #160E08   Elevated surface
-    grain       #2A1C13   Card / panel surface
-    grain-hover #382818   Hover lift
-    crema       #FFF7EE   Primary text (17:1 contrast on void)
-    mocha       #8B7355   Secondary text
-    bone        #EBE1D7   Reduced-contrast text
-    asparagus   #465945   Tertiary metadata
-    crater      #3C2A21   Borders
-    crater-lt   #4D3B31   Strong borders
-    rustic      #480404   Atmospheric red
-    rose        #480607   Error bg tint
-    amber       #E69A4C   Primary accent
-    amber-hot   #D2691E   Gradient terminal
-    gold        #DAA520   Success / stable
-    scarlet     #C44C4C   Error / critical
-    teal        #4CC4B4   Live data
-    sage        #8AAC6B   Warm green (terminal ext)
-    slate       #6E8FAD   Dusty blue (terminal ext)
-    mauve       #AD7FA8   Dried lavender (terminal ext)
+  FULL COLOR PALETTE (from dark-roast-tokens.css v4.0.0; hex unchanged from v3):
+    void         #120C06   Deepest background (OLED-safe)
+    obsidian     #160E08   Elevated surface
+    dark-cacao   #1E140E   Modals / sheets (new in v4)
+    espresso     #2A1C13   Card / panel surface (v4: was `grain`)
+    espresso-hov #382818   Hover lift (v4: was `grain-hover`)
+    roasted-bean #3C2A1E   Borders / dividers (new in v4)
+    crema        #FFF7EE   Primary text (17:1 contrast on void)
+    warm-white   #F0E6D0   Bright callouts, ANSI 15 (new in v4)
+    mocha        #8B7355   Secondary text
+    bone         #EBE1D7   Reduced-contrast text
+    asparagus    #465945   Tertiary metadata
+    crater-deep  #3C2A21   Borders (v4: was `crater`)
+    crater       #4D3B31   Strong borders (v4: was `crater-lt`)
+    rustic       #480404   Atmospheric red
+    rose         #480607   Error bg tint
+    amber        #E69A4C   Primary accent
+    amber-hot    #D2691E   Gradient terminal
+    amber-muted  #C07A4A   Reader contexts (new in v4)
+    gold         #DAA520   Stable severity
+    brass        #BFA162   Warning (new in v4)
+    scarlet      #C44C4C   Clinical critical
+    burnt-sienna #C75B39   Terminal red (new in v4)
+    teal         #4CC4B4   Live data / success
+    sage         #8AAC6B   Warm green (terminal ext)
+    slate        #6E8FAD   Dusty blue (terminal ext)
+    mauve        #AD7FA8   Dried lavender (terminal ext)
+
+  NOTE: Inline token-role comments elsewhere in this file still use v3 names
+  (crater-lt, grain) as role descriptors — they're purely cosmetic. Hex
+  values are the authoritative source of truth.
 
   INSTALL (iOS / iPadOS Textastic):
     1. Place this file in Textastic → Local Files → #Textastic/

@@ -1,0 +1,708 @@
+{
+  "_meta": {
+    "name": "Dark Roast Design System",
+    "version": "1.0.0-draft",
+    "generated": "2026-04-02",
+    "owner": "amo",
+    "status": "opinionated_defaults_pending_approval",
+    "purpose": "Full design system specification. Primitives + components + app-specific tokens. Extends theme-context-cache-v4.json (which only holds color palette data).",
+    "review_markers": {
+      "VERIFIED": "Sourced from canonical Dark Roast v2.0.0 artifacts",
+      "DEFAULT": "Opinionated default proposed by Claude — pending Amo approval",
+      "TBD": "Needs real-world measurement or decision"
+    }
+  },
+
+  "color": {
+    "_note": "Color tokens are the source of truth. See theme-context-cache-v4.json for full palette with provenance. Summarized here for self-containment.",
+    "_status": "VERIFIED",
+
+    "surface": {
+      "void":         { "hex": "#120C06", "use": "Page background, deepest layer" },
+      "obsidian":     { "hex": "#160E08", "use": "Content background" },
+      "dark_cacao":   { "hex": "#1E140E", "use": "Elevated surfaces (modals, sheets)" },
+      "espresso":     { "hex": "#2A1C14", "use": "Card backgrounds" },
+      "roasted_bean": { "hex": "#3C2A1E", "use": "Borders, dividers" },
+      "crater":       { "hex": "#4D3B31", "use": "Geological accent, card bottom stripes" }
+    },
+
+    "foreground": {
+      "display":    { "hex": "#FFF7EE", "use": "Hero text, brand chrome ONLY" },
+      "workhorse":  { "hex": "#D4C4A8", "use": "Terminal, code, body reading" },
+      "secondary":  { "hex": "#8B7355", "use": "Muted body, labels" },
+      "tertiary":   { "hex": "#465945", "use": "Timestamps, metadata" },
+      "warm_white": { "hex": "#F0E6D0", "use": "Bright callouts, ANSI 15" },
+      "bone":       { "hex": "#EBE1D7", "use": "Codex ink, midpoint" }
+    },
+
+    "action": {
+      "accent":       { "hex": "#E69A4C", "use": "Primary accent, cursor, CTAs" },
+      "accent_hot":   { "hex": "#D2691E", "use": "Gradient terminal, worsening state" },
+      "accent_muted": { "hex": "#C07A4A", "use": "Reader contexts, Mystic2 parity", "_status": "DEFAULT — imported from Mystic2 tuned" },
+      "success":      { "hex": "#4CC4B4", "use": "Success, live data, kinetic teal" },
+      "warning":      { "hex": "#BFA162", "use": "Warning, caution" },
+      "error":        { "hex": "#C75B39", "use": "Error, terminal error" },
+      "scarlet":      { "hex": "#C44C4C", "use": "Clinical critical severity" },
+      "gold":         { "hex": "#DAA520", "use": "Clinical stable severity" }
+    },
+
+    "crater_layer": {
+      "crater_primary": { "hex": "#3C2A21" },
+      "crater_light":   { "hex": "#4D3B31" },
+      "asparagus":      { "hex": "#465945" },
+      "rustic":         { "hex": "#480404" },
+      "rose":           { "hex": "#480607" }
+    }
+  },
+
+  "opacity": {
+    "_status": "DEFAULT",
+    "_note": "Alpha scale for overlays, glows, scrims. Hex suffix form: e.g., #E69A4CFF is 100%, #E69A4C80 is 50%.",
+    "scale": {
+      "0":   { "decimal": 0.0,  "hex": "00", "use": "Fully transparent" },
+      "4":   { "decimal": 0.04, "hex": "0A", "use": "Subtle divider (theme.divider)" },
+      "8":   { "decimal": 0.08, "hex": "14", "use": "Hover state overlay" },
+      "12":  { "decimal": 0.12, "hex": "1F", "use": "Amber glow (glowAmber)" },
+      "15":  { "decimal": 0.15, "hex": "26", "use": "Teal glow (glowTeal)" },
+      "24":  { "decimal": 0.24, "hex": "3D", "use": "Disabled state" },
+      "40":  { "decimal": 0.40, "hex": "66", "use": "Scrim under modal" },
+      "60":  { "decimal": 0.60, "hex": "99", "use": "Heavy scrim" },
+      "85":  { "decimal": 0.85, "hex": "D9", "use": "Export modal backdrop" },
+      "100": { "decimal": 1.0,  "hex": "FF", "use": "Fully opaque" }
+    }
+  },
+
+  "spacing": {
+    "_status": "DEFAULT",
+    "_note": "4px base unit. Matches iOS/SwiftUI conventions and standard 4pt grid.",
+    "unit_px": 4,
+    "scale": {
+      "0":   { "px": 0,   "rem": 0,     "use": "No spacing" },
+      "0.5": { "px": 2,   "rem": 0.125, "use": "Hairline gap, icon-text tight pair" },
+      "1":   { "px": 4,   "rem": 0.25,  "use": "Tight pair, intra-component" },
+      "1.5": { "px": 6,   "rem": 0.375, "use": "Chip internal padding" },
+      "2":   { "px": 8,   "rem": 0.5,   "use": "Related element gap" },
+      "3":   { "px": 12,  "rem": 0.75,  "use": "Standard content padding" },
+      "4":   { "px": 16,  "rem": 1.0,   "use": "Card padding, section spacing" },
+      "5":   { "px": 20,  "rem": 1.25,  "use": "Larger card padding" },
+      "6":   { "px": 24,  "rem": 1.5,   "use": "Section gap" },
+      "8":   { "px": 32,  "rem": 2.0,   "use": "Major section gap" },
+      "10":  { "px": 40,  "rem": 2.5,   "use": "Page-level gap" },
+      "12":  { "px": 48,  "rem": 3.0,   "use": "Hero spacing" },
+      "16":  { "px": 64,  "rem": 4.0,   "use": "Page margins (iPad)" },
+      "20":  { "px": 80,  "rem": 5.0,   "use": "Large hero" },
+      "24":  { "px": 96,  "rem": 6.0,   "use": "Extreme hero" }
+    }
+  },
+
+  "radii": {
+    "_status": "DEFAULT",
+    "_note": "Rounding scale. Standard iOS conventions with soft-modern bias.",
+    "scale": {
+      "none":  { "px": 0,  "use": "Flush, full-bleed" },
+      "xs":    { "px": 2,  "use": "Inline chips, tight badges" },
+      "sm":    { "px": 4,  "use": "Tight controls, small buttons" },
+      "md":    { "px": 8,  "use": "Standard buttons, inputs" },
+      "lg":    { "px": 12, "use": "Cards (matches DarkRoastCard modifier)" },
+      "xl":    { "px": 16, "use": "Large cards, modals" },
+      "2xl":   { "px": 24, "use": "Hero cards" },
+      "full":  { "px": 9999, "use": "Pills, circular avatars" }
+    }
+  },
+
+  "elevation": {
+    "_status": "DEFAULT",
+    "_note": "Dark theme elevation via atmospheric bleed and subtle shadows. Dark Roast avoids the iOS-typical hard drop shadows — uses radial glow + border-weight variation instead.",
+    "scale": {
+      "flat": {
+        "shadow": "none",
+        "border": "1px solid rgba(255,255,255,0.04)",
+        "use": "Inline elements, flat cards"
+      },
+      "raised": {
+        "shadow": "0 2px 8px rgba(0,0,0,0.4)",
+        "border": "1px solid rgba(255,255,255,0.06)",
+        "use": "Standard cards, elevated from obsidian"
+      },
+      "floating": {
+        "shadow": "0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(230,154,76,0.12)",
+        "border": "1px solid rgba(255,255,255,0.08)",
+        "glow": "glow_amber",
+        "use": "Modals, sheets, popovers, hovered cards"
+      },
+      "critical": {
+        "shadow": "0 8px 24px rgba(0,0,0,0.6), 0 0 24px rgba(196,76,76,0.20)",
+        "border": "1px solid rgba(196,76,76,0.30)",
+        "glow": "glow_scarlet",
+        "use": "Critical alerts, error modals, high-severity patient cards"
+      },
+      "live": {
+        "shadow": "0 4px 16px rgba(0,0,0,0.4), 0 0 16px rgba(76,196,180,0.15)",
+        "border": "1px solid rgba(76,196,180,0.20)",
+        "glow": "glow_teal",
+        "use": "SSE-streaming cards, live data indicators"
+      }
+    }
+  },
+
+  "typography": {
+    "_status": "VERIFIED_families_DEFAULT_ramps",
+    "_note": "Family spec from canonical Dark Roast v2.0.0. Size/weight/line-height ramps are opinionated defaults.",
+
+    "families": {
+      "display":  { "family": "Playfair Display", "fallback": "Georgia, serif", "weights": [700, 900], "use": "Hero elements, brand identity, app titles, marketing" },
+      "heading":  { "family": "Instrument Sans",  "fallback": "system-ui, sans-serif", "weights": [400, 500, 600, 700], "use": "Patient names, track titles, card headers, section headers" },
+      "body":     { "family": "DM Sans",          "fallback": "system-ui, sans-serif", "weights": [400, 500, 700], "use": "Clinical descriptions, UI labels, body copy" },
+      "mono":     { "family": "Fira Code",        "fallback": "ui-monospace, SFMono-Regular, monospace", "weights": [400, 500, 600], "use": "Lab values, ISRC codes, JSON, timestamps, vitals, code. Ligatures enabled." }
+    },
+
+    "scale": {
+      "_note": "Type scale uses 1.25 minor-third ratio. Line-heights tuned for dense clinical/technical reading.",
+      "xs":   { "size_px": 10, "line_height": 1.4,  "letter_spacing": "0.02em", "weight": 500, "use": "Badges, micro-labels, legal" },
+      "sm":   { "size_px": 12, "line_height": 1.5,  "letter_spacing": "0.01em", "weight": 400, "use": "Metadata, timestamps, captions" },
+      "base": { "size_px": 14, "line_height": 1.6,  "letter_spacing": "0",      "weight": 400, "use": "Body copy, UI default" },
+      "md":   { "size_px": 16, "line_height": 1.5,  "letter_spacing": "0",      "weight": 400, "use": "Readable body, primary content" },
+      "lg":   { "size_px": 18, "line_height": 1.4,  "letter_spacing": "-0.01em","weight": 500, "use": "Card titles, subsection headers" },
+      "xl":   { "size_px": 22, "line_height": 1.3,  "letter_spacing": "-0.01em","weight": 600, "use": "Section headers" },
+      "2xl":  { "size_px": 28, "line_height": 1.2,  "letter_spacing": "-0.02em","weight": 700, "use": "Page titles" },
+      "3xl":  { "size_px": 36, "line_height": 1.15, "letter_spacing": "-0.02em","weight": 700, "use": "Hero subheads" },
+      "4xl":  { "size_px": 48, "line_height": 1.1,  "letter_spacing": "-0.03em","weight": 900, "use": "Hero display (Playfair)" },
+      "5xl":  { "size_px": 64, "line_height": 1.0,  "letter_spacing": "-0.03em","weight": 900, "use": "Marketing hero only" }
+    },
+
+    "roles": {
+      "hero":          { "family": "display", "scale": "4xl", "color": "foreground.display" },
+      "page_title":    { "family": "heading", "scale": "2xl", "color": "foreground.display" },
+      "section":       { "family": "heading", "scale": "xl",  "color": "foreground.workhorse" },
+      "card_title":    { "family": "heading", "scale": "lg",  "color": "foreground.workhorse" },
+      "body":          { "family": "body",    "scale": "base","color": "foreground.workhorse" },
+      "body_muted":    { "family": "body",    "scale": "base","color": "foreground.secondary" },
+      "label":         { "family": "body",    "scale": "sm",  "color": "foreground.secondary" },
+      "metadata":      { "family": "body",    "scale": "sm",  "color": "foreground.tertiary" },
+      "code":          { "family": "mono",    "scale": "base","color": "foreground.workhorse" },
+      "lab_value":     { "family": "mono",    "scale": "md",  "color": "foreground.workhorse", "weight": 500 },
+      "timestamp":     { "family": "mono",    "scale": "xs",  "color": "foreground.tertiary" },
+      "vital_sign":    { "family": "mono",    "scale": "lg",  "color": "foreground.workhorse", "weight": 600 }
+    }
+  },
+
+  "motion": {
+    "_status": "DEFAULT",
+    "_note": "Tuned for calm/deliberate feel. Avoids bouncy springs except for specific delight moments. All iPad/iOS contexts should use spring curves via SwiftUI .animation(.spring()).",
+
+    "durations": {
+      "instant":  { "ms": 0,   "use": "No animation (prefers-reduced-motion)" },
+      "fast":     { "ms": 120, "use": "Hover, tap feedback, micro-interactions" },
+      "base":     { "ms": 200, "use": "Standard transitions, chip/button state" },
+      "moderate": { "ms": 320, "use": "Card expand/collapse, tab switches" },
+      "slow":     { "ms": 480, "use": "Modal enter/exit, sheet slides" },
+      "deliberate":{ "ms": 640, "use": "Hero reveals, page transitions" },
+      "ambient":  { "ms": 1200,"use": "Breathing glows, pulsing indicators" }
+    },
+
+    "easings": {
+      "linear":     { "css": "linear",                              "use": "Progress bars, loading indicators" },
+      "ease_out":   { "css": "cubic-bezier(0.16, 1, 0.3, 1)",       "use": "Most enters — decelerate into place" },
+      "ease_in":    { "css": "cubic-bezier(0.7, 0, 0.84, 0)",       "use": "Most exits — accelerate off-screen" },
+      "ease_in_out":{ "css": "cubic-bezier(0.65, 0, 0.35, 1)",      "use": "Position changes, symmetrical motion" },
+      "spring_snappy":{ "css": "cubic-bezier(0.175, 0.885, 0.32, 1.275)", "swiftui": ".spring(response: 0.35, dampingFraction: 0.7)", "use": "Confirmations, delight" },
+      "spring_soft":  { "swiftui": ".spring(response: 0.55, dampingFraction: 0.85)", "use": "Card expansion, drawer open" }
+    },
+
+    "keyframes": {
+      "breathe_amber": {
+        "keyframes": "@keyframes breathe { 0%,100% { opacity: 0.6; } 50% { opacity: 1.0; } }",
+        "duration": "ambient",
+        "easing": "ease_in_out",
+        "use": "Live data indicator, streaming cursor"
+      },
+      "pulse_scarlet": {
+        "keyframes": "@keyframes pulse-critical { 0%,100% { box-shadow: 0 0 0 rgba(196,76,76,0); } 50% { box-shadow: 0 0 16px rgba(196,76,76,0.3); } }",
+        "duration": "ambient",
+        "easing": "ease_in_out",
+        "use": "Critical severity patient card, flagged lab"
+      },
+      "shimmer_skeleton": {
+        "keyframes": "@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }",
+        "duration": 1500,
+        "easing": "linear",
+        "use": "Loading skeleton, SSE pre-stream state"
+      }
+    }
+  },
+
+  "z_index": {
+    "_status": "DEFAULT",
+    "_note": "Named z-index scale. Never hand-write arbitrary z values.",
+    "scale": {
+      "base":        0,
+      "raised":      1,
+      "sticky":      100,
+      "header":      200,
+      "dropdown":    300,
+      "overlay":     400,
+      "modal":       500,
+      "popover":     600,
+      "toast":       700,
+      "tooltip":     800,
+      "debug":       9999
+    }
+  },
+
+  "icon": {
+    "_status": "DEFAULT",
+    "_note": "Icon sizing scale. Matches SF Symbols and web icon systems.",
+    "scale": {
+      "xs": { "px": 12, "use": "Inline inside text, chip icons" },
+      "sm": { "px": 14, "use": "Badge icons, dense lists" },
+      "md": { "px": 16, "use": "Standard button icons, nav" },
+      "lg": { "px": 20, "use": "Card-level, toolbar" },
+      "xl": { "px": 24, "use": "Primary toolbar, large CTA" },
+      "2xl":{ "px": 32, "use": "Hero icons, empty states" },
+      "3xl":{ "px": 48, "use": "Feature illustrations" }
+    },
+    "stroke_width": {
+      "thin":   1.5,
+      "normal": 2,
+      "bold":   2.5
+    }
+  },
+
+  "components": {
+    "_status": "DEFAULT",
+    "_note": "Component-level tokens. Derived from primitives. Opinionated defaults pending review.",
+
+    "button": {
+      "primary": {
+        "background":     "action.accent",
+        "foreground":     "surface.void",
+        "border":         "none",
+        "hover_bg":       "action.accent_hot",
+        "active_bg":      "action.accent",
+        "disabled_bg":    "action.accent + opacity.24",
+        "disabled_fg":    "foreground.secondary",
+        "padding_y":      "spacing.3",
+        "padding_x":      "spacing.4",
+        "radius":         "radii.md",
+        "font":           "typography.roles.body",
+        "weight":         500,
+        "transition":     "motion.durations.fast motion.easings.ease_out"
+      },
+      "secondary": {
+        "background":     "transparent",
+        "foreground":     "action.accent",
+        "border":         "1px solid action.accent + opacity.40",
+        "hover_bg":       "action.accent + opacity.08",
+        "padding_y":      "spacing.3",
+        "padding_x":      "spacing.4",
+        "radius":         "radii.md"
+      },
+      "ghost": {
+        "background":     "transparent",
+        "foreground":     "foreground.workhorse",
+        "hover_bg":       "surface.espresso",
+        "padding_y":      "spacing.2",
+        "padding_x":      "spacing.3",
+        "radius":         "radii.md"
+      },
+      "danger": {
+        "background":     "action.error",
+        "foreground":     "foreground.warm_white",
+        "hover_bg":       "action.scarlet"
+      },
+      "sizes": {
+        "sm": { "padding_y": "spacing.2", "padding_x": "spacing.3", "font_scale": "sm" },
+        "md": { "padding_y": "spacing.3", "padding_x": "spacing.4", "font_scale": "base" },
+        "lg": { "padding_y": "spacing.4", "padding_x": "spacing.6", "font_scale": "md" }
+      }
+    },
+
+    "card": {
+      "base": {
+        "background":     "surface.espresso",
+        "border":         "1px solid rgba(255,255,255,0.04)",
+        "radius":         "radii.lg",
+        "padding":        "spacing.4",
+        "elevation":      "elevation.raised",
+        "bottom_stripe":  "linear-gradient(90deg, crater_layer.crater_primary, crater_layer.crater_light, transparent)"
+      },
+      "elevated": {
+        "elevation":      "elevation.floating",
+        "glow":           "glow_amber"
+      },
+      "critical": {
+        "border":         "1px solid action.scarlet + opacity.40",
+        "elevation":      "elevation.critical",
+        "glow":           "glow_scarlet"
+      },
+      "live": {
+        "border":         "1px solid action.success + opacity.24",
+        "elevation":      "elevation.live",
+        "glow":           "glow_teal"
+      }
+    },
+
+    "input": {
+      "base": {
+        "background":     "surface.obsidian",
+        "foreground":     "foreground.workhorse",
+        "placeholder":    "foreground.secondary",
+        "border":         "1px solid surface.roasted_bean",
+        "focus_border":   "1px solid action.accent",
+        "focus_ring":     "0 0 0 3px action.accent + opacity.24",
+        "radius":         "radii.md",
+        "padding_y":      "spacing.3",
+        "padding_x":      "spacing.3",
+        "font":           "typography.roles.body"
+      },
+      "invalid": {
+        "border":         "1px solid action.error",
+        "focus_ring":     "0 0 0 3px action.error + opacity.24"
+      }
+    },
+
+    "nav": {
+      "background":       "surface.obsidian",
+      "border_bottom":    "1px solid surface.roasted_bean",
+      "padding":          "spacing.3 spacing.4",
+      "item_fg":          "foreground.secondary",
+      "item_fg_active":   "action.accent",
+      "item_fg_hover":    "foreground.workhorse",
+      "indicator":        "2px solid action.accent (bottom)"
+    },
+
+    "modal": {
+      "backdrop":         "rgba(0,0,0,0.85)",
+      "background":       "surface.dark_cacao",
+      "border":           "1px solid surface.roasted_bean",
+      "radius":           "radii.xl",
+      "padding":          "spacing.5",
+      "max_width":        "480px",
+      "elevation":        "elevation.floating",
+      "enter":            "motion.durations.slow motion.easings.ease_out",
+      "exit":             "motion.durations.moderate motion.easings.ease_in"
+    },
+
+    "toast": {
+      "background":       "surface.dark_cacao",
+      "border":           "1px solid surface.roasted_bean",
+      "radius":           "radii.md",
+      "padding":          "spacing.3 spacing.4",
+      "variants": {
+        "info":    { "accent_bar": "action.accent" },
+        "success": { "accent_bar": "action.success" },
+        "warning": { "accent_bar": "action.warning" },
+        "error":   { "accent_bar": "action.error" }
+      }
+    },
+
+    "chip": {
+      "background":       "surface.dark_cacao",
+      "foreground":       "foreground.workhorse",
+      "border":           "1px solid rgba(255,255,255,0.06)",
+      "radius":           "radii.full",
+      "padding":          "spacing.1 spacing.3",
+      "font":             "typography.roles.label"
+    },
+
+    "divider": {
+      "default":          "1px solid rgba(255,255,255,0.04)",
+      "strong":           "1px solid surface.roasted_bean",
+      "accent":           "1px solid action.accent + opacity.24"
+    },
+
+    "tooltip": {
+      "background":       "surface.void",
+      "foreground":       "foreground.warm_white",
+      "border":           "1px solid surface.roasted_bean",
+      "radius":           "radii.sm",
+      "padding":          "spacing.2 spacing.3",
+      "font":             "typography.roles.label"
+    }
+  },
+
+  "state_variants": {
+    "_status": "DEFAULT",
+    "_note": "Universal state modifiers. Applied to any interactive token.",
+
+    "hover": {
+      "overlay":          "rgba(255,255,255,0.08)",
+      "cursor":           "pointer",
+      "transition":       "motion.durations.fast"
+    },
+    "active": {
+      "overlay":          "rgba(0,0,0,0.12)",
+      "transform":        "scale(0.98)",
+      "transition":       "motion.durations.instant"
+    },
+    "focus": {
+      "ring":             "0 0 0 3px action.accent + opacity.24",
+      "outline":          "none"
+    },
+    "disabled": {
+      "opacity":          "opacity.40",
+      "cursor":           "not-allowed",
+      "pointer_events":   "none"
+    },
+    "selected": {
+      "background":       "action.accent + opacity.15",
+      "border":           "1px solid action.accent"
+    }
+  },
+
+  "accessibility": {
+    "_status": "DEFAULT",
+    "reduced_motion": {
+      "_note": "When prefers-reduced-motion: reduce, all motion.durations → instant, keyframes disabled.",
+      "strategy": "Replace motion.* duration tokens with 0ms at runtime. Ambient keyframes (breathe, pulse) become static at 70% opacity."
+    },
+    "high_contrast": {
+      "_note": "When prefers-contrast: more, increase foreground contrast tier and strengthen borders.",
+      "substitutions": {
+        "foreground.workhorse":  "foreground.warm_white",
+        "foreground.secondary":  "foreground.workhorse",
+        "foreground.tertiary":   "foreground.secondary",
+        "divider.default":       "1px solid rgba(255,255,255,0.12)"
+      }
+    },
+    "contrast_targets": {
+      "_note": "Minimum WCAG contrast ratios per role. Validated by dark-roast.py.",
+      "display":        { "min": 12.0, "actual_against_void": 17.4 },
+      "workhorse":      { "min":  7.0, "actual_against_void": 11.3 },
+      "secondary":      { "min":  4.5, "actual_against_void":  5.1 },
+      "tertiary":       { "min":  3.0, "actual_against_void":  3.2 },
+      "accent":         { "min":  4.5, "actual_against_void":  8.4 },
+      "metadata_ignore":{ "min":  1.8, "max":  3.0, "role": "Legible but ignorable (Mystic2 IGNORE pattern)" }
+    }
+  },
+
+  "print_export": {
+    "_status": "DEFAULT",
+    "_note": "Mappings for print output, PDF export, paper-backed displays. Dark Roast does not degrade gracefully to light substrates — explicit inversions needed.",
+    "substitutions": {
+      "surface.void":         "#FFFFFF",
+      "surface.obsidian":     "#FAFAF8",
+      "surface.espresso":     "#F5F2ED",
+      "foreground.workhorse": "#2A1C14",
+      "foreground.display":   "#120C06",
+      "foreground.secondary": "#8B7355",
+      "action.accent":        "#B26540",
+      "action.error":         "#A23818",
+      "action.success":       "#2A8778"
+    },
+    "rules": [
+      "Never print OLED-optimized tokens directly — substrate inversion required.",
+      "Amber accent drops saturation 20% on paper to avoid ink bloom.",
+      "Scarlet becomes burgundy on paper — maintains severity meaning."
+    ]
+  },
+
+  "somaCURA": {
+    "_status": "VERIFIED_severity_DEFAULT_components",
+    "_note": "Hospitalist longitudinal patient-state engine. Census-first workflow.",
+
+    "severity_mapping": {
+      "_status": "VERIFIED",
+      "critical":  { "color": "action.scarlet",    "hex": "#C44C4C", "use": "Actively deteriorating, ICU-eligible, flagged lab panics" },
+      "worsening": { "color": "action.accent_hot", "hex": "#D2691E", "use": "Trending worse, clinical driver intensifying" },
+      "improving": { "color": "action.accent",     "hex": "#E69A4C", "use": "Trending better, disposition-forward" },
+      "stable":    { "color": "action.gold",       "hex": "#DAA520", "use": "Stable, monitoring" },
+      "resolved":  { "color": "action.success",    "hex": "#4CC4B4", "use": "Resolved problem, archived" }
+    },
+
+    "pipeline_states": {
+      "clinical_update": { "color": "foreground.secondary", "icon": "pencil.circle", "label": "Input received" },
+      "hyperdrive_ner":  { "color": "action.accent",        "icon": "brain",         "label": "NER extracting", "animate": "motion.keyframes.breathe_amber" },
+      "problem_approval":{ "color": "action.warning",       "icon": "checklist",     "label": "Awaiting approval" },
+      "sse_streaming":   { "color": "action.success",       "icon": "wave.3.right",  "label": "Streaming note",  "animate": "motion.keyframes.breathe_amber" },
+      "note_complete":   { "color": "foreground.workhorse", "icon": "checkmark.seal","label": "Complete" }
+    },
+
+    "components": {
+      "census_row": {
+        "base_bg":           "surface.espresso",
+        "critical_bg":       "surface.espresso + action.scarlet overlay opacity.08",
+        "worsening_bg":      "surface.espresso + action.accent_hot overlay opacity.08",
+        "selected_bg":       "surface.dark_cacao",
+        "selected_border":   "3px solid action.accent (left)",
+        "padding":           "spacing.3 spacing.4",
+        "divider":           "1px solid rgba(255,255,255,0.04)",
+        "severity_dot":      { "size": "8px", "position": "left of name" },
+        "vitals_text":       "typography.roles.vital_sign",
+        "metadata_text":     "typography.roles.metadata"
+      },
+      "problem_card": {
+        "base":              "components.card.base",
+        "severity_stripe":   "4px top border using severity_mapping[status]",
+        "title_font":        "typography.roles.card_title",
+        "body_font":         "typography.roles.body",
+        "sparkline_color":   "derived from severity_mapping[status]",
+        "sparkline_height":  "32px"
+      },
+      "flagged_lab": {
+        "bg":                "action.scarlet + opacity.08",
+        "border":            "1px solid action.scarlet + opacity.40",
+        "value_color":       "action.scarlet",
+        "value_font":        "typography.roles.lab_value",
+        "animate":           "motion.keyframes.pulse_scarlet"
+      },
+      "sse_stream_cursor": {
+        "color":             "action.accent",
+        "shape":             "2px vertical bar",
+        "animate":           "motion.keyframes.breathe_amber"
+      },
+      "problem_list_item": {
+        "base_fg":           "foreground.workhorse",
+        "resolved_fg":       "foreground.tertiary",
+        "resolved_strikethrough": false,
+        "prefix":            "severity_mapping[status] dot (6px)",
+        "secondary_line":    "typography.roles.metadata"
+      },
+      "disposition_barrier": {
+        "bg":                "surface.obsidian",
+        "border":            "1px dashed action.warning + opacity.40",
+        "fg":                "action.warning",
+        "icon":              "exclamationmark.triangle",
+        "font":              "typography.roles.label"
+      }
+    }
+  },
+
+  "songExpanse": {
+    "_status": "VERIFIED_vinyl_DEFAULT_other_components",
+    "_note": "SwiftUI music visualization iPad app. Chrome tokens from AppTheme; content tokens from TextColors (song-derived). Never conflate.",
+
+    "token_separation": {
+      "_critical": "This is the core architectural rule for Song Expanse.",
+      "chrome": {
+        "source": "AppTheme (Dark Roast tokens from this spec)",
+        "scope":  "Navigation, tab bars, modals, settings, controls, buttons, toolbars, any UI shell element",
+        "rule":   "NEVER derive chrome colors from album art. Chrome stays constant across songs."
+      },
+      "content": {
+        "source": "TextColors (9-tier palette derived from album art per song)",
+        "scope":  "Lyrics, annotations, timeline, song story, credits, artist intel — any content surface",
+        "rule":   "NEVER use AppTheme tokens inside content areas. Content is album-responsive."
+      },
+      "bridge": {
+        "harmonizer": "dark-roast.py harmonize command can score TextColors against theme collection for chrome-content coherence.",
+        "fallback":   "When TextColors generation fails or album art is unavailable, content areas fall back to Dark Roast foreground tiers."
+      }
+    },
+
+    "vinyl_renderer": {
+      "_status": "VERIFIED",
+      "case_bg":           "surface.void",
+      "platter_shadow":    "crater_layer.crater_primary",
+      "tonearm_metallic":  "foreground.secondary",
+      "tonearm_tip_glow":  "action.accent",
+      "play_button":       "action.accent",
+      "loading_indicator": "action.success",
+      "marquee_scrim":     "crater_layer.crater_primary",
+      "marquee_grid":      "action.accent + opacity.12",
+      "timeline_rail_track":"crater_layer.crater_primary",
+      "timeline_thumb":    "action.accent",
+      "groove_metal_shader": {
+        "note": "MRT groove rendering + Metal GPU vinyl texture. Reference canonical somaCURA/Song Expanse source for shader details.",
+        "base_tone": "surface.obsidian",
+        "highlight": "crater_layer.crater_light",
+        "scratch_noise_amplitude": 0.04
+      }
+    },
+
+    "textcolors_rules": {
+      "_status": "DEFAULT",
+      "_note": "9-tier palette derived from album art. Must meet internal contrast constraints before use.",
+      "tiers": {
+        "textColor1": { "role": "Primary content FG",     "target_contrast_vs_chrome_bg": ">= 7.0" },
+        "textColor2": { "role": "Secondary content FG",   "target_contrast_vs_chrome_bg": ">= 4.5" },
+        "textColor3": { "role": "Tertiary content FG",    "target_contrast_vs_chrome_bg": ">= 3.0" },
+        "textColor4": { "role": "Accent 1 (lyric highlight)", "target_contrast_vs_chrome_bg": ">= 4.5" },
+        "textColor5": { "role": "Accent 2 (annotation)",  "target_contrast_vs_chrome_bg": ">= 4.5" },
+        "textColor6": { "role": "Accent 3 (credits)",     "target_contrast_vs_chrome_bg": ">= 4.5" },
+        "textColor7": { "role": "Content surface",        "role_type": "bg" },
+        "textColor8": { "role": "Elevated content surface","role_type": "bg" },
+        "textColor9": { "role": "Dim content surface",    "role_type": "bg" }
+      },
+      "generation_rules": [
+        "Extract dominant + accent colors from album art via k-means or perceptual clustering.",
+        "Reject palettes where fewer than 3 tiers meet contrast targets against Dark Roast void bg.",
+        "If album art fails — fall back to Dark Roast foreground tiers (workhorse, secondary, tertiary + accent, success, warning).",
+        "Cache generated palette per songId. Invalidate on art change.",
+        "Harmonizer step: score against theme collection via dark-roast.py harmonize; if clash against current chrome, dim accent tiers by 15%."
+      ]
+    },
+
+    "content_components": {
+      "_status": "DEFAULT",
+      "lyric_line": {
+        "active_color":      "textColor1",
+        "played_color":      "textColor2 + opacity.60",
+        "upcoming_color":    "textColor3",
+        "annotation_accent": "textColor4",
+        "font":              "typography.roles.body",
+        "line_height":       1.8
+      },
+      "song_story_chunk": {
+        "bg":                "textColor7",
+        "border":            "1px solid textColor8",
+        "fg":                "textColor1",
+        "enrichment_accent": "textColor5",
+        "padding":           "spacing.4",
+        "radius":            "radii.lg"
+      },
+      "credits_bar": {
+        "bg":                "textColor9",
+        "fg":                "textColor2",
+        "accent":            "textColor6",
+        "font":              "typography.roles.metadata"
+      },
+      "artist_intel": {
+        "bg":                "textColor7",
+        "fact_fg":           "textColor1",
+        "metadata_fg":       "textColor3",
+        "rotation_interval": "motion.durations.deliberate * 10"
+      },
+      "career_timeline_heatmap": {
+        "year_cell_base":    "textColor9",
+        "year_cell_intensity_scale": [
+          "textColor9",
+          "textColor8",
+          "textColor7 mixed with textColor4 at 30%",
+          "textColor4 mixed with textColor5 at 50%",
+          "textColor4"
+        ],
+        "annotated_moment_marker": "textColor5",
+        "hover_fg":          "textColor1"
+      }
+    }
+  },
+
+  "additional_apps": {
+    "_status": "TBD",
+    "_note": "Other apps in the Dark Roast ecosystem. Component specs not yet defined.",
+    "dictum":      { "status": "TBD", "role": "Cross-platform voice dictation" },
+    "tradingDesk": { "status": "TBD", "role": "Financial analysis webapp" },
+    "narwhal2_mystic2": {
+      "status": "related_theme_in_context_cache",
+      "note": "See theme-context-cache-v4.json related_themes.mystic2_tuned. Uses Narwhal2 app semantic token model (not this Dark Roast component spec)."
+    }
+  },
+
+  "generation": {
+    "_note": "What platforms consume this spec. Generated files are regenerable — never hand-edit downstream.",
+    "targets": {
+      "web_css":       { "file": "tokens.css",            "generator": "dark-roast.py export css" },
+      "swift":         { "file": "DarkRoastTokens.swift", "generator": "dark-roast.py export swift" },
+      "iterm":         { "file": "dark-roast.itermcolors","generator": "dark-roast.py export iterm" },
+      "alacritty":     { "file": "dark-roast.toml",       "generator": "dark-roast.py export alacritty" },
+      "warp":          { "file": "dark-roast.yaml",       "generator": "dark-roast.py export warp" },
+      "codex_desktop": { "import_string": "codex-theme-v1:{...}", "source": "spec.color + spec.typography + spec.action" }
+    },
+    "validation": {
+      "contrast":   "dark-roast.py validate — flags WCAG failures",
+      "oled_wake":  "dark-roast.py validate — flags surface tokens above 5ms wake threshold",
+      "coherence":  "dark-roast.py harmonize — scores TextColors against collection"
+    }
+  }
+}
