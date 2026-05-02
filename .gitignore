@@ -1,3 +1,8 @@
 node_modules/
 .DS_Store
 *.log
+*.vsix
+.planning/
+*.db
+theme-context-cache*.json
+dark-roast-system-v1.json

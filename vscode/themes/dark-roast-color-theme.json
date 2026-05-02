@@ -18,7 +18,7 @@
   //
   // Palette quick reference:
   //   void         #120C06   deepest background (L0: editor)
-  //   obsidian     #1E140C   elevated surface (L1: sidebar, terminal, agent panel)
+  //   obsidian     #1E140E   elevated surface (L1: sidebar, terminal, agent panel)
   //   espresso     #2A1C13   window frame (L2: title bar, activity bar, status bar, tab strip)
   //   espresso-hov #382818   hover / active widgets (L3)
   //   crema        #FFF7EE   primary text
@@ -80,7 +80,7 @@
     "editorCursor.foreground": "#4CC4B4",
     "editorCursor.background": "#120C06",
     // Current line: grain surface, no border (border would be visually noisy).
-    "editor.lineHighlightBackground": "#1E140C",
+    "editor.lineHighlightBackground": "#1E140E",
     "editor.lineHighlightBorder": "#00000000",
     // Line numbers: crater (muted) for inactive, mocha for active.
     "editorLineNumber.foreground": "#3C2A21",
@@ -172,8 +172,8 @@
     "editor.linkedEditingBackground": "#4CC4B41A",
 
     // ── Sticky scroll ──────────────────────────────────────────────────────
-    "editorStickyScroll.background": "#1E140C",
-    "editorStickyScrollHover.background": "#1E140C",
+    "editorStickyScroll.background": "#1E140E",
+    "editorStickyScrollHover.background": "#1E140E",
     "editorStickyScroll.border": "#3C2A21",
     "editorStickyScroll.shadow": "#0A060344",
 
@@ -236,7 +236,7 @@
 
     // ── Side bar ───────────────────────────────────────────────────────────
     // obsidian — one step above editor void, creates depth hierarchy.
-    "sideBar.background": "#1E140C",
+    "sideBar.background": "#1E140E",
     "sideBar.foreground": "#EBE1D7",
     "sideBar.border": "#3C2A21",
     "sideBar.dropBackground": "#E69A4C22",
@@ -299,7 +299,7 @@
     "tab.activeModifiedBorder": "#DAA520",
     "tab.inactiveModifiedBorder": "#DAA52066",
     "tab.unfocusedActiveModifiedBorder": "#DAA52099",
-    "tab.hoverBackground": "#1E140C",
+    "tab.hoverBackground": "#1E140E",
     "tab.hoverForeground": "#EBE1D7",
     "tab.hoverBorder": "#3C2A21",
     "tab.unfocusedActiveBackground": "#120C06",
@@ -338,7 +338,7 @@
     "statusBarItem.compactHoverBackground": "#2A1C1344",
 
     // ── Panel (Terminal, Output, Problems, Debug Console) ──────────────────
-    "panel.background": "#1E140C",
+    "panel.background": "#1E140E",
     "panel.border": "#3C2A21",
     "panel.dropBorder": "#E69A4C",
     "panelTitle.activeForeground": "#FFF7EE",
@@ -353,7 +353,7 @@
 
     // ── Integrated terminal ────────────────────────────────────────────────
     // ANSI palette must match Warp dark-roast.yaml exactly.
-    "terminal.background": "#1E140C",
+    "terminal.background": "#120C06",
     "terminal.foreground": "#FFF7EE",
     "terminalCursor.foreground": "#4CC4B4",
     "terminalCursor.background": "#120C06",
@@ -382,7 +382,7 @@
     "terminal.ansiBrightYellow":  "#DAA520",
     "terminal.ansiBrightBlue":    "#8AABC4",
     "terminal.ansiBrightMagenta": "#C49BC0",
-    "terminal.ansiBrightCyan":    "#4CC4B4",
+    "terminal.ansiBrightCyan":    "#6DD4C8",
     "terminal.ansiBrightWhite":   "#FFF7EE",
     "terminalCommandDecoration.successBackground": "#8AAC6B",
     "terminalCommandDecoration.errorBackground": "#C44C4C",
@@ -394,7 +394,7 @@
     "list.activeSelectionBackground": "#2A1C13",
     "list.activeSelectionForeground": "#FFF7EE",
     "list.activeSelectionIconForeground": "#E69A4C",
-    "list.inactiveSelectionBackground": "#1E140C",
+    "list.inactiveSelectionBackground": "#1E140E",
     "list.inactiveSelectionForeground": "#EBE1D7",
     "list.inactiveSelectionIconForeground": "#8B7355",
     "list.hoverBackground": "#1A0F09",
@@ -403,7 +403,7 @@
     "list.focusForeground": "#FFF7EE",
     "list.focusOutline": "#4CC4B444",
     "list.focusAndSelectionOutline": "#4CC4B444",
-    "list.inactiveFocusBackground": "#1E140C",
+    "list.inactiveFocusBackground": "#1E140E",
     "list.inactiveFocusOutline": "#3C2A21",
     // Amber highlight for matched search characters — primary accent.
     "list.highlightForeground": "#E69A4C",
@@ -416,7 +416,7 @@
     "list.warningForeground": "#E69A4C",
     "list.invalidItemForeground": "#C44C4C",
     "tree.indentGuidesStroke": "#2A1C13",
-    "tree.inactiveIndentGuidesStroke": "#1E140C",
+    "tree.inactiveIndentGuidesStroke": "#1E140E",
     "tree.tableColumnsBorder": "#2A1C13",
     "tree.tableOddRowsBackground": "#160E0811",
     "listFilterWidget.background": "#160E08",
@@ -431,7 +431,7 @@
     "scrollbarSlider.activeBackground": "#4D3B31BB",
 
     // ── Input / form controls ──────────────────────────────────────────────
-    "input.background": "#1E140C",
+    "input.background": "#1E140E",
     "input.foreground": "#FFF7EE",
     "input.border": "#3C2A21",
     "input.placeholderForeground": "#3C2A21",
@@ -468,7 +468,7 @@
     "button.secondaryHoverBackground": "#382818",
 
     // ── Checkbox / radio / toggle ──────────────────────────────────────────
-    "checkbox.background": "#1E140C",
+    "checkbox.background": "#1E140E",
     "checkbox.foreground": "#FFF7EE",
     "checkbox.border": "#3C2A21",
     "checkbox.selectBackground": "#2A1C13",
@@ -531,7 +531,7 @@
     "diffEditor.diagonalFill": "#3C2A2144",
     "diffEditor.unchangedRegionBackground": "#160E08",
     "diffEditor.unchangedRegionForeground": "#4D3B31",
-    "diffEditor.unchangedCodeBackground": "#1E140C",
+    "diffEditor.unchangedCodeBackground": "#1E140E",
     "diffEditorGutter.insertedLineBackground": "#8AAC6B22",
     "diffEditorGutter.removedLineBackground": "#C44C4C22",
     "diffEditorOverview.insertedForeground": "#8AAC6B",
@@ -694,7 +694,7 @@
     "notebook.symbolHighlightBackground": "#E69A4C22",
     "notebook.inactiveFocusedCellBorder": "#3C2A21",
     "notebook.inactiveSelectedCellBorder": "#2A1C13",
-    "notebook.selectedCellBackground": "#1E140C",
+    "notebook.selectedCellBackground": "#1E140E",
     "notebook.selectedCellBorder": "#4CC4B444",
     "notebookStatusSuccessIcon.foreground": "#8AAC6B",
     "notebookStatusErrorIcon.foreground": "#C44C4C",
@@ -722,16 +722,16 @@
     "settings.dropdownForeground": "#FFF7EE",
     "settings.dropdownBorder": "#3C2A21",
     "settings.dropdownListBorder": "#3C2A21",
-    "settings.checkboxBackground": "#1E140C",
+    "settings.checkboxBackground": "#1E140E",
     "settings.checkboxForeground": "#FFF7EE",
     "settings.checkboxBorder": "#3C2A21",
-    "settings.textInputBackground": "#1E140C",
+    "settings.textInputBackground": "#1E140E",
     "settings.textInputForeground": "#FFF7EE",
     "settings.textInputBorder": "#3C2A21",
-    "settings.numberInputBackground": "#1E140C",
+    "settings.numberInputBackground": "#1E140E",
     "settings.numberInputForeground": "#FFF7EE",
     "settings.numberInputBorder": "#3C2A21",
-    "settings.focusedRowBackground": "#1E140C",
+    "settings.focusedRowBackground": "#1E140E",
     "settings.rowHoverBackground": "#1A0F09",
     "settings.focusedRowBorder": "#4CC4B4",
     "settings.headerBorder": "#3C2A21",
@@ -808,7 +808,7 @@
     // ── Chat / Copilot / AI panel ──────────────────────────────────────────
     // ── Secondary side bar (Cursor agent/chat panel) ──────────────────
     // obsidian (L1) — matches primary sidebar depth, distinct from editor void.
-    "secondarySideBar.background": "#1E140C",
+    "secondarySideBar.background": "#1E140E",
     "secondarySideBar.foreground": "#EBE1D7",
     "secondarySideBar.border": "#3C2A21",
     "secondarySideBarSectionHeader.background": "#2A1C13",
@@ -831,7 +831,7 @@
     "inlineChatInput.border": "#4CC4B4",
     "inlineChatInput.focusBorder": "#4CC4B4",
     "inlineChatInput.placeholderForeground": "#3C2A21",
-    "inlineChatInput.background": "#1E140C",
+    "inlineChatInput.background": "#1E140E",
     "inlineChatDiff.inserted": "#8AAC6B22",
     "inlineChatDiff.removed": "#C44C4C22",
 

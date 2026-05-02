@@ -132,7 +132,7 @@ All 22 color primitives organized by functional layer. Every token is production
 
 | Token | CSS Variable | Hex | Role |
 |-------|-------------|-----|------|
-| crema | `--dr-crema` | `#FFF7EE` | Hero text, brand chrome, highest contrast (17.08:1 on void) |
+| crema | `--dr-crema` | `#FFF7EE` | Hero text, brand chrome, highest contrast (18.31:1 on void) |
 | warmWhite | `--dr-warm-white` | `#F0E6D0` | Bright callouts, ANSI 15 |
 | bone | `--dr-bone` | `#EBE1D7` | Body reading, codex ink |
 | mocha | `--dr-mocha` | `#8B7355` | Muted secondary, captions, labels |
@@ -338,7 +338,7 @@ Both `void` and `obsidian` keep OLED pixels energized above the power-off thresh
 
 | Token | Ratio | WCAG AA Normal | WCAG AA Large |
 |-------|-------|----------------|---------------|
-| crema | **17.08:1** | PASS | PASS |
+| crema | **18.31:1** | PASS | PASS |
 | bone | **15.06:1** | PASS | PASS |
 | teal | **9.12:1** | PASS | PASS |
 | gold | **8.68:1** | PASS | PASS |

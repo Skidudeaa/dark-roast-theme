@@ -583,6 +583,7 @@ body[data-theme="dark-roast"] *:focus-visible {
     body[data-theme="dark-roast"] .dr-fade-up,
     body[data-theme="dark-roast"] .dr-slide-in,
     body[data-theme="dark-roast"] .dr-glow-breathe,
+    body[data-theme="dark-roast"] .dr-shimmer-skeleton,
     body[data-theme="dark-roast"] .dr-grain-overlay {
         animation: none;
     }
@@ -596,6 +597,20 @@ body[data-theme="dark-roast"] *:focus-visible {
         --dr-asparagus: var(--dr-mocha);
         --dr-divider:   rgba(255, 255, 255, 0.12);
     }
+}
+
+@media (forced-colors: active) {
+  [data-theme="dark-roast"] {
+    --dr-void: Canvas;
+    --dr-obsidian: Canvas;
+    --dr-crema: CanvasText;
+    --dr-bone: CanvasText;
+    --dr-mocha: CanvasText;
+    --dr-amber: Highlight;
+    --dr-teal: LinkText;
+    --dr-scarlet: Mark;
+    --dr-divider: ButtonBorder;
+  }
 }
 
 

@@ -637,6 +637,7 @@
     .dark-roast .dr-fade-up,
     .dark-roast .dr-slide-in,
     .dark-roast .dr-glow-breathe,
+    .dark-roast .dr-shimmer-skeleton,
     .dark-roast .dr-grain-overlay {
         animation: none;
     }
@@ -651,4 +652,19 @@
         --dr-asparagus: var(--dr-mocha);
         --dr-divider:   rgba(255, 255, 255, 0.12);
     }
+}
+
+/* Accessibility: Windows High Contrast Mode — map DR tokens to system colors */
+@media (forced-colors: active) {
+  .dark-roast {
+    --dr-void: Canvas;
+    --dr-obsidian: Canvas;
+    --dr-crema: CanvasText;
+    --dr-bone: CanvasText;
+    --dr-mocha: CanvasText;
+    --dr-amber: Highlight;
+    --dr-teal: LinkText;
+    --dr-scarlet: Mark;
+    --dr-divider: ButtonBorder;
+  }
 }

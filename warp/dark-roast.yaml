@@ -28,7 +28,7 @@
 # --------------------
 # Chrome:
 #   background    #120C06   void      — OLED-safe deepest layer (1.6ms wake)
-#   foreground    #FFF7EE   crema     — primary text (17.08:1 contrast on void)
+#   foreground    #FFF7EE   crema     — primary text (18.31:1 contrast on void)
 #   cursor        #4CC4B4   teal      — kinetic, matches editor caret
 #   cursor text   #120C06   void      — inverted on cursor block
 #   selection bg  #2A1C13   espresso  — warm polished surface (v4: was `grain`)
@@ -60,7 +60,7 @@
 # ── Warp chrome ─────────────────────────────────────────────────────────────
 accent:     "#E69A4C"   # amber — selection highlights and Warp UI accent ring
 background: "#120C06"   # void — OLED-safe deepest layer (1.6ms pixel wake)
-foreground: "#FFF7EE"   # crema — primary text, 17.08:1 contrast vs void
+foreground: "#FFF7EE"   # crema — primary text, 18.31:1 contrast vs void
 cursor:     "#4CC4B4"   # teal — kinetic live-data cursor, matches editor caret
 details:    darker      # Warp lightens or darkens chrome decoration; "darker"
                         # keeps tab bar and sidebar darker than the background,

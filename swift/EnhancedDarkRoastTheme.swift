@@ -129,7 +129,7 @@ enum DarkRoast {
     /// Ultra-subtle divider — crema at 4% opacity.
     static let divider     = Color(hex: 0xFFF7EE, alpha: 0.04)
     /// Input field background (Swift-only extension — midpoint between void and espresso).
-    static let inputBg     = Color(hex: 0x1E140C)
+    static let inputBg     = Color(hex: 0x1E140E)
 
     // ── Deprecated v3 aliases (removed in v5) ───────────────
     //
