@@ -1,6 +1,6 @@
 {
   "name": "dark-roast-theme",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Dark Roast: Black Label — OLED-optimized design system. 6-step surface scale, expanded action palette, semantic role aliases, multi-layer phosphor glows, four-tier typography, elevation/motion/z-index/icon scales, and accessibility contrast targets",
   "type": "module",
   "main": "index.js",
