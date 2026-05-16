@@ -70,6 +70,11 @@ body[data-theme="dark-roast"] {
     --dr-burnt-sienna:   #C75B39;
     --dr-teal:           #4CC4B4;
 
+    /* Clinical severity hues (Option C, v4.1.0) — distinct hue families */
+    --dr-magenta:        #C25F90;
+    --dr-harvest:        #D4A040;
+    --dr-olive:          #879A39;
+
     /* — Deprecated v3 aliases (removed in v5) — */
     --dr-grain:          var(--dr-espresso);        /* @deprecated v4.0.0 */
     --dr-grain-hover:    var(--dr-espresso-hover);  /* @deprecated v4.0.0 */
@@ -129,6 +134,18 @@ body[data-theme="dark-roast"] {
     --dr-burnt-sienna-subtle: rgba(199, 91, 57, 0.10);
     --dr-burnt-sienna-ghost:  rgba(199, 91, 57, 0.05);
 
+    --dr-magenta-dim:    rgba(194, 95, 144, 0.40);
+    --dr-magenta-subtle: rgba(194, 95, 144, 0.10);
+    --dr-magenta-ghost:  rgba(194, 95, 144, 0.05);
+
+    --dr-harvest-dim:    rgba(212, 160, 64, 0.40);
+    --dr-harvest-subtle: rgba(212, 160, 64, 0.10);
+    --dr-harvest-ghost:  rgba(212, 160, 64, 0.05);
+
+    --dr-olive-dim:      rgba(135, 154, 57, 0.40);
+    --dr-olive-subtle:   rgba(135, 154, 57, 0.10);
+    --dr-olive-ghost:    rgba(135, 154, 57, 0.05);
+
     --dr-divider:        rgba(255, 247, 238, 0.04);
 
 
@@ -176,6 +193,19 @@ body[data-theme="dark-roast"] {
         0 0 2px rgba(255, 255, 255, 0.3),
         0 0 8px rgba(210, 105, 30, 0.30),
         0 0 20px rgba(210, 105, 30, 0.10);
+
+    --dr-glow-magenta:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 8px rgba(194, 95, 144, 0.40),
+        0 0 16px rgba(194, 95, 144, 0.15);
+    --dr-glow-harvest:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(212, 160, 64, 0.25),
+        0 0 24px rgba(212, 160, 64, 0.10);
+    --dr-glow-olive:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(135, 154, 57, 0.25),
+        0 0 24px rgba(135, 154, 57, 0.10);
 
     --dr-glow-teal-ghost:
         0 0 4px rgba(76, 196, 180, 0.08),
@@ -245,22 +275,24 @@ body[data-theme="dark-roast"] {
        SECTION 7: CLINICAL SEVERITY MAPPING
        ====================================================================== */
 
+    /* Option C (v4.1.0): worsening/improving/stable repointed off the
+       amberHot/amber/gold cluster onto distinct hue families. */
     --dr-severity-critical:   var(--dr-scarlet);
-    --dr-severity-worsening:  var(--dr-amber-hot);
-    --dr-severity-improving:  var(--dr-amber);
-    --dr-severity-stable:     var(--dr-gold);
+    --dr-severity-worsening:  var(--dr-magenta);
+    --dr-severity-improving:  var(--dr-harvest);
+    --dr-severity-stable:     var(--dr-olive);
     --dr-severity-resolved:   var(--dr-teal);
 
     --dr-glow-severity-critical:  var(--dr-glow-scarlet);
-    --dr-glow-severity-worsening: var(--dr-glow-amber-hot);
-    --dr-glow-severity-improving: var(--dr-glow-amber);
-    --dr-glow-severity-stable:    var(--dr-glow-gold);
+    --dr-glow-severity-worsening: var(--dr-glow-magenta);
+    --dr-glow-severity-improving: var(--dr-glow-harvest);
+    --dr-glow-severity-stable:    var(--dr-glow-olive);
     --dr-glow-severity-resolved:  var(--dr-glow-teal);
 
     --dr-severity-critical-bg:    var(--dr-scarlet-subtle);
-    --dr-severity-worsening-bg:   var(--dr-amber-hot-subtle);
-    --dr-severity-improving-bg:   var(--dr-amber-subtle);
-    --dr-severity-stable-bg:      var(--dr-gold-subtle);
+    --dr-severity-worsening-bg:   var(--dr-magenta-subtle);
+    --dr-severity-improving-bg:   var(--dr-harvest-subtle);
+    --dr-severity-stable-bg:      var(--dr-olive-subtle);
     --dr-severity-resolved-bg:    var(--dr-teal-subtle);
 
     --dr-status-idle:        var(--dr-mocha);

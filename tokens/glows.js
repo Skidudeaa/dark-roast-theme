@@ -53,6 +53,25 @@ export const glowAmberHot =
   '0 0 8px rgba(210, 105, 30, 0.30), ' +
   '0 0 20px rgba(210, 105, 30, 0.10)';
 
+// ── Clinical Severity Glows (Option C, v4.1.0) ──────────────
+// WHY: worsening carries the scarlet urgency profile (tighter, brighter
+// midband) so a deteriorating problem reads as alarming; improving/stable
+// use the calm gold profile. Matches the hue split in colors.js.
+export const glowMagenta =
+  '0 0 2px rgba(255, 255, 255, 0.3), ' +
+  '0 0 8px rgba(194, 95, 144, 0.40), ' +
+  '0 0 16px rgba(194, 95, 144, 0.15)';
+
+export const glowHarvest =
+  '0 0 2px rgba(255, 255, 255, 0.3), ' +
+  '0 0 10px rgba(212, 160, 64, 0.25), ' +
+  '0 0 24px rgba(212, 160, 64, 0.10)';
+
+export const glowOlive =
+  '0 0 2px rgba(255, 255, 255, 0.3), ' +
+  '0 0 10px rgba(135, 154, 57, 0.25), ' +
+  '0 0 24px rgba(135, 154, 57, 0.10)';
+
 // ── Ghost Glow (empty state cards) ──────────────────────────
 export const glowTealGhost =
   '0 0 4px rgba(76, 196, 180, 0.08), ' +
@@ -75,5 +94,8 @@ export const glows = {
   gold: glowGold,
   goldIntense: glowGoldIntense,
   amberHot: glowAmberHot,
+  magenta: glowMagenta,
+  harvest: glowHarvest,
+  olive: glowOlive,
   tealGhost: glowTealGhost,
 };

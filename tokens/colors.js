@@ -1,5 +1,5 @@
 // Dark Roast: Black Label — Color Tokens
-// Generated from tokens.json v4.0.0
+// Generated from tokens.json v4.1.0
 // Surface scale (6 steps) + foregrounds + geological accents + action colors + opacity variants + semantic roles.
 
 // ── Surface Scale (monotonic dark → light) ──────────────────
@@ -27,13 +27,23 @@ export const rose = '#480607';            // Contextual error background
 
 // ── Action & State (color-name primitives) ──────────────────
 export const amber = '#E69A4C';           // Primary accent, cursor, CTAs
-export const amberHot = '#D2691E';        // Worsening state, gradient terminal
+export const amberHot = '#D2691E';        // Gradient terminal, escalation/hover (no longer severity — see Option C)
 export const amberMuted = '#C07A4A';      // Reader contexts, Mystic2 parity
 export const gold = '#DAA520';            // Stable severity, true gold
 export const brass = '#BFA162';           // Warning, caution
 export const scarlet = '#C44C4C';         // Clinical critical severity
 export const burntSienna = '#C75B39';     // Terminal error, UI error (ANSI red)
 export const teal = '#4CC4B4';            // Success, live data, kinetic teal
+
+// ── Clinical Severity Hues (Option C, v4.1.0) ───────────────
+// WHY: worsening/improving/stable previously aliased amberHot/amber/gold —
+// a 3° hue spread that collapses to "vaguely amber" at census scanning
+// speed. These three occupy distinct hue families (333°/39°/72°) so the
+// clinical distinction survives peripheral vision and display variation.
+// Directional states still require paired iconography (see DESIGN-SYSTEM.md).
+export const magenta = '#C25F90';         // Worsening severity (hue 333°)
+export const harvest = '#D4A040';         // Improving severity (hue 39°)
+export const olive = '#879A39';           // Stable severity (hue 72°)
 
 // ── Opacity Variants ────────────────────────────────────────
 // dim (40%) — focused borders, active rings
@@ -67,6 +77,18 @@ export const brassGhost = 'rgba(191, 161, 98, 0.05)';
 export const burntSiennaDim = 'rgba(199, 91, 57, 0.40)';
 export const burntSiennaSubtle = 'rgba(199, 91, 57, 0.10)';
 export const burntSiennaGhost = 'rgba(199, 91, 57, 0.05)';
+
+export const magentaDim = 'rgba(194, 95, 144, 0.40)';
+export const magentaSubtle = 'rgba(194, 95, 144, 0.10)';
+export const magentaGhost = 'rgba(194, 95, 144, 0.05)';
+
+export const harvestDim = 'rgba(212, 160, 64, 0.40)';
+export const harvestSubtle = 'rgba(212, 160, 64, 0.10)';
+export const harvestGhost = 'rgba(212, 160, 64, 0.05)';
+
+export const oliveDim = 'rgba(135, 154, 57, 0.40)';
+export const oliveSubtle = 'rgba(135, 154, 57, 0.10)';
+export const oliveGhost = 'rgba(135, 154, 57, 0.05)';
 
 // ── Structural Derived ──────────────────────────────────────
 export const divider = 'rgba(255, 247, 238, 0.04)';
@@ -112,6 +134,10 @@ export const colors = {
   scarlet,
   burntSienna,
   teal,
+  // Clinical severity hues (Option C)
+  magenta,
+  harvest,
+  olive,
 };
 
 export const roles = {
@@ -138,6 +164,9 @@ export const opacityVariants = {
   tealDim, tealSubtle, tealGhost,
   brassDim, brassSubtle, brassGhost,
   burntSiennaDim, burntSiennaSubtle, burntSiennaGhost,
+  magentaDim, magentaSubtle, magentaGhost,
+  harvestDim, harvestSubtle, harvestGhost,
+  oliveDim, oliveSubtle, oliveGhost,
   divider,
 };
 
