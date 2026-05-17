@@ -151,13 +151,16 @@ All 22 color primitives organized by functional layer. Every token is production
 | Token | CSS Variable | Hex | Role |
 |-------|-------------|-----|------|
 | amber | `--dr-amber` | `#E69A4C` | Primary accent, cursor, CTAs |
-| amberHot | `--dr-amber-hot` | `#D2691E` | Worsening severity, gradient terminal |
+| amberHot | `--dr-amber-hot` | `#D2691E` | Gradient terminal, escalation/hover (no longer severity, see Option C) |
 | amberMuted | `--dr-amber-muted` | `#C07A4A` | Reader contexts, Mystic2 parity (new in v4) |
-| gold | `--dr-gold` | `#DAA520` | Stable severity |
+| gold | `--dr-gold` | `#DAA520` | True gold accent |
 | brass | `--dr-brass` | `#BFA162` | Warning, caution (new in v4) |
 | scarlet | `--dr-scarlet` | `#C44C4C` | Clinical critical severity |
 | burntSienna | `--dr-burnt-sienna` | `#C75B39` | Terminal error, UI error (ANSI red, new in v4) |
 | teal | `--dr-teal` | `#4CC4B4` | Success, live data, kinetic teal |
+| magenta | `--dr-magenta` | `#C25F90` | Worsening severity, hue 333° (new in v4.1.0, Option C) |
+| harvest | `--dr-harvest` | `#D4A040` | Improving severity, hue 39° (new in v4.1.0, Option C) |
+| olive | `--dr-olive` | `#879A39` | Stable severity, hue 72° (new in v4.1.0, Option C) |
 
 ### 2.5 Semantic Role Aliases
 
@@ -185,13 +188,13 @@ Each action color has three opacity tiers for layered UI states:
 | subtle | 10% | Hover backgrounds, light fills, severity badge bg |
 | ghost | 5% | Skeleton loads, faint state indicators |
 
-v4 extends the tier system to `brass` (warning) and `burntSienna` (error) in addition to the original 5 action colors.
+v4 extends the tier system to `brass` (warning) and `burntSienna` (error) in addition to the original 5 action colors. v4.1.0 adds the three severity hues (`magenta`, `harvest`, `olive`) with the same dim/subtle/ghost tiers.
 
 ### 2.7 Derived Tokens: Multi-Layer Glow System
 
 Glows are `box-shadow` values (not colors). Each has three phosphor layers: white hotspot, color midband, color wash.
 
-11 glow tokens: amber, amber-intense, teal, teal-intense, scarlet, scarlet-intense, gold, gold-intense, amber-hot, teal-ghost, glass-gradient.
+14 glow tokens: amber, amber-intense, teal, teal-intense, scarlet, scarlet-intense, gold, gold-intense, amber-hot, magenta, harvest, olive, teal-ghost, glass-gradient. The three severity glows (magenta/harvest/olive) were added in v4.1.0 — magenta carries the scarlet urgency profile, harvest/olive the calm gold profile.
 
 ---
 
@@ -273,13 +276,54 @@ Both `void` and `obsidian` keep OLED pixels energized above the power-off thresh
 
 ## 6. Clinical Severity System
 
-| Severity | Token | Hex | Clinical Meaning |
-|----------|-------|-----|-----------------|
-| Critical | scarlet | `#C44C4C` | Immediate attention required |
-| Worsening | amber-hot | `#D2691E` | Deteriorating trend |
-| Improving | amber | `#E69A4C` | Positive trajectory |
-| Stable | gold | `#DAA520` | No significant change |
-| Resolved | teal | `#4CC4B4` | Problem resolved |
+Consumed via the `--dr-severity-*` indirection layer (`--dr-severity-worsening`,
+`--dr-severity-improving`, `--dr-severity-stable`, plus `-bg` and
+`--dr-glow-severity-*` companions). Reference these, **not** the underlying
+color primitives — the indirection is the migration seam.
+
+| Severity | Token | Hex | Hue | Icon (SF Symbol) | Sparkline | Clinical Meaning |
+|----------|-------|-----|-----|------------------|-----------|------------------|
+| Critical | scarlet | `#C44C4C` | 0° | `exclamationmark.triangle.fill` | — | Immediate attention required |
+| Worsening | magenta | `#C25F90` | 333° | `arrow.down.right` | slope_down | Deteriorating trend |
+| Improving | harvest | `#D4A040` | 39° | `arrow.up.right` | slope_up | Positive trajectory |
+| Stable | olive | `#879A39` | 72° | `arrow.right` | flat | No significant change |
+| Resolved | teal | `#4CC4B4` | 172° | `checkmark.seal.fill` | — | Problem resolved |
+
+Five distinct hue families: catastrophe → struggle → climbing → holding →
+recovered. **Directional states (worsening/improving/stable) MUST render the
+paired icon + sparkline** — color carries category, icon carries direction,
+sparkline carries magnitude. Renderers that omit iconography still degrade
+acceptably (hues are now distinct), but the documented contract is the full
+pattern. Severity renders as a bare 8px dot in dense census rows, which is why
+hue separation is enforced strictly here (see §6.1).
+
+### 6.1 Palette Rules
+
+These three rules govern how color tokens may be assigned to semantic roles.
+They exist so the Option C remediation is not silently "normalized" back to a
+single amber family by a future maintainer.
+
+**Rule 1 — Hue family separation.** Colors representing semantically distinct
+roles within the same group must occupy different hue families: ≥ 30° hue gap
+**and** ≥ 25 ΔE between any two roles in one group. Under cognitive load,
+peripheral vision, or display variation, colors within 30° blur into one.
+*Exempt when* roles are variants of the same token (`accent`/`accentHot`),
+differentiated by paired iconography/animation, or never co-occur in one frame.
+*Violation that triggered Option C:* `improving #E69A4C` (28°) vs
+`worsening #D2691E` (25°) — a 3° gap that collapsed at census scanning speed.
+*Compliant:* `critical #C44C4C` (0°) vs `resolved #4CC4B4` (172°) — cannot blend.
+
+**Rule 2 — No cross-group exact reuse.** One hex used as the primary signal in
+two semantic groups creates channel ambiguity (e.g. the same amber as both a
+clinical severity and a pipeline stage — the viewer cannot tell which channel
+is reporting). Remediate with distinct tokens per group, channel-distinguishing
+iconography, or animating one channel so motion disambiguates.
+
+**Rule 3 — Directional states need iconography.** Direction is a vector; color
+is a scalar. An amber dot cannot say "getting better" vs "getting worse"
+without an arrow, slope sparkline, or label. Compliant pattern: hue carries the
+intermediate-state category, a paired SF Symbol carries direction, a number
+carries magnitude.
 
 ---
 

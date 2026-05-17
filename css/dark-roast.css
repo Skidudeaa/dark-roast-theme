@@ -57,13 +57,19 @@
 
     /* — Action & State Tokens (color-name primitives) — */
     --dr-amber:          #E69A4C;  /* Primary accent, cursor, CTA */
-    --dr-amber-hot:      #D2691E;  /* Worsening state, gradient terminal */
+    --dr-amber-hot:      #D2691E;  /* Gradient terminal, escalation/hover (no longer severity) */
     --dr-amber-muted:    #C07A4A;  /* Reader contexts, Mystic2 parity */
-    --dr-gold:           #DAA520;  /* Stable severity, true gold */
+    --dr-gold:           #DAA520;  /* True gold accent */
     --dr-brass:          #BFA162;  /* Warning, caution */
     --dr-scarlet:        #C44C4C;  /* Clinical critical severity */
     --dr-burnt-sienna:   #C75B39;  /* Terminal red, UI error (ANSI red) */
     --dr-teal:           #4CC4B4;  /* Success, live data, kinetic teal */
+
+    /* Clinical severity hues (Option C, v4.1.0) — distinct hue families
+       so worsening/improving/stable cannot blend at scanning speed. */
+    --dr-magenta:        #C25F90;  /* Worsening severity (hue 333°) */
+    --dr-harvest:        #D4A040;  /* Improving severity (hue 39°) */
+    --dr-olive:          #879A39;  /* Stable severity (hue 72°) */
 
     /* — Deprecated v3 aliases (removed in v5) — */
     --dr-grain:          var(--dr-espresso);        /* @deprecated v4.0.0 */
@@ -133,6 +139,21 @@
     --dr-burnt-sienna-subtle: rgba(199, 91, 57, 0.10);
     --dr-burnt-sienna-ghost:  rgba(199, 91, 57, 0.05);
 
+    /* Magenta (worsening severity) variants */
+    --dr-magenta-dim:    rgba(194, 95, 144, 0.40);
+    --dr-magenta-subtle: rgba(194, 95, 144, 0.10);
+    --dr-magenta-ghost:  rgba(194, 95, 144, 0.05);
+
+    /* Harvest (improving severity) variants */
+    --dr-harvest-dim:    rgba(212, 160, 64, 0.40);
+    --dr-harvest-subtle: rgba(212, 160, 64, 0.10);
+    --dr-harvest-ghost:  rgba(212, 160, 64, 0.05);
+
+    /* Olive (stable severity) variants */
+    --dr-olive-dim:      rgba(135, 154, 57, 0.40);
+    --dr-olive-subtle:   rgba(135, 154, 57, 0.10);
+    --dr-olive-ghost:    rgba(135, 154, 57, 0.05);
+
     /* Structural derived */
     --dr-divider:        rgba(255, 247, 238, 0.04);  /* Crema-based ultra-subtle divider */
 
@@ -190,6 +211,21 @@
         0 0 2px rgba(255, 255, 255, 0.3),
         0 0 8px rgba(210, 105, 30, 0.30),
         0 0 20px rgba(210, 105, 30, 0.10);
+
+    /* Severity glows (Option C) — worsening carries the scarlet urgency
+       profile; improving/stable use the calm gold profile. */
+    --dr-glow-magenta:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 8px rgba(194, 95, 144, 0.40),
+        0 0 16px rgba(194, 95, 144, 0.15);
+    --dr-glow-harvest:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(212, 160, 64, 0.25),
+        0 0 24px rgba(212, 160, 64, 0.10);
+    --dr-glow-olive:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 10px rgba(135, 154, 57, 0.25),
+        0 0 24px rgba(135, 154, 57, 0.10);
 
     /* Ghost-level glow for empty state cards */
     --dr-glow-teal-ghost:
@@ -273,24 +309,27 @@
        SECTION 7: CLINICAL SEVERITY MAPPING
        ====================================================================== */
 
+    /* Option C (v4.1.0): worsening/improving/stable repointed off the
+       amberHot/amber/gold cluster (3° hue spread) onto distinct hue
+       families. Pair directional states with iconography (DESIGN-SYSTEM §6). */
     --dr-severity-critical:   var(--dr-scarlet);     /* #C44C4C — immediate danger */
-    --dr-severity-worsening:  var(--dr-amber-hot);   /* #D2691E — trending worse */
-    --dr-severity-improving:  var(--dr-amber);       /* #E69A4C — trending better */
-    --dr-severity-stable:     var(--dr-gold);        /* #DAA520 — holding steady */
+    --dr-severity-worsening:  var(--dr-magenta);     /* #C25F90 — trending worse (hue 333°) */
+    --dr-severity-improving:  var(--dr-harvest);     /* #D4A040 — trending better (hue 39°) */
+    --dr-severity-stable:     var(--dr-olive);       /* #879A39 — holding steady (hue 72°) */
     --dr-severity-resolved:   var(--dr-teal);        /* #4CC4B4 — no longer active */
 
     /* Severity glow variants */
     --dr-glow-severity-critical:  var(--dr-glow-scarlet);
-    --dr-glow-severity-worsening: var(--dr-glow-amber-hot);
-    --dr-glow-severity-improving: var(--dr-glow-amber);
-    --dr-glow-severity-stable:    var(--dr-glow-gold);
+    --dr-glow-severity-worsening: var(--dr-glow-magenta);
+    --dr-glow-severity-improving: var(--dr-glow-harvest);
+    --dr-glow-severity-stable:    var(--dr-glow-olive);
     --dr-glow-severity-resolved:  var(--dr-glow-teal);
 
     /* Severity background fills */
     --dr-severity-critical-bg:    var(--dr-scarlet-subtle);
-    --dr-severity-worsening-bg:   var(--dr-amber-hot-subtle);
-    --dr-severity-improving-bg:   var(--dr-amber-subtle);
-    --dr-severity-stable-bg:      var(--dr-gold-subtle);
+    --dr-severity-worsening-bg:   var(--dr-magenta-subtle);
+    --dr-severity-improving-bg:   var(--dr-harvest-subtle);
+    --dr-severity-stable-bg:      var(--dr-olive-subtle);
     --dr-severity-resolved-bg:    var(--dr-teal-subtle);
 
     /* Clinical workflow states */
