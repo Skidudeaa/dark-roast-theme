@@ -1,0 +1,312 @@
+/* ==========================================================================
+   DARK ROAST: BLACK LABEL — DESIGN TOKEN FOUNDATION (Standalone)
+   GENERATED FILE — do not edit. Source: src/tokens.json + this template's
+   hand-authored regions. Regenerate with `npm run build`.
+
+   The :root token block below is filled by scripts/build-tokens.js between the
+   @generated markers. Everything else (app-layer vars, keyframes, utilities,
+   base styles) is hand-authored in src/css-templates/.
+   ========================================================================== */
+
+
+:root {
+
+    /* @generated:tokens — from src/tokens.json, do not edit by hand */
+    /* @end:tokens */
+
+    /* ── App-layer & derived tokens (hand-authored) ──────────────────────
+       These consume the generated primitives above. Severity / workflow / CExE
+       are somaCURA app-layer contracts; deprecated aliases ease v3 migration. */
+
+    /* Deprecated v3 aliases (slated for removal in a future major) */
+    --dr-grain:          var(--dr-espresso);
+    --dr-grain-hover:    var(--dr-espresso-hover);
+    --dr-crater-lt:      var(--dr-crater);
+
+    /* Clinical severity mapping (Option C, v4.1.0) — color is category only;
+       pair directional states with iconography (DESIGN-SYSTEM §6). */
+    --dr-severity-critical:   var(--dr-scarlet);
+    --dr-severity-worsening:  var(--dr-magenta);
+    --dr-severity-improving:  var(--dr-harvest);
+    --dr-severity-stable:     var(--dr-olive);
+    --dr-severity-resolved:   var(--dr-teal);
+
+    --dr-glow-severity-critical:  var(--dr-glow-scarlet);
+    --dr-glow-severity-worsening: var(--dr-glow-magenta);
+    --dr-glow-severity-improving: var(--dr-glow-harvest);
+    --dr-glow-severity-stable:    var(--dr-glow-olive);
+    --dr-glow-severity-resolved:  var(--dr-glow-teal);
+
+    --dr-severity-critical-bg:    var(--dr-scarlet-subtle);
+    --dr-severity-worsening-bg:   var(--dr-magenta-subtle);
+    --dr-severity-improving-bg:   var(--dr-harvest-subtle);
+    --dr-severity-stable-bg:      var(--dr-olive-subtle);
+    --dr-severity-resolved-bg:    var(--dr-teal-subtle);
+
+    /* Clinical workflow states */
+    --dr-status-idle:        var(--dr-mocha);
+    --dr-status-generating:  var(--dr-teal);
+    --dr-status-ready:       var(--dr-gold);
+    --dr-status-editing:     var(--dr-amber);
+    --dr-status-error:       var(--dr-burnt-sienna);
+
+    /* CExE component tokens (Clinical Expression Engine) */
+    --dr-cexe-eval-badge-bg:       var(--dr-espresso);
+    --dr-cexe-eval-badge-border:   var(--dr-crater-deep);
+    --dr-cexe-answer-text:         var(--dr-crema);
+    --dr-cexe-answer-highlight:    var(--dr-amber);
+    --dr-cexe-scope-indicator:     var(--dr-asparagus);
+    --dr-cexe-whatif-highlight:    var(--dr-amber-subtle);
+    --dr-cexe-whatif-border:       var(--dr-amber-dim);
+    --dr-cexe-provenance-hover:    var(--dr-espresso-hover);
+    --dr-cexe-provenance-border:   var(--dr-crater);
+    --dr-cexe-running-total:       var(--dr-gold);
+    --dr-cexe-running-total-bg:    var(--dr-gold-ghost);
+    --dr-cexe-abx-badge:           var(--dr-amber-hot);
+    --dr-cexe-abx-badge-bg:        var(--dr-amber-hot-subtle);
+    --dr-cexe-expr-detect:         var(--dr-teal-subtle);
+    --dr-cexe-expr-detect-border:  var(--dr-teal-dim);
+
+    /* Texture */
+    --dr-grain-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================================
+   SECTION 13: ANIMATION KEYFRAMES
+   ========================================================================== */
+
+@keyframes dr-pulse-teal {
+    0%   { box-shadow: 0 0 0 0 rgba(76, 196, 180, 0.6); }
+    70%  { box-shadow: 0 0 0 12px rgba(76, 196, 180, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 196, 180, 0); }
+}
+
+@keyframes dr-pulse-scarlet {
+    0%, 100% { box-shadow: 0 0 0 rgba(196, 76, 76, 0); }
+    50%      { box-shadow: 0 0 16px rgba(196, 76, 76, 0.3); }
+}
+
+@keyframes dr-breathe-amber {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1.0; }
+}
+
+@keyframes dr-shimmer-skeleton {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+}
+
+@keyframes dr-fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dr-slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes dr-glow {
+    0%, 100% { box-shadow: 0 0 8px rgba(230, 154, 76, 0.2); }
+    50%      { box-shadow: 0 0 20px rgba(230, 154, 76, 0.4); }
+}
+
+@keyframes dr-grain-drift {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(-2px, -2px); }
+}
+
+
+/* ==========================================================================
+   SECTION 14: UTILITY CLASSES
+   Unscoped — classes work standalone without data-theme attribute.
+   ========================================================================== */
+
+/* Glass morphism panel — the standard Dark Roast card surface */
+.dr-glass-panel {
+    background: var(--dr-glass-gradient);
+    border: 1px solid var(--dr-crater-deep);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-radius: var(--dr-radius-lg);
+}
+
+/* Geological sediment stripe — thin warm gradient at card bottom */
+.dr-geo-stripe {
+    position: relative;
+}
+.dr-geo-stripe::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--dr-stripe-height);
+    background: linear-gradient(90deg, var(--dr-crater-deep), var(--dr-crater), transparent);
+    opacity: var(--dr-stripe-opacity);
+    border-radius: 0 0 var(--dr-radius-lg) var(--dr-radius-lg);
+}
+
+/* Severity badge classes — inline pill/chip for clinical states */
+.dr-severity-critical {
+    color: var(--dr-severity-critical);
+    background: var(--dr-severity-critical-bg);
+    box-shadow: var(--dr-glow-severity-critical);
+}
+.dr-severity-worsening {
+    color: var(--dr-severity-worsening);
+    background: var(--dr-severity-worsening-bg);
+    box-shadow: var(--dr-glow-severity-worsening);
+}
+.dr-severity-improving {
+    color: var(--dr-severity-improving);
+    background: var(--dr-severity-improving-bg);
+    box-shadow: var(--dr-glow-severity-improving);
+}
+.dr-severity-stable {
+    color: var(--dr-severity-stable);
+    background: var(--dr-severity-stable-bg);
+    box-shadow: var(--dr-glow-severity-stable);
+}
+.dr-severity-resolved {
+    color: var(--dr-severity-resolved);
+    background: var(--dr-severity-resolved-bg);
+    box-shadow: var(--dr-glow-severity-resolved);
+}
+
+/* Live data pulsing indicator */
+.dr-pulse-teal {
+    animation: dr-pulse-teal 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* Critical breathing ring */
+.dr-pulse-scarlet {
+    animation: dr-pulse-scarlet var(--dr-duration-ambient) var(--dr-easing-ease-in-out) infinite;
+}
+
+/* Amber ambient breathing opacity */
+.dr-breathe-amber {
+    animation: dr-breathe-amber var(--dr-duration-ambient) var(--dr-easing-ease-in-out) infinite;
+}
+
+/* Fractal noise grain overlay — fixed fullscreen with drift animation */
+.dr-grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--dr-z-debug);
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+    background-image: var(--dr-grain-texture);
+    animation: dr-grain-drift 8s ease-in-out infinite;
+}
+
+/* Fade-up entrance utility */
+.dr-fade-up {
+    animation: dr-fadeUp 0.7s ease-out both;
+}
+
+/* Slide-in entrance utility */
+.dr-slide-in {
+    animation: dr-slideIn 0.5s ease-out both;
+}
+
+/* Amber glow breathing animation */
+.dr-glow-breathe {
+    animation: dr-glow 3s ease-in-out infinite;
+}
+
+
+/* ==========================================================================
+   SECTION 15: BASE STYLES
+   Activated by adding class="dark-roast" to body (or any container).
+   ========================================================================== */
+
+.dark-roast {
+    background-color: var(--dr-void);
+    color: var(--dr-bone);
+    font-family: var(--dr-font-body);
+    font-size: var(--dr-text-base);
+    line-height: var(--dr-leading-base);
+    margin: 0;
+    padding: 0;
+}
+
+.dark-roast ::selection {
+    background: rgba(76, 196, 180, 0.35);
+    color: var(--dr-crema);
+}
+
+.dark-roast ::-moz-selection {
+    background: rgba(76, 196, 180, 0.35);
+    color: var(--dr-crema);
+}
+
+/* Scrollbars */
+.dark-roast {
+    scrollbar-color: var(--dr-crater-deep) var(--dr-void);
+    scrollbar-width: thin;
+}
+.dark-roast ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.dark-roast ::-webkit-scrollbar-track {
+    background: var(--dr-void);
+}
+.dark-roast ::-webkit-scrollbar-thumb {
+    background: var(--dr-crater-deep);
+    border-radius: 3px;
+}
+.dark-roast ::-webkit-scrollbar-thumb:hover {
+    background: var(--dr-amber);
+}
+
+/* Focus ring */
+.dark-roast *:focus-visible {
+    outline: 2px solid var(--dr-teal);
+    outline-offset: 2px;
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .dark-roast {
+        animation: none;
+    }
+    .dark-roast .dr-pulse-teal,
+    .dark-roast .dr-pulse-scarlet,
+    .dark-roast .dr-breathe-amber,
+    .dark-roast .dr-fade-up,
+    .dark-roast .dr-slide-in,
+    .dark-roast .dr-glow-breathe,
+    .dark-roast .dr-shimmer-skeleton,
+    .dark-roast .dr-grain-overlay {
+        animation: none;
+    }
+}
+
+/* Accessibility: high contrast strengthens foregrounds, disables shadows */
+@media (prefers-contrast: more) {
+    .dark-roast {
+        text-shadow: none !important;
+        --dr-bone:      var(--dr-warm-white);
+        --dr-mocha:     var(--dr-bone);
+        --dr-asparagus: var(--dr-mocha);
+        --dr-divider:   rgba(255, 255, 255, 0.12);
+    }
+}
+
+/* Accessibility: Windows High Contrast Mode — map DR tokens to system colors */
+@media (forced-colors: active) {
+  .dark-roast {
+    --dr-void: Canvas;
+    --dr-obsidian: Canvas;
+    --dr-crema: CanvasText;
+    --dr-bone: CanvasText;
+    --dr-mocha: CanvasText;
+    --dr-amber: Highlight;
+    --dr-teal: LinkText;
+    --dr-scarlet: Mark;
+    --dr-divider: ButtonBorder;
+  }
+}

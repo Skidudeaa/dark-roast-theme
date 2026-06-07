@@ -1,13 +1,10 @@
-// Dark Roast: Black Label — Spacing, Geometry, Motion, Z-Index, Icon, Elevation
-// v4.0.0 — Expanded spacing scale (4px base, 15 steps), added z-index + icon sizes + elevation.
+// AUTO-GENERATED from src/tokens.json by scripts/build-tokens.js — DO NOT EDIT.
+// Edit src/tokens.json and run `npm run build`.
+// Spacing, radii, motion, z-index, icon, elevation.
 
-// ── Spacing Scale (4px base unit) ───────────────────────────
-// Numeric tokens (space1 = 4px, space2 = 8px, ...).
+// ── Spacing Scale (4px base) ──
 export const space0 = '0';
-export const spacePx = '1px';
-export const space0_5 = '2px';
 export const space1 = '4px';
-export const space1_5 = '6px';
 export const space2 = '8px';
 export const space3 = '12px';
 export const space4 = '16px';
@@ -19,17 +16,20 @@ export const space12 = '48px';
 export const space16 = '64px';
 export const space20 = '80px';
 export const space24 = '96px';
+export const spacePx = '1px';
+export const space0_5 = '2px';
+export const space1_5 = '6px';
 
-// Alias tokens (retained for backwards compat; point at numeric scale).
-export const spaceXs = space1;    // 4px
-export const spaceSm = space2;    // 8px
-export const spaceMd = space3;    // 12px
-export const spaceLg = space4;    // 16px
-export const spaceXl = space6;    // 24px
-export const space2xl = space8;   // 32px
-export const space3xl = space12;  // 48px
+// ── Spacing Aliases ──
+export const spaceXs = space1;
+export const spaceSm = space2;
+export const spaceMd = space3;
+export const spaceLg = space4;
+export const spaceXl = space6;
+export const space2xl = space8;
+export const space3xl = space12;
 
-// ── Border Radii ────────────────────────────────────────────
+// ── Border Radii ──
 export const radiusNone = '0';
 export const radiusXs = '2px';
 export const radiusSm = '4px';
@@ -39,39 +39,35 @@ export const radiusXl = '16px';
 export const radius2xl = '24px';
 export const radiusFull = '9999px';
 
-// ── Geo-Stripe Dimensions ───────────────────────────────────
+// ── Geo-Stripe ──
 export const stripeHeight = '2px';
 export const stripeOpacity = '0.5';
 
-// ── Animation Timing (v4 names) ─────────────────────────────
+// ── Durations ──
 export const durationInstant = '0ms';
-export const durationFast = '120ms';           // Hover, tap feedback
-export const durationBase = '200ms';           // Standard transitions
-export const durationModerate = '320ms';       // Card expand, tab switches
-export const durationSlow = '480ms';           // Modal enter/exit
-export const durationDeliberate = '640ms';     // Hero reveals
-export const durationAmbient = '1200ms';       // Breathing glows
-
-// Legacy v3 duration aliases (retained).
+export const durationFast = '120ms';
+export const durationBase = '200ms';
+export const durationModerate = '320ms';
+export const durationSlow = '480ms';
+export const durationDeliberate = '640ms';
+export const durationAmbient = '1200ms';
 export const durationNormal = '300ms';
 export const durationTheatrical = '500ms';
 export const durationEntrance = '600ms';
 
-// ── Easing Curves ───────────────────────────────────────────
-export const easing = 'cubic-bezier(0.4, 0, 0.2, 1)';
+// ── Easings ──
 export const easingLinear = 'linear';
+export const easing = 'cubic-bezier(0.4, 0, 0.2, 1)';
 export const easingEaseOut = 'cubic-bezier(0.16, 1, 0.3, 1)';
 export const easingEaseIn = 'cubic-bezier(0.7, 0, 0.84, 0)';
 export const easingEaseInOut = 'cubic-bezier(0.65, 0, 0.35, 1)';
 export const easingDramatic = 'cubic-bezier(0.22, 1, 0.36, 1)';
 export const easingBounce = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
 export const easingSpringSnappy = 'cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-
-// SwiftUI spring strings (consumed by native iOS targets, not CSS).
 export const swiftuiSpringSnappy = '.spring(response: 0.35, dampingFraction: 0.7)';
 export const swiftuiSpringSoft = '.spring(response: 0.55, dampingFraction: 0.85)';
 
-// ── Z-Index Scale ───────────────────────────────────────────
+// ── Z-Index ──
 export const zBase = 0;
 export const zRaised = 1;
 export const zSticky = 100;
@@ -84,7 +80,7 @@ export const zToast = 700;
 export const zTooltip = 800;
 export const zDebug = 9999;
 
-// ── Icon Size Scale ─────────────────────────────────────────
+// ── Icon Sizes ──
 export const iconXs = '12px';
 export const iconSm = '14px';
 export const iconMd = '16px';
@@ -92,13 +88,11 @@ export const iconLg = '20px';
 export const iconXl = '24px';
 export const icon2xl = '32px';
 export const icon3xl = '48px';
-
 export const iconStrokeThin = 1.5;
 export const iconStrokeNormal = 2;
 export const iconStrokeBold = 2.5;
 
-// ── Elevation (shadow + border pairs) ───────────────────────
-// Dark Roast uses radial glow + border-weight variation, not hard drop shadows.
+// ── Elevation ──
 export const elevationFlat = {
   shadow: 'none',
   border: '1px solid rgba(255,255,255,0.04)',
@@ -123,43 +117,41 @@ export const elevationLive = {
   glow: 'teal',
 };
 
-// ── Collected objects for iteration ─────────────────────────
 export const spacing = {
-  0: space0,
-  px: spacePx,
+  '0': space0,
+  '1': space1,
+  '2': space2,
+  '3': space3,
+  '4': space4,
+  '5': space5,
+  '6': space6,
+  '8': space8,
+  '10': space10,
+  '12': space12,
+  '16': space16,
+  '20': space20,
+  '24': space24,
+  'px': spacePx,
   '0.5': space0_5,
-  1: space1,
   '1.5': space1_5,
-  2: space2,
-  3: space3,
-  4: space4,
-  5: space5,
-  6: space6,
-  8: space8,
-  10: space10,
-  12: space12,
-  16: space16,
-  20: space20,
-  24: space24,
-  // Aliases
-  xs: spaceXs,
-  sm: spaceSm,
-  md: spaceMd,
-  lg: spaceLg,
-  xl: spaceXl,
+  'xs': spaceXs,
+  'sm': spaceSm,
+  'md': spaceMd,
+  'lg': spaceLg,
+  'xl': spaceXl,
   '2xl': space2xl,
   '3xl': space3xl,
 };
 
 export const radii = {
-  none: radiusNone,
-  xs: radiusXs,
-  sm: radiusSm,
-  md: radiusMd,
-  lg: radiusLg,
-  xl: radiusXl,
+  'none': radiusNone,
+  'xs': radiusXs,
+  'sm': radiusSm,
+  'md': radiusMd,
+  'lg': radiusLg,
+  'xl': radiusXl,
   '2xl': radius2xl,
-  full: radiusFull,
+  'full': radiusFull,
 };
 
 export const durations = {
@@ -170,23 +162,22 @@ export const durations = {
   slow: durationSlow,
   deliberate: durationDeliberate,
   ambient: durationAmbient,
-  // Legacy
   normal: durationNormal,
   theatrical: durationTheatrical,
   entrance: durationEntrance,
 };
 
 export const easings = {
-  default: easing,
   linear: easingLinear,
+  default: easing,
   easeOut: easingEaseOut,
   easeIn: easingEaseIn,
   easeInOut: easingEaseInOut,
   dramatic: easingDramatic,
   bounce: easingBounce,
   springSnappy: easingSpringSnappy,
-  swiftuiSpringSnappy,
-  swiftuiSpringSoft,
+  swiftuiSpringSnappy: swiftuiSpringSnappy,
+  swiftuiSpringSoft: swiftuiSpringSoft,
 };
 
 export const zIndex = {
@@ -205,8 +196,13 @@ export const zIndex = {
 
 export const icon = {
   size: {
-    xs: iconXs, sm: iconSm, md: iconMd, lg: iconLg,
-    xl: iconXl, '2xl': icon2xl, '3xl': icon3xl,
+    'xs': iconXs,
+    'sm': iconSm,
+    'md': iconMd,
+    'lg': iconLg,
+    'xl': iconXl,
+    '2xl': icon2xl,
+    '3xl': icon3xl,
   },
   stroke: {
     thin: iconStrokeThin,

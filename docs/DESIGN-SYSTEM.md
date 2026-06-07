@@ -1,9 +1,18 @@
 # Dark Roast: Black Label -- Design System Reference
 
-**Version**: 4.0.0
+**Version**: 5.0.0
 **Status**: CANONICAL
 **Date**: 2026-04-20
 **Applies to**: somaCURA (web, clinical data), Song Expanse (iOS, music visualization)
+
+> **Reading notes for v4.1.0 / v5.0.0.** This reference was authored at v4.0.0.
+> Two later releases affect it: **v4.1.0** added 3 clinical-severity hue
+> primitives — `magenta #C25F90`, `harvest #D4A040`, `olive #879A39` (see §6) —
+> bringing the totals to **26 colors / 30 opacity variants / 13 glows**; the
+> per-section matrices below (§2) still enumerate the original 22 and have not
+> yet been expanded. **v5.0.0** is a structural release: no token values
+> changed; the package is now generated from `src/tokens.json` and import paths
+> moved under `dist/` (see README "v4 → v5 Migration" and `docs/REORG-PLAN.md`).
 
 ---
 
@@ -51,7 +60,7 @@ Prefer in new code for portability; color-name primitives remain canonical.
 
 ### New primitive categories
 
-All additive. See `tokens/tokens.json` v4.0.0 for full detail.
+All additive. See `src/tokens.json` for full detail.
 
 - `opacity` -- 12-step alpha scale (0/4/5/8/10/12/15/24/40/60/85/100)
 - `spacing` -- expanded to 15 steps (`0` -> `24` in px increments; numeric keys + legacy aliases)
@@ -94,11 +103,11 @@ Dark Roast: Black Label is the unified design system for the soma product family
 | Attribute | Value |
 |-----------|-------|
 | Theme name | Dark Roast: Black Label |
-| Version | 4.0.0 |
+| Version | 5.0.0 |
 | Status | CANONICAL (production-locked) |
-| Color primitives | 6 surface + 4 foreground + 4 geological + 8 action = 22 colors |
-| Opacity variants | 21 (3 tiers x 7 action colors) |
-| Glows | 11 multi-layer box-shadows |
+| Color primitives | 6 surface + 4 foreground + 4 geological + 8 action + 3 severity = 26 colors |
+| Opacity variants | 30 (3 tiers x 10 colors) |
+| Glows | 13 multi-layer box-shadows |
 | Typography | 4 families, 10-step scale, 12 semantic roles |
 | Primitive categories | 11 (color, opacity, spacing, radii, elevation, typography, motion, z-index, icon, state, accessibility) |
 | App targets | 2 (somaCURA, Song Expanse) |
@@ -224,7 +233,7 @@ Four locked font faces, each with a distinct role. No substitutions.
 | `--dr-text-4xl` | 3rem (48px) | Hero display (Playfair) |
 | `--dr-text-5xl` | 4rem (64px) | Marketing hero only |
 
-Each step carries matching `--dr-leading-*` line-height values tuned for dense clinical/technical reading (see `tokens/tokens.json` `typography.scale`). Semantic typography *roles* (`hero`, `cardTitle`, `labValue`, `vitalSign`, `timestamp`, etc.) map role -> family + scale + color, see `typography.roles`.
+Each step carries matching `--dr-leading-*` line-height values tuned for dense clinical/technical reading (see `src/tokens.json` `typography.scale`). Semantic typography *roles* (`hero`, `cardTitle`, `labValue`, `vitalSign`, `timestamp`, etc.) map role -> family + scale + color, see `typography.roles`.
 | `--dr-text-lg` | 1.125rem (18px) | Subheadings |
 | `--dr-text-xl` | 1.5rem (24px) | Section headers |
 | `--dr-text-2xl` | 2rem (32px) | Page titles |
@@ -437,15 +446,17 @@ The CSS includes `prefers-reduced-motion`, `prefers-contrast: more`, and visible
 
 | File | Purpose |
 |------|---------|
-| `css/dark-roast.css` | Standalone CSS — tokens on `:root`, base styles via `.dark-roast` class |
-| `css/dark-roast-scoped.css` | Scoped CSS — tokens on `[data-theme="dark-roast"]` for multi-theme apps |
-| `tokens/tokens.json` | Machine-readable canonical token definitions |
-| `tokens/colors.js` | ES module — named color hex exports |
-| `tokens/typography.js` | ES module — font stack exports |
-| `tokens/glows.js` | ES module — box-shadow string exports |
-| `tokens/spacing.js` | ES module — spacing/radii/timing exports |
-| `tokens/index.js` | Barrel re-export of all token modules |
-| `swift/EnhancedDarkRoastTheme.swift` | SwiftUI reference implementation |
+| `src/tokens.json` | **Source of truth** — hand-edited canonical token definitions |
+| `src/css-templates/*.css` | Hand-authored CSS (app-layer vars, utilities, base) with `@generated` markers |
+| `scripts/build-tokens.js` | Generator: `src/tokens.json` → `dist/` (`npm run build` / `npm test`) |
+| `dist/css/dark-roast.css` | GENERATED standalone CSS — tokens on `:root`, base styles via `.dark-roast` |
+| `dist/css/dark-roast-scoped.css` | GENERATED scoped CSS — tokens on `[data-theme="dark-roast"]` |
+| `dist/tokens/colors.js` | GENERATED — named color hex + opacity variant + role exports |
+| `dist/tokens/typography.js` | GENERATED — font stack + type scale exports |
+| `dist/tokens/glows.js` | GENERATED — box-shadow string exports |
+| `dist/tokens/spacing.js` | GENERATED — spacing/radii/motion/z-index/icon/elevation exports |
+| `dist/tokens/index.js` | GENERATED — barrel re-export of all token modules |
+| `platforms/swift/EnhancedDarkRoastTheme.swift` | SwiftUI reference implementation |
 | `spec/dark-roast-spec.html` | Interactive visual spec with Chart.js |
 | **This document** | Full design system reference |
 

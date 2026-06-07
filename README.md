@@ -7,7 +7,7 @@ OLED-optimized design token system. Warm espresso palette, 23 base colors, multi
 ### CSS (simplest)
 
 ```html
-<link rel="stylesheet" href="node_modules/dark-roast-theme/css/dark-roast.css">
+<link rel="stylesheet" href="node_modules/dark-roast-theme/dist/css/dark-roast.css">
 <body class="dark-roast">
   <div class="dr-glass-panel">
     <h1 style="color: var(--dr-crema)">Hello Dark Roast</h1>
@@ -21,7 +21,7 @@ All tokens land on `:root` automatically. Add `class="dark-roast"` to your `<bod
 ### CSS (multi-theme apps)
 
 ```html
-<link rel="stylesheet" href="node_modules/dark-roast-theme/css/dark-roast-scoped.css">
+<link rel="stylesheet" href="node_modules/dark-roast-theme/dist/css/dark-roast-scoped.css">
 <body data-theme="dark-roast">
 ```
 
@@ -63,7 +63,7 @@ console.log(tokens.colors.espresso); // '#2A1C13'
 
 ### SwiftUI
 
-Copy `swift/EnhancedDarkRoastTheme.swift` into your Xcode project:
+Copy `platforms/swift/EnhancedDarkRoastTheme.swift` into your Xcode project:
 
 ```swift
 @Environment(\.appTheme) private var theme
@@ -237,13 +237,13 @@ Consistent Dark Roast colors across your entire development environment:
 
 | App | File | How to install |
 |-----|------|----------------|
-| **VS Code / Cursor** | `vscode/themes/dark-roast-color-theme.json` | Copy `vscode/` to `~/.vscode/extensions/dark-roast-theme/` and reload window |
-| **Xcode** | `xcode/Dark Roast Black Label.dvtcolortheme` | Copy to `~/Library/Developer/Xcode/UserData/FontAndColorThemes/`, restart Xcode |
-| **Textastic** | `textastic/Dark-Roast-Black-Label.tmTheme` | Copy to `#Textastic` folder, Settings → Reload Customizations |
-| **Warp** | `warp/dark-roast.yaml` | Copy to `~/.warp/themes/`, Settings → Appearance → Theme |
-| **Tabby** | `tabby/dark-roast.yaml` | Merge into `config.yaml` under `terminal:`, then select in Settings |
-| **Terminal.app** | `terminal-app/generate-terminal-profile.py` | Run `python3 generate-terminal-profile.py`, then open the generated `.terminal` file |
-| **iTerm2** | `iterm2/Dark Roast.itermcolors` | Double-click to import, or Preferences → Profiles → Colors → Color Presets → Import |
+| **VS Code / Cursor** | `platforms/vscode/themes/dark-roast-color-theme.json` | Copy `platforms/vscode/` to `~/.vscode/extensions/dark-roast-theme/` and reload window |
+| **Xcode** | `platforms/xcode/Dark Roast Black Label.dvtcolortheme` | Copy to `~/Library/Developer/Xcode/UserData/FontAndColorThemes/`, restart Xcode |
+| **Textastic** | `platforms/textastic/Dark-Roast-Black-Label.tmTheme` | Copy to `#Textastic` folder, Settings → Reload Customizations |
+| **Warp** | `platforms/warp/dark-roast.yaml` | Copy to `~/.warp/themes/`, Settings → Appearance → Theme |
+| **Tabby** | `platforms/tabby/dark-roast.yaml` | Merge into `config.yaml` under `terminal:`, then select in Settings |
+| **Terminal.app** | `platforms/terminal-app/generate-terminal-profile.py` | Run `python3 generate-terminal-profile.py`, then open the generated `.terminal` file |
+| **iTerm2** | `platforms/iterm2/Dark Roast.itermcolors` | Double-click to import, or Preferences → Profiles → Colors → Color Presets → Import |
 
 ### Syntax Color Mapping
 
@@ -268,28 +268,48 @@ All four terminal emulators (Warp, Tabby, iTerm2, Terminal.app, VS Code integrat
 ## Files
 
 ```
-css/dark-roast.css          Standalone — tokens on :root, utilities unscoped
-css/dark-roast-scoped.css   Scoped — tokens on [data-theme="dark-roast"]
-tokens/tokens.json          Machine-readable canonical token definitions
-tokens/colors.js            Color hex + opacity variant exports
-tokens/typography.js        Font stacks + type scale exports
-tokens/glows.js             Box-shadow phosphor glow exports
-tokens/spacing.js           Spacing, radii, duration, easing exports
-tokens/index.js             Barrel re-export of all token modules
-swift/                      SwiftUI reference implementation
-xcode/                      Xcode .dvtcolortheme
-textastic/                  Textastic .tmTheme
-warp/                       Warp terminal YAML
-tabby/                      Tabby terminal YAML
-terminal-app/               macOS Terminal.app profile generator (Python + PyObjC)
-iterm2/                     iTerm2 .itermcolors
-vscode/                     VS Code / Cursor extension (v4.0.0)
+src/tokens.json             SOURCE OF TRUTH — hand-edited canonical token definitions
+src/css-templates/          Hand-authored CSS (app-layer vars, utilities, base) + @generated markers
+scripts/build-tokens.js     Generator: src/tokens.json → dist/ (npm run build / npm test)
+
+dist/css/dark-roast.css         GENERATED — standalone, tokens on :root, utilities unscoped
+dist/css/dark-roast-scoped.css  GENERATED — scoped to [data-theme="dark-roast"]
+dist/tokens/colors.js           GENERATED — color hex + opacity variants + roles
+dist/tokens/typography.js       GENERATED — font stacks + type scale
+dist/tokens/glows.js            GENERATED — box-shadow phosphor glows
+dist/tokens/spacing.js          GENERATED — spacing, radii, motion, z-index, icon, elevation
+dist/tokens/index.js            GENERATED — barrel re-export
+
+platforms/swift/            SwiftUI reference implementation
+platforms/xcode/            Xcode .dvtcolortheme
+platforms/textastic/        Textastic .tmTheme
+platforms/warp/             Warp terminal YAML
+platforms/tabby/            Tabby terminal YAML
+platforms/terminal-app/     macOS Terminal.app profile generator (Python + PyObjC)
+platforms/iterm2/           iTerm2 .itermcolors
+platforms/vscode/           VS Code / Cursor extension
 spec/                       Interactive HTML visual specification
 docs/DESIGN-SYSTEM.md       Full design system reference
 docs/SYNTAX-COLOR-SPEC.md   Syntax highlighting color rules
+docs/REORG-PLAN.md          v5 restructure plan / rationale
 ```
 
+Bundler imports use the package subpath exports and don't need the `dist/` prefix:
+`import 'dark-roast-theme/css'`, `import { amber } from 'dark-roast-theme/tokens/colors'`.
+
 ---
+
+## v4 → v5 Migration
+
+v5 is a **structural** release — no token values changed. The package is now generated from a single source of truth (`src/tokens.json`) and import paths moved under `dist/`. If you import via the package name + subpath (`dark-roast-theme/css`, `dark-roast-theme/tokens/colors`, `dark-roast-theme`), **nothing changes**. Only update if you referenced files by raw path:
+
+| v4 raw path | v5 raw path |
+|-------------|-------------|
+| `dark-roast-theme/css/dark-roast.css` | `dark-roast-theme/dist/css/dark-roast.css` |
+| `dark-roast-theme/tokens/colors.js` | `dark-roast-theme/dist/tokens/colors.js` |
+| `dark-roast-theme/swift/…`, `…/vscode/…`, etc. | `dark-roast-theme/platforms/swift/…`, `…/platforms/vscode/…` |
+
+`dark-roast-theme/tokens.json` still resolves (now to `src/tokens.json`). Editor/terminal themes moved under `platforms/`.
 
 ## v3 → v4 Migration
 
