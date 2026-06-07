@@ -65,27 +65,43 @@ a token-extraction diff, not raw diff. Known *intentional* corrections applied o
 top (called out in CHANGELOG):
 - standalone CSS gains the elevation/icon/z vars it was missing (drift fix).
 
-## Phases (commit per phase)
+## Phases (commit per phase) — ALL COMPLETE
 
-- [ ] **P0 Hygiene** — untrack `theme-context-cache-v4.json` + `vscode/*.vsix`;
-      tighten `.gitignore`. No structure change.
-- [ ] **P1 Complete tokens.json** — add `glows`, `glassGradient`, legacy keys so
-      it fully describes every derived output. Still at old paths.
-- [ ] **P2 Generator** — `scripts/build-tokens.js` emits JS modules + CSS
-      `@generated` regions; `--check` diffs. Iterate to token-set equivalence
-      against current files (in place).
-- [ ] **P3 Restructure** — `git mv` to src/ + dist/ + platforms/; rewrite
-      package.json (version 5.0.0, exports → ./dist/*, files, scripts); point
-      index.js at dist.
-- [ ] **P4 Docs/consistency** — fix CLAUDE.md (v5, 23 colors, new modify-token
-      workflow), README paths, CHANGELOG 5.0.0, vscode/package.json, CSS header.
-- [ ] **P5 Verify** — `npm run build` clean, `npm test` (--check) green, ESM
-      import smoke test, final git diff review.
+- [x] **P0 Hygiene** — untracked `theme-context-cache-v4.json` + the stale v3
+      `vscode/*.vsix`. (commit a6415ef)
+- [x] **P1 Complete tokens.json** — added `glows`, glass gradient, `_build`
+      config, `typography._legacyRem`; reconciled font fallbacks; regrouped
+      `craterDeep`. (commit ea8b7cf)
+- [x] **P2 Generator** — `scripts/build-tokens.js` emits JS modules + CSS
+      `@generated` regions; `--check` drift test. Verified value-equivalent:
+      203 JS exports, both CSS files at 233 vars. (commit 0bc0641)
+- [x] **P3 Restructure** — moved to src/ + dist/ + platforms/; package.json
+      (5.0.0, exports → ./dist/*, files, scripts); index.js → dist. (0bc0641)
+- [x] **P4 Docs/consistency** — CLAUDE.md, README paths + v4→v5 migration,
+      CHANGELOG 5.0.0, DESIGN-SYSTEM, vscode/package.json. (commit f7466e1)
+- [x] **P5 Verify** — `npm run build` idempotent, `npm test` green, ESM import
+      smoke across all subpaths, path-reference scan.
 
-## Open decisions (flag, don't silently resolve)
+## Open decisions — RESOLVED
 
 - **Deprecated v3 aliases** (`--dr-grain`, `--dr-grain-hover`, `--dr-crater-lt`):
-  docs promised removal "in v5". Default = KEEP one more cycle to avoid
-  compounding breakage with the path change; revisit. Do not remove silently.
-- **Shipping docs/spec to npm:** `files` currently ships 64K spec HTML + docs.
-  Default = drop from `files` (keep in repo). Confirm.
+  KEPT (in `src/css-templates/`, app-layer block) to avoid compounding breakage
+  with the path change. Removal deferred to a future major.
+- **Shipping docs/spec to npm:** DROPPED from `files` (kept in repo).
+- **Font-stack modernization** (heading/body → `system-ui`, mono →
+  `ui-monospace`): DEFERRED — `tokens.json` fallbacks pinned to shipped values
+  to keep v5 value-neutral. Future minor.
+- **CSS elevation/icon/z "drift"** claimed in the initial review: FALSE ALARM
+  (line-count artifact). The two files were in sync; the generator now makes
+  drift structurally impossible.
+
+## Known remaining (not blocking v5)
+
+- `docs/DESIGN-SYSTEM.md` §2 matrices still enumerate the original 22 colors;
+  the v4.1.0 severity hues are flagged in the new reading note + at-a-glance
+  counts but not yet woven into every per-section table. Content audit, not a
+  restructure task.
+- The `--term-*` beachhead migration comment lives only in the scoped CSS
+  template (asymmetry inherited from the old files). Candidate to move to docs.
+- Editor/terminal themes under `platforms/` are still hand-maintained (not
+  generated from `tokens.json`). A future generator target.
