@@ -3,7 +3,55 @@
 All notable changes to `dark-roast-theme` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/); this project
 treats token-value changes as evolving under minor releases and reserves major
-releases for token renames/removals (see the v3 → v4 migration).
+releases for breaking changes — token renames/removals (see the v3 → v4
+migration) or changes to the package's public import paths (see v5.0.0).
+
+## [5.0.0] — 2026-06-06
+
+Structural release: **no token values changed.** The package is now generated
+from a single source of truth and its import paths moved under `dist/`.
+
+### Added
+- `scripts/build-tokens.js` — generator that emits every derived file (the five
+  JS token modules and the CSS custom-property blocks) from `src/tokens.json`.
+  `npm run build` regenerates; `npm test` (`--check`) fails on drift;
+  `prepublishOnly` blocks publishing stale output. Zero runtime dependencies; no
+  install-time build (generated files are committed in `dist/`).
+- `src/tokens.json` now fully describes every output: added the `glows` section
+  (13 phosphor box-shadows as structured layers) + glass gradient, a `_build`
+  config block, and `typography._legacyRem`; reconciled font fallbacks to the
+  shipped stacks.
+
+### Changed (BREAKING — import paths)
+- npm `exports` repointed to `./dist/*`. `./tokens.json` now resolves to
+  `./src/tokens.json`. Package-name subpath imports
+  (`dark-roast-theme`, `dark-roast-theme/css`, `dark-roast-theme/tokens/colors`)
+  are **unchanged**; only raw file paths under `node_modules/` moved.
+- Editor/terminal/native targets grouped under `platforms/` (was top-level
+  `swift/`, `vscode/`, `xcode/`, `textastic/`, `warp/`, `tabby/`,
+  `terminal-app/`, `iterm2/`).
+- The hand-written JS modules and CSS files were replaced by generated output
+  (`dist/`); the hand-authored CSS (app-layer vars, utilities, keyframes, base)
+  now lives in `src/css-templates/` with a `@generated:tokens` marker region.
+- `package.json` `files` trimmed: ships `dist/` + `src/tokens.json` +
+  `platforms/`; no longer ships `docs/` or `spec/`.
+
+### Fixed
+- Untracked `theme-context-cache-v4.json` and a stale `vscode/*.vsix` (v3.0.0)
+  that were committed despite matching `.gitignore`.
+- `craterDeep` regrouped in `tokens.json` under geological accents (it was
+  filed under the surface scale, which its own note excluded).
+- Reconciled stale version stamps (CLAUDE.md said v3.0.0; CSS headers said
+  v4.0.0; vsix/extension said 3.0.0/4.0.0) to the real version.
+
+### Notes
+- Generated output is value-equivalent to the prior hand-written files
+  (verified: all 203 JS exports; both CSS files at 233 vars each). Numeric
+  formatting in generated `rgba()`/box-shadow values is normalized (e.g. `0.40`
+  → `0.4`) with no value change.
+- Earlier reports of the two CSS files drifting on elevation/icon/z variables
+  were a false alarm from a line-counting artifact; the files were in sync. The
+  generator now makes such drift structurally impossible regardless.
 
 ## [4.1.0] — 2026-05-16
 
@@ -69,5 +117,3 @@ change in this release beyond what `5d398c1` already contained.
 ### Fixed
 - `version` field synced to the actually-shipped `4.0.1` in `package.json` and
   `tokens/tokens.json`.
-</content>
-</invoke>
