@@ -1,35 +1,32 @@
 {
   "name": "dark-roast-theme",
-  "version": "4.1.0",
-  "description": "Dark Roast: Black Label — OLED-optimized design system. 6-step surface scale, expanded action palette, semantic role aliases, multi-layer phosphor glows, four-tier typography, elevation/motion/z-index/icon scales, and accessibility contrast targets",
+  "version": "5.0.0",
+  "description": "Dark Roast: Black Label — OLED-optimized design system. 6-step surface scale, expanded action palette, semantic role aliases, multi-layer phosphor glows, four-tier typography, elevation/motion/z-index/icon scales, and accessibility contrast targets. Generated from a single source of truth (src/tokens.json)",
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
-    "./css": "./css/dark-roast.css",
-    "./css/scoped": "./css/dark-roast-scoped.css",
-    "./tokens": "./tokens/index.js",
-    "./tokens/colors": "./tokens/colors.js",
-    "./tokens/typography": "./tokens/typography.js",
-    "./tokens/glows": "./tokens/glows.js",
-    "./tokens/spacing": "./tokens/spacing.js",
-    "./tokens.json": "./tokens/tokens.json"
+    "./css": "./dist/css/dark-roast.css",
+    "./css/scoped": "./dist/css/dark-roast-scoped.css",
+    "./tokens": "./dist/tokens/index.js",
+    "./tokens/colors": "./dist/tokens/colors.js",
+    "./tokens/typography": "./dist/tokens/typography.js",
+    "./tokens/glows": "./dist/tokens/glows.js",
+    "./tokens/spacing": "./dist/tokens/spacing.js",
+    "./tokens.json": "./src/tokens.json"
   },
   "files": [
-    "css/",
-    "tokens/",
-    "swift/",
-    "spec/",
-    "docs/",
-    "vscode/",
-    "xcode/",
-    "textastic/",
-    "warp/",
-    "tabby/",
-    "terminal-app/",
-    "iterm2/",
-    "index.js"
+    "dist/",
+    "src/tokens.json",
+    "platforms/",
+    "index.js",
+    "CHANGELOG.md"
   ],
+  "scripts": {
+    "build": "node scripts/build-tokens.js",
+    "test": "node scripts/build-tokens.js --check",
+    "prepublishOnly": "node scripts/build-tokens.js --check"
+  },
   "keywords": [
     "design-system",
     "dark-theme",
