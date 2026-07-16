@@ -1,0 +1,50 @@
+{
+  "base": {
+    "id": "black-label",
+    "name": "Dark Roast: Black Label",
+    "selector": "dark-roast",
+    "unchanged": true
+  },
+  "companions": [
+    {
+      "id": "house-blend",
+      "displayOrder": 1,
+      "name": "Dark Roast: House Blend",
+      "selector": "dark-roast-house-blend",
+      "className": "dark-roast-house-blend",
+      "description": "A balanced, less-black Dark Roast with burnished kiln-enamel signals for long sessions and ordinary room lighting.",
+      "intent": {
+        "position": "recommended companion",
+        "ambientLight": "low to moderate",
+        "surfaceLift": "approximately 3x Black Label canvas luminance",
+        "designRule": "Dense copper, lacquer, mineral, and bottle-glass pigments stay chromatic while every informational foreground remains readable on the interactive surface."
+      },
+      "quality": {
+        "contrastSurface": "espressoHover",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.13,
+        "minimumPlatformAccentChromaAverage": 0.105
+      }
+    },
+    {
+      "id": "copper-roast",
+      "displayOrder": 2,
+      "name": "Dark Roast: Copper Roast",
+      "selector": "dark-roast-copper-roast",
+      "className": "dark-roast-copper-roast",
+      "description": "A brighter-room Dark Roast with burnished cocoa surfaces and saturated kiln-enamel signals.",
+      "intent": {
+        "position": "richest brighter-room companion",
+        "ambientLight": "moderate to bright",
+        "surfaceLift": "approximately 5x Black Label canvas luminance",
+        "designRule": "High-chroma copper, gold, bottle teal, scarlet lacquer, malachite, mineral blue, and amethyst preserve hue semantics without a milk-washed palette."
+      },
+      "quality": {
+        "contrastSurface": "espresso",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.14,
+        "minimumPlatformAccentChromaAverage": 0.115
+      }
+    }
+  ]
+}

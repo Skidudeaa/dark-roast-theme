@@ -1,31 +1,45 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.0.0",
-  "description": "Dark Roast: Black Label — OLED-optimized design system. 6-step surface scale, expanded action palette, semantic role aliases, multi-layer phosphor glows, four-tier typography, elevation/motion/z-index/icon scales, and accessibility contrast targets. Generated from a single source of truth (src/tokens.json)",
+  "version": "5.1.0",
+  "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./css": "./dist/css/dark-roast.css",
     "./css/scoped": "./dist/css/dark-roast-scoped.css",
+    "./css/house-blend": "./dist/css/dark-roast-house-blend.css",
+    "./css/house-blend/scoped": "./dist/css/dark-roast-house-blend-scoped.css",
+    "./css/copper-roast": "./dist/css/dark-roast-copper-roast.css",
+    "./css/copper-roast/scoped": "./dist/css/dark-roast-copper-roast-scoped.css",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
     "./tokens/typography": "./dist/tokens/typography.js",
     "./tokens/glows": "./dist/tokens/glows.js",
     "./tokens/spacing": "./dist/tokens/spacing.js",
-    "./tokens.json": "./src/tokens.json"
+    "./tokens.json": "./src/tokens.json",
+    "./themes": "./dist/themes/index.js",
+    "./themes/house-blend": "./dist/themes/house-blend/index.js",
+    "./themes/house-blend/tokens.json": "./dist/themes/house-blend/tokens.json",
+    "./themes/copper-roast": "./dist/themes/copper-roast/index.js",
+    "./themes/copper-roast/tokens.json": "./dist/themes/copper-roast/tokens.json"
   },
   "files": [
     "dist/",
-    "src/tokens.json",
+    "src/",
+    "scripts/",
+    "docs/",
+    "spec/",
     "platforms/",
     "index.js",
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "node scripts/build-tokens.js",
-    "test": "node scripts/build-tokens.js --check",
-    "prepublishOnly": "node scripts/build-tokens.js --check"
+    "build": "npm run build:tokens && npm run build:variants",
+    "build:tokens": "node scripts/build-tokens.js",
+    "build:variants": "node scripts/build-variants.js",
+    "test": "node scripts/check-black-label-contract.js && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "design-system",
@@ -34,7 +48,9 @@
     "css-variables",
     "design-tokens",
     "dark-roast",
-    "black-label"
+    "black-label",
+    "theme-family",
+    "accessible-theme"
   ],
   "author": "skidudeaa",
   "license": "MIT",

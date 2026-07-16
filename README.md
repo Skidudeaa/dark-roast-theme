@@ -1,6 +1,14 @@
-# Dark Roast: Black Label
+# Dark Roast Theme Family
 
-OLED-optimized design token system. Warm espresso palette, 23 base colors, multi-layer phosphor glows, four-tier typography, and clinical severity states. Built for data-dense interfaces that need to look beautiful during 12-hour shifts.
+A warm espresso design system for every room, not one brightness setting. The original **Dark Roast: Black Label** remains unchanged; v5.1 adds two independent companions with the same semantic DNA and deliberately recalibrated contrast.
+
+| Theme | Canvas | Best for | Informational contrast guarantee |
+|-------|--------|----------|----------------------------------|
+| **Black Label** | `#120C06` | OLED and very low light | Original v5 behavior, unchanged |
+| **House Blend** | `#241810` | Daily use and ordinary room light | ≥ 4.5:1 through the hover surface |
+| **Copper Roast** | `#34251C` | Moderate-to-bright rooms without washed-out color | ≥ 4.5:1 through the common panel surface |
+
+House Blend is the recommended “less dark Dark Roast.” Copper Roast is the high-ambient option. Both use saturated kiln-enamel pigments while keeping the same severity hue families, warm/cool syntax grammar, typography, spacing, motion, and component API.
 
 ## Quick Start
 
@@ -26,6 +34,22 @@ All tokens land on `:root` automatically. Add `class="dark-roast"` to your `<bod
 ```
 
 Tokens scoped to `[data-theme="dark-roast"]` — safe to use alongside other themes on the same page.
+
+### Companion CSS
+
+Each companion is a complete stylesheet, not a fragile override on Black Label:
+
+```html
+<!-- House Blend: recommended less-dark companion -->
+<link rel="stylesheet" href="node_modules/dark-roast-theme/dist/css/dark-roast-house-blend-scoped.css">
+<body data-theme="dark-roast-house-blend">
+
+<!-- Or Copper Roast -->
+<link rel="stylesheet" href="node_modules/dark-roast-theme/dist/css/dark-roast-copper-roast-scoped.css">
+<body data-theme="dark-roast-copper-roast">
+```
+
+Package imports are `dark-roast-theme/css/house-blend`, `dark-roast-theme/css/house-blend/scoped`, `dark-roast-theme/css/copper-roast`, and `dark-roast-theme/css/copper-roast/scoped`.
 
 ### JavaScript (ES modules)
 
@@ -53,6 +77,16 @@ element.style.color = roles.secondary;    // mocha — captions
 
 Note: `void` is a JS reserved word, so its export is `void_`.
 
+Companion palettes are namespaced, leaving the root Black Label API intact:
+
+```js
+import houseBlend, { semantic, syntax, ansi } from 'dark-roast-theme/themes/house-blend';
+import copperRoast from 'dark-roast-theme/themes/copper-roast';
+
+panel.style.background = houseBlend.semantic.background.panel;
+caption.style.color = houseBlend.semantic.foreground.secondary;
+```
+
 ### JSON (build tools, Figma plugins, Style Dictionary)
 
 ```js
@@ -63,23 +97,24 @@ console.log(tokens.colors.espresso); // '#2A1C13'
 
 ### SwiftUI
 
-Copy `platforms/swift/EnhancedDarkRoastTheme.swift` into your Xcode project:
+Copy `platforms/swift/EnhancedDarkRoastTheme.swift` for the legacy Black Label implementation. Add `platforms/swift/DarkRoastThemeFamily.swift` for side-by-side palette selection:
 
 ```swift
-@Environment(\.appTheme) private var theme
+@Environment(\.darkRoastPalette) private var palette
 
 Text("Patient Name")
-    .foregroundColor(theme.primaryText)    // crema #FFF7EE
+    .foregroundColor(palette.crema)
     .font(.custom("Instrument Sans", size: 18))
 
-VStack { ... }
-    .darkRoastCard(elevated: true)
-    .darkRoastBackground()
+ContentView()
+    .darkRoastPalette(.houseBlend) // or .blackLabel / .copperRoast
 ```
+
+The existing `\.darkRoastTheme` environment API in `EnhancedDarkRoastTheme.swift` remains unchanged.
 
 ---
 
-## Color System
+## Black Label Color System
 
 ### Surface Scale
 
@@ -233,11 +268,11 @@ Available: `glowAmber`, `glowAmberIntense`, `glowGold`, `glowGoldIntense`, `glow
 
 ## Editor & Terminal Themes
 
-Consistent Dark Roast colors across your entire development environment:
+The VS Code/Cursor extension contributes all three themes. Companion files are also generated for every terminal/editor target:
 
 | App | File | How to install |
 |-----|------|----------------|
-| **VS Code / Cursor** | `platforms/vscode/themes/dark-roast-color-theme.json` | Copy `platforms/vscode/` to `~/.vscode/extensions/dark-roast-theme/` and reload window |
+| **VS Code / Cursor** | `platforms/vscode/themes/dark-roast-*-color-theme.json` | Copy `platforms/vscode/` to `~/.vscode/extensions/dark-roast-theme/` and reload window |
 | **Xcode** | `platforms/xcode/Dark Roast Black Label.dvtcolortheme` | Copy to `~/Library/Developer/Xcode/UserData/FontAndColorThemes/`, restart Xcode |
 | **Textastic** | `platforms/textastic/Dark-Roast-Black-Label.tmTheme` | Copy to `#Textastic` folder, Settings → Reload Customizations |
 | **Warp** | `platforms/warp/dark-roast.yaml` | Copy to `~/.warp/themes/`, Settings → Appearance → Theme |
@@ -245,23 +280,27 @@ Consistent Dark Roast colors across your entire development environment:
 | **Terminal.app** | `platforms/terminal-app/generate-terminal-profile.py` | Run `python3 generate-terminal-profile.py`, then open the generated `.terminal` file |
 | **iTerm2** | `platforms/iterm2/Dark Roast.itermcolors` | Double-click to import, or Preferences → Profiles → Colors → Color Presets → Import |
 
+House Blend and Copper Roast use the same filenames with their theme name appended. Generated companions cover modern VS Code surfaces including inline edits, multi-file diffs, chat, terminal sticky scroll, Markdown alerts, multi-cursor states, and agent status.
+
 ### Syntax Color Mapping
 
-All editors share the same "12-hour ergonomics" mapping (see `docs/SYNTAX-COLOR-SPEC.md` for full rules):
+The companions enforce the authoritative "12-hour ergonomics" mapping (see `docs/SYNTAX-COLOR-SPEC.md`). Black Label's existing files are preserved for compatibility.
 
-| Color | Hex | Used for |
-|-------|-----|----------|
+| Role token | Black Label hex | Used for |
+|------------|-----------------|----------|
 | mauve | `#AD7FA8` | Keywords, storage, `self`/`super` |
 | sage | `#8AAC6B` | Strings, characters |
 | gold | `#DAA520` | Types, classes, CSS selectors |
-| slate | `#6E8FAD` | Functions, JSON/YAML keys, CSS properties |
+| slate | `#6E8FAD` | SDK/default-library symbols, JSON/YAML keys, CSS properties |
 | amberHot | `#D2691E` | Numbers, constants, decorators |
-| teal | `#4CC4B4` | Operators, cursor, links |
+| teal | `#4CC4B4` | User-code functions, operators, cursor, links |
 | scarlet | `#C44C4C` | Errors only — never keywords |
+
+House Blend and Copper Roast retain these semantic assignments with richer, independently validated color values.
 
 ### Terminal ANSI Palette
 
-All four terminal emulators (Warp, Tabby, iTerm2, Terminal.app, VS Code integrated) share the same ANSI-16 palette. Bright cyan is `#6DD4C8` — visibly lighter than normal teal `#4CC4B4` so "bright is actually brighter."
+All terminal targets (Warp, Tabby, iTerm2, Terminal.app, and VS Code integrated) share the same ANSI-16 palette. Bright cyan is `#6DD4C8` — visibly lighter than normal teal `#4CC4B4` so "bright is actually brighter."
 
 ---
 
@@ -269,11 +308,20 @@ All four terminal emulators (Warp, Tabby, iTerm2, Terminal.app, VS Code integrat
 
 ```
 src/tokens.json             SOURCE OF TRUTH — hand-edited canonical token definitions
+src/variants/*.json         ADDITIVE companion palettes, pinned to the Black Label fingerprint
+src/black-label-contract.json Frozen hashes for Black Label's public 5.0 surface
 src/css-templates/          Hand-authored CSS (app-layer vars, utilities, base) + @generated markers
-scripts/build-tokens.js     Generator: src/tokens.json → dist/ (npm run build / npm test)
+scripts/build-tokens.js     Black Label generator (unchanged)
+scripts/build-variants.js   Companion generator: CSS, JS, editor, terminal, native palettes
+scripts/check-black-label-contract.js Byte-for-byte additive-change guard
+scripts/validate-themes.js  Luminance, contrast, perceptual chroma, severity, fingerprint, and identity checks
+scripts/validate-platforms.js Generated-platform parity and parseability checks
+scripts/validate-gallery.js Gallery identity plus platform/syntax color-fidelity checks
 
 dist/css/dark-roast.css         GENERATED — standalone, tokens on :root, utilities unscoped
 dist/css/dark-roast-scoped.css  GENERATED — scoped to [data-theme="dark-roast"]
+dist/css/dark-roast-*.css       GENERATED — independent House Blend / Copper Roast stylesheets
+dist/themes/                    GENERATED — namespaced companion JS + JSON contracts
 dist/tokens/colors.js           GENERATED — color hex + opacity variants + roles
 dist/tokens/typography.js       GENERATED — font stacks + type scale
 dist/tokens/glows.js            GENERATED — box-shadow phosphor glows
@@ -288,7 +336,8 @@ platforms/tabby/            Tabby terminal YAML
 platforms/terminal-app/     macOS Terminal.app profile generator (Python + PyObjC)
 platforms/iterm2/           iTerm2 .itermcolors
 platforms/vscode/           VS Code / Cursor extension
-spec/                       Interactive HTML visual specification
+spec/theme-gallery.html     Self-contained three-theme comparison / acceptance gallery
+spec/dark-roast-spec.html   Legacy Black Label visual specification
 docs/DESIGN-SYSTEM.md       Full design system reference
 docs/SYNTAX-COLOR-SPEC.md   Syntax highlighting color rules
 docs/REORG-PLAN.md          v5 restructure plan / rationale

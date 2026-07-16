@@ -1,8 +1,8 @@
 {
   "name": "dark-roast-theme",
-  "displayName": "Dark Roast: Black Label",
-  "description": "OLED-optimized dark theme — warm espresso palette with geological accents and kinetic teal",
-  "version": "5.0.0",
+  "displayName": "Dark Roast Theme Family",
+  "description": "Black Label, House Blend, and Copper Roast — three warm espresso themes with saturated kiln-enamel color",
+  "version": "5.1.0",
   "publisher": "soma",
   "engines": {
     "vscode": "^1.85.0"
@@ -14,9 +14,19 @@
         "label": "Dark Roast: Black Label",
         "uiTheme": "vs-dark",
         "path": "./themes/dark-roast-color-theme.json"
+      },
+      {
+        "label": "Dark Roast: House Blend",
+        "uiTheme": "vs-dark",
+        "path": "./themes/dark-roast-house-blend-color-theme.json"
+      },
+      {
+        "label": "Dark Roast: Copper Roast",
+        "uiTheme": "vs-dark",
+        "path": "./themes/dark-roast-copper-roast-color-theme.json"
       }
     ]
   },
-  "keywords": ["dark", "oled", "warm", "espresso", "theme"],
+  "keywords": ["dark", "oled", "warm", "espresso", "theme", "accessible", "ambient-light", "warm-dark"],
   "license": "MIT"
 }

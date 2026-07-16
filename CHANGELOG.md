@@ -6,6 +6,53 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.1.0] — 2026-07-15
+
+Additive theme-family release. **Dark Roast: Black Label is unchanged**: its
+tokens, root exports, CSS selectors, generated files, platform theme, and visual
+appearance remain byte-for-byte compatible with v5.0.0.
+
+### Added
+
+- **Dark Roast: House Blend** — the recommended less-dark companion. Its warm
+  canvas is roughly three times Black Label's luminance, and every informational
+  foreground is validated at 4.5:1 or better through the hover surface.
+- **Dark Roast: Copper Roast** — a clearly lighter high-ambient companion with
+  saturated kiln-enamel signals instead of milk-washed pastels. Every
+  informational foreground is validated at 4.5:1 or better through the common
+  panel surface.
+- Independent standalone and scoped CSS, namespaced JavaScript semantic
+  palettes, effective token JSON, and package subpath exports for both themes.
+- Generated companion artifacts for VS Code/Cursor, Xcode, Textastic, Warp,
+  Tabby, Terminal.app, iTerm2, and a side-by-side SwiftUI palette family.
+- Modern VS Code coverage for toolbars, multi-cursor state, AI lightbulbs,
+  inline edits, multi-file diffs, current chat states, terminal sticky scroll,
+  Markdown alerts, and agent status.
+- `structural` foreground role separates readable punctuation, CodeLens, inlay
+  hints, placeholders, and inactive chrome from lower-contrast border colors.
+- Complete `.dr-shimmer-skeleton` and severity-pill utilities in companion CSS;
+  companion keyframes are namespaced for safe multi-theme use.
+- `scripts/validate-themes.js` for base fingerprint, palette completeness,
+  monotonic luminance, assigned-surface contrast, inverse-fill contrast,
+  perceptual chroma floors, and severity hue separation.
+- `scripts/validate-platforms.js` for generated CSS/JS/editor/terminal/native
+  contracts and parseability.
+- `scripts/validate-gallery.js` prevents presentation-only syntax and ANSI
+  extension colors from drifting away from companion source palettes.
+- `spec/theme-gallery.html` and `docs/THEME-FAMILY.md` for presentation and
+  acceptance.
+
+### Architecture
+
+- `src/variants/*.json` is the source of truth for companions. Each file pins
+  the exact Black Label version and SHA-256 source fingerprint so a future base
+  edit requires deliberate variant review.
+- `scripts/build-variants.js` generates companion outputs without refactoring or
+  mutating the established Black Label generator. Check mode rejects unexpected
+  generator-owned artifacts; write mode prunes them after a rename or removal.
+- `npm test` now validates both source palettes and all generated targets;
+  `prepublishOnly` runs the full suite.
+
 ## [5.0.0] — 2026-06-06
 
 Structural release: **no token values changed.** The package is now generated

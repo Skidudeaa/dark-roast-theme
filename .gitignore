@@ -6,3 +6,8 @@ node_modules/
 *.db
 theme-context-cache*.json
 dark-roast-system-v1.json
+
+# Agent scratch
+.claude/
+.codex/
+.agents/

@@ -13,6 +13,12 @@
 > yet been expanded. **v5.0.0** is a structural release: no token values
 > changed; the package is now generated from `src/tokens.json` and import paths
 > moved under `dist/` (see README "v4 → v5 Migration" and `docs/REORG-PLAN.md`).
+>
+> **Theme-family note for v5.1.0.** This document remains the canonical Black
+> Label reference; Black Label did not change. House Blend and Copper Roast are
+> additive, independently generated companions. Their surface assignments,
+> semantic role split, accessibility guarantees, usage, and generation rules
+> are defined in [`THEME-FAMILY.md`](THEME-FAMILY.md).
 
 ---
 
