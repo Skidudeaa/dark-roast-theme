@@ -15,17 +15,17 @@ export const metadata = Object.freeze({
 });
 export const colors = Object.freeze({
   "void": "#E2DBD0",
-  "obsidian": "#DBD1C4",
-  "darkCacao": "#D3C7B8",
-  "espresso": "#CABBAA",
-  "espressoHover": "#C2B19F",
-  "roastedBean": "#B5A390",
-  "crater": "#9A8573",
-  "crema": "#3B3129",
+  "obsidian": "#D5CABB",
+  "darkCacao": "#C8BAA7",
+  "espresso": "#BBA994",
+  "espressoHover": "#B19C85",
+  "roastedBean": "#A08971",
+  "crater": "#785D47",
+  "crema": "#342920",
   "warmWhite": "#463B31",
   "bone": "#50453C",
   "mocha": "#625445",
-  "craterDeep": "#A99889",
+  "craterDeep": "#90765F",
   "asparagus": "#405634",
   "rustic": "#ECBEB4",
   "rose": "#E3B9C6",
@@ -36,7 +36,7 @@ export const colors = Object.freeze({
   "brass": "#6B5200",
   "scarlet": "#950011",
   "burntSienna": "#843500",
-  "teal": "#006362",
+  "teal": "#005D5C",
   "magenta": "#8D0057",
   "harvest": "#6E4700",
   "olive": "#405E00"
@@ -45,77 +45,77 @@ export const roles = Object.freeze({
   "accent": "#734400",
   "accentHot": "#7F3300",
   "accentMuted": "#7C4700",
-  "success": "#006362",
+  "success": "#005D5C",
   "warning": "#6B5200",
   "error": "#843500",
   "critical": "#950011",
   "stable": "#5F4B00",
-  "live": "#006362",
-  "display": "#3B3129",
+  "live": "#005D5C",
+  "display": "#342920",
   "workhorse": "#50453C",
   "secondary": "#625445",
   "tertiary": "#405634"
 });
 export const syntax = Object.freeze({
-  "structural": "#625447",
-  "sage": "#386228",
+  "structural": "#5A493B",
+  "sage": "#325D22",
   "slate": "#23588B",
   "mauve": "#69387C"
 });
 export const ansi = Object.freeze({
   "normal": [
-    "#DBD1C4",
+    "#D5CABB",
     "#950011",
-    "#386228",
+    "#325D22",
     "#734400",
     "#23588B",
     "#69387C",
-    "#006362",
+    "#005D5C",
     "#50453C"
   ],
   "bright": [
-    "#625447",
+    "#5A493B",
     "#A22726",
     "#3F6F2D",
     "#5F4B00",
     "#2C649A",
     "#76428A",
     "#007170",
-    "#3B3129"
+    "#342920"
   ]
 });
 export const semantic = Object.freeze({
   "background": {
     "canvas": "#E2DBD0",
-    "surface": "#DBD1C4",
-    "elevated": "#D3C7B8",
-    "panel": "#CABBAA",
-    "interactive": "#C2B19F"
+    "surface": "#D5CABB",
+    "elevated": "#C8BAA7",
+    "panel": "#BBA994",
+    "interactive": "#B19C85"
   },
   "foreground": {
-    "primary": "#3B3129",
+    "primary": "#342920",
     "reading": "#50453C",
     "secondary": "#625445",
     "tertiary": "#405634",
-    "structural": "#625447",
+    "structural": "#5A493B",
     "inverse": "#E2DBD0"
   },
   "border": {
-    "subtle": "#B5A390",
-    "default": "#A99889",
-    "strong": "#9A8573",
-    "focus": "#006362"
+    "subtle": "#A08971",
+    "default": "#90765F",
+    "strong": "#785D47",
+    "focus": "#005D5C"
   },
   "severity": {
     "critical": "#950011",
     "worsening": "#8D0057",
     "improving": "#6E4700",
     "stable": "#405E00",
-    "resolved": "#006362"
+    "resolved": "#005D5C"
   },
   "status": {
     "ready": "#5F4B00",
-    "live": "#006362",
+    "live": "#005D5C",
     "warning": "#6B5200",
     "error": "#843500"
   }
