@@ -5,7 +5,7 @@
   "shortName": "Cold Brew",
   "selector": "dark-roast-cold-brew",
   "className": "dark-roast-cold-brew",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "baseVersion": "5.0.0",
   "baseFingerprint": "sha256:1d7f90234693f4e37eb407be888f6798f3fbc2788e345604cc58295f61addcae",
   "polarity": "light",
@@ -17,22 +17,22 @@
   "intent": {
     "position": "daylight companion",
     "ambientLight": "moderate to bright",
-    "surfaceLift": "surfaces darken with elevation over a cream canvas",
+    "surfaceLift": "surfaces darken decisively with elevation over a cream canvas — wide ramp; light polarity needs surface separation to carry the depth that glows carry on OLED",
     "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
   },
   "colors": {
     "void": "#E2DBD0",
-    "obsidian": "#DED5C9",
-    "darkCacao": "#D8CEC1",
-    "espresso": "#D1C5B7",
-    "espressoHover": "#C9BCAE",
-    "roastedBean": "#BFB0A1",
-    "crater": "#9C8B7E",
+    "obsidian": "#DBD1C4",
+    "darkCacao": "#D3C7B8",
+    "espresso": "#CABBAA",
+    "espressoHover": "#C2B19F",
+    "roastedBean": "#B5A390",
+    "crater": "#9A8573",
     "crema": "#3B3129",
     "warmWhite": "#463B31",
     "bone": "#50453C",
     "mocha": "#625445",
-    "craterDeep": "#AE9F91",
+    "craterDeep": "#A99889",
     "asparagus": "#405634",
     "rustic": "#ECBEB4",
     "rose": "#E3B9C6",
@@ -60,7 +60,7 @@
     "tealBright": "#007170",
     "tealActive": "#006969",
     "shadow": "#2C221A",
-    "hoverSurface": "#D4C7BA"
+    "hoverSurface": "#D6C9BB"
   },
   "quality": {
     "contrastSurface": "obsidian",

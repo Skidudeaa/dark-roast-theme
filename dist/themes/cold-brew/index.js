@@ -9,23 +9,23 @@ export const metadata = Object.freeze({
   "intent": {
     "position": "daylight companion",
     "ambientLight": "moderate to bright",
-    "surfaceLift": "surfaces darken with elevation over a cream canvas",
+    "surfaceLift": "surfaces darken decisively with elevation over a cream canvas — wide ramp; light polarity needs surface separation to carry the depth that glows carry on OLED",
     "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
   }
 });
 export const colors = Object.freeze({
   "void": "#E2DBD0",
-  "obsidian": "#DED5C9",
-  "darkCacao": "#D8CEC1",
-  "espresso": "#D1C5B7",
-  "espressoHover": "#C9BCAE",
-  "roastedBean": "#BFB0A1",
-  "crater": "#9C8B7E",
+  "obsidian": "#DBD1C4",
+  "darkCacao": "#D3C7B8",
+  "espresso": "#CABBAA",
+  "espressoHover": "#C2B19F",
+  "roastedBean": "#B5A390",
+  "crater": "#9A8573",
   "crema": "#3B3129",
   "warmWhite": "#463B31",
   "bone": "#50453C",
   "mocha": "#625445",
-  "craterDeep": "#AE9F91",
+  "craterDeep": "#A99889",
   "asparagus": "#405634",
   "rustic": "#ECBEB4",
   "rose": "#E3B9C6",
@@ -64,7 +64,7 @@ export const syntax = Object.freeze({
 });
 export const ansi = Object.freeze({
   "normal": [
-    "#DED5C9",
+    "#DBD1C4",
     "#950011",
     "#386228",
     "#734400",
@@ -87,10 +87,10 @@ export const ansi = Object.freeze({
 export const semantic = Object.freeze({
   "background": {
     "canvas": "#E2DBD0",
-    "surface": "#DED5C9",
-    "elevated": "#D8CEC1",
-    "panel": "#D1C5B7",
-    "interactive": "#C9BCAE"
+    "surface": "#DBD1C4",
+    "elevated": "#D3C7B8",
+    "panel": "#CABBAA",
+    "interactive": "#C2B19F"
   },
   "foreground": {
     "primary": "#3B3129",
@@ -101,9 +101,9 @@ export const semantic = Object.freeze({
     "inverse": "#E2DBD0"
   },
   "border": {
-    "subtle": "#BFB0A1",
-    "default": "#AE9F91",
-    "strong": "#9C8B7E",
+    "subtle": "#B5A390",
+    "default": "#A99889",
+    "strong": "#9A8573",
     "focus": "#006362"
   },
   "severity": {

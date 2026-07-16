@@ -75,7 +75,7 @@
       "intent": {
         "position": "daylight companion",
         "ambientLight": "moderate to bright",
-        "surfaceLift": "surfaces darken with elevation over a cream canvas",
+        "surfaceLift": "surfaces darken decisively with elevation over a cream canvas — wide ramp; light polarity needs surface separation to carry the depth that glows carry on OLED",
         "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
       },
       "quality": {
