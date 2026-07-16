@@ -14,110 +14,110 @@ export const metadata = Object.freeze({
   }
 });
 export const colors = Object.freeze({
-  "void": "#FAF5EE",
-  "obsidian": "#F5F0E8",
-  "darkCacao": "#F0E9E0",
-  "espresso": "#E8E0D6",
-  "espressoHover": "#E1D7CC",
-  "roastedBean": "#D5CABF",
-  "crater": "#B0A296",
+  "void": "#E2DBD0",
+  "obsidian": "#DED5C9",
+  "darkCacao": "#D8CEC1",
+  "espresso": "#D1C5B7",
+  "espressoHover": "#C9BCAE",
+  "roastedBean": "#BFB0A1",
+  "crater": "#9C8B7E",
   "crema": "#3B3129",
   "warmWhite": "#463B31",
   "bone": "#50453C",
-  "mocha": "#6F6051",
-  "craterDeep": "#C2B5AA",
-  "asparagus": "#4C6340",
-  "rustic": "#FBCDC3",
-  "rose": "#F2C8D5",
-  "amber": "#854F00",
-  "amberHot": "#943C00",
-  "amberMuted": "#875726",
-  "gold": "#6E5800",
-  "brass": "#79601B",
-  "scarlet": "#A22626",
-  "burntSienna": "#983E00",
-  "teal": "#007271",
-  "magenta": "#952C63",
-  "harvest": "#7F5300",
-  "olive": "#4E6C1E"
+  "mocha": "#625445",
+  "craterDeep": "#AE9F91",
+  "asparagus": "#405634",
+  "rustic": "#ECBEB4",
+  "rose": "#E3B9C6",
+  "amber": "#734400",
+  "amberHot": "#7F3300",
+  "amberMuted": "#7C4700",
+  "gold": "#5F4B00",
+  "brass": "#6B5200",
+  "scarlet": "#950011",
+  "burntSienna": "#843500",
+  "teal": "#006362",
+  "magenta": "#8D0057",
+  "harvest": "#6E4700",
+  "olive": "#405E00"
 });
 export const roles = Object.freeze({
-  "accent": "#854F00",
-  "accentHot": "#943C00",
-  "accentMuted": "#875726",
-  "success": "#007271",
-  "warning": "#79601B",
-  "error": "#983E00",
-  "critical": "#A22626",
-  "stable": "#6E5800",
-  "live": "#007271",
+  "accent": "#734400",
+  "accentHot": "#7F3300",
+  "accentMuted": "#7C4700",
+  "success": "#006362",
+  "warning": "#6B5200",
+  "error": "#843500",
+  "critical": "#950011",
+  "stable": "#5F4B00",
+  "live": "#006362",
   "display": "#3B3129",
   "workhorse": "#50453C",
-  "secondary": "#6F6051",
-  "tertiary": "#4C6340"
+  "secondary": "#625445",
+  "tertiary": "#405634"
 });
 export const syntax = Object.freeze({
-  "structural": "#73665B",
-  "sage": "#457036",
-  "slate": "#32669A",
-  "mauve": "#77458B"
+  "structural": "#625447",
+  "sage": "#386228",
+  "slate": "#23588B",
+  "mauve": "#69387C"
 });
 export const ansi = Object.freeze({
   "normal": [
-    "#F5F0E8",
-    "#A22626",
-    "#457036",
-    "#854F00",
-    "#32669A",
-    "#77458B",
-    "#007271",
+    "#DED5C9",
+    "#950011",
+    "#386228",
+    "#734400",
+    "#23588B",
+    "#69387C",
+    "#006362",
     "#50453C"
   ],
   "bright": [
-    "#73665B",
-    "#B33834",
-    "#4D7D3B",
-    "#6E5800",
-    "#3A72A9",
-    "#845099",
-    "#008180",
+    "#625447",
+    "#A22726",
+    "#3F6F2D",
+    "#5F4B00",
+    "#2C649A",
+    "#76428A",
+    "#007170",
     "#3B3129"
   ]
 });
 export const semantic = Object.freeze({
   "background": {
-    "canvas": "#FAF5EE",
-    "surface": "#F5F0E8",
-    "elevated": "#F0E9E0",
-    "panel": "#E8E0D6",
-    "interactive": "#E1D7CC"
+    "canvas": "#E2DBD0",
+    "surface": "#DED5C9",
+    "elevated": "#D8CEC1",
+    "panel": "#D1C5B7",
+    "interactive": "#C9BCAE"
   },
   "foreground": {
     "primary": "#3B3129",
     "reading": "#50453C",
-    "secondary": "#6F6051",
-    "tertiary": "#4C6340",
-    "structural": "#73665B",
-    "inverse": "#FAF5EE"
+    "secondary": "#625445",
+    "tertiary": "#405634",
+    "structural": "#625447",
+    "inverse": "#E2DBD0"
   },
   "border": {
-    "subtle": "#D5CABF",
-    "default": "#C2B5AA",
-    "strong": "#B0A296",
-    "focus": "#007271"
+    "subtle": "#BFB0A1",
+    "default": "#AE9F91",
+    "strong": "#9C8B7E",
+    "focus": "#006362"
   },
   "severity": {
-    "critical": "#A22626",
-    "worsening": "#952C63",
-    "improving": "#7F5300",
-    "stable": "#4E6C1E",
-    "resolved": "#007271"
+    "critical": "#950011",
+    "worsening": "#8D0057",
+    "improving": "#6E4700",
+    "stable": "#405E00",
+    "resolved": "#006362"
   },
   "status": {
-    "ready": "#6E5800",
-    "live": "#007271",
-    "warning": "#79601B",
-    "error": "#983E00"
+    "ready": "#5F4B00",
+    "live": "#006362",
+    "warning": "#6B5200",
+    "error": "#843500"
   }
 });
 
