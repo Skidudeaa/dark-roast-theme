@@ -11,3 +11,5 @@ dark-roast-system-v1.json
 .claude/
 .codex/
 .agents/
+.preview/
+.playwright-cli/

@@ -1,7 +1,7 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.1.0",
-  "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions with saturated kiln-enamel color.",
+  "version": "5.2.0",
+  "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions and the warm light-polarity Cold Brew, all with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",
   "exports": {
@@ -12,6 +12,8 @@
     "./css/house-blend/scoped": "./dist/css/dark-roast-house-blend-scoped.css",
     "./css/copper-roast": "./dist/css/dark-roast-copper-roast.css",
     "./css/copper-roast/scoped": "./dist/css/dark-roast-copper-roast-scoped.css",
+    "./css/cold-brew": "./dist/css/dark-roast-cold-brew.css",
+    "./css/cold-brew/scoped": "./dist/css/dark-roast-cold-brew-scoped.css",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
     "./tokens/typography": "./dist/tokens/typography.js",
@@ -22,7 +24,9 @@
     "./themes/house-blend": "./dist/themes/house-blend/index.js",
     "./themes/house-blend/tokens.json": "./dist/themes/house-blend/tokens.json",
     "./themes/copper-roast": "./dist/themes/copper-roast/index.js",
-    "./themes/copper-roast/tokens.json": "./dist/themes/copper-roast/tokens.json"
+    "./themes/copper-roast/tokens.json": "./dist/themes/copper-roast/tokens.json",
+    "./themes/cold-brew": "./dist/themes/cold-brew/index.js",
+    "./themes/cold-brew/tokens.json": "./dist/themes/cold-brew/tokens.json"
   },
   "files": [
     "dist/",
@@ -35,10 +39,12 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "npm run build:tokens && npm run build:variants",
+    "build": "npm run build:tokens && npm run build:cold-brew && npm run build:variants",
     "build:tokens": "node scripts/build-tokens.js",
+    "build:cold-brew": "node scripts/build-cold-brew.js",
     "build:variants": "node scripts/build-variants.js",
-    "test": "node scripts/check-black-label-contract.js && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js",
+    "report:apca": "node scripts/report-apca.js",
+    "test": "node scripts/check-black-label-contract.js && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js",
     "prepublishOnly": "npm test"
   },
   "keywords": [
@@ -61,5 +67,9 @@
   "homepage": "https://github.com/Skidudeaa/dark-roast-theme#readme",
   "bugs": {
     "url": "https://github.com/Skidudeaa/dark-roast-theme/issues"
+  },
+  "devDependencies": {
+    "apca-w3": "^0.1.9",
+    "culori": "^4.0.2"
   }
 }

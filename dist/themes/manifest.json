@@ -3,6 +3,7 @@
     "id": "black-label",
     "name": "Dark Roast: Black Label",
     "selector": "dark-roast",
+    "polarity": "dark",
     "unchanged": true
   },
   "companions": [
@@ -24,7 +25,16 @@
         "minimumInformationalContrast": 4.5,
         "minimumCoreAccentChromaAverage": 0.13,
         "minimumPlatformAccentChromaAverage": 0.105
-      }
+      },
+      "polarity": "dark",
+      "targets": [
+        "web",
+        "editor",
+        "terminal",
+        "native"
+      ],
+      "sourceVersion": "5.2.0",
+      "baseFingerprint": "sha256:1d7f90234693f4e37eb407be888f6798f3fbc2788e345604cc58295f61addcae"
     },
     {
       "id": "copper-roast",
@@ -44,7 +54,42 @@
         "minimumInformationalContrast": 4.5,
         "minimumCoreAccentChromaAverage": 0.14,
         "minimumPlatformAccentChromaAverage": 0.115
-      }
+      },
+      "polarity": "dark",
+      "targets": [
+        "web",
+        "editor",
+        "terminal",
+        "native"
+      ],
+      "sourceVersion": "5.2.0",
+      "baseFingerprint": "sha256:1d7f90234693f4e37eb407be888f6798f3fbc2788e345604cc58295f61addcae"
+    },
+    {
+      "id": "cold-brew",
+      "displayOrder": 3,
+      "name": "Dark Roast: Cold Brew",
+      "selector": "dark-roast-cold-brew",
+      "className": "dark-roast-cold-brew",
+      "description": "A warm, positive-polarity Dark Roast for bright rooms: a cream canvas that deepens with elevation, espresso ink, and dark kiln-enamel accents that stay legible in daylight.",
+      "intent": {
+        "position": "daylight companion",
+        "ambientLight": "moderate to bright",
+        "surfaceLift": "surfaces darken with elevation over a cream canvas",
+        "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
+      },
+      "quality": {
+        "contrastSurface": "obsidian",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.11,
+        "minimumPlatformAccentChromaAverage": 0.09
+      },
+      "polarity": "light",
+      "targets": [
+        "web"
+      ],
+      "sourceVersion": "5.2.0",
+      "baseFingerprint": "sha256:1d7f90234693f4e37eb407be888f6798f3fbc2788e345604cc58295f61addcae"
     }
   ]
 }

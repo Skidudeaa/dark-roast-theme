@@ -1,0 +1,480 @@
+{
+  "_note": "APCA Lc report — informational only. WCAG 2.x remains the shipping gate.",
+  "generatedFrom": "dark-roast-theme@5.1.0",
+  "apcaImplementation": "apca-w3@0.1.9",
+  "signConvention": "positive Lc = dark text on light bg; negative = light text on dark bg",
+  "themes": [
+    {
+      "id": "black-label",
+      "polarity": "dark",
+      "rows": [
+        {
+          "label": "primary text (crema)",
+          "text": "#FFF7EE",
+          "bg": "#120C06",
+          "lc": -103,
+          "abs": 103,
+          "tier": "small-text"
+        },
+        {
+          "label": "reading text (bone)",
+          "text": "#EBE1D7",
+          "bg": "#120C06",
+          "lc": -89.2,
+          "abs": 89.2,
+          "tier": "small-text"
+        },
+        {
+          "label": "secondary text (mocha)",
+          "text": "#8B7355",
+          "bg": "#120C06",
+          "lc": -30.3,
+          "abs": 30.3,
+          "tier": "non-text"
+        },
+        {
+          "label": "tertiary (asparagus)",
+          "text": "#465945",
+          "bg": "#120C06",
+          "lc": -15.5,
+          "abs": 15.5,
+          "tier": "below-30"
+        },
+        {
+          "label": "structural",
+          "text": "#4D3B31",
+          "bg": "#120C06",
+          "lc": -7.8,
+          "abs": 7.8,
+          "tier": "below-30"
+        },
+        {
+          "label": "accent (amber)",
+          "text": "#E69A4C",
+          "bg": "#120C06",
+          "lc": -56.5,
+          "abs": 56.5,
+          "tier": "large-text"
+        },
+        {
+          "label": "success/live (teal)",
+          "text": "#4CC4B4",
+          "bg": "#120C06",
+          "lc": -60.5,
+          "abs": 60.5,
+          "tier": "body-text"
+        },
+        {
+          "label": "critical (scarlet)",
+          "text": "#C44C4C",
+          "bg": "#120C06",
+          "lc": -29.7,
+          "abs": 29.7,
+          "tier": "below-30"
+        },
+        {
+          "label": "stable (gold)",
+          "text": "#DAA520",
+          "bg": "#120C06",
+          "lc": -58,
+          "abs": 58,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity worsening (magenta)",
+          "text": "#C25F90",
+          "bg": "#120C06",
+          "lc": -35,
+          "abs": 35,
+          "tier": "non-text"
+        },
+        {
+          "label": "severity improving (harvest)",
+          "text": "#D4A040",
+          "bg": "#120C06",
+          "lc": -55.4,
+          "abs": 55.4,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity stable (olive)",
+          "text": "#879A39",
+          "bg": "#120C06",
+          "lc": -43.2,
+          "abs": 43.2,
+          "tier": "non-text"
+        },
+        {
+          "label": "accent on elevated (amber/darkCacao)",
+          "text": "#E69A4C",
+          "bg": "#1E140E",
+          "lc": -55.8,
+          "abs": 55.8,
+          "tier": "large-text"
+        },
+        {
+          "label": "primary on elevated (crema/darkCacao)",
+          "text": "#FFF7EE",
+          "bg": "#1E140E",
+          "lc": -102.4,
+          "abs": 102.4,
+          "tier": "small-text"
+        }
+      ]
+    },
+    {
+      "id": "house-blend",
+      "polarity": "dark",
+      "rows": [
+        {
+          "label": "primary text (crema)",
+          "text": "#FFF8F0",
+          "bg": "#241810",
+          "lc": -102.4,
+          "abs": 102.4,
+          "tier": "small-text"
+        },
+        {
+          "label": "reading text (bone)",
+          "text": "#E9DCCF",
+          "bg": "#241810",
+          "lc": -85.2,
+          "abs": 85.2,
+          "tier": "small-text"
+        },
+        {
+          "label": "secondary text (mocha)",
+          "text": "#BBA188",
+          "bg": "#241810",
+          "lc": -52.3,
+          "abs": 52.3,
+          "tier": "large-text"
+        },
+        {
+          "label": "tertiary (asparagus)",
+          "text": "#89B481",
+          "bg": "#241810",
+          "lc": -54.2,
+          "abs": 54.2,
+          "tier": "large-text"
+        },
+        {
+          "label": "structural",
+          "text": "#BCA18A",
+          "bg": "#241810",
+          "lc": -52.5,
+          "abs": 52.5,
+          "tier": "large-text"
+        },
+        {
+          "label": "accent (amber)",
+          "text": "#E9922E",
+          "bg": "#241810",
+          "lc": -53,
+          "abs": 53,
+          "tier": "large-text"
+        },
+        {
+          "label": "success/live (teal)",
+          "text": "#2CB9AA",
+          "bg": "#241810",
+          "lc": -53.1,
+          "abs": 53.1,
+          "tier": "large-text"
+        },
+        {
+          "label": "critical (scarlet)",
+          "text": "#FE8175",
+          "bg": "#241810",
+          "lc": -53.1,
+          "abs": 53.1,
+          "tier": "large-text"
+        },
+        {
+          "label": "stable (gold)",
+          "text": "#D0A200",
+          "bg": "#241810",
+          "lc": -54.1,
+          "abs": 54.1,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity worsening (magenta)",
+          "text": "#ED85B8",
+          "bg": "#241810",
+          "lc": -53.1,
+          "abs": 53.1,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity improving (harvest)",
+          "text": "#D79B29",
+          "bg": "#241810",
+          "lc": -52.8,
+          "abs": 52.8,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity stable (olive)",
+          "text": "#9DAF48",
+          "bg": "#241810",
+          "lc": -52.9,
+          "abs": 52.9,
+          "tier": "large-text"
+        },
+        {
+          "label": "accent on elevated (amber/darkCacao)",
+          "text": "#E9922E",
+          "bg": "#322219",
+          "lc": -51.3,
+          "abs": 51.3,
+          "tier": "large-text"
+        },
+        {
+          "label": "primary on elevated (crema/darkCacao)",
+          "text": "#FFF8F0",
+          "bg": "#322219",
+          "lc": -100.8,
+          "abs": 100.8,
+          "tier": "small-text"
+        }
+      ]
+    },
+    {
+      "id": "copper-roast",
+      "polarity": "dark",
+      "rows": [
+        {
+          "label": "primary text (crema)",
+          "text": "#FFF9F4",
+          "bg": "#34251C",
+          "lc": -101,
+          "abs": 101,
+          "tier": "small-text"
+        },
+        {
+          "label": "reading text (bone)",
+          "text": "#F3E7DD",
+          "bg": "#34251C",
+          "lc": -90,
+          "abs": 90,
+          "tier": "small-text"
+        },
+        {
+          "label": "secondary text (mocha)",
+          "text": "#D0AE8E",
+          "bg": "#34251C",
+          "lc": -58.3,
+          "abs": 58.3,
+          "tier": "large-text"
+        },
+        {
+          "label": "tertiary (asparagus)",
+          "text": "#89B47E",
+          "bg": "#34251C",
+          "lc": -52,
+          "abs": 52,
+          "tier": "large-text"
+        },
+        {
+          "label": "structural",
+          "text": "#C4A78E",
+          "bg": "#34251C",
+          "lc": -53.9,
+          "abs": 53.9,
+          "tier": "large-text"
+        },
+        {
+          "label": "accent (amber)",
+          "text": "#F5A33A",
+          "bg": "#34251C",
+          "lc": -58.8,
+          "abs": 58.8,
+          "tier": "large-text"
+        },
+        {
+          "label": "success/live (teal)",
+          "text": "#24C6B6",
+          "bg": "#34251C",
+          "lc": -57.3,
+          "abs": 57.3,
+          "tier": "large-text"
+        },
+        {
+          "label": "critical (scarlet)",
+          "text": "#FF7D70",
+          "bg": "#34251C",
+          "lc": -50,
+          "abs": 50,
+          "tier": "large-text"
+        },
+        {
+          "label": "stable (gold)",
+          "text": "#E4B20B",
+          "bg": "#34251C",
+          "lc": -61.2,
+          "abs": 61.2,
+          "tier": "body-text"
+        },
+        {
+          "label": "severity worsening (magenta)",
+          "text": "#F47CBA",
+          "bg": "#34251C",
+          "lc": -50,
+          "abs": 50,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity improving (harvest)",
+          "text": "#E0A225",
+          "bg": "#34251C",
+          "lc": -54.7,
+          "abs": 54.7,
+          "tier": "large-text"
+        },
+        {
+          "label": "severity stable (olive)",
+          "text": "#A1B73A",
+          "bg": "#34251C",
+          "lc": -54.5,
+          "abs": 54.5,
+          "tier": "large-text"
+        },
+        {
+          "label": "accent on elevated (amber/darkCacao)",
+          "text": "#F5A33A",
+          "bg": "#402F24",
+          "lc": -56.6,
+          "abs": 56.6,
+          "tier": "large-text"
+        },
+        {
+          "label": "primary on elevated (crema/darkCacao)",
+          "text": "#FFF9F4",
+          "bg": "#402F24",
+          "lc": -98.8,
+          "abs": 98.8,
+          "tier": "small-text"
+        }
+      ]
+    },
+    {
+      "id": "cold-brew",
+      "polarity": "light",
+      "rows": [
+        {
+          "label": "primary text (crema)",
+          "text": "#3B3129",
+          "bg": "#FAF5EE",
+          "lc": 93.1,
+          "abs": 93.1,
+          "tier": "small-text"
+        },
+        {
+          "label": "reading text (bone)",
+          "text": "#50453C",
+          "bg": "#FAF5EE",
+          "lc": 85.9,
+          "abs": 85.9,
+          "tier": "small-text"
+        },
+        {
+          "label": "secondary text (mocha)",
+          "text": "#6F6051",
+          "bg": "#FAF5EE",
+          "lc": 74.6,
+          "abs": 74.6,
+          "tier": "body-text"
+        },
+        {
+          "label": "tertiary (asparagus)",
+          "text": "#4C6340",
+          "bg": "#FAF5EE",
+          "lc": 77.1,
+          "abs": 77.1,
+          "tier": "small-text"
+        },
+        {
+          "label": "structural",
+          "text": "#73665B",
+          "bg": "#FAF5EE",
+          "lc": 72.1,
+          "abs": 72.1,
+          "tier": "body-text"
+        },
+        {
+          "label": "accent (amber)",
+          "text": "#854F00",
+          "bg": "#FAF5EE",
+          "lc": 77.2,
+          "abs": 77.2,
+          "tier": "small-text"
+        },
+        {
+          "label": "success/live (teal)",
+          "text": "#007271",
+          "bg": "#FAF5EE",
+          "lc": 72.6,
+          "abs": 72.6,
+          "tier": "body-text"
+        },
+        {
+          "label": "critical (scarlet)",
+          "text": "#A22626",
+          "bg": "#FAF5EE",
+          "lc": 78.7,
+          "abs": 78.7,
+          "tier": "small-text"
+        },
+        {
+          "label": "stable (gold)",
+          "text": "#6E5800",
+          "bg": "#FAF5EE",
+          "lc": 77.9,
+          "abs": 77.9,
+          "tier": "small-text"
+        },
+        {
+          "label": "severity worsening (magenta)",
+          "text": "#952C63",
+          "bg": "#FAF5EE",
+          "lc": 79.3,
+          "abs": 79.3,
+          "tier": "small-text"
+        },
+        {
+          "label": "severity improving (harvest)",
+          "text": "#7F5300",
+          "bg": "#FAF5EE",
+          "lc": 77.1,
+          "abs": 77.1,
+          "tier": "small-text"
+        },
+        {
+          "label": "severity stable (olive)",
+          "text": "#4E6C1E",
+          "bg": "#FAF5EE",
+          "lc": 74.3,
+          "abs": 74.3,
+          "tier": "body-text"
+        },
+        {
+          "label": "accent on elevated (amber/darkCacao)",
+          "text": "#854F00",
+          "bg": "#F0E9E0",
+          "lc": 70.4,
+          "abs": 70.4,
+          "tier": "body-text"
+        },
+        {
+          "label": "primary on elevated (crema/darkCacao)",
+          "text": "#3B3129",
+          "bg": "#F0E9E0",
+          "lc": 86.2,
+          "abs": 86.2,
+          "tier": "small-text"
+        }
+      ]
+    }
+  ]
+}

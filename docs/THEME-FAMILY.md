@@ -4,12 +4,13 @@
 
 Black Label is not being replaced, renamed, or silently lightened. It remains the default root export, `dark-roast-theme/css`, `.dark-roast`, `[data-theme="dark-roast"]`, and the first VS Code contribution.
 
-The family adds two independent companions:
+The family adds three independent companions:
 
 | Theme | Intent | Canvas | Validated surface |
 |-------|--------|--------|-------------------|
 | House Blend | Recommended daily driver | `#241810` | Every informational foreground is at least 4.5:1 on `espressoHover` (`#49362B`) |
 | Copper Roast | Brighter-room, richly chromatic | `#34251C` | Every informational foreground is at least 4.5:1 on `espresso` (`#47352A`) |
+| Cold Brew | Positive-polarity (light), daylight rooms | `#FAF5EE` | Every informational foreground is at least 4.5:1 on `obsidian` (`#F5F0E8`); surfaces darken with elevation |
 
 The validated surface is deliberately not the darkest canvas. This prevents the old failure mode where a caption passes on the page background but becomes unreadable inside a card or interactive row.
 

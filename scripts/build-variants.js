@@ -61,6 +61,17 @@ const basePlatform = {
 
 const outputs = [];
 const check = process.argv.includes('--check');
+
+// Target groups let a companion ship to a subset of platforms. A variant with
+// no `targets` field ships everywhere (Black Label parity — House Blend and
+// Copper Roast); a web-only companion like Cold Brew defers editor/native
+// artifacts. Web outputs (CSS + ESM theme module + effective tokens) always
+// generate, since every companion is at minimum a web theme.
+const ALL_TARGETS = ['web', 'editor', 'terminal', 'native'];
+const variantTargets = (variant) =>
+  Array.isArray(variant.targets) && variant.targets.length ? variant.targets : ALL_TARGETS;
+const hasTarget = (variant, group) => variantTargets(variant).includes(group);
+const pushIf = (condition, entry) => { if (condition) outputs.push(entry); };
 const hex = (value) => value.toUpperCase();
 const rgb = (value) => [1, 3, 5].map((i) => Number.parseInt(value.slice(i, i + 2), 16));
 const hexFromRgb = (r, g, b) =>
@@ -211,6 +222,18 @@ function buildCssVariant(baseCss, variant, scoped) {
     /(::(?:-moz-)?selection\s*\{[\s\S]*?\bbackground:\s*)rgba\([^)]+\)/g,
     `$1rgba(${ar}, ${ag}, ${ab}, 0.22)`,
   );
+  if (variant.polarity === 'light') {
+    // Black Label's elevation borders, dividers, and glow hotspots are white at
+    // low alpha, tuned for a dark canvas. On a positive-polarity companion they
+    // would be invisible or inverted, so remap the neutral white overlay to the
+    // companion's dark shadow tone — borders and separators then read on a
+    // bright surface, and glows become soft dark halos instead of white ones.
+    const [sr, sg, sb] = rgb(variant.platform.shadow);
+    result = result.replace(
+      /rgba\(\s*255\s*,\s*255\s*,\s*255\s*(,[^)]*)\)/g,
+      `rgba(${sr}, ${sg}, ${sb}$1)`,
+    );
+  }
   result = renameTheme(result, variant);
   result = namespaceKeyframes(result, variant);
   result = normalizeCssCompanionComments(result, variant);
@@ -659,7 +682,7 @@ function buildSwiftFamily() {
     name: 'Dark Roast: Black Label',
     colors: Object.fromEntries(Object.entries(base.colors).filter(([key]) => !key.startsWith('_'))),
     platform: { ...basePlatform, structural: base.colors.crater },
-  }, ...variants];
+  }, ...variants.filter((variant) => !Array.isArray(variant.targets) || variant.targets.includes('native'))];
   const fields = [...Object.keys(all[0].colors), 'structural', 'sage', 'slate', 'mauve'];
   const cases = all.map((theme) => `    case ${theme.id === 'black-label' ? 'blackLabel' : theme.id.replace(/-([a-z])/g, (_, c) => c.toUpperCase())} = "${theme.id}"`).join('\n');
   const palettes = all.map((theme) => {
@@ -750,6 +773,8 @@ for (const variant of variants) {
     id: variant.id,
     displayOrder: variant.displayOrder,
     selector: variant.selector,
+    polarity: variant.polarity || 'dark',
+    targets: variantTargets(variant),
     baseTheme: base.themeName,
     baseVersion: variant.baseVersion,
     baseFingerprint: variant.baseFingerprint,
@@ -790,11 +815,11 @@ for (const variant of variants) {
   outputs.push([join(ROOT, 'dist', 'css', `dark-roast-${variant.id}-scoped.css`), buildCssVariant(baseScopedCss, variant, true)]);
   outputs.push([join(ROOT, 'dist', 'themes', variant.id, 'index.js'), buildThemeModule(variant)]);
   outputs.push([join(ROOT, 'dist', 'themes', variant.id, 'tokens.json'), JSON.stringify(effectiveTokens, null, 2) + '\n']);
-  outputs.push([join(ROOT, 'platforms', 'vscode', 'themes', `dark-roast-${variant.id}-color-theme.json`), buildVsCodeVariant(vscodeSource, variant)]);
+  pushIf(hasTarget(variant, 'editor'), [join(ROOT, 'platforms', 'vscode', 'themes', `dark-roast-${variant.id}-color-theme.json`), buildVsCodeVariant(vscodeSource, variant)]);
 
   const terminalMap = colorMapFor(variant, true);
-  outputs.push([join(ROOT, 'platforms', 'warp', `dark-roast-${variant.id}.yaml`), `${HASH_BANNER}\n${normalizePlatformNarrative(renameTheme(replaceColors(warpSource, terminalMap), variant), variant)}`]);
-  outputs.push([join(ROOT, 'platforms', 'tabby', `dark-roast-${variant.id}.yaml`), `${HASH_BANNER}\n${normalizePlatformNarrative(renameTheme(replaceColors(tabbySource, terminalMap), variant), variant)}`]);
+  pushIf(hasTarget(variant, 'terminal'), [join(ROOT, 'platforms', 'warp', `dark-roast-${variant.id}.yaml`), `${HASH_BANNER}\n${normalizePlatformNarrative(renameTheme(replaceColors(warpSource, terminalMap), variant), variant)}`]);
+  pushIf(hasTarget(variant, 'terminal'), [join(ROOT, 'platforms', 'tabby', `dark-roast-${variant.id}.yaml`), `${HASH_BANNER}\n${normalizePlatformNarrative(renameTheme(replaceColors(tabbySource, terminalMap), variant), variant)}`]);
 
   let textastic = renameTheme(replaceColors(textasticSource, colorMapFor(variant)), variant)
     .replace('23707EF3-1F96-43C3-946F-4DFFA64AF02C', variant.textasticUuid)
@@ -817,16 +842,16 @@ for (const variant of variants) {
   ];
   for (const [name, foreground, style] of tmRules) textastic = setTmThemeRule(textastic, name, foreground, style);
   textastic = normalizeTextasticCompanionComments(textastic, variant);
-  outputs.push([join(ROOT, 'platforms', 'textastic', `Dark-Roast-${idPascal.replace(/([a-z])([A-Z])/g, '$1-$2')}.tmTheme`), addXmlBanner(textastic)]);
+  pushIf(hasTarget(variant, 'editor'), [join(ROOT, 'platforms', 'textastic', `Dark-Roast-${idPascal.replace(/([a-z])([A-Z])/g, '$1-$2')}.tmTheme`), addXmlBanner(textastic)]);
 
   let xcode = renameTheme(replaceHexColors(xcodeSource, colorMapFor(variant)), variant);
   xcode = sanitizeXmlComments(normalizePlatformNarrative(rewriteXcodeFloatColors(xcode, colorMapFor(variant)), variant));
-  outputs.push([join(ROOT, 'platforms', 'xcode', `Dark Roast ${variant.shortName}.dvtcolortheme`), addXmlBanner(xcode)]);
+  pushIf(hasTarget(variant, 'editor'), [join(ROOT, 'platforms', 'xcode', `Dark Roast ${variant.shortName}.dvtcolortheme`), addXmlBanner(xcode)]);
 
   let iterm = renameTheme(replaceHexColors(itermSource, terminalMap), variant);
   iterm = sanitizeXmlComments(normalizePlatformNarrative(rewriteITermFloatColors(iterm, terminalMap), variant));
   iterm = iterm.replaceAll(`"${variant.name}"`, `"${variant.name.replace(':', '')}"`);
-  outputs.push([join(ROOT, 'platforms', 'iterm2', `Dark Roast ${variant.shortName}.itermcolors`), addXmlBanner(iterm)]);
+  pushIf(hasTarget(variant, 'terminal'), [join(ROOT, 'platforms', 'iterm2', `Dark Roast ${variant.shortName}.itermcolors`), addXmlBanner(iterm)]);
 
   let terminal = renameTheme(replaceColors(terminalSource, terminalMap), variant)
     .replaceAll('generate-terminal-profile.py', `generate-${variant.id}-profile.py`)
@@ -871,7 +896,7 @@ def color_to_nsdata(hex_color):`,
     return bytes(data)`,
       '    return archive_nsobject(font)',
     );
-  outputs.push([join(ROOT, 'platforms', 'terminal-app', `generate-${variant.id}-profile.py`), addScriptBanner(terminal)]);
+  pushIf(hasTarget(variant, 'terminal'), [join(ROOT, 'platforms', 'terminal-app', `generate-${variant.id}-profile.py`), addScriptBanner(terminal)]);
 }
 
 const themeIndex = `${JS_BANNER}
@@ -879,8 +904,21 @@ ${variants.map((variant) => `export { default as ${variant.id.replace(/-([a-z])/
 `;
 outputs.push([join(ROOT, 'dist', 'themes', 'index.js'), themeIndex]);
 outputs.push([join(ROOT, 'dist', 'themes', 'manifest.json'), JSON.stringify({
-  base: { id: 'black-label', name: base.themeName, selector: 'dark-roast', unchanged: true },
-  companions: variants.map(({ id, displayOrder, name, selector, className, description, intent, quality }) => ({ id, displayOrder, name, selector, className, description, intent, quality })),
+  base: { id: 'black-label', name: base.themeName, selector: 'dark-roast', polarity: 'dark', unchanged: true },
+  companions: variants.map((variant) => ({
+    id: variant.id,
+    displayOrder: variant.displayOrder,
+    name: variant.name,
+    selector: variant.selector,
+    className: variant.className,
+    description: variant.description,
+    intent: variant.intent,
+    quality: variant.quality,
+    polarity: variant.polarity || 'dark',
+    targets: variantTargets(variant),
+    sourceVersion: packageVersion,
+    baseFingerprint: variant.baseFingerprint,
+  })),
 }, null, 2) + '\n']);
 outputs.push([join(ROOT, 'platforms', 'swift', 'DarkRoastThemeFamily.swift'), buildSwiftFamily()]);
 

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../dist/css/dark-roast-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-house-blend-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-copper-roast-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-cold-brew-scoped.css">
   <style>
     :root {
       color-scheme: dark;
@@ -81,6 +82,20 @@
       --spec-teal-bright: #5FE0D1;
       --spec-function: #24C6B6;
       --spec-punctuation: #C4A78E;
+    }
+
+    [data-theme="dark-roast-cold-brew"] {
+      --spec-structural: #73665B;
+      --spec-sage: #457036;
+      --spec-slate: #32669A;
+      --spec-mauve: #77458B;
+      --spec-scarlet-bright: #B33834;
+      --spec-sage-bright: #4D7D3B;
+      --spec-slate-bright: #3A72A9;
+      --spec-mauve-bright: #845099;
+      --spec-teal-bright: #008180;
+      --spec-function: #007271;
+      --spec-punctuation: #73665B;
     }
 
     [data-theme^="dark-roast"] {
@@ -1985,6 +2000,14 @@
             <div class="signature-grid" data-palette-grid></div>
             <div class="surface-rail" aria-label="Copper Roast surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
           </article>
+          <article class="palette-row" data-theme="dark-roast-cold-brew" data-theme-row="dark-roast-cold-brew" aria-label="Cold Brew palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Cold Brew</strong><span class="palette-badge">Light &middot; daylight</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Cold Brew surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
       </div>
     </section>
 
@@ -2015,6 +2038,7 @@
                 <option value="dark-roast">Black Label</option>
                 <option value="dark-roast-house-blend">House Blend</option>
                 <option value="dark-roast-copper-roast">Copper Roast</option>
+                <option value="dark-roast-cold-brew">Cold Brew</option>
               </select>
             </label>
             <button class="gallery-button swap-button" id="swap-themes" type="button" aria-label="Swap left and right themes" title="Swap themes">⇄</button>
@@ -2023,6 +2047,7 @@
                 <option value="dark-roast">Black Label</option>
                 <option value="dark-roast-house-blend" selected>House Blend</option>
                 <option value="dark-roast-copper-roast">Copper Roast</option>
+                <option value="dark-roast-cold-brew">Cold Brew</option>
               </select>
             </label>
           </div>

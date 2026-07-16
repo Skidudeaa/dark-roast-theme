@@ -1,0 +1,72 @@
+{
+  "id": "cold-brew",
+  "displayOrder": 3,
+  "name": "Dark Roast: Cold Brew",
+  "shortName": "Cold Brew",
+  "selector": "dark-roast-cold-brew",
+  "className": "dark-roast-cold-brew",
+  "version": "1.0.0",
+  "baseVersion": "5.0.0",
+  "baseFingerprint": "sha256:1d7f90234693f4e37eb407be888f6798f3fbc2788e345604cc58295f61addcae",
+  "polarity": "light",
+  "targets": [
+    "web"
+  ],
+  "sourceVersion": "5.2.0",
+  "description": "A warm, positive-polarity Dark Roast for bright rooms: a cream canvas that deepens with elevation, espresso ink, and dark kiln-enamel accents that stay legible in daylight.",
+  "intent": {
+    "position": "daylight companion",
+    "ambientLight": "moderate to bright",
+    "surfaceLift": "surfaces darken with elevation over a cream canvas",
+    "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
+  },
+  "colors": {
+    "void": "#FAF5EE",
+    "obsidian": "#F5F0E8",
+    "darkCacao": "#F0E9E0",
+    "espresso": "#E8E0D6",
+    "espressoHover": "#E1D7CC",
+    "roastedBean": "#D5CABF",
+    "crater": "#B0A296",
+    "crema": "#3B3129",
+    "warmWhite": "#463B31",
+    "bone": "#50453C",
+    "mocha": "#6F6051",
+    "craterDeep": "#C2B5AA",
+    "asparagus": "#4C6340",
+    "rustic": "#FBCDC3",
+    "rose": "#F2C8D5",
+    "amber": "#854F00",
+    "amberHot": "#943C00",
+    "amberMuted": "#875726",
+    "gold": "#6E5800",
+    "brass": "#79601B",
+    "scarlet": "#A22626",
+    "burntSienna": "#983E00",
+    "teal": "#007271",
+    "magenta": "#952C63",
+    "harvest": "#7F5300",
+    "olive": "#4E6C1E"
+  },
+  "platform": {
+    "structural": "#73665B",
+    "sage": "#457036",
+    "slate": "#32669A",
+    "mauve": "#77458B",
+    "scarletBright": "#B33834",
+    "sageBright": "#4D7D3B",
+    "slateBright": "#3A72A9",
+    "mauveBright": "#845099",
+    "tealBright": "#008180",
+    "tealActive": "#007978",
+    "shadow": "#2C221A",
+    "hoverSurface": "#ECE2D8"
+  },
+  "quality": {
+    "contrastSurface": "obsidian",
+    "minimumInformationalContrast": 4.5,
+    "minimumCoreAccentChromaAverage": 0.11,
+    "minimumPlatformAccentChromaAverage": 0.09
+  },
+  "textasticUuid": "c01dbe33-0000-4c0f-fee0-000000000003"
+}

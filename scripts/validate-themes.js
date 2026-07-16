@@ -246,29 +246,27 @@ function main() {
     const colors = isObject(variant.colors) ? variant.colors : {};
     const platform = isObject(variant.platform) ? variant.platform : {};
 
-    const surfaceLuminances = SURFACE_SCALE.map((key) => relativeLuminance(colors[key]));
-    for (let index = 1; index < SURFACE_SCALE.length; index += 1) {
-      const previous = surfaceLuminances[index - 1];
-      const current = surfaceLuminances[index];
-      if (previous !== null && current !== null && current <= previous) {
-        fail(
-          file,
-          `surface luminance must increase from colors.${SURFACE_SCALE[index - 1]} to colors.${SURFACE_SCALE[index]}`,
-        );
+    // Elevation is polarity-aware. Dark themes (the default) get lighter as they
+    // lift off the canvas, so surface/border luminance must strictly INCREASE.
+    // A positive-polarity (light) companion like Cold Brew darkens with
+    // elevation over a bright canvas, so the same ramps must strictly DECREASE.
+    // Either way the ramp stays strictly monotonic — flat steps still fail.
+    const polarity = variant.polarity === 'light' ? 'light' : 'dark';
+    const monotonicRamp = (scale, label) => {
+      const luminances = scale.map((key) => relativeLuminance(colors[key]));
+      for (let index = 1; index < scale.length; index += 1) {
+        const previous = luminances[index - 1];
+        const current = luminances[index];
+        if (previous === null || current === null) continue;
+        const ok = polarity === 'light' ? current < previous : current > previous;
+        if (!ok) {
+          const direction = polarity === 'light' ? 'decrease' : 'increase';
+          fail(file, `${label} luminance must ${direction} from colors.${scale[index - 1]} to colors.${scale[index]}`);
+        }
       }
-    }
-
-    const borderLuminances = BORDER_SCALE.map((key) => relativeLuminance(colors[key]));
-    for (let index = 1; index < BORDER_SCALE.length; index += 1) {
-      const previous = borderLuminances[index - 1];
-      const current = borderLuminances[index];
-      if (previous !== null && current !== null && current <= previous) {
-        fail(
-          file,
-          `border luminance must increase from colors.${BORDER_SCALE[index - 1]} to colors.${BORDER_SCALE[index]}`,
-        );
-      }
-    }
+    };
+    monotonicRamp(SURFACE_SCALE, 'surface');
+    monotonicRamp(BORDER_SCALE, 'border');
 
     let contrastSurface = null;
     let minimumInformationalContrast = null;

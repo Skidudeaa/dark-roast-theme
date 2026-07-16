@@ -12,6 +12,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const VARIANT_DIR = join(ROOT, 'src', 'variants');
 const HEX_COLOR = /^#[0-9A-F]{6}$/i;
 
+// A web-only companion (Cold Brew) generates no editor/terminal/native
+// artifacts, so those platform checks are skipped for it. Variants with no
+// `targets` field are validated on every platform (Black Label parity).
+const variantTargets = (variant) =>
+  Array.isArray(variant.targets) && variant.targets.length ? variant.targets : ['web', 'editor', 'terminal', 'native'];
+const hasTarget = (variant, group) => variantTargets(variant).includes(group);
+
 const CURRENT_VSCODE_ROLES = [
   'editorMultiCursor.primary.foreground',
   'toolbar.hoverBackground',
@@ -1175,11 +1182,12 @@ async function main() {
 
   for (const variant of variants) {
     validateCss(variant, readArtifact, fail);
-    validateVsCode(variant, readArtifact, fail);
-    validateTerminalFiles(variant, readArtifact, fail);
+    if (hasTarget(variant, 'editor')) validateVsCode(variant, readArtifact, fail);
+    if (hasTarget(variant, 'terminal')) validateTerminalFiles(variant, readArtifact, fail);
     validateEffectiveTokens(variant, readArtifact, fail);
   }
-  validatePlists(variants.flatMap(plistRequestsFor), fail);
+  const plistVariants = variants.filter((variant) => hasTarget(variant, 'editor') || hasTarget(variant, 'terminal'));
+  validatePlists(plistVariants.flatMap(plistRequestsFor), fail);
   await Promise.all(variants.map((variant) => validateThemeModule(variant, fail)));
 
   if (errors.length) {

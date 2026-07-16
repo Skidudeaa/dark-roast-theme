@@ -6,6 +6,32 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.2.0] — 2026-07-16
+
+Additive theme-family release. **Dark Roast: Black Label is unchanged** — its
+17-file contract is byte-for-byte identical to v5.0.0.
+
+### Added
+
+- **Dark Roast: Cold Brew** — the first positive-polarity (light) companion, for
+  bright rooms. A warm cream canvas (`#FAF5EE`) that *darkens* with elevation,
+  espresso ink, and dark saturated kiln-enamel accents that stay legible in
+  daylight. Every informational foreground validates at 4.5:1 or better on the
+  card surface (`obsidian`); actions clear 4.5:1 on the canvas.
+- **OKLCH seed authoring** — Cold Brew is authored in perceptually-uniform OKLCH
+  in `src/cold-brew.seeds.json` and compiled to the standard hex registry via
+  `scripts/build-cold-brew.js`, using Culori for deterministic sRGB gamut
+  mapping. `npm run build:cold-brew --check` guards seed → registry drift.
+- **Polarity-aware validation** — `validate-themes.js` now enforces the
+  surface/border elevation ramp by `polarity` (dark themes lighten with
+  elevation, light themes darken). A `targets` field lets a companion ship to a
+  subset of platforms; Cold Brew is `web`-only, deferring editor/native.
+- **Manifest metadata** — `dist/themes/manifest.json` companions now record
+  `polarity`, `targets`, `sourceVersion`, and `baseFingerprint`.
+- **APCA report** — `npm run report:apca` emits `reports/apca.{json,md}` with
+  signed Lc from the pinned `apca-w3`. Informational only; WCAG 2.x remains the
+  shipping gate.
+
 ## [5.1.0] — 2026-07-15
 
 Additive theme-family release. **Dark Roast: Black Label is unchanged**: its
