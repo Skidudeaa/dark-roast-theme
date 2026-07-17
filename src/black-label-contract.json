@@ -3,10 +3,10 @@
   "lockedAt": "5.0.0",
   "purpose": "Black Label is the unchanged flagship. Companion work must not mutate these files.",
   "sha256": {
-    "src/tokens.json": "1d7f90234693f4e37eb407be888f6798f3fbc2788e345604cc58295f61addcae",
-    "dist/css/dark-roast.css": "247def2721376a58852f0a60fa20e33e4936c0b2ae0184d8a9740ec0949c7d8f",
-    "dist/css/dark-roast-scoped.css": "f0e788074a6119eee1cd1e4145e1026ae325c65f7e1df067f894473c44a44a63",
-    "dist/tokens/colors.js": "9457dce4e1c2a0cc244aaa664768a03e2aecf816024bd03af2707c552e9c3c78",
+    "src/tokens.json": "39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030",
+    "dist/css/dark-roast.css": "162ba6ba32eff3c8e85f88d9b0d17bddf2ea27594a86bd9ffe9f6b3f514fde48",
+    "dist/css/dark-roast-scoped.css": "6036ce61c10e96ebc8117b0bcece91c6efe1d20fc91682aeb6bc652b9ac25ac1",
+    "dist/tokens/colors.js": "bdbf1c553d43f06f641651a85285c6cf49270d9a5160639d5d7339457d2a8778",
     "dist/tokens/glows.js": "f592f58541a1da3c1c86e4e163261f0f6447ca79f16770a6f3b122b92adf7ec2",
     "dist/tokens/index.js": "7f4b2e535e5e5472e9164ace0a9a3d2287e0483a3ae83de50752172e9b994620",
     "dist/tokens/spacing.js": "b17bb401d925ecf3227faafc9dc970766aadf9a24d1dc8caa6993de351626e7a",
@@ -20,5 +20,6 @@
     "platforms/terminal-app/generate-terminal-profile.py": "8932c2340bc59e652b5442e7095263e7bb5b3b2962bdbd78da95c0db712ce4ea",
     "platforms/swift/EnhancedDarkRoastTheme.swift": "91afa0c20bf2721b5557d6e6347f9d4ac0ae6beb2af0b464b0da9945f789d89d",
     "index.js": "680a96f1bab3b33a78250df1a7e5e647bf777fde00c24d938a7a43c1bfbd2c24"
-  }
+  },
+  "note": "2026-07-17: additive fg role aliases --dr-fg-body(bone)/--dr-fg-muted(mocha); no existing value changed."
 }

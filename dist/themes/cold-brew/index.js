@@ -54,7 +54,9 @@ export const roles = Object.freeze({
   "display": "#342920",
   "workhorse": "#50453C",
   "secondary": "#625445",
-  "tertiary": "#405634"
+  "tertiary": "#405634",
+  "body": "#50453C",
+  "muted": "#625445"
 });
 export const syntax = Object.freeze({
   "structural": "#5A493B",

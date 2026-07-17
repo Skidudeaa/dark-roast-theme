@@ -64,6 +64,8 @@
     --dr-fg-workhorse: var(--dr-bone);
     --dr-fg-secondary: var(--dr-mocha);
     --dr-fg-tertiary: var(--dr-asparagus);
+    --dr-fg-body: var(--dr-bone);
+    --dr-fg-muted: var(--dr-mocha);
 
     /* Opacity variants (dim 40% / subtle 10% / ghost 5%) */
     --dr-amber-dim: rgba(245, 163, 58, 0.4);

@@ -331,7 +331,7 @@ function buildCssVars() {
   L.push(`${I}/* Semantic role aliases */`);
   const ALIAS_ROLES = ['accent', 'accentHot', 'accentMuted', 'success', 'warning', 'error', 'critical', 'stable', 'live'];
   for (const r of ALIAS_ROLES) decl(kebab(r), `var(--dr-${kebab(t.roles[r])})`);
-  for (const r of ['display', 'workhorse', 'secondary', 'tertiary']) decl(`fg-${r}`, `var(--dr-${kebab(t.roles[r])})`);
+  for (const r of ['display', 'workhorse', 'secondary', 'tertiary', 'body', 'muted']) decl(`fg-${r}`, `var(--dr-${kebab(t.roles[r])})`);
   L.push('');
 
   // Opacity variants.

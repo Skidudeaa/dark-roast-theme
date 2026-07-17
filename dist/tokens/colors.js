@@ -128,6 +128,8 @@ export const roles = {
   workhorse: bone,
   secondary: mocha,
   tertiary: asparagus,
+  body: bone,
+  muted: mocha,
 };
 
 export const opacityVariants = {
