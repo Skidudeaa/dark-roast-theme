@@ -21,11 +21,13 @@ for (const file of recipes) {
 	const variant = generatePalette(recipe);
 	
 	variant.version = "1.0.0";
-	variant.baseVersion = "5.0.0"; // Mirroring existing standard
+	variant.shortName = recipe.name.includes(':') ? recipe.name.split(':')[1].trim() : recipe.name;
+	variant.baseVersion = "5.0.0";
 	variant.baseFingerprint = fingerprint;
 	variant.selector = `dark-roast-${variant.id}`;
 	variant.className = `dark-roast-${variant.id}`;
 	variant.sourceVersion = packageVersion;
+	variant.targets = ["web", "editor", "terminal", "native"];
 	
 	const outPath = join(VARIANTS_DIR, `${variant.id}.json`);
 	writeFileSync(outPath, JSON.stringify(variant, null, '\t'));

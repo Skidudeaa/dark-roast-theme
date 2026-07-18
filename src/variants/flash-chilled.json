@@ -56,9 +56,16 @@
 		"minimumPlatformAccentChromaAverage": 0.1
 	},
 	"version": "1.0.0",
+	"shortName": "Flash Chilled",
 	"baseVersion": "5.0.0",
 	"baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030",
 	"selector": "dark-roast-flash-chilled",
 	"className": "dark-roast-flash-chilled",
-	"sourceVersion": "5.3.0"
+	"sourceVersion": "5.3.0",
+	"targets": [
+		"web",
+		"editor",
+		"terminal",
+		"native"
+	]
 }
