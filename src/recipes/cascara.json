@@ -1,0 +1,10 @@
+{
+  "id": "cascara",
+  "name": "Dark Roast: Cascara",
+  "displayOrder": 6,
+  "description": "A botanical light mode inspired by the coffee cherry tea: a pale rose-tan canvas with deep jammy reds and dried-leaf green accents.",
+  "polarity": "light",
+  "hue": 25,
+  "chroma_scale": 1.1,
+  "contrast_target": 4.5
+}
