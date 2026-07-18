@@ -1,0 +1,33 @@
+{
+	"id": "nitro",
+	"name": "Dark Roast: Nitro",
+	"polarity": "light",
+	"hue": 62,
+	"chroma_scale": 0.6,
+	"contrast_target": 4,
+	"colors": {
+		"void": "#DCD6D2",
+		"obsidian": "#D0C9C3",
+		"darkCacao": "#C5BCB4",
+		"espresso": "#B7ACA3",
+		"espressoHover": "#A89C91",
+		"roastedBean": "#8B7D72",
+		"crater": "#706052",
+		"crema": "#010000",
+		"warmWhite": "#050301",
+		"bone": "#100A05",
+		"mocha": "#3B2A1B",
+		"craterDeep": "#7E6E62",
+		"amber": "#533200",
+		"teal": "#004444",
+		"scarlet": "#873936",
+		"gold": "#2B2000"
+	},
+	"platform": {
+		"structural": "#988D84",
+		"shadow": "#F8ECE3"
+	},
+	"version": "1.0.0",
+	"selector": "dark-roast-nitro",
+	"className": "dark-roast-nitro"
+}

@@ -1,0 +1,33 @@
+{
+	"id": "flash-chilled",
+	"name": "Dark Roast: Flash Chilled",
+	"polarity": "light",
+	"hue": 210,
+	"chroma_scale": 1.4,
+	"contrast_target": 4.5,
+	"colors": {
+		"void": "#C9DCDF",
+		"obsidian": "#B7D0D5",
+		"darkCacao": "#A5C4CA",
+		"espresso": "#90B6BD",
+		"espressoHover": "#7BA7AF",
+		"roastedBean": "#578A93",
+		"crater": "#296E79",
+		"crema": "#000101",
+		"warmWhite": "#000406",
+		"bone": "#000E11",
+		"mocha": "#00353C",
+		"craterDeep": "#417C86",
+		"amber": "#533200",
+		"teal": "#004444",
+		"scarlet": "#A30018",
+		"gold": "#2B2000"
+	},
+	"platform": {
+		"structural": "#72979D",
+		"shadow": "#CFF7FE"
+	},
+	"version": "1.0.0",
+	"selector": "dark-roast-flash-chilled",
+	"className": "dark-roast-flash-chilled"
+}
