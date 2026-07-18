@@ -1,6 +1,8 @@
 {
   "id": "cold-brew",
   "name": "Dark Roast: Cold Brew",
+  "displayOrder": 3,
+  "description": "The original warm cream light mode for bright rooms.",
   "polarity": "light",
   "hue": 70,
   "chroma_scale": 1.0,

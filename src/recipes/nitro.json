@@ -1,6 +1,8 @@
 {
   "id": "nitro",
   "name": "Dark Roast: Nitro",
+  "displayOrder": 4,
+  "description": "A soft-light variation with diffused, nitrogen-infused surfaces for low-fatigue daylight coding.",
   "polarity": "light",
   "hue": 62,
   "chroma_scale": 0.6,
