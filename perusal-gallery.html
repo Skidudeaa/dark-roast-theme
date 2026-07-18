@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Roast: The Full Menu</title>
+    <style>
+        :root {
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: var(--font-main);
+            background: #121212;
+            color: #e0e0e0;
+        }
+        header {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+        h1 { font-weight: 800; font-size: 2.5rem; margin-bottom: 10px; color: #fff; }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .theme-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .theme-card:hover { transform: translateY(-5px); }
+        .preview-box {
+            height: 200px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .info { padding: 24px; flex-grow: 1; }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+        .tag.dark { background: #000; color: #fff; }
+        .tag.light { background: #fff; color: #000; }
+        .theme-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
+        .description { font-size: 0.95rem; line-height: 1.6; color: #aaa; margin-bottom: 20px; }
+        
+        .swatch-ramp {
+            display: flex;
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .code-snippet {
+            grid-column: span 2;
+            font-family: "SF Mono", "Fira Code", monospace;
+            font-size: 0.85rem;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dark Roast Theme Family</h1>
+        <p>A comprehensive perusal of all brewed variants, from OLED Black to Cascara Tea.</p>
+    </header>
+
+    <div class="menu-grid">
+
+        <div class="theme-card">
+            <div class="preview-box" style="background: #241810;">
+                <div class="code-snippet" style="background: #2B1D14; color: #FFF8F0; border: 1px solid #3B2A20;">
+                    <span style="color: #E9922E;">const</span> <span style="color: #2CB9AA;">brew</span> = () => {<br>
+                    &nbsp;&nbsp;<span style="color: #FE8175;">return</span> <span style="color: #D0A200;">'Dark Roast'</span>;<br>
+                    };
+                </div>
+                <div class="swatch-ramp">
+                    <div class="swatch" style="background: #E9922E;" title="Amber"></div>
+                    <div class="swatch" style="background: #2CB9AA;" title="Teal"></div>
+                    <div class="swatch" style="background: #FE8175;" title="Scarlet"></div>
+                    <div class="swatch" style="background: #D0A200;" title="Gold"></div>
+                    <div class="swatch" style="background: #ED85B8;" title="Magenta"></div>
+                </div>
+            </div>
+            <div class="info">
+                <span class="tag dark">undefined mode</span>
+                <div class="theme-name">Dark Roast: House Blend</div>
+                <div class="description">A balanced, less-black Dark Roast with burnished kiln-enamel signals for long sessions and ordinary room lighting.</div>
+                <div style="font-size: 0.8rem; color: #666;">ID: house-blend | Hue: N/A</div>
+            </div>
+        </div>
+    
+        <div class="theme-card">
+            <div class="preview-box" style="background: #34251C;">
+                <div class="code-snippet" style="background: #3A2A20; color: #FFF9F4; border: 1px solid #47352A;">
+                    <span style="color: #F5A33A;">const</span> <span style="color: #24C6B6;">brew</span> = () => {<br>
+                    &nbsp;&nbsp;<span style="color: #FF7D70;">return</span> <span style="color: #E4B20B;">'Dark Roast'</span>;<br>
+                    };
+                </div>
+                <div class="swatch-ramp">
+                    <div class="swatch" style="background: #F5A33A;" title="Amber"></div>
+                    <div class="swatch" style="background: #24C6B6;" title="Teal"></div>
+                    <div class="swatch" style="background: #FF7D70;" title="Scarlet"></div>
+                    <div class="swatch" style="background: #E4B20B;" title="Gold"></div>
+                    <div class="swatch" style="background: #F47CBA;" title="Magenta"></div>
+                </div>
+            </div>
+            <div class="info">
+                <span class="tag dark">undefined mode</span>
+                <div class="theme-name">Dark Roast: Copper Roast</div>
+                <div class="description">A brighter-room Dark Roast with burnished cocoa surfaces and saturated kiln-enamel signals.</div>
+                <div style="font-size: 0.8rem; color: #666;">ID: copper-roast | Hue: N/A</div>
+            </div>
+        </div>
+    
+        <div class="theme-card">
+            <div class="preview-box" style="background: #E2DDD7;">
+                <div class="code-snippet" style="background: #D8CFC7; color: #000000; border: 1px solid #C2B5A7;">
+                    <span style="color: #492B00;">const</span> <span style="color: #004444;">brew</span> = () => {<br>
+                    &nbsp;&nbsp;<span style="color: #940015;">return</span> <span style="color: #2D1F00;">'Dark Roast'</span>;<br>
+                    };
+                </div>
+                <div class="swatch-ramp">
+                    <div class="swatch" style="background: #492B00;" title="Amber"></div>
+                    <div class="swatch" style="background: #004444;" title="Teal"></div>
+                    <div class="swatch" style="background: #940015;" title="Scarlet"></div>
+                    <div class="swatch" style="background: #2D1F00;" title="Gold"></div>
+                    <div class="swatch" style="background: #640060;" title="Magenta"></div>
+                </div>
+            </div>
+            <div class="info">
+                <span class="tag light">light mode</span>
+                <div class="theme-name">Dark Roast: Cold Brew</div>
+                <div class="description">The original warm cream light mode for bright rooms.</div>
+                <div style="font-size: 0.8rem; color: #666;">ID: cold-brew | Hue: 70</div>
+            </div>
+        </div>
+    
+        <div class="theme-card">
+            <div class="preview-box" style="background: #E1DDDA;">
+                <div class="code-snippet" style="background: #D5D0CB; color: #000000; border: 1px solid #BFB5AE;">
+                    <span style="color: #492B00;">const</span> <span style="color: #004444;">brew</span> = () => {<br>
+                    &nbsp;&nbsp;<span style="color: #7E312E;">return</span> <span style="color: #2D1F00;">'Dark Roast'</span>;<br>
+                    };
+                </div>
+                <div class="swatch-ramp">
+                    <div class="swatch" style="background: #492B00;" title="Amber"></div>
+                    <div class="swatch" style="background: #004444;" title="Teal"></div>
+                    <div class="swatch" style="background: #7E312E;" title="Scarlet"></div>
+                    <div class="swatch" style="background: #2D1F00;" title="Gold"></div>
+                    <div class="swatch" style="background: #552552;" title="Magenta"></div>
+                </div>
+            </div>
+            <div class="info">
+                <span class="tag light">light mode</span>
+                <div class="theme-name">Dark Roast: Nitro</div>
+                <div class="description">A soft-light variation with diffused, nitrogen-infused surfaces for low-fatigue daylight coding.</div>
+                <div style="font-size: 0.8rem; color: #666;">ID: nitro | Hue: 62</div>
+            </div>
+        </div>
+    
+        <div class="theme-card">
+            <div class="preview-box" style="background: #D4E1E3;">
+                <div class="code-snippet" style="background: #C2D5D9; color: #000000; border: 1px solid #9EBEC4;">
+                    <span style="color: #492B00;">const</span> <span style="color: #004444;">brew</span> = () => {<br>
+                    &nbsp;&nbsp;<span style="color: #940015;">return</span> <span style="color: #2D1F00;">'Dark Roast'</span>;<br>
+                    };
+                </div>
+                <div class="swatch-ramp">
+                    <div class="swatch" style="background: #492B00;" title="Amber"></div>
+                    <div class="swatch" style="background: #004444;" title="Teal"></div>
+                    <div class="swatch" style="background: #940015;" title="Scarlet"></div>
+                    <div class="swatch" style="background: #2D1F00;" title="Gold"></div>
+                    <div class="swatch" style="background: #640060;" title="Magenta"></div>
+                </div>
+            </div>
+            <div class="info">
+                <span class="tag light">light mode</span>
+                <div class="theme-name">Dark Roast: Flash Chilled</div>
+                <div class="description">A high-chroma, cool-spectrum light mode with crisp edges and clinical contrast.</div>
+                <div style="font-size: 0.8rem; color: #666;">ID: flash-chilled | Hue: 210</div>
+            </div>
+        </div>
+    
+        <div class="theme-card">
+            <div class="preview-box" style="background: #E5DBDA;">
+                <div class="code-snippet" style="background: #DCCDCB; color: #010000; border: 1px solid #C9B1AF;">
+                    <span style="color: #492B00;">const</span> <span style="color: #004444;">brew</span> = () => {<br>
+                    &nbsp;&nbsp;<span style="color: #940015;">return</span> <span style="color: #2D1F00;">'Dark Roast'</span>;<br>
+                    };
+                </div>
+                <div class="swatch-ramp">
+                    <div class="swatch" style="background: #492B00;" title="Amber"></div>
+                    <div class="swatch" style="background: #004444;" title="Teal"></div>
+                    <div class="swatch" style="background: #940015;" title="Scarlet"></div>
+                    <div class="swatch" style="background: #2D1F00;" title="Gold"></div>
+                    <div class="swatch" style="background: #640060;" title="Magenta"></div>
+                </div>
+            </div>
+            <div class="info">
+                <span class="tag light">light mode</span>
+                <div class="theme-name">Dark Roast: Cascara</div>
+                <div class="description">A botanical light mode inspired by the coffee cherry tea: a pale rose-tan canvas with deep jammy reds and dried-leaf green accents.</div>
+                <div style="font-size: 0.8rem; color: #666;">ID: cascara | Hue: 25</div>
+            </div>
+        </div>
+    
+    </div>
+</body>
+</html>
