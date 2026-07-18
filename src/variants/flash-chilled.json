@@ -1,6 +1,8 @@
 {
 	"id": "flash-chilled",
 	"name": "Dark Roast: Flash Chilled",
+	"displayOrder": 5,
+	"description": "A high-chroma, cool-spectrum light mode with crisp edges and clinical contrast.",
 	"polarity": "light",
 	"hue": 210,
 	"chroma_scale": 1.4,
