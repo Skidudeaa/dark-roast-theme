@@ -30,39 +30,39 @@
 # Chrome:
 #   background    #E1DDDA   void      — warm-dark deepest layer
 #   foreground    #000000   crema     — primary text (15.56:1 contrast on void)
-#   cursor        #004444   teal      — kinetic, matches editor caret
+#   cursor        #006A6A   teal      — kinetic, matches editor caret
 #   cursor text   #E1DDDA   void      — inverted on cursor block
 #   selection bg  #BFB5AE   espresso  — warm polished surface (v4: was `grain`)
 #   selection fg  #000000   crema     — full brightness on selection
 #
 # ANSI Normal (indices 0–7):
 #   0 black       #D5D0CB   obsidian  — dark but not void; provides depth in dark bg
-#   1 red         #7E312E   scarlet   — error / critical
-#   2 green       #213A1C   sage      — warm fern green (terminal extension)
-#   3 yellow      #492B00   amber     — warning / accent / CTA
-#   4 blue        #0C3F5C   slate     — dusty steel blue (terminal extension)
-#   5 magenta     #422F5F   mauve     — dried lavender (terminal extension)
-#   6 cyan        #004444   teal      — live data flow / resolved
+#   1 red         #912224   scarlet   — error / critical
+#   2 green       #213E1B   sage      — warm fern green (terminal extension)
+#   3 yellow      #885500   amber     — warning / accent / CTA
+#   4 blue        #084466   slate     — dusty steel blue (terminal extension)
+#   5 magenta     #3D275E   mauve     — dried lavender (terminal extension)
+#   6 cyan        #006A6A   teal      — live data flow / resolved
 #   7 white       #0E0804   bone      — reduced-contrast light text
 #
 # ANSI Bright (indices 8–15):
-#   8  bright black    #7A6F67   crater-deep   — comment gray / muted metadata (v4: was `crater`)
-#   9  bright red      #772B28   scarlet-lt    — scarlet companion-bright
-#  10  bright green    #13310B   sage-lt       — sage companion-bright
-#  11  bright yellow   #2D1F00   gold          — success / stable severity
-#  12  bright blue     #00314C   slate-lt      — slate companion-bright
-#  13  bright magenta  #361F56   mauve-lt      — mauve companion-bright
-#  14  bright cyan     #003636   teal-lt       — teal brightened (noticeably lighter
+#   8  bright black    #655C53   crater-deep   — comment gray / muted metadata (v4: was `crater`)
+#   9  bright red      #7C2524   scarlet-lt    — scarlet companion-bright
+#  10  bright green    #0F3206   sage-lt       — sage companion-bright
+#  11  bright yellow   #7A5B00   gold          — success / stable severity
+#  12  bright blue     #06527B   slate-lt      — slate companion-bright
+#  13  bright magenta  #381D5C   mauve-lt      — mauve companion-bright
+#  14  bright cyan     #006A6A   teal-lt       — teal brightened (noticeably lighter
 #                                               than normal teal; brights should be
 #                                               brighter, not identical)
 #  15  bright white    #000000   crema         — full brightness
 # ============================================================================
 
 # ── Warp chrome ─────────────────────────────────────────────────────────────
-accent:     "#492B00"   # amber — selection highlights and Warp UI accent ring
+accent:     "#885500"   # amber — selection highlights and Warp UI accent ring
 background: "#E1DDDA"   # void — warm-dark deepest layer
 foreground: "#000000"   # crema — primary text, 15.56:1 contrast vs void
-cursor:     "#004444"   # teal — kinetic live-data cursor, matches editor caret
+cursor:     "#006A6A"   # teal — kinetic live-data cursor, matches editor caret
 details:    darker      # Warp lightens or darkens chrome decoration; "darker"
                         # keeps tab bar and sidebar darker than the background,
                         # which is correct for a warm-dark bg
@@ -71,21 +71,21 @@ details:    darker      # Warp lightens or darkens chrome decoration; "darker"
 terminal_colors:
   normal:
     black:   "#D5D0CB"  # ANSI 0 — obsidian (elevated floor, not as deep as void)
-    red:     "#7E312E"  # ANSI 1 — scarlet (error / critical severity)
-    green:   "#213A1C"  # ANSI 2 — sage (warm fern, used by git diff +lines, ls dirs)
-    yellow:  "#492B00"  # ANSI 3 — amber (warning / accent; matches DR primary CTA)
-    blue:    "#0C3F5C"  # ANSI 4 — slate (dusty steel; git diff header, less prompt)
-    magenta: "#422F5F"  # ANSI 5 — mauve (dried lavender; grep matches, vim special)
-    cyan:    "#004444"  # ANSI 6 — teal (live data; matches cursor + DR teal token)
+    red:     "#912224"  # ANSI 1 — scarlet (error / critical severity)
+    green:   "#213E1B"  # ANSI 2 — sage (warm fern, used by git diff +lines, ls dirs)
+    yellow:  "#885500"  # ANSI 3 — amber (warning / accent; matches DR primary CTA)
+    blue:    "#084466"  # ANSI 4 — slate (dusty steel; git diff header, less prompt)
+    magenta: "#3D275E"  # ANSI 5 — mauve (dried lavender; grep matches, vim special)
+    cyan:    "#006A6A"  # ANSI 6 — teal (live data; matches cursor + DR teal token)
     white:   "#0E0804"  # ANSI 7 — bone (reduced-contrast; comment-level brightness)
 
   bright:
-    black:   "#7A6F67"  # ANSI 8  — crater-deep (comment gray; git log graph, tmux inactive)
-    red:     "#772B28"  # ANSI 9  — scarlet companion-bright (diff removed, error paths)
-    green:   "#13310B"  # ANSI 10 — sage companion-bright (diff added, success paths)
-    yellow:  "#2D1F00"  # ANSI 11 — gold (success / stable; DR gold token, git branch)
-    blue:    "#00314C"  # ANSI 12 — slate companion-bright (links, prompt path segments)
-    magenta: "#361F56"  # ANSI 13 — mauve companion-bright (vim visual, special tokens)
-    cyan:    "#003636"  # ANSI 14 — teal lightened (brighter than normal teal #004444;
+    black:   "#655C53"  # ANSI 8  — crater-deep (comment gray; git log graph, tmux inactive)
+    red:     "#7C2524"  # ANSI 9  — scarlet companion-bright (diff removed, error paths)
+    green:   "#0F3206"  # ANSI 10 — sage companion-bright (diff added, success paths)
+    yellow:  "#7A5B00"  # ANSI 11 — gold (success / stable; DR gold token, git branch)
+    blue:    "#06527B"  # ANSI 12 — slate companion-bright (links, prompt path segments)
+    magenta: "#381D5C"  # ANSI 13 — mauve companion-bright (vim visual, special tokens)
+    cyan:    "#006A6A"  # ANSI 14 — teal lightened (brighter than normal teal #006A6A;
                         #            satisfies "bright should look brighter" convention)
     white:   "#000000"  # ANSI 15 — crema (full brightness; bold text, headings)

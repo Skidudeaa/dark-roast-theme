@@ -6,7 +6,6 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
     case blackLabel = "black-label"
     case houseBlend = "house-blend"
     case copperRoast = "copper-roast"
-    case coldBrew = "cold-brew"
     case nitro = "nitro"
     case flashChilled = "flash-chilled"
     case cascara = "cascara"
@@ -114,39 +113,6 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
             slate: drColor(0x5DB4E8),
             mauve: drColor(0xDB86D0)
             )
-        case .coldBrew:
-            return DarkRoastPalette(
-            void_: drColor(0xE2DDD7),
-            obsidian: drColor(0xD8CFC7),
-            darkCacao: drColor(0xCDC2B7),
-            espresso: drColor(0xC2B5A7),
-            espressoHover: drColor(0xB1A291),
-            roastedBean: drColor(0x96826C),
-            crater: drColor(0x7C6449),
-            crema: drColor(0x000000),
-            warmWhite: drColor(0x030100),
-            bone: drColor(0x100701),
-            mocha: drColor(0x3B2301),
-            craterDeep: drColor(0x867058),
-            asparagus: drColor(0x162700),
-            rustic: drColor(0xBD6062),
-            rose: drColor(0xAF6297),
-            amber: drColor(0x492B00),
-            amberHot: drColor(0x632500),
-            amberMuted: drColor(0x472400),
-            gold: drColor(0x2D1F00),
-            brass: drColor(0x342700),
-            scarlet: drColor(0x940015),
-            burntSienna: drColor(0x742400),
-            teal: drColor(0x004444),
-            magenta: drColor(0x640060),
-            harvest: drColor(0x382500),
-            olive: drColor(0x2B2B00),
-            structural: drColor(0x7D6F5F),
-            sage: drColor(0x0F3E02),
-            slate: drColor(0x003F60),
-            mauve: drColor(0x472077)
-            )
         case .nitro:
             return DarkRoastPalette(
             void_: drColor(0xE1DDDA),
@@ -161,24 +127,24 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
             bone: drColor(0x0E0804),
             mocha: drColor(0x362516),
             craterDeep: drColor(0x807165),
-            asparagus: drColor(0x1A260C),
+            asparagus: drColor(0x1C290E),
             rustic: drColor(0xA76F6E),
             rose: drColor(0x9E6F8E),
-            amber: drColor(0x492B00),
-            amberHot: drColor(0x632500),
-            amberMuted: drColor(0x472400),
-            gold: drColor(0x2D1F00),
-            brass: drColor(0x342700),
-            scarlet: drColor(0x7E312E),
-            burntSienna: drColor(0x6B2D16),
-            teal: drColor(0x004444),
-            magenta: drColor(0x552552),
-            harvest: drColor(0x382500),
-            olive: drColor(0x2B2B00),
-            structural: drColor(0x7A6F67),
-            sage: drColor(0x213A1C),
-            slate: drColor(0x0C3F5C),
-            mauve: drColor(0x422F5F)
+            amber: drColor(0x885500),
+            amberHot: drColor(0xA44201),
+            amberMuted: drColor(0x733E02),
+            gold: drColor(0x7A5B00),
+            brass: drColor(0x745C04),
+            scarlet: drColor(0x912224),
+            burntSienna: drColor(0x862D04),
+            teal: drColor(0x006A6A),
+            magenta: drColor(0x6B2567),
+            harvest: drColor(0x7E5900),
+            olive: drColor(0x323C08),
+            structural: drColor(0x655C53),
+            sage: drColor(0x213E1B),
+            slate: drColor(0x084466),
+            mauve: drColor(0x3D275E)
             )
         case .flashChilled:
             return DarkRoastPalette(
@@ -194,24 +160,24 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
             bone: drColor(0x000C0F),
             mocha: drColor(0x002F36),
             craterDeep: drColor(0x447F89),
-            asparagus: drColor(0x162700),
+            asparagus: drColor(0x395A04),
             rustic: drColor(0xD14C55),
             rose: drColor(0xBE509F),
-            amber: drColor(0x492B00),
-            amberHot: drColor(0x632500),
-            amberMuted: drColor(0x472400),
-            gold: drColor(0x2D1F00),
-            brass: drColor(0x342700),
-            scarlet: drColor(0x940015),
-            burntSienna: drColor(0x742400),
-            teal: drColor(0x004444),
-            magenta: drColor(0x640060),
-            harvest: drColor(0x382500),
-            olive: drColor(0x2B2B00),
-            structural: drColor(0x54797F),
-            sage: drColor(0x0D3E00),
-            slate: drColor(0x003F60),
-            mauve: drColor(0x4D008A)
+            amber: drColor(0x7E4F01),
+            amberHot: drColor(0x973C00),
+            amberMuted: drColor(0x864901),
+            gold: drColor(0x725400),
+            brass: drColor(0x6E5600),
+            scarlet: drColor(0xB6011C),
+            burntSienna: drColor(0xA03500),
+            teal: drColor(0x006464),
+            magenta: drColor(0xA1039C),
+            harvest: drColor(0x755200),
+            olive: drColor(0x4B5E00),
+            structural: drColor(0x3B5F65),
+            sage: drColor(0x1C6402),
+            slate: drColor(0x015E8C),
+            mauve: drColor(0x5A129D)
             )
         case .cascara:
             return DarkRoastPalette(
@@ -227,24 +193,24 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
             bone: drColor(0x130504),
             mocha: drColor(0x441A18),
             craterDeep: drColor(0x906966),
-            asparagus: drColor(0x162700),
+            asparagus: drColor(0x294205),
             rustic: drColor(0xC25C5F),
             rose: drColor(0xB35E99),
-            amber: drColor(0x492B00),
-            amberHot: drColor(0x632500),
-            amberMuted: drColor(0x472400),
-            gold: drColor(0x2D1F00),
-            brass: drColor(0x342700),
-            scarlet: drColor(0x940015),
-            burntSienna: drColor(0x742400),
-            teal: drColor(0x004444),
-            magenta: drColor(0x640060),
-            harvest: drColor(0x382500),
-            olive: drColor(0x2B2B00),
-            structural: drColor(0x846A68),
-            sage: drColor(0x0D3E00),
-            slate: drColor(0x003F60),
-            mauve: drColor(0x491A7C)
+            amber: drColor(0x7D4E00),
+            amberHot: drColor(0x973C00),
+            amberMuted: drColor(0x864901),
+            gold: drColor(0x705300),
+            brass: drColor(0x6C5500),
+            scarlet: drColor(0xB4001B),
+            burntSienna: drColor(0x9D3401),
+            teal: drColor(0x006262),
+            magenta: drColor(0x740270),
+            harvest: drColor(0x755200),
+            olive: drColor(0x4B5E00),
+            structural: drColor(0x674E4C),
+            sage: drColor(0x144904),
+            slate: drColor(0x015D8A),
+            mauve: drColor(0x4C1D80)
             )
         }
     }

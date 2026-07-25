@@ -55,33 +55,33 @@
   Chrome:
     background    #D4E1E3   void      — warm-dark deepest layer
     foreground    #000000   crema     — primary text (15.68:1 contrast vs void)
-    cursor        #004444   teal      — kinetic cursor, matches editor caret
+    cursor        #006464   teal      — kinetic cursor, matches editor caret
     cursor text   #D4E1E3   void      — text inside cursor block (inverted)
     selection bg  #9EBEC4   espresso  — warm polished surface (v4: was `grain`)
     selection fg  #000000   crema     — text color on selection
     bold          #000000   crema     — bold text color (same hue, higher weight)
-    badge         #940015   scarlet   — iTerm2 badge/notification
+    badge         #B6011C   scarlet   — iTerm2 badge/notification
     tab           #C2D5D9   obsidian  — tab bar background color
-    link          #004444   teal      — hyperlink color in terminal output
+    link          #006464   teal      — hyperlink color in terminal output
 
   ANSI Normal (indices 0–7):
     0  black       #C2D5D9   obsidian  — dark floor (not as deep as void)
-    1  red         #940015   scarlet   — error / critical
-    2  green       #0D3E00   sage      — warm fern (terminal extension)
-    3  yellow      #492B00   amber     — warning / accent
-    4  blue        #003F60   slate     — dusty steel blue (terminal extension)
-    5  magenta     #4D008A   mauve     — dried lavender (terminal extension)
-    6  cyan        #004444   teal      — live data flow / resolved
+    1  red         #B6011C   scarlet   — error / critical
+    2  green       #1C6402   sage      — warm fern (terminal extension)
+    3  yellow      #7E4F01   amber     — warning / accent
+    4  blue        #015E8C   slate     — dusty steel blue (terminal extension)
+    5  magenta     #5A129D   mauve     — dried lavender (terminal extension)
+    6  cyan        #006464   teal      — live data flow / resolved
     7  white       #000C0F   bone      — reduced-contrast light text
 
   ANSI Bright (indices 8–15):
-    8  bright black    #54797F   crater-deep — comment gray, tmux inactive (v4: was `crater`)
-    9  bright red      #8A0012   scarlet+  — scarlet companion-bright
-    10 bright green    #093300   sage+     — sage companion-bright
-    11 bright yellow   #2D1F00   gold      — success / stable severity
-    12 bright blue     #00314C   slate+    — slate companion-bright
-    13 bright magenta  #3D006F   mauve+    — mauve companion-bright
-    14 bright cyan     #003636   teal+     — teal brightened (lighter than #004444;
+    8  bright black    #3B5F65   crater-deep — comment gray, tmux inactive (v4: was `crater`)
+    9  bright red      #B6011C   scarlet+  — scarlet companion-bright
+    10 bright green    #1C6700   sage+     — sage companion-bright
+    11 bright yellow   #725400   gold      — success / stable severity
+    12 bright blue     #015E8C   slate+    — slate companion-bright
+    13 bright magenta  #6605B3   mauve+    — mauve companion-bright
+    14 bright cyan     #006464   teal+     — teal brightened (lighter than #006464;
                                              bright should be visibly brighter)
     15 bright white    #000000   crema     — full brightness
   ============================================================================
@@ -103,63 +103,63 @@
     <key>Red Component</key>   <real>0.760784314</real>
   </dict>
 
-  <!-- ANSI 1 — Red — scarlet #940015 -->
+  <!-- ANSI 1 — Red — scarlet #B6011C -->
   <key>Ansi 1 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.082352941</real>
+    <key>Blue Component</key>  <real>0.109803922</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.000000000</real>
-    <key>Red Component</key>   <real>0.580392157</real>
+    <key>Green Component</key> <real>0.003921569</real>
+    <key>Red Component</key>   <real>0.713725490</real>
   </dict>
 
-  <!-- ANSI 2 — Green — sage #0D3E00 -->
+  <!-- ANSI 2 — Green — sage #1C6402 -->
   <key>Ansi 2 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.000000000</real>
+    <key>Blue Component</key>  <real>0.007843137</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.243137255</real>
-    <key>Red Component</key>   <real>0.050980392</real>
+    <key>Green Component</key> <real>0.392156863</real>
+    <key>Red Component</key>   <real>0.109803922</real>
   </dict>
 
-  <!-- ANSI 3 — Yellow — amber #492B00 -->
+  <!-- ANSI 3 — Yellow — amber #7E4F01 -->
   <key>Ansi 3 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.000000000</real>
+    <key>Blue Component</key>  <real>0.003921569</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.168627451</real>
-    <key>Red Component</key>   <real>0.286274510</real>
+    <key>Green Component</key> <real>0.309803922</real>
+    <key>Red Component</key>   <real>0.494117647</real>
   </dict>
 
-  <!-- ANSI 4 — Blue — slate #003F60 -->
+  <!-- ANSI 4 — Blue — slate #015E8C -->
   <key>Ansi 4 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.376470588</real>
+    <key>Blue Component</key>  <real>0.549019608</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.247058824</real>
-    <key>Red Component</key>   <real>0.000000000</real>
+    <key>Green Component</key> <real>0.368627451</real>
+    <key>Red Component</key>   <real>0.003921569</real>
   </dict>
 
-  <!-- ANSI 5 — Magenta — mauve #4D008A -->
+  <!-- ANSI 5 — Magenta — mauve #5A129D -->
   <key>Ansi 5 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.541176471</real>
+    <key>Blue Component</key>  <real>0.615686275</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.000000000</real>
-    <key>Red Component</key>   <real>0.301960784</real>
+    <key>Green Component</key> <real>0.070588235</real>
+    <key>Red Component</key>   <real>0.352941176</real>
   </dict>
 
-  <!-- ANSI 6 — Cyan — teal #004444 -->
+  <!-- ANSI 6 — Cyan — teal #006464 -->
   <key>Ansi 6 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.266666667</real>
+    <key>Blue Component</key>  <real>0.392156863</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.266666667</real>
+    <key>Green Component</key> <real>0.392156863</real>
     <key>Red Component</key>   <real>0.000000000</real>
   </dict>
 
@@ -177,76 +177,76 @@
        ANSI BRIGHT COLORS (indices 8–15)
        ════════════════════════════════════════════════════════════════════════ -->
 
-  <!-- ANSI 8 — Bright Black — crater-deep #54797F -->
+  <!-- ANSI 8 — Bright Black — crater-deep #3B5F65 -->
   <key>Ansi 8 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.498039216</real>
+    <key>Blue Component</key>  <real>0.396078431</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.474509804</real>
-    <key>Red Component</key>   <real>0.329411765</real>
+    <key>Green Component</key> <real>0.372549020</real>
+    <key>Red Component</key>   <real>0.231372549</real>
   </dict>
 
-  <!-- ANSI 9 — Bright Red — scarlet lightened #8A0012 -->
+  <!-- ANSI 9 — Bright Red — scarlet lightened #B6011C -->
   <key>Ansi 9 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.070588235</real>
+    <key>Blue Component</key>  <real>0.109803922</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.000000000</real>
-    <key>Red Component</key>   <real>0.541176471</real>
+    <key>Green Component</key> <real>0.003921569</real>
+    <key>Red Component</key>   <real>0.713725490</real>
   </dict>
 
-  <!-- ANSI 10 — Bright Green — sage lightened #093300 -->
+  <!-- ANSI 10 — Bright Green — sage lightened #1C6700 -->
   <key>Ansi 10 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
     <key>Blue Component</key>  <real>0.000000000</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.200000000</real>
-    <key>Red Component</key>   <real>0.035294118</real>
+    <key>Green Component</key> <real>0.403921569</real>
+    <key>Red Component</key>   <real>0.109803922</real>
   </dict>
 
-  <!-- ANSI 11 — Bright Yellow — gold #2D1F00 -->
+  <!-- ANSI 11 — Bright Yellow — gold #725400 -->
   <key>Ansi 11 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
     <key>Blue Component</key>  <real>0.000000000</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.121568627</real>
-    <key>Red Component</key>   <real>0.176470588</real>
+    <key>Green Component</key> <real>0.329411765</real>
+    <key>Red Component</key>   <real>0.447058824</real>
   </dict>
 
-  <!-- ANSI 12 — Bright Blue — slate lightened #00314C -->
+  <!-- ANSI 12 — Bright Blue — slate lightened #015E8C -->
   <key>Ansi 12 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.298039216</real>
+    <key>Blue Component</key>  <real>0.549019608</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.192156863</real>
-    <key>Red Component</key>   <real>0.000000000</real>
+    <key>Green Component</key> <real>0.368627451</real>
+    <key>Red Component</key>   <real>0.003921569</real>
   </dict>
 
-  <!-- ANSI 13 — Bright Magenta — mauve lightened #3D006F -->
+  <!-- ANSI 13 — Bright Magenta — mauve lightened #6605B3 -->
   <key>Ansi 13 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.435294118</real>
+    <key>Blue Component</key>  <real>0.701960784</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.000000000</real>
-    <key>Red Component</key>   <real>0.239215686</real>
+    <key>Green Component</key> <real>0.019607843</real>
+    <key>Red Component</key>   <real>0.400000000</real>
   </dict>
 
-  <!-- ANSI 14 — Bright Cyan — teal brightened #003636
-       NOTE: This is intentionally lighter than ANSI 6 teal (#004444).
+  <!-- ANSI 14 — Bright Cyan — teal brightened #006464
+       NOTE: This is intentionally lighter than ANSI 6 teal (#006464).
        The "bright" variants should be visibly brighter, not identical.
-       #003636 is ~15% lighter in luminance than #004444. -->
+       #006464 is ~15% lighter in luminance than #006464. -->
   <key>Ansi 14 Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.211764706</real>
+    <key>Blue Component</key>  <real>0.392156863</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.211764706</real>
+    <key>Green Component</key> <real>0.392156863</real>
     <key>Red Component</key>   <real>0.000000000</real>
   </dict>
 
@@ -299,15 +299,15 @@
     <key>Red Component</key>   <real>0.000000000</real>
   </dict>
 
-  <!-- Cursor Color — teal #004444
+  <!-- Cursor Color — teal #006464
        The cursor matches the DR teal token ("kinetic, live data flow").
        Visually connects the terminal cursor to editor cursors in the app. -->
   <key>Cursor Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.266666667</real>
+    <key>Blue Component</key>  <real>0.392156863</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.266666667</real>
+    <key>Green Component</key> <real>0.392156863</real>
     <key>Red Component</key>   <real>0.000000000</real>
   </dict>
 
@@ -347,17 +347,17 @@
     <key>Red Component</key>   <real>0.000000000</real>
   </dict>
 
-  <!-- Badge Color — scarlet #940015
+  <!-- Badge Color — scarlet #B6011C
        iTerm2 badges appear in the top-right of a pane to show dynamic info
        (like current git branch). Scarlet keeps it attention-drawing but
        consistent with the DR error/critical color semantic. -->
   <key>Badge Color</key>
   <dict>
     <key>Alpha Component</key> <real>0.5</real>
-    <key>Blue Component</key>  <real>0.082352941</real>
+    <key>Blue Component</key>  <real>0.109803922</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.000000000</real>
-    <key>Red Component</key>   <real>0.580392157</real>
+    <key>Green Component</key> <real>0.003921569</real>
+    <key>Red Component</key>   <real>0.713725490</real>
   </dict>
 
   <!-- Tab Color — obsidian #C2D5D9
@@ -372,29 +372,29 @@
     <key>Red Component</key>   <real>0.760784314</real>
   </dict>
 
-  <!-- Link Color — teal #004444
+  <!-- Link Color — teal #006464
        Hyperlinks in terminal output are teal — consistent with the DR
        "kinetic / live data flow" semantic. Matches cursor color, creating
        a unified interactive-element language. -->
   <key>Link Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.266666667</real>
+    <key>Blue Component</key>  <real>0.392156863</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.266666667</real>
+    <key>Green Component</key> <real>0.392156863</real>
     <key>Red Component</key>   <real>0.000000000</real>
   </dict>
 
-  <!-- Underline Color — amber #492B00
+  <!-- Underline Color — amber #7E4F01
        Underlined text (rare in terminals) uses amber, the DR primary accent.
        Keeps it distinct from both normal text and hyperlinks. -->
   <key>Underline Color</key>
   <dict>
     <key>Alpha Component</key> <real>1</real>
-    <key>Blue Component</key>  <real>0.000000000</real>
+    <key>Blue Component</key>  <real>0.003921569</real>
     <key>Color Space</key>     <string>sRGB</string>
-    <key>Green Component</key> <real>0.168627451</real>
-    <key>Red Component</key>   <real>0.286274510</real>
+    <key>Green Component</key> <real>0.309803922</real>
+    <key>Red Component</key>   <real>0.494117647</real>
   </dict>
 
 </dict>

@@ -54,29 +54,29 @@ FULL COLOR REFERENCE
 Chrome:
   background    #E1DDDA   void      — warm-dark deepest layer
   foreground    #000000   crema     — primary text (15.56:1 contrast on void)
-  cursor        #004444   teal      — kinetic cursor, matches editor caret
+  cursor        #006A6A   teal      — kinetic cursor, matches editor caret
   cursor text   #E1DDDA   void      — text color inside cursor block
   selection     #BFB5AE   espresso  — warm polished surface (v4: was `grain`)
   bold          #000000   crema     — same as foreground (bold = same weight)
 
 ANSI Normal (indices 0–7):
   0  black       #D5D0CB   obsidian  — dark floor (not as deep as void)
-  1  red         #7E312E   scarlet   — error / critical
-  2  green       #213A1C   sage      — warm fern (terminal extension)
-  3  yellow      #492B00   amber     — warning / accent
-  4  blue        #0C3F5C   slate     — dusty steel (terminal extension)
-  5  magenta     #422F5F   mauve     — dried lavender (terminal extension)
-  6  cyan        #004444   teal      — live data flow
+  1  red         #912224   scarlet   — error / critical
+  2  green       #213E1B   sage      — warm fern (terminal extension)
+  3  yellow      #885500   amber     — warning / accent
+  4  blue        #084466   slate     — dusty steel (terminal extension)
+  5  magenta     #3D275E   mauve     — dried lavender (terminal extension)
+  6  cyan        #006A6A   teal      — live data flow
   7  white       #0E0804   bone      — reduced-contrast light text
 
 ANSI Bright (indices 8–15):
-  8  bright black    #7A6F67   crater-deep — comment gray (v4: was `crater`)
-  9  bright red      #772B28   scarlet+  — scarlet companion-bright
-  10 bright green    #13310B   sage+     — sage companion-bright
-  11 bright yellow   #2D1F00   gold      — success / stable severity
-  12 bright blue     #00314C   slate+    — slate companion-bright
-  13 bright magenta  #361F56   mauve+    — mauve companion-bright
-  14 bright cyan     #003636   teal+     — teal brightened (visibly lighter than #004444)
+  8  bright black    #655C53   crater-deep — comment gray (v4: was `crater`)
+  9  bright red      #7C2524   scarlet+  — scarlet companion-bright
+  10 bright green    #0F3206   sage+     — sage companion-bright
+  11 bright yellow   #7A5B00   gold      — success / stable severity
+  12 bright blue     #06527B   slate+    — slate companion-bright
+  13 bright magenta  #381D5C   mauve+    — mauve companion-bright
+  14 bright cyan     #006A6A   teal+     — teal brightened (visibly lighter than #006A6A)
   15 bright white    #000000   crema     — full brightness
 """
 
@@ -114,29 +114,29 @@ PALETTE = {
     # Chrome
     "background":     "#E1DDDA",   # void
     "foreground":     "#000000",   # crema
-    "cursor":         "#004444",   # teal
+    "cursor":         "#006A6A",   # teal
     "cursor_text":    "#E1DDDA",   # void (inverted on cursor block)
     "selection":      "#BFB5AE",   # espresso (Terminal.app uses opaque selection bg)
     "bold_text":      "#000000",   # crema (bold = same color, different weight)
 
     # ANSI Normal 0–7
     "ansi_black":     "#D5D0CB",   # obsidian
-    "ansi_red":       "#7E312E",   # scarlet
-    "ansi_green":     "#213A1C",   # sage
-    "ansi_yellow":    "#492B00",   # amber
-    "ansi_blue":      "#0C3F5C",   # slate
-    "ansi_magenta":   "#422F5F",   # mauve
-    "ansi_cyan":      "#004444",   # teal
+    "ansi_red":       "#912224",   # scarlet
+    "ansi_green":     "#213E1B",   # sage
+    "ansi_yellow":    "#885500",   # amber
+    "ansi_blue":      "#084466",   # slate
+    "ansi_magenta":   "#3D275E",   # mauve
+    "ansi_cyan":      "#006A6A",   # teal
     "ansi_white":     "#0E0804",   # bone
 
     # ANSI Bright 8–15
-    "ansi_bright_black":   "#7A6F67",  # crater-deep
-    "ansi_bright_red":     "#772B28",  # scarlet lightened
-    "ansi_bright_green":   "#13310B",  # sage lightened
-    "ansi_bright_yellow":  "#2D1F00",  # gold
-    "ansi_bright_blue":    "#00314C",  # slate lightened
-    "ansi_bright_magenta": "#361F56",  # mauve lightened
-    "ansi_bright_cyan":    "#003636",  # teal brightened (lighter than #004444)
+    "ansi_bright_black":   "#655C53",  # crater-deep
+    "ansi_bright_red":     "#7C2524",  # scarlet lightened
+    "ansi_bright_green":   "#0F3206",  # sage lightened
+    "ansi_bright_yellow":  "#7A5B00",  # gold
+    "ansi_bright_blue":    "#06527B",  # slate lightened
+    "ansi_bright_magenta": "#381D5C",  # mauve lightened
+    "ansi_bright_cyan":    "#006A6A",  # teal brightened (lighter than #006A6A)
     "ansi_bright_white":   "#000000",  # crema
 }
 

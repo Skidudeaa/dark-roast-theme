@@ -53,29 +53,29 @@
 # Chrome:
 #   foreground      #000000   crema     — primary text (15.68:1 contrast on void)
 #   background      #D4E1E3   void      — warm-dark deepest layer
-#   cursor          #004444   teal      — kinetic, matches editor caret
+#   cursor          #006464   teal      — kinetic, matches editor caret
 #   cursorAccent    #D4E1E3   void      — text color inside cursor block (inverted)
 #   selection bg    #9EBEC466 espresso+40% — warm espresso at ~40% alpha (v4: was `grain`)
 #   selectionFg     #000000   crema     — full brightness text on selection
 #
 # ANSI Normal (indices 0–7):
 #   0 black       #C2D5D9   obsidian  — dark floor, provides depth against void
-#   1 red         #940015   scarlet   — error / critical
-#   2 green       #0D3E00   sage      — warm fern (terminal extension)
-#   3 yellow      #492B00   amber     — warning / accent / CTA
-#   4 blue        #003F60   slate     — dusty steel blue (terminal extension)
-#   5 magenta     #4D008A   mauve     — dried lavender (terminal extension)
-#   6 cyan        #004444   teal      — live data flow / resolved
+#   1 red         #B6011C   scarlet   — error / critical
+#   2 green       #1C6402   sage      — warm fern (terminal extension)
+#   3 yellow      #7E4F01   amber     — warning / accent / CTA
+#   4 blue        #015E8C   slate     — dusty steel blue (terminal extension)
+#   5 magenta     #5A129D   mauve     — dried lavender (terminal extension)
+#   6 cyan        #006464   teal      — live data flow / resolved
 #   7 white       #000C0F   bone      — reduced-contrast light text
 #
 # ANSI Bright (indices 8–15):
-#   8  bright black    #54797F   crater-deep — comment gray, tmux inactive (v4: was `crater`)
-#   9  bright red      #8A0012   scarlet+  — scarlet companion-bright
-#  10  bright green    #093300   sage+     — sage companion-bright
-#  11  bright yellow   #2D1F00   gold      — success / stable severity
-#  12  bright blue     #00314C   slate+    — slate companion-bright
-#  13  bright magenta  #3D006F   mauve+    — mauve companion-bright
-#  14  bright cyan     #003636   teal+     — teal brightened (noticeably lighter
+#   8  bright black    #3B5F65   crater-deep — comment gray, tmux inactive (v4: was `crater`)
+#   9  bright red      #B6011C   scarlet+  — scarlet companion-bright
+#  10  bright green    #1C6700   sage+     — sage companion-bright
+#  11  bright yellow   #725400   gold      — success / stable severity
+#  12  bright blue     #015E8C   slate+    — slate companion-bright
+#  13  bright magenta  #6605B3   mauve+    — mauve companion-bright
+#  14  bright cyan     #006464   teal+     — teal brightened (noticeably lighter
 #                                            than normal teal; "bright" means
 #                                            brighter, not identical)
 #  15  bright white    #000000   crema     — full brightness
@@ -95,7 +95,7 @@ terminal:
       # Chrome colors
       foreground:          '#000000'    # crema — primary text
       background:          '#D4E1E3'    # void — warm-dark deepest layer
-      cursor:              '#004444'    # teal — kinetic cursor, matches editor caret
+      cursor:              '#006464'    # teal — kinetic cursor, matches editor caret
       cursorAccent:        '#D4E1E3'    # void — text inside cursor block (inverted)
       # Tabby uses CSS color strings; the trailing 66 is hex for ~40% alpha.
       # Espresso (#9EBEC4) at 40% gives a warm visible selection without contrast clash.
@@ -108,20 +108,20 @@ terminal:
       colors:
         # ── Normal (ANSI indices 0–7) ────────────────────────────────────
         - '#C2D5D9'    # 0  ANSI Black    — obsidian (dark floor, not as deep as void)
-        - '#940015'    # 1  ANSI Red      — scarlet (error / critical severity)
-        - '#0D3E00'    # 2  ANSI Green    — sage (warm fern; ls dirs, git diff +lines)
-        - '#492B00'    # 3  ANSI Yellow   — amber (warning / accent; DR primary CTA)
-        - '#003F60'    # 4  ANSI Blue     — slate (dusty steel; git diff headers)
-        - '#4D008A'    # 5  ANSI Magenta  — mauve (dried lavender; grep matches)
-        - '#004444'    # 6  ANSI Cyan     — teal (live data; matches cursor token)
+        - '#B6011C'    # 1  ANSI Red      — scarlet (error / critical severity)
+        - '#1C6402'    # 2  ANSI Green    — sage (warm fern; ls dirs, git diff +lines)
+        - '#7E4F01'    # 3  ANSI Yellow   — amber (warning / accent; DR primary CTA)
+        - '#015E8C'    # 4  ANSI Blue     — slate (dusty steel; git diff headers)
+        - '#5A129D'    # 5  ANSI Magenta  — mauve (dried lavender; grep matches)
+        - '#006464'    # 6  ANSI Cyan     — teal (live data; matches cursor token)
         - '#000C0F'    # 7  ANSI White    — bone (reduced-contrast light text)
         # ── Bright (ANSI indices 8–15) ───────────────────────────────────
-        - '#54797F'    # 8  Bright Black  — crater-deep (comment gray; tmux inactive pane)
-        - '#8A0012'    # 9  Bright Red    — scarlet companion-bright (diff removed)
-        - '#093300'    # 10 Bright Green  — sage companion-bright (diff added)
-        - '#2D1F00'    # 11 Bright Yellow — gold (success / stable; git branch name)
-        - '#00314C'    # 12 Bright Blue   — slate companion-bright (links, paths)
-        - '#3D006F'    # 13 Bright Magenta — mauve companion-bright (special tokens)
-        - '#003636'    # 14 Bright Cyan   — teal lightened (brighter than ANSI 6;
+        - '#3B5F65'    # 8  Bright Black  — crater-deep (comment gray; tmux inactive pane)
+        - '#B6011C'    # 9  Bright Red    — scarlet companion-bright (diff removed)
+        - '#1C6700'    # 10 Bright Green  — sage companion-bright (diff added)
+        - '#725400'    # 11 Bright Yellow — gold (success / stable; git branch name)
+        - '#015E8C'    # 12 Bright Blue   — slate companion-bright (links, paths)
+        - '#6605B3'    # 13 Bright Magenta — mauve companion-bright (special tokens)
+        - '#006464'    # 14 Bright Cyan   — teal lightened (brighter than ANSI 6;
                        #                    "bright" should be visually distinct)
         - '#000000'    # 15 Bright White  — crema (full brightness; bold headings)

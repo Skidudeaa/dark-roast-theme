@@ -15,68 +15,68 @@ export const colors = Object.freeze({
   "espressoHover": "#B99D9A",
   "roastedBean": "#9F7C79",
   "crater": "#865D59",
+  "craterDeep": "#906966",
   "crema": "#010000",
   "warmWhite": "#050101",
   "bone": "#130504",
   "mocha": "#441A18",
-  "craterDeep": "#906966",
-  "asparagus": "#162700",
+  "asparagus": "#294205",
+  "amber": "#7D4E00",
+  "amberHot": "#973C00",
+  "amberMuted": "#864901",
+  "gold": "#705300",
+  "brass": "#6C5500",
+  "scarlet": "#B4001B",
+  "burntSienna": "#9D3401",
+  "teal": "#006262",
+  "magenta": "#740270",
+  "harvest": "#755200",
+  "olive": "#4B5E00",
   "rustic": "#C25C5F",
-  "rose": "#B35E99",
-  "amber": "#492B00",
-  "amberHot": "#632500",
-  "amberMuted": "#472400",
-  "gold": "#2D1F00",
-  "brass": "#342700",
-  "scarlet": "#940015",
-  "burntSienna": "#742400",
-  "teal": "#004444",
-  "magenta": "#640060",
-  "harvest": "#382500",
-  "olive": "#2B2B00"
+  "rose": "#B35E99"
 });
 export const roles = Object.freeze({
-  "accent": "#492B00",
-  "accentHot": "#632500",
-  "accentMuted": "#472400",
-  "success": "#004444",
-  "warning": "#342700",
-  "error": "#742400",
-  "critical": "#940015",
-  "stable": "#2D1F00",
-  "live": "#004444",
+  "accent": "#7D4E00",
+  "accentHot": "#973C00",
+  "accentMuted": "#864901",
+  "success": "#006262",
+  "warning": "#6C5500",
+  "error": "#9D3401",
+  "critical": "#B4001B",
+  "stable": "#705300",
+  "live": "#006262",
   "display": "#010000",
   "workhorse": "#130504",
   "secondary": "#441A18",
-  "tertiary": "#162700",
+  "tertiary": "#294205",
   "body": "#130504",
   "muted": "#441A18"
 });
 export const syntax = Object.freeze({
-  "structural": "#846A68",
-  "sage": "#0D3E00",
-  "slate": "#003F60",
-  "mauve": "#491A7C"
+  "structural": "#674E4C",
+  "sage": "#144904",
+  "slate": "#015D8A",
+  "mauve": "#4C1D80"
 });
 export const ansi = Object.freeze({
   "normal": [
     "#DCCDCB",
-    "#940015",
-    "#0D3E00",
-    "#492B00",
-    "#003F60",
-    "#491A7C",
-    "#004444",
+    "#B4001B",
+    "#144904",
+    "#7D4E00",
+    "#015D8A",
+    "#4C1D80",
+    "#006262",
     "#130504"
   ],
   "bright": [
-    "#846A68",
-    "#8A0012",
-    "#093300",
-    "#2D1F00",
-    "#00314C",
-    "#3D006F",
-    "#003636",
+    "#674E4C",
+    "#B4001B",
+    "#195C02",
+    "#705300",
+    "#015D8A",
+    "#480381",
+    "#006262",
     "#010000"
   ]
 });
@@ -92,28 +92,28 @@ export const semantic = Object.freeze({
     "primary": "#010000",
     "reading": "#130504",
     "secondary": "#441A18",
-    "tertiary": "#162700",
-    "structural": "#846A68",
+    "tertiary": "#294205",
+    "structural": "#674E4C",
     "inverse": "#E5DBDA"
   },
   "border": {
     "subtle": "#9F7C79",
     "default": "#906966",
     "strong": "#865D59",
-    "focus": "#004444"
+    "focus": "#006262"
   },
   "severity": {
-    "critical": "#940015",
-    "worsening": "#640060",
-    "improving": "#382500",
-    "stable": "#2B2B00",
-    "resolved": "#004444"
+    "critical": "#B4001B",
+    "worsening": "#740270",
+    "improving": "#755200",
+    "stable": "#4B5E00",
+    "resolved": "#006262"
   },
   "status": {
-    "ready": "#2D1F00",
-    "live": "#004444",
-    "warning": "#342700",
-    "error": "#742400"
+    "ready": "#705300",
+    "live": "#006262",
+    "warning": "#6C5500",
+    "error": "#9D3401"
   }
 });
 

@@ -46,17 +46,17 @@
     crema        #000000  →  0.000 0.000 0.000    Primary text
     mocha        #362516  →  0.212 0.145 0.086    Secondary / caption text
     bone         #0E0804  →  0.055 0.031 0.016    Reduced-contrast body text
-    asparagus    #1A260C  →  0.102 0.149 0.047    Tertiary metadata
+    asparagus    #1C290E  →  0.110 0.161 0.055    Tertiary metadata
     crater-deep  #807165  →  0.502 0.443 0.396    Borders (v4: was `crater`)
     crater       #766558  →  0.463 0.396 0.345    Strong borders (v4: was `crater-lt`)
-    amber        #492B00  →  0.286 0.169 0.000    Primary accent (attributes, user macros)
-    amber-hot    #632500  →  0.388 0.145 0.000    Numbers, user constants, system constants
-    gold         #2D1F00  →  0.176 0.122 0.000    User classes / structs / enums / type aliases
-    scarlet      #7E312E  →  0.494 0.192 0.180    Errors / critical (NOT used for keywords)
-    teal         #004444  →  0.000 0.267 0.267    User functions, URLs, cursor, LLDB prompt
-    sage         #213A1C  →  0.129 0.227 0.110    Strings, characters, debug pointer
-    slate        #0C3F5C  →  0.047 0.247 0.361    System / SDK identifiers (cool contrast)
-    mauve        #422F5F  →  0.259 0.184 0.373    Keywords, preprocessor, system variables
+    amber        #885500  →  0.533 0.333 0.000    Primary accent (attributes, user macros)
+    amber-hot    #A44201  →  0.643 0.259 0.004    Numbers, user constants, system constants
+    gold         #7A5B00  →  0.478 0.357 0.000    User classes / structs / enums / type aliases
+    scarlet      #912224  →  0.569 0.133 0.141    Errors / critical (NOT used for keywords)
+    teal         #006A6A  →  0.000 0.416 0.416    User functions, URLs, cursor, LLDB prompt
+    sage         #213E1B  →  0.129 0.243 0.106    Strings, characters, debug pointer
+    slate        #084466  →  0.031 0.267 0.400    System / SDK identifiers (cool contrast)
+    mauve        #3D275E  →  0.239 0.153 0.369    Keywords, preprocessor, system variables
 
   ────────────────────────────────────────────────────────────────────────
   DESIGN PHILOSOPHY — THE KILLER FEATURE:
@@ -65,20 +65,20 @@
   This theme exploits that distinction as its primary visual grammar:
 
     WARM PALETTE  →  YOUR code
-      gold   #2D1F00  your classes, structs, enums, type aliases
-      teal   #004444  your functions and methods
-      amber  #492B00  your attributes (@State, @objc), your macros
-      amber-hot #632500  numeric literals, your constants, system constants
+      gold   #7A5B00  your classes, structs, enums, type aliases
+      teal   #006A6A  your functions and methods
+      amber  #885500  your attributes (@State, @objc), your macros
+      amber-hot #A44201  numeric literals, your constants, system constants
 
     COOL SLATE  →  Apple's SDK
-      slate  #0C3F5C  UIViewController, Int, String, system funcs, etc.
+      slate  #084466  UIViewController, Int, String, system funcs, etc.
 
     STRUCTURAL MAUVE  →  Language itself
-      mauve  #422F5F  keywords (if/let/func/class), preprocessor (#import),
+      mauve  #3D275E  keywords (if/let/func/class), preprocessor (#import),
                       system variables (self, super) — language-reserved
 
     DATA COLORS:
-      sage   #213A1C  string and character literals (organic, universal)
+      sage   #213E1B  string and character literals (organic, universal)
       mocha  #362516  comments (must recede completely)
       bone   #0E0804  doc comment keywords (scannable above mocha base)
       crema  #000000  plain text, user variables (most common token)
@@ -103,9 +103,9 @@
     <key>DVTSourceTextBackground</key>
     <string>0.882 0.867 0.855 1</string>
 
-    <!-- Cursor: teal (#004444) — kinetic, high-contrast, easy to track -->
+    <!-- Cursor: teal (#006A6A) — kinetic, high-contrast, easy to track -->
     <key>DVTSourceTextInsertionPointColor</key>
-    <string>0.000 0.267 0.267 1</string>
+    <string>0.000 0.416 0.416 1</string>
 
     <!-- Selection: grain (#BFB5AE) — warm surface lift, visible without
          jarring. Grain is the card-surface level, one step above void. -->
@@ -122,10 +122,10 @@
     <key>DVTSourceTextBlockDimBackgroundColor</key>
     <string>0.835 0.816 0.796 1</string>
 
-    <!-- Debug instruction pointer: sage (#213A1C)
+    <!-- Debug instruction pointer: sage (#213E1B)
          Warm green arrow — alive and growing, not critical. -->
     <key>DVTDebuggerInstructionPointerColor</key>
-    <string>0.129 0.227 0.110 1</string>
+    <string>0.129 0.243 0.106 1</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════
@@ -144,7 +144,7 @@
 
     <!-- Console cursor: teal — matches editor cursor for muscle memory -->
     <key>DVTConsoleTextInsertionPointColor</key>
-    <string>0.000 0.267 0.267 1</string>
+    <string>0.000 0.416 0.416 1</string>
 
     <!-- Console selection: grain — same grain lift as editor selection -->
     <key>DVTConsoleTextSelectionColor</key>
@@ -154,7 +154,7 @@
          The prompt IS the cursor — same color signals "interactive, type
          here." Bold weight increases weight without changing hue. -->
     <key>DVTConsoleDebuggerPromptTextColor</key>
-    <string>0.000 0.267 0.267 1</string>
+    <string>0.000 0.416 0.416 1</string>
     <key>DVTConsoleDebuggerPromptTextFont</key>
     <string>SFMono-Bold - 13.0</string>
 
@@ -218,35 +218,35 @@
 
         <!-- Keywords (if, let, var, func, class, return, guard, switch,
              import, @discardableResult, where, in, as, is, try, catch,
-             throw, async, await, some, any ...): mauve (#422F5F) -->
+             throw, async, await, some, any ...): mauve (#3D275E) -->
         <key>xcode.syntax.keyword</key>
-        <string>0.259 0.184 0.373 1</string>
+        <string>0.239 0.153 0.369 1</string>
 
         <!-- Preprocessor (#import, #define, #if, #endif, #pragma mark):
              mauve — same as keywords, both are structural language
              scaffolding, not runtime data. -->
         <key>xcode.syntax.preprocessor</key>
-        <string>0.259 0.184 0.373 1</string>
+        <string>0.239 0.153 0.369 1</string>
 
         <!-- ── DATA LITERALS ──────────────────────────────────────────── -->
 
-        <!-- String literals ("hello", "patient_id"): sage (#213A1C)
+        <!-- String literals ("hello", "patient_id"): sage (#213E1B)
              Organic green — universal convention for strings across
              almost every professional dark theme. Data at rest. -->
         <key>xcode.syntax.string</key>
-        <string>0.129 0.227 0.110 1</string>
+        <string>0.129 0.243 0.106 1</string>
 
         <!-- Character literals ('a', '\n'): sage
              Same family as strings — it's a string of length 1. -->
         <key>xcode.syntax.character</key>
-        <string>0.129 0.227 0.110 1</string>
+        <string>0.129 0.243 0.106 1</string>
 
-        <!-- Numeric literals (42, 3.14, 0xFF, 1_000_000): amber-hot (#632500)
+        <!-- Numeric literals (42, 3.14, 0xFF, 1_000_000): amber-hot (#A44201)
              Warm orange-amber. Stands out from variable names (crema)
              without the neon glare of pure orange. Numbers are values
              you should notice while scanning. -->
         <key>xcode.syntax.number</key>
-        <string>0.388 0.145 0.000 1</string>
+        <string>0.643 0.259 0.004 1</string>
 
         <!-- ── COMMENTS ───────────────────────────────────────────────── -->
 
@@ -274,45 +274,45 @@
         <!-- ── META-PROGRAMMING: AMBER ────────────────────────────────── -->
 
         <!-- Attributes (@objc, @IBOutlet, @State, @Published, @MainActor,
-             @discardableResult, @frozen, @inline ...): amber (#492B00)
+             @discardableResult, @frozen, @inline ...): amber (#885500)
              Meta-programming constructs — the primary accent color.
              Draws the eye: "something special happens at this call site."
              Amber is the alert color without the alarm of scarlet. -->
         <key>xcode.syntax.attribute</key>
-        <string>0.286 0.169 0.000 1</string>
+        <string>0.533 0.333 0.000 1</string>
 
         <!-- ── NAVIGATION ─────────────────────────────────────────────── -->
 
-        <!-- URLs in comments: teal (#004444)
+        <!-- URLs in comments: teal (#006A6A)
              Navigable = kinetic. Same teal as user functions — both are
              things you can jump to. Signals "this goes somewhere." -->
         <key>xcode.syntax.url</key>
-        <string>0.000 0.267 0.267 1</string>
+        <string>0.000 0.416 0.416 1</string>
 
         <!-- ── USER-DEFINED IDENTIFIERS: WARM PALETTE ────────────────────
              Everything YOU wrote. The warm side of the palette.
              Your eyes learn: warm = mine.
              ─────────────────────────────────────────────────────────── -->
 
-        <!-- User class / struct / enum / protocol / actor: gold (#2D1F00)
+        <!-- User class / struct / enum / protocol / actor: gold (#7A5B00)
              YOUR type blueprints — authoritative, stable. Gold is warm
              and assertive without being hot. "These are my architecture." -->
         <key>xcode.syntax.identifier.class</key>
-        <string>0.176 0.122 0.000 1</string>
+        <string>0.478 0.357 0.000 1</string>
 
-        <!-- User function / method: teal (#004444)
+        <!-- User function / method: teal (#006A6A)
              YOUR actions — kinetic. Functions DO things; teal is the
              most energetic color in the palette. Also used for URLs
              (both are navigable/actionable). -->
         <key>xcode.syntax.identifier.function</key>
-        <string>0.000 0.267 0.267 1</string>
+        <string>0.000 0.416 0.416 1</string>
 
         <!-- User type alias / generic parameter / associated type: gold
              Same as user class — it's still YOUR named type, just
              aliased or parameterized. Gold unifies all user type-level
              constructs. -->
         <key>xcode.syntax.identifier.type</key>
-        <string>0.176 0.122 0.000 1</string>
+        <string>0.478 0.357 0.000 1</string>
 
         <!-- User variable / property: crema (#000000)
              Default text. Variables are the most common identifier —
@@ -324,13 +324,13 @@
              Constants are fixed values — same family as numeric literals.
              Both are immutable data worth noticing at a glance. -->
         <key>xcode.syntax.identifier.constant</key>
-        <string>0.388 0.145 0.000 1</string>
+        <string>0.643 0.259 0.004 1</string>
 
-        <!-- User macro (ObjC/C preprocessor macros you defined): amber (#492B00)
+        <!-- User macro (ObjC/C preprocessor macros you defined): amber (#885500)
              Your meta-programming. Amber because it's your construct,
              one step calmer than system macros which live in Apple-land. -->
         <key>xcode.syntax.identifier.macro</key>
-        <string>0.286 0.169 0.000 1</string>
+        <string>0.533 0.333 0.000 1</string>
 
         <!-- ── SYSTEM / SDK IDENTIFIERS: COOL SLATE ──────────────────────
              Everything Apple wrote. The cool side of the palette.
@@ -338,45 +338,45 @@
              ─────────────────────────────────────────────────────────── -->
 
         <!-- System class (UIViewController, SwiftUI.View, NSObject,
-             DispatchQueue ...): slate (#0C3F5C)
+             DispatchQueue ...): slate (#084466)
              Apple's type blueprints. Cool blue-grey — SDK = authoritative
              external. You didn't write it; it just works. -->
         <key>xcode.syntax.identifier.class.system</key>
-        <string>0.047 0.247 0.361 1</string>
+        <string>0.031 0.267 0.400 1</string>
 
         <!-- System function (print(), stride(), zip(), withAnimation()):
              slate — Apple's actions. Same cool logic as system classes. -->
         <key>xcode.syntax.identifier.function.system</key>
-        <string>0.047 0.247 0.361 1</string>
+        <string>0.031 0.267 0.400 1</string>
 
         <!-- System type (Int, String, Bool, Double, Array, Optional,
              Result, Never ...): slate — Apple's type primitives. -->
         <key>xcode.syntax.identifier.type.system</key>
-        <string>0.047 0.247 0.361 1</string>
+        <string>0.031 0.267 0.400 1</string>
 
-        <!-- System variable (self, super): mauve (#422F5F)
+        <!-- System variable (self, super): mauve (#3D275E)
              Language-reserved pronouns. Technically "yours" but the
              compiler defines their semantics. Keyword treatment is
              correct: they're part of the language machinery, not data. -->
         <key>xcode.syntax.identifier.variable.system</key>
-        <string>0.259 0.184 0.373 1</string>
+        <string>0.239 0.153 0.369 1</string>
 
-        <!-- System constant (nil, true, false): amber-hot (#632500)
+        <!-- System constant (nil, true, false): amber-hot (#A44201)
              These are VALUES — same family as numeric literals and user
              constants. `true`, `false`, and `nil` behave like literals,
              so they get the literal color. -->
         <key>xcode.syntax.identifier.constant.system</key>
-        <string>0.388 0.145 0.000 1</string>
+        <string>0.643 0.259 0.004 1</string>
 
         <!-- System macro (NULL, YES, NO, NSLog, FOUNDATION_EXPORT,
-             CF_RETURNS_RETAINED ...): mauve (#422F5F)
+             CF_RETURNS_RETAINED ...): mauve (#3D275E)
              Apple's macro conventions. Mauve signals "this is Apple's
              structural machinery" — same treatment as keywords and
              preprocessor directives. Distinct from your own macros
              (amber) so the authorship distinction is preserved even in
              legacy ObjC/C code. -->
         <key>xcode.syntax.identifier.macro.system</key>
-        <string>0.259 0.184 0.373 1</string>
+        <string>0.239 0.153 0.369 1</string>
 
     </dict>
 

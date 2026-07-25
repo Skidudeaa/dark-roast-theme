@@ -28,36 +28,36 @@
   ┌─────────────────────┬───────────┬──────────┬──────────────────────────────┐
   │ Role                │ Token     │ Hex      │ Why                          │
   ├─────────────────────┼───────────┼──────────┼──────────────────────────────┤
-  │ Keywords            │ mauve     │ #491A7C  │ Structural but not fatiguing │
-  │ Strings             │ sage      │ #0D3E00  │ Organic data, universal      │
-  │ Numbers             │ amber-hot │ #632500  │ Warm, stands out quietly     │
-  │ Language constants  │ amber-hot │ #632500  │ Same family as numbers       │
-  │ Functions           │ teal      │ #004444  │ User-code verbs              │
-  │ Types / Classes     │ gold      │ #2D1F00  │ Warm, authoritative nouns    │
+  │ Keywords            │ mauve     │ #4C1D80  │ Structural but not fatiguing │
+  │ Strings             │ sage      │ #144904  │ Organic data, universal      │
+  │ Numbers             │ amber-hot │ #973C00  │ Warm, stands out quietly     │
+  │ Language constants  │ amber-hot │ #973C00  │ Same family as numbers       │
+  │ Functions           │ teal      │ #006262  │ User-code verbs              │
+  │ Types / Classes     │ gold      │ #705300  │ Warm, authoritative nouns    │
   │ Variables           │ crema     │ #010000  │ Default — stays invisible    │
   │ Parameters          │ crema     │ #010000  │ Italic signals input scope   │
   │ Properties          │ bone      │ #130504  │ Slightly receded             │
-  │ self/this/super     │ mauve     │ #491A7C  │ Language-special = keyword   │
-  │ Operators           │ teal      │ #004444  │ Connective, eye-catching     │
+  │ self/this/super     │ mauve     │ #4C1D80  │ Language-special = keyword   │
+  │ Operators           │ teal      │ #006262  │ Connective, eye-catching     │
   │ Comments            │ mocha     │ #441A18  │ Must recede completely       │
-  │ Decorators          │ amber     │ #492B00  │ Meta-programming = accent    │
-  │ HTML tags           │ mauve     │ #491A7C  │ Structural markup            │
-  │ HTML attributes     │ amber     │ #492B00  │ Constructive parameters      │
-  │ CSS properties      │ slate     │ #003F60  │ Properties DO things         │
-  │ CSS selectors       │ gold      │ #2D1F00  │ Define targets, like types   │
-  │ JSON keys           │ slate     │ #003F60  │ Structural keys              │
-  │ Regex               │ amber-hot │ #632500  │ Patterns, not data           │
-  │ Escape sequences    │ amber-hot │ #632500  │ Breaks string flow           │
-  │ Invalid / Error     │ scarlet   │ #940015  │ THE correct use for scarlet  │
-  │ Deprecated          │ amber-hot │ #632500  │ Warning without error status │
-  │ Markdown heading    │ amber     │ #492B00  │ Landmarks                    │
-  │ Markdown bold       │ gold      │ #2D1F00  │ Emphasis                     │
-  │ Markdown italic     │ gold      │ #2D1F00  │ Light emphasis               │
-  │ Markdown code       │ sage      │ #0D3E00  │ Code = data = strings        │
-  │ Markdown link       │ teal      │ #004444  │ Navigable = kinetic          │
-  │ Diff inserted       │ sage      │ #0D3E00  │ Green = added                │
-  │ Diff deleted        │ scarlet   │ #940015  │ Red = removed                │
-  │ Diff changed        │ amber     │ #492B00  │ Amber = modified             │
+  │ Decorators          │ amber     │ #7D4E00  │ Meta-programming = accent    │
+  │ HTML tags           │ mauve     │ #4C1D80  │ Structural markup            │
+  │ HTML attributes     │ amber     │ #7D4E00  │ Constructive parameters      │
+  │ CSS properties      │ slate     │ #015D8A  │ Properties DO things         │
+  │ CSS selectors       │ gold      │ #705300  │ Define targets, like types   │
+  │ JSON keys           │ slate     │ #015D8A  │ Structural keys              │
+  │ Regex               │ amber-hot │ #973C00  │ Patterns, not data           │
+  │ Escape sequences    │ amber-hot │ #973C00  │ Breaks string flow           │
+  │ Invalid / Error     │ scarlet   │ #B4001B  │ THE correct use for scarlet  │
+  │ Deprecated          │ amber-hot │ #973C00  │ Warning without error status │
+  │ Markdown heading    │ amber     │ #7D4E00  │ Landmarks                    │
+  │ Markdown bold       │ gold      │ #705300  │ Emphasis                     │
+  │ Markdown italic     │ gold      │ #705300  │ Light emphasis               │
+  │ Markdown code       │ sage      │ #144904  │ Code = data = strings        │
+  │ Markdown link       │ teal      │ #006262  │ Navigable = kinetic          │
+  │ Diff inserted       │ sage      │ #144904  │ Green = added                │
+  │ Diff deleted        │ scarlet   │ #B4001B  │ Red = removed                │
+  │ Diff changed        │ amber     │ #7D4E00  │ Amber = modified             │
   └─────────────────────┴───────────┴──────────┴──────────────────────────────┘
 
   FULL COMPANION COLOR PALETTE (generated from src/variants/cascara.json):
@@ -71,22 +71,22 @@
     warm-white   #050101   Bright callouts, ANSI 15
     mocha        #441A18   Secondary text
     bone         #130504   Reduced-contrast text
-    asparagus    #162700   Tertiary metadata
+    asparagus    #294205   Tertiary metadata
     crater-deep  #906966   Borders
     crater       #865D59   Strong borders
     rustic       #C25C5F   Atmospheric red
     rose         #B35E99   Error bg tint
-    amber        #492B00   Primary accent
-    amber-hot    #632500   Gradient terminal
-    amber-muted  #472400   Reader contexts
-    gold         #2D1F00   Stable severity
-    brass        #342700   Warning
-    scarlet      #940015   Clinical critical
-    burnt-sienna #742400   Terminal red
-    teal         #004444   Live data / success
-    sage         #0D3E00   Warm green (terminal ext)
-    slate        #003F60   Dusty blue (terminal ext)
-    mauve        #491A7C   Dried lavender (terminal ext)
+    amber        #7D4E00   Primary accent
+    amber-hot    #973C00   Gradient terminal
+    amber-muted  #864901   Reader contexts
+    gold         #705300   Stable severity
+    brass        #6C5500   Warning
+    scarlet      #B4001B   Clinical critical
+    burnt-sienna #9D3401   Terminal red
+    teal         #006262   Live data / success
+    sage         #144904   Warm green (terminal ext)
+    slate        #015D8A   Dusty blue (terminal ext)
+    mauve        #4C1D80   Dried lavender (terminal ext)
 
   NOTE: Inline token-role comments elsewhere in this file still use v3 names
   (crater-lt, grain) as role descriptors — they're purely cosmetic. Hex
@@ -112,7 +112,7 @@
   <string>Dark Roast: Cascara</string>
 
   <key>uuid</key>
-  <string>undefined</string>
+  <string>819B404B-E23D-5913-8DCC-B7C1873C7FC3</string>
 
   <key>semanticClass</key>
   <string>theme.dark.dark-roast-cascara</string>
@@ -146,7 +146,7 @@
 
         <!-- CARET ───────────────────────────────────────────────────────── -->
         <key>caret</key>
-        <string>#004444</string>
+        <string>#006262</string>
         <!-- DR teal — kinetic, easy to track. Changed from amber to teal
              per canonical spec: caret = teal (live cursor = live data). -->
 
@@ -182,7 +182,7 @@
 
         <!-- FIND / SEARCH HIGHLIGHTS ────────────────────────────────────── -->
         <key>findHighlight</key>
-        <string>#492B00</string>
+        <string>#7D4E00</string>
         <!-- DR amber — matches pop against void without screaming. -->
 
         <key>findHighlightForeground</key>
@@ -191,14 +191,14 @@
 
         <!-- BRACKET MATCHING ────────────────────────────────────────────── -->
         <key>bracketsForeground</key>
-        <string>#004444</string>
+        <string>#006262</string>
         <!-- DR teal — kinetic pairing: brackets light up when matched. -->
 
         <key>bracketsOptions</key>
         <string>underline</string>
 
         <key>bracketsContentsForeground</key>
-        <string>#00444480</string>
+        <string>#00626280</string>
         <!-- DR teal @ 50% — contents of matched bracket subtly highlighted. -->
 
         <key>bracketsContentsOptions</key>
@@ -233,7 +233,7 @@
 
         <!-- MISSPELLING INDICATOR ───────────────────────────────────────── -->
         <key>misspelling</key>
-        <string>#940015</string>
+        <string>#B4001B</string>
         <!-- DR scarlet — same color as invalid code; error is error. -->
 
         <!-- SHADOW (Sublime Text minimap + scroll shadow) ───────────────── -->
@@ -287,7 +287,7 @@
         punctuation.definition.comment.doc-tag, entity.name.tag.documentation</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — tags stand out within comments -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — tags stand out within comments -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -300,7 +300,7 @@
         comment.block keyword.todo, comment.block keyword.fixme</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — demands attention inside a comment -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — demands attention inside a comment -->
         <key>fontStyle</key>   <string>bold italic</string>
       </dict>
     </dict>
@@ -321,7 +321,7 @@
          §3  STRINGS
          ════════════════════════════════════════════════════════════════════
          Strings are inert data — they hold values but don't execute.
-         Sage (#0D3E00) is warm green, the universal "data/string" signal.
+         Sage (#144904) is warm green, the universal "data/string" signal.
          The sage family groups: raw strings, byte strings, template strings,
          heredocs, and multiline strings all in the same visual bucket.
          ════════════════════════════════════════════════════════════════════ -->
@@ -334,7 +334,7 @@
         string.unquoted, string.other</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage -->
       </dict>
     </dict>
 
@@ -345,7 +345,7 @@
         punctuation.definition.string.end</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage — unified with string body -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage — unified with string body -->
       </dict>
     </dict>
 
@@ -355,7 +355,7 @@
       <key>scope</key>   <string>string.template, string.interpolated</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage -->
       </dict>
     </dict>
 
@@ -369,7 +369,7 @@
         punctuation.definition.interpolation.end</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — evaluated = live -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — evaluated = live -->
       </dict>
     </dict>
 
@@ -382,7 +382,7 @@
         constant.character.escape.octal</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>
+        <key>foreground</key>  <string>#973C00</string>
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -395,7 +395,7 @@
         source.regexp, source.js.regexp</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot italic — patterns, not data -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot italic — patterns, not data -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -408,7 +408,7 @@
         punctuation.definition.character-class.regexp</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — sub-structure within pattern -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — sub-structure within pattern -->
       </dict>
     </dict>
 
@@ -420,7 +420,7 @@
         punctuation.definition.string.raw.end</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — modifier signals "not plain string" -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — modifier signals "not plain string" -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -429,7 +429,7 @@
     <!-- ════════════════════════════════════════════════════════════════════
          §4  NUMBERS & LANGUAGE CONSTANTS
          ════════════════════════════════════════════════════════════════════
-         Numbers are literal values — amber-hot (#632500) makes them
+         Numbers are literal values — amber-hot (#973C00) makes them
          stand out from surrounding crema text without screaming.
          Language constants (true/false/null/nil/None) belong in the
          same visual family as numbers: they ARE constant values.
@@ -443,7 +443,7 @@
         constant.numeric.binary, constant.numeric.complex</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot -->
       </dict>
     </dict>
 
@@ -455,7 +455,7 @@
         constant.language.undefined, constant.language.nan</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot italic -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -468,7 +468,7 @@
         constant.other.ruby</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot -->
       </dict>
     </dict>
 
@@ -481,7 +481,7 @@
         support.constant.property-value</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — library-provided, stable -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — library-provided, stable -->
       </dict>
     </dict>
 
@@ -490,7 +490,7 @@
          §5  KEYWORDS
          ════════════════════════════════════════════════════════════════════
          Keywords are structural control words — they define program flow.
-         Mauve (#491A7C) is the canonical keyword color: lavender-purple
+         Mauve (#4C1D80) is the canonical keyword color: lavender-purple
          that is structurally distinct without the fatigue of scarlet.
          12-hour shift design: scarlet is reserved for ACTUAL errors.
          ════════════════════════════════════════════════════════════════════ -->
@@ -503,7 +503,7 @@
       <key>scope</key>   <string>keyword, keyword.other</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve -->
       </dict>
     </dict>
 
@@ -517,7 +517,7 @@
         keyword.control.import, keyword.control.return</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve bold -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve bold -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -536,7 +536,7 @@
         keyword.operator.type, keyword.operator.cast</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — connective tissue, eye-catching -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — connective tissue, eye-catching -->
       </dict>
     </dict>
 
@@ -560,7 +560,7 @@
         keyword.operator.comparison.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — same as symbol operators -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — same as symbol operators -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -586,7 +586,7 @@
         storage.type.primitive, storage.type.namespace</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve italic -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -603,7 +603,7 @@
         storage.modifier.export, storage.modifier.import</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve italic -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -612,7 +612,7 @@
     <!-- ════════════════════════════════════════════════════════════════════
          §7  FUNCTIONS
          ════════════════════════════════════════════════════════════════════
-         Functions are the VERBS of code. Teal (#004444) marks user-code
+         Functions are the VERBS of code. Teal (#006262) marks user-code
          actions consistently with the kinetic accent role. Constructors
          remain gold so object creation retains a distinct visual landmark.
          ════════════════════════════════════════════════════════════════════ -->
@@ -626,7 +626,7 @@
         entity.name.function.member</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>
+        <key>foreground</key>  <string>#006262</string>
       </dict>
     </dict>
 
@@ -637,7 +637,7 @@
         meta.function-call.generic, variable.function, meta.method-call</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>
+        <key>foreground</key>  <string>#006262</string>
       </dict>
     </dict>
 
@@ -651,7 +651,7 @@
         support.function.kernel, support.function.print</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>
+        <key>foreground</key>  <string>#015D8A</string>
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -663,7 +663,7 @@
         meta.instance.constructor, keyword.operator.new</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>
+        <key>foreground</key>  <string>#705300</string>
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -675,7 +675,7 @@
         punctuation.definition.arrow, keyword.operator.arrow</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — arrow is an operator -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — arrow is an operator -->
       </dict>
     </dict>
 
@@ -684,7 +684,7 @@
          §8  TYPES, CLASSES, STRUCTS
          ════════════════════════════════════════════════════════════════════
          Types are structural NOUNS — they describe shape and capability.
-         Gold (#2D1F00) is warm and authoritative. It maps to the "stable"
+         Gold (#705300) is warm and authoritative. It maps to the "stable"
          state in the clinical severity gradient: types don't change at
          runtime, they ground everything else.
          ════════════════════════════════════════════════════════════════════ -->
@@ -697,7 +697,7 @@
         entity.name.trait, entity.name.union, entity.name.protocol</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold bold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold bold -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -708,7 +708,7 @@
       <key>scope</key>   <string>entity.other.inherited-class</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold italic — subordinate to definition -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold italic — subordinate to definition -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -721,7 +721,7 @@
         support.type.sys-types, support.other.namespace</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold -->
       </dict>
     </dict>
 
@@ -734,7 +734,7 @@
         entity.name.type.go, entity.name.type.rust</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold italic -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -747,7 +747,7 @@
         support.module, support.other.module</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold -->
       </dict>
     </dict>
 
@@ -758,7 +758,7 @@
         support.constant.enum, entity.name.case</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — same family as types -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — same family as types -->
       </dict>
     </dict>
 
@@ -806,7 +806,7 @@
         variable.language.special</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve italic — language-special = keyword treatment -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve italic — language-special = keyword treatment -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -831,7 +831,7 @@
         support.constant.handlebars</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — immutable = constant family -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — immutable = constant family -->
       </dict>
     </dict>
 
@@ -851,7 +851,7 @@
          §10  DECORATORS & ANNOTATIONS
          ════════════════════════════════════════════════════════════════════
          Decorators (@) are meta-programming constructs — they modify code
-         without being code themselves. Amber (#492B00) is the primary accent
+         without being code themselves. Amber (#7D4E00) is the primary accent
          and draws the eye to these structural annotations.
          Covers: Python @decorator, JS/TS @decorator, Java @Annotation,
          C# [Attribute], Rust #[derive(...)], Go struct tags.
@@ -864,7 +864,7 @@
         keyword.decorator, keyword.decorator.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber -->
       </dict>
     </dict>
 
@@ -875,7 +875,7 @@
         meta.annotation, support.other.attribute</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber italic -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -888,7 +888,7 @@
         punctuation.definition.attribute.end</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber -->
       </dict>
     </dict>
 
@@ -899,7 +899,7 @@
         punctuation.definition.attribute.rust</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -916,7 +916,7 @@
         entity.name.function.magic.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate — still a function, but special -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate — still a function, but special -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -927,7 +927,7 @@
       <key>scope</key>   <string>support.function.builtin.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate italic -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -940,7 +940,7 @@
         punctuation.definition.template-expression.end.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — evaluated expression -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — evaluated expression -->
       </dict>
     </dict>
 
@@ -950,7 +950,7 @@
       <key>scope</key>   <string>meta.type.annotation.python, support.type.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold italic — types = gold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold italic — types = gold -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -962,7 +962,7 @@
         entity.name.exception.python</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet — exceptions are error-adjacent -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet — exceptions are error-adjacent -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -983,7 +983,7 @@
         keyword.operator.type.annotation.typescript</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve italic -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -995,7 +995,7 @@
         punctuation.definition.typeparameters.end.typescript</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — type-family punctuation -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — type-family punctuation -->
       </dict>
     </dict>
 
@@ -1006,7 +1006,7 @@
         support.variable.object.process, support.variable.object.node</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — global objects are type-like -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — global objects are type-like -->
       </dict>
     </dict>
 
@@ -1017,7 +1017,7 @@
         support.class.component.tsx, support.class.component.jsx</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — component = type -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — component = type -->
       </dict>
     </dict>
 
@@ -1027,7 +1027,7 @@
       <key>scope</key>   <string>entity.name.tag.html.tsx, entity.name.tag.html.jsx</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet — markup = HTML convention -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet — markup = HTML convention -->
       </dict>
     </dict>
 
@@ -1043,7 +1043,7 @@
         storage.modifier.attribute.swift</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — attribute = decorator -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — attribute = decorator -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1055,7 +1055,7 @@
         keyword.other.hash.swift</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — compiler magic -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — compiler magic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1068,7 +1068,7 @@
         keyword.control.fallthrough.swift</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve bold — control family -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve bold — control family -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1084,7 +1084,7 @@
       <key>scope</key>   <string>keyword.control.go, keyword.channel.go</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve bold -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve bold -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1096,7 +1096,7 @@
       <key>scope</key>   <string>support.function.builtin.go</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate italic -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1123,7 +1123,7 @@
         entity.name.lifetime.rust, punctuation.definition.lifetime.rust</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot italic — special borrow annotation -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot italic — special borrow annotation -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1136,7 +1136,7 @@
         variable.other.macro.rust, meta.macro.rust</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — macros = meta-programming like decorators -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — macros = meta-programming like decorators -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1148,7 +1148,7 @@
         storage.modifier.unsafe.rust</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet bold — unsafe is CRITICAL -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet bold — unsafe is CRITICAL -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1159,7 +1159,7 @@
       <key>scope</key>   <string>keyword.other.rust, storage.type.rust</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve italic -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1168,7 +1168,7 @@
     <!-- ════════════════════════════════════════════════════════════════════
          §16  HTML / XML / JSX
          ════════════════════════════════════════════════════════════════════
-         HTML tags are structural markup, so mauve (#491A7C) aligns them
+         HTML tags are structural markup, so mauve (#4C1D80) aligns them
          with other language structure. Attributes remain amber; tag
          punctuation uses the quiet structural foreground.
          ════════════════════════════════════════════════════════════════════ -->
@@ -1181,7 +1181,7 @@
         entity.name.tag.svg, entity.name.tag.other</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>
+        <key>foreground</key>  <string>#4C1D80</string>
       </dict>
     </dict>
 
@@ -1194,7 +1194,7 @@
         entity.other.attribute-name.id.html</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber -->
       </dict>
     </dict>
 
@@ -1204,7 +1204,7 @@
       <key>scope</key>   <string>string.unquoted.html, string.unquoted.attribute-value</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage — values are strings -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage — values are strings -->
       </dict>
     </dict>
 
@@ -1218,7 +1218,7 @@
         punctuation.definition.tag.xml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#846A68</string>
+        <key>foreground</key>  <string>#674E4C</string>
       </dict>
     </dict>
 
@@ -1241,7 +1241,7 @@
         constant.character.entity.xml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet — breaks normal text flow -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet — breaks normal text flow -->
       </dict>
     </dict>
 
@@ -1252,7 +1252,7 @@
         entity.name.tag.style.html</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet — still a tag name -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet — still a tag name -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1273,7 +1273,7 @@
         entity.name.tag.wildcard.css</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold -->
       </dict>
     </dict>
 
@@ -1285,7 +1285,7 @@
         entity.other.attribute-name.id.scss</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold -->
       </dict>
     </dict>
 
@@ -1297,7 +1297,7 @@
         entity.other.pseudo-element.css</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold italic — derived selector -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold italic — derived selector -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1311,7 +1311,7 @@
         meta.property-name.css</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate — properties DO things -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate — properties DO things -->
       </dict>
     </dict>
 
@@ -1324,7 +1324,7 @@
         variable.scss, variable.less</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — CSS vars are accent-level constructs -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — CSS vars are accent-level constructs -->
       </dict>
     </dict>
 
@@ -1350,7 +1350,7 @@
         punctuation.definition.keyword.css</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve — at-rules = keyword family -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve — at-rules = keyword family -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1362,7 +1362,7 @@
         keyword.other.unit.scss, keyword.other.unit.less</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — unit modifies the number -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — unit modifies the number -->
       </dict>
     </dict>
 
@@ -1374,7 +1374,7 @@
         support.constant.color.w3c-standard-color-name.css</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — color = numeric literal family -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — color = numeric literal family -->
       </dict>
     </dict>
 
@@ -1385,7 +1385,7 @@
         meta.function.scss entity.name</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate — SCSS functions = functions -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate — SCSS functions = functions -->
       </dict>
     </dict>
 
@@ -1406,7 +1406,7 @@
         meta.mapping.key.json string.quoted.double.json</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate -->
       </dict>
     </dict>
 
@@ -1418,7 +1418,7 @@
         string.quoted.double.json</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage — strings = sage universally -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage — strings = sage universally -->
       </dict>
     </dict>
 
@@ -1428,7 +1428,7 @@
       <key>scope</key>   <string>constant.language.json</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot italic — same as language constants -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot italic — same as language constants -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1461,7 +1461,7 @@
         meta.mapping.key.yaml string</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate — structural keys -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate — structural keys -->
       </dict>
     </dict>
 
@@ -1472,7 +1472,7 @@
         string.quoted.single.yaml, string.quoted.double.yaml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage -->
       </dict>
     </dict>
 
@@ -1485,7 +1485,7 @@
         punctuation.definition.alias.yaml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — references = meta-programming -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — references = meta-programming -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1508,7 +1508,7 @@
         keyword.control.flow.block-scalar.folded.yaml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — multi-line string delimiter -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — multi-line string delimiter -->
       </dict>
     </dict>
 
@@ -1532,7 +1532,7 @@
         entity.name.section.markdown</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber bold — landmarks -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber bold — landmarks -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1544,7 +1544,7 @@
         punctuation.definition.heading.setext</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — unified with heading -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — unified with heading -->
       </dict>
     </dict>
 
@@ -1554,7 +1554,7 @@
       <key>scope</key>   <string>markup.bold, markup.bold string</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold bold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold bold -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1565,7 +1565,7 @@
       <key>scope</key>   <string>markup.italic, markup.italic string</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold italic -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold italic -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1576,7 +1576,7 @@
       <key>scope</key>   <string>markup.bold markup.italic, markup.italic markup.bold</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold bold italic -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold bold italic -->
         <key>fontStyle</key>   <string>bold italic</string>
       </dict>
     </dict>
@@ -1588,7 +1588,7 @@
         markup.raw.inline, markup.inline.raw.string.markdown</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage — code = strings = data -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage — code = strings = data -->
       </dict>
     </dict>
 
@@ -1599,7 +1599,7 @@
         markup.code.fenced, markup.raw.code-fence</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage -->
       </dict>
     </dict>
 
@@ -1610,7 +1610,7 @@
         variable.language.fenced.markdown, fenced_code.block.language</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber italic — language tag is a label -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber italic — language tag is a label -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1623,7 +1623,7 @@
         string.other.link.title.markdown</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal underline — navigable = kinetic -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal underline — navigable = kinetic -->
         <key>fontStyle</key>   <string>underline</string>
       </dict>
     </dict>
@@ -1646,7 +1646,7 @@
         markup.list.unnumbered, markup.list.numbered</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — list structure is stable -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — list structure is stable -->
       </dict>
     </dict>
 
@@ -1678,7 +1678,7 @@
         meta.link.reference.markdown</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — references like anchors/decorators -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — references like anchors/decorators -->
       </dict>
     </dict>
 
@@ -1694,7 +1694,7 @@
         support.function.builtin.bash, keyword.other.shell</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate italic — built-in functions -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate italic — built-in functions -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1707,7 +1707,7 @@
         variable.other.bracket.shell, variable.other.readwrite.shell</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — shell vars are accent-level -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — shell vars are accent-level -->
       </dict>
     </dict>
 
@@ -1717,7 +1717,7 @@
       <key>scope</key>   <string>punctuation.definition.variable.shell</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber -->
       </dict>
     </dict>
 
@@ -1728,7 +1728,7 @@
         punctuation.definition.string.heredoc.shell</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — heredoc delimiter marks evaluated block -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — heredoc delimiter marks evaluated block -->
       </dict>
     </dict>
 
@@ -1739,7 +1739,7 @@
         punctuation.definition.command-substitution.shell</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — evaluated = live -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — evaluated = live -->
       </dict>
     </dict>
 
@@ -1768,7 +1768,7 @@
         keyword.other.drop.sql, keyword.other.alter.sql</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve bold — SQL keywords = keyword family -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve bold — SQL keywords = keyword family -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1780,7 +1780,7 @@
         support.function.scalar.sql, support.function.window.sql</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate — functions = slate -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate — functions = slate -->
       </dict>
     </dict>
 
@@ -1790,7 +1790,7 @@
       <key>scope</key>   <string>entity.name.table.sql, entity.name.column.sql</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — schema objects = types -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — schema objects = types -->
       </dict>
     </dict>
 
@@ -1801,7 +1801,7 @@
         keyword.operator.logical.sql</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — operators = teal -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — operators = teal -->
       </dict>
     </dict>
 
@@ -1818,7 +1818,7 @@
         punctuation.definition.symbol.ruby</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — symbols are constants -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — symbols are constants -->
       </dict>
     </dict>
 
@@ -1829,7 +1829,7 @@
         source.ruby.embedded.source</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — embedded expression = live -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — embedded expression = live -->
       </dict>
     </dict>
 
@@ -1865,7 +1865,7 @@
       <key>scope</key>   <string>punctuation.definition.variable.php</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — sigil is accent -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — sigil is accent -->
       </dict>
     </dict>
 
@@ -1876,7 +1876,7 @@
         keyword.other.new.php</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve — language-level constructs -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve — language-level constructs -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1889,7 +1889,7 @@
         meta.embedded.line.php punctuation</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet — tag = markup family -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet — tag = markup family -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -1907,7 +1907,7 @@
         entity.name.type.annotation.java</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — annotations = decorators -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — annotations = decorators -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1936,7 +1936,7 @@
         punctuation.definition.directive</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — preprocessor = meta-programming -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — preprocessor = meta-programming -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1949,7 +1949,7 @@
         entity.name.constant.preprocessor.c</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>  <!-- DR amber-hot — macros are constant-like -->
+        <key>foreground</key>  <string>#973C00</string>  <!-- DR amber-hot — macros are constant-like -->
       </dict>
     </dict>
 
@@ -1972,7 +1972,7 @@
         storage.type.primitive.c, storage.type.primitive.c++</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — primitive types = type family -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — primitive types = type family -->
         <key>fontStyle</key>   <string>italic</string>
       </dict>
     </dict>
@@ -1984,7 +1984,7 @@
         keyword.operator.pointer.c, keyword.operator.address.c++</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — pointer ops = operator family -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — pointer ops = operator family -->
       </dict>
     </dict>
 
@@ -2006,7 +2006,7 @@
         punctuation.separator.sequence</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#846A68</string>
+        <key>foreground</key>  <string>#674E4C</string>
       </dict>
     </dict>
 
@@ -2025,7 +2025,7 @@
         meta.brace.round, meta.brace.square, meta.brace.curly</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#846A68</string>
+        <key>foreground</key>  <string>#674E4C</string>
       </dict>
     </dict>
 
@@ -2045,7 +2045,7 @@
     <!-- ════════════════════════════════════════════════════════════════════
          §28  INVALID & DEPRECATED
          ════════════════════════════════════════════════════════════════════
-         Scarlet (#940015) is the ONLY correct use for error-state code.
+         Scarlet (#B4001B) is the ONLY correct use for error-state code.
          The canonical spec reserves scarlet for actual errors — which is
          why keywords were deliberately moved to mauve.
          Deprecated tokens use amber-hot + strikethrough: warning, not error.
@@ -2056,7 +2056,7 @@
       <key>scope</key>   <string>invalid, invalid.illegal</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet -->
         <key>background</key>  <string>#B35E9920</string> <!-- DR rose bg @ ~12% — tinted error bg -->
         <key>fontStyle</key>   <string>underline</string>
       </dict>
@@ -2067,7 +2067,7 @@
       <key>scope</key>   <string>invalid.deprecated</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#632500</string>
+        <key>foreground</key>  <string>#973C00</string>
         <key>fontStyle</key>   <string>italic strikethrough</string>
       </dict>
     </dict>
@@ -2086,7 +2086,7 @@
         markup.inserted.diff, markup.inserted.git_gutter</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#0D3E00</string>  <!-- DR sage — green = added -->
+        <key>foreground</key>  <string>#144904</string>  <!-- DR sage — green = added -->
       </dict>
     </dict>
 
@@ -2096,7 +2096,7 @@
         markup.deleted.diff, markup.deleted.git_gutter</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#940015</string>  <!-- DR scarlet — red = removed -->
+        <key>foreground</key>  <string>#B4001B</string>  <!-- DR scarlet — red = removed -->
       </dict>
     </dict>
 
@@ -2106,7 +2106,7 @@
         markup.changed.diff, markup.changed.git_gutter</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#492B00</string>  <!-- DR amber — amber = modified -->
+        <key>foreground</key>  <string>#7D4E00</string>  <!-- DR amber — amber = modified -->
       </dict>
     </dict>
 
@@ -2135,7 +2135,7 @@
         support.type.property-name.table.toml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — sections define structure like types -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — sections define structure like types -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -2147,7 +2147,7 @@
         keyword.key.toml</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate — structural keys -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate — structural keys -->
       </dict>
     </dict>
 
@@ -2162,7 +2162,7 @@
         entity.name.section.ini</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold bold -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold bold -->
         <key>fontStyle</key>   <string>bold</string>
       </dict>
     </dict>
@@ -2173,7 +2173,7 @@
         support.type.property-name.ini</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#003F60</string>  <!-- DR slate -->
+        <key>foreground</key>  <string>#015D8A</string>  <!-- DR slate -->
       </dict>
     </dict>
 
@@ -2190,7 +2190,7 @@
         meta.tag.template entity.name.tag</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#491A7C</string>  <!-- DR mauve — template control = keyword family -->
+        <key>foreground</key>  <string>#4C1D80</string>  <!-- DR mauve — template control = keyword family -->
       </dict>
     </dict>
 
@@ -2204,7 +2204,7 @@
         entity.other.jinja2.delimiter.variable</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — evaluated expressions -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — evaluated expressions -->
       </dict>
     </dict>
 
@@ -2215,7 +2215,7 @@
         support.constant.handlebars</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#004444</string>  <!-- DR teal — evaluated = live -->
+        <key>foreground</key>  <string>#006262</string>  <!-- DR teal — evaluated = live -->
       </dict>
     </dict>
 
@@ -2230,7 +2230,7 @@
       <key>scope</key>   <string>entity.name</string>
       <key>settings</key>
       <dict>
-        <key>foreground</key>  <string>#2D1F00</string>  <!-- DR gold — named entities default to type family -->
+        <key>foreground</key>  <string>#705300</string>  <!-- DR gold — named entities default to type family -->
       </dict>
     </dict>
 

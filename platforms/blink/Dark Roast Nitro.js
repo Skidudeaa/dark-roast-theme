@@ -44,26 +44,26 @@
 // Chrome:
 //   background    #E1DDDA   void      — warm-dark deepest layer
 //   foreground    #000000   crema     — primary text (15.56:1 contrast vs void)
-//   cursor        #004444   teal      — kinetic, matches editor caret
+//   cursor        #006A6A   teal      — kinetic, matches editor caret
 //
 // ANSI Normal (indices 0–7):
 //   0 black       #D5D0CB   obsidian  — dark but not void; provides depth in dark bg
-//   1 red         #7E312E   scarlet   — error / critical
-//   2 green       #213A1C   sage      — warm fern green (terminal extension)
-//   3 yellow      #492B00   amber     — warning / accent / CTA
-//   4 blue        #0C3F5C   slate     — dusty steel blue (terminal extension)
-//   5 magenta     #422F5F   mauve     — dried lavender (terminal extension)
-//   6 cyan        #004444   teal      — live data flow / resolved
+//   1 red         #912224   scarlet   — error / critical
+//   2 green       #213E1B   sage      — warm fern green (terminal extension)
+//   3 yellow      #885500   amber     — warning / accent / CTA
+//   4 blue        #084466   slate     — dusty steel blue (terminal extension)
+//   5 magenta     #3D275E   mauve     — dried lavender (terminal extension)
+//   6 cyan        #006A6A   teal      — live data flow / resolved
 //   7 white       #0E0804   bone      — reduced-contrast light text
 //
 // ANSI Bright (indices 8–15):
-//   8  bright black    #7A6F67   crater-deep   — comment gray / muted metadata
-//   9  bright red      #772B28   scarlet-lt    — scarlet companion-bright
-//  10  bright green    #13310B   sage-lt       — sage companion-bright
-//  11  bright yellow   #2D1F00   gold          — success / stable severity
-//  12  bright blue     #00314C   slate-lt      — slate companion-bright
-//  13  bright magenta  #361F56   mauve-lt      — mauve companion-bright
-//  14  bright cyan     #003636   teal-lt       — teal brightened (noticeably lighter
+//   8  bright black    #655C53   crater-deep   — comment gray / muted metadata
+//   9  bright red      #7C2524   scarlet-lt    — scarlet companion-bright
+//  10  bright green    #0F3206   sage-lt       — sage companion-bright
+//  11  bright yellow   #7A5B00   gold          — success / stable severity
+//  12  bright blue     #06527B   slate-lt      — slate companion-bright
+//  13  bright magenta  #381D5C   mauve-lt      — mauve companion-bright
+//  14  bright cyan     #006A6A   teal-lt       — teal brightened (noticeably lighter
 //                                               than normal teal; brights should be
 //                                               brighter, not identical)
 //  15  bright white    #000000   crema         — full brightness
@@ -72,28 +72,28 @@
 const darkRoastNitro = {
   // ── ANSI normal (0–7) ─────────────────────────────────────────────────────
   black: "#D5D0CB", // obsidian — elevated floor, not as deep as void
-  red: "#7E312E", // scarlet — error / critical severity
-  green: "#213A1C", // sage — warm fern; git diff +lines, ls dirs
-  yellow: "#492B00", // amber — warning / accent; DR primary CTA
-  blue: "#0C3F5C", // slate — dusty steel; git diff header, less prompt
-  magenta: "#422F5F", // mauve — dried lavender; grep matches, vim special
-  cyan: "#004444", // teal — live data; matches cursor + DR teal token
+  red: "#912224", // scarlet — error / critical severity
+  green: "#213E1B", // sage — warm fern; git diff +lines, ls dirs
+  yellow: "#885500", // amber — warning / accent; DR primary CTA
+  blue: "#084466", // slate — dusty steel; git diff header, less prompt
+  magenta: "#3D275E", // mauve — dried lavender; grep matches, vim special
+  cyan: "#006A6A", // teal — live data; matches cursor + DR teal token
   white: "#0E0804", // bone — reduced-contrast; comment-level brightness
 
   // ── ANSI bright (8–15) ────────────────────────────────────────────────────
-  lightBlack: "#7A6F67", // crater-deep — comment gray; git log graph, tmux inactive
-  lightRed: "#772B28", // scarlet companion-bright — diff removed, error paths
-  lightGreen: "#13310B", // sage companion-bright — diff added, success paths
-  lightYellow: "#2D1F00", // gold — success / stable; git branch
-  lightBlue: "#00314C", // slate companion-bright — links, prompt path segments
-  lightMagenta: "#361F56", // mauve companion-bright — vim visual, special tokens
-  lightCyan: "#003636", // teal lightened — brighter than normal teal
+  lightBlack: "#655C53", // crater-deep — comment gray; git log graph, tmux inactive
+  lightRed: "#7C2524", // scarlet companion-bright — diff removed, error paths
+  lightGreen: "#0F3206", // sage companion-bright — diff added, success paths
+  lightYellow: "#7A5B00", // gold — success / stable; git branch
+  lightBlue: "#06527B", // slate companion-bright — links, prompt path segments
+  lightMagenta: "#381D5C", // mauve companion-bright — vim visual, special tokens
+  lightCyan: "#006A6A", // teal lightened — brighter than normal teal
   lightWhite: "#000000", // crema — full brightness; bold text, headings
 
   // ── Chrome ────────────────────────────────────────────────────────────────
   backgroundColor: "#E1DDDA", // void — warm-dark deepest layer
   foregroundColor: "#000000", // crema — primary text, 15.56:1 contrast vs void
-  cursorColor: "rgba(0, 68, 68, 0.65)", // teal at 65% — glyph stays legible under the block
+  cursorColor: "rgba(0, 106, 106, 0.65)", // teal at 65% — glyph stays legible under the block
 };
 
 t.prefs_.set('color-palette-overrides', [

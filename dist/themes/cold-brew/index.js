@@ -5,115 +5,121 @@ export const metadata = Object.freeze({
   "name": "Dark Roast: Cold Brew",
   "selector": "dark-roast-cold-brew",
   "className": "dark-roast-cold-brew",
-  "description": "The original warm cream light mode for bright rooms."
+  "description": "A warm, positive-polarity Dark Roast for bright rooms: a cream canvas that deepens with elevation, espresso ink, and dark kiln-enamel accents that stay legible in daylight.",
+  "intent": {
+    "position": "daylight companion",
+    "ambientLight": "moderate to bright",
+    "surfaceLift": "surfaces darken decisively with elevation over a cream canvas — wide ramp; light polarity needs surface separation to carry the depth that glows carry on OLED",
+    "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
+  }
 });
 export const colors = Object.freeze({
-  "void": "#E2DDD7",
-  "obsidian": "#D8CFC7",
-  "darkCacao": "#CDC2B7",
-  "espresso": "#C2B5A7",
-  "espressoHover": "#B1A291",
-  "roastedBean": "#96826C",
-  "crater": "#7C6449",
-  "crema": "#000000",
-  "warmWhite": "#030100",
-  "bone": "#100701",
-  "mocha": "#3B2301",
-  "craterDeep": "#867058",
-  "asparagus": "#162700",
-  "rustic": "#BD6062",
-  "rose": "#AF6297",
-  "amber": "#492B00",
-  "amberHot": "#632500",
-  "amberMuted": "#472400",
-  "gold": "#2D1F00",
-  "brass": "#342700",
-  "scarlet": "#940015",
-  "burntSienna": "#742400",
-  "teal": "#004444",
-  "magenta": "#640060",
-  "harvest": "#382500",
-  "olive": "#2B2B00"
+  "void": "#E2DBD0",
+  "obsidian": "#D5CABB",
+  "darkCacao": "#C8BAA7",
+  "espresso": "#BBA994",
+  "espressoHover": "#B19C85",
+  "roastedBean": "#A08971",
+  "crater": "#785D47",
+  "crema": "#342920",
+  "warmWhite": "#463B31",
+  "bone": "#50453C",
+  "mocha": "#625445",
+  "craterDeep": "#90765F",
+  "asparagus": "#405634",
+  "rustic": "#ECBEB4",
+  "rose": "#E3B9C6",
+  "amber": "#734400",
+  "amberHot": "#7F3300",
+  "amberMuted": "#7C4700",
+  "gold": "#5F4B00",
+  "brass": "#6B5200",
+  "scarlet": "#950011",
+  "burntSienna": "#843500",
+  "teal": "#005D5C",
+  "magenta": "#8D0057",
+  "harvest": "#6E4700",
+  "olive": "#405E00"
 });
 export const roles = Object.freeze({
-  "accent": "#492B00",
-  "accentHot": "#632500",
-  "accentMuted": "#472400",
-  "success": "#004444",
-  "warning": "#342700",
-  "error": "#742400",
-  "critical": "#940015",
-  "stable": "#2D1F00",
-  "live": "#004444",
-  "display": "#000000",
-  "workhorse": "#100701",
-  "secondary": "#3B2301",
-  "tertiary": "#162700",
-  "body": "#100701",
-  "muted": "#3B2301"
+  "accent": "#734400",
+  "accentHot": "#7F3300",
+  "accentMuted": "#7C4700",
+  "success": "#005D5C",
+  "warning": "#6B5200",
+  "error": "#843500",
+  "critical": "#950011",
+  "stable": "#5F4B00",
+  "live": "#005D5C",
+  "display": "#342920",
+  "workhorse": "#50453C",
+  "secondary": "#625445",
+  "tertiary": "#405634",
+  "body": "#50453C",
+  "muted": "#625445"
 });
 export const syntax = Object.freeze({
-  "structural": "#7D6F5F",
-  "sage": "#0F3E02",
-  "slate": "#003F60",
-  "mauve": "#472077"
+  "structural": "#5A493B",
+  "sage": "#325D22",
+  "slate": "#23588B",
+  "mauve": "#69387C"
 });
 export const ansi = Object.freeze({
   "normal": [
-    "#D8CFC7",
-    "#940015",
-    "#0F3E02",
-    "#492B00",
-    "#003F60",
-    "#472077",
-    "#004444",
-    "#100701"
+    "#D5CABB",
+    "#950011",
+    "#325D22",
+    "#734400",
+    "#23588B",
+    "#69387C",
+    "#005D5C",
+    "#50453C"
   ],
   "bright": [
-    "#7D6F5F",
-    "#8A0012",
-    "#093300",
-    "#2D1F00",
-    "#00314C",
-    "#3D006F",
-    "#003636",
-    "#000000"
+    "#5A493B",
+    "#A22726",
+    "#3F6F2D",
+    "#5F4B00",
+    "#2C649A",
+    "#76428A",
+    "#007170",
+    "#342920"
   ]
 });
 export const semantic = Object.freeze({
   "background": {
-    "canvas": "#E2DDD7",
-    "surface": "#D8CFC7",
-    "elevated": "#CDC2B7",
-    "panel": "#C2B5A7",
-    "interactive": "#B1A291"
+    "canvas": "#E2DBD0",
+    "surface": "#D5CABB",
+    "elevated": "#C8BAA7",
+    "panel": "#BBA994",
+    "interactive": "#B19C85"
   },
   "foreground": {
-    "primary": "#000000",
-    "reading": "#100701",
-    "secondary": "#3B2301",
-    "tertiary": "#162700",
-    "structural": "#7D6F5F",
-    "inverse": "#E2DDD7"
+    "primary": "#342920",
+    "reading": "#50453C",
+    "secondary": "#625445",
+    "tertiary": "#405634",
+    "structural": "#5A493B",
+    "inverse": "#E2DBD0"
   },
   "border": {
-    "subtle": "#96826C",
-    "default": "#867058",
-    "strong": "#7C6449",
-    "focus": "#004444"
+    "subtle": "#A08971",
+    "default": "#90765F",
+    "strong": "#785D47",
+    "focus": "#005D5C"
   },
   "severity": {
-    "critical": "#940015",
-    "worsening": "#640060",
-    "improving": "#382500",
-    "stable": "#2B2B00",
-    "resolved": "#004444"
+    "critical": "#950011",
+    "worsening": "#8D0057",
+    "improving": "#6E4700",
+    "stable": "#405E00",
+    "resolved": "#005D5C"
   },
   "status": {
-    "ready": "#2D1F00",
-    "live": "#004444",
-    "warning": "#342700",
-    "error": "#742400"
+    "ready": "#5F4B00",
+    "live": "#005D5C",
+    "warning": "#6B5200",
+    "error": "#843500"
   }
 });
 

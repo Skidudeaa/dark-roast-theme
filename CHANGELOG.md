@@ -6,6 +6,53 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.5.0] — 2026-07-25
+
+Brew-engine correctness release. **Dark Roast: Black Label is unchanged.**
+Cascara, Flash Chilled, and Nitro are re-brewed and now pass validation for the
+first time; `npm test` is green across all eight companions.
+
+### Fixed
+
+- **Cold Brew regression** — `src/recipes/cold-brew.json` duplicated a companion
+  that `scripts/build-cold-brew.js` already compiles from
+  `src/cold-brew.seeds.json`, and `reconcile-recipes.js` overwrote the shipped
+  v5.2.0 registry with a weaker generated palette. The duplicate recipe is
+  removed and Cold Brew is restored from its seeds. Because the seeds correctly
+  declare Cold Brew `web`-only, the editor and terminal artifacts the recipe had
+  wrongly generated are pruned.
+- **Registry ownership** — brewed registries now record `generator:
+  "brew-engine"`, and `reconcile-recipes.js` refuses to overwrite any registry it
+  does not own, exiting non-zero. Hand-authored companions (House Blend, Copper
+  Roast, Velvet) and seed-compiled ones (Cold Brew) can no longer be clobbered by
+  a recipe that happens to share their id. `--adopt` claims registries brewed
+  before provenance tracking existed.
+- **Gamut-starved accents** — the engine mirrored lightness for light polarity,
+  so an accent seeded at L=0.68 landed at L=0.32, where sRGB has little chroma to
+  give. Core accent averages capped at 0.089 against a declared floor of 0.120 no
+  matter what `chroma_scale` asked for. Chromatic roles are now *placed* at the
+  lightness carrying the most colour while still clearing the contrast target,
+  which is where Cold Brew's hand-authored accents already sat (L≈0.43).
+- **Unreachable quality floors** — the engine published floors it never checked.
+  Floors are now polarity-aware (light palettes declare 0.11/0.09, matching what
+  Cold Brew delivers) and solved for, and every guarantee is re-asserted before
+  the palette is returned, so the engine throws with a diagnostic instead of
+  emitting a registry its own quality block would fail.
+- **Severity separation measured in the wrong space** — separation was specified
+  in OKLCH hue while `validate-themes.js` measures HSL, so a 30° OKLCH gap
+  collapsed to 20.4° and sat under the 25° minimum. Separation is now solved
+  against the *delivered* HSL hue after placement; the three brewed palettes
+  report 29.2°–30.1°.
+- **Missing Textastic identity** — brewed registries had no `textasticUuid`. They
+  now derive a stable UUIDv5 from the recipe id, so re-brewing never churns the
+  committed registry or its generated `.tmTheme`.
+
+### Changed
+
+- `npm run brew` compiles recipes; `npm run build` runs it, and `npm test` gates
+  brewed-registry drift with `reconcile-recipes.js --check`.
+- Cascara, Flash Chilled, and Nitro are added to `spec/theme-gallery.html`.
+
 ## [5.4.0] — 2026-07-24
 
 Additive theme-family release. **Dark Roast: Black Label is unchanged** — its

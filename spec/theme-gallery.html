@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="../dist/css/dark-roast-cold-brew-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-velvet-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-velvet-noir-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-nitro-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-flash-chilled-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-cascara-scoped.css">
   <style>
     :root {
       color-scheme: dark;
@@ -112,6 +115,48 @@
       --spec-teal-bright: #59CAC5;
       --spec-function: #36AFAB;
       --spec-punctuation: #A88594;
+    }
+
+    [data-theme="dark-roast-nitro"] {
+      --spec-structural: #655C53;
+      --spec-sage: #213E1B;
+      --spec-slate: #084466;
+      --spec-mauve: #3D275E;
+      --spec-scarlet-bright: #7C2524;
+      --spec-sage-bright: #0F3206;
+      --spec-slate-bright: #06527B;
+      --spec-mauve-bright: #381D5C;
+      --spec-teal-bright: #006A6A;
+      --spec-function: #006A6A;
+      --spec-punctuation: #655C53;
+    }
+
+    [data-theme="dark-roast-flash-chilled"] {
+      --spec-structural: #3B5F65;
+      --spec-sage: #1C6402;
+      --spec-slate: #015E8C;
+      --spec-mauve: #5A129D;
+      --spec-scarlet-bright: #B6011C;
+      --spec-sage-bright: #1C6700;
+      --spec-slate-bright: #015E8C;
+      --spec-mauve-bright: #6605B3;
+      --spec-teal-bright: #006464;
+      --spec-function: #006464;
+      --spec-punctuation: #3B5F65;
+    }
+
+    [data-theme="dark-roast-cascara"] {
+      --spec-structural: #674E4C;
+      --spec-sage: #144904;
+      --spec-slate: #015D8A;
+      --spec-mauve: #4C1D80;
+      --spec-scarlet-bright: #B4001B;
+      --spec-sage-bright: #195C02;
+      --spec-slate-bright: #015D8A;
+      --spec-mauve-bright: #480381;
+      --spec-teal-bright: #006262;
+      --spec-function: #006262;
+      --spec-punctuation: #674E4C;
     }
 
     [data-theme="dark-roast-cold-brew"] {
@@ -2046,6 +2091,30 @@
             <div class="signature-grid" data-palette-grid></div>
             <div class="surface-rail" aria-label="Velvet Noir surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
           </article>
+          <article class="palette-row" data-theme="dark-roast-nitro" data-theme-row="dark-roast-nitro" aria-label="Nitro palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Nitro</strong><span class="palette-badge">Light &middot; brewed</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Nitro surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
+          <article class="palette-row" data-theme="dark-roast-flash-chilled" data-theme-row="dark-roast-flash-chilled" aria-label="Flash Chilled palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Flash Chilled</strong><span class="palette-badge">Light &middot; brewed</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Flash Chilled surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
+          <article class="palette-row" data-theme="dark-roast-cascara" data-theme-row="dark-roast-cascara" aria-label="Cascara palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Cascara</strong><span class="palette-badge">Light &middot; brewed</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Cascara surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
           <article class="palette-row" data-theme="dark-roast-cold-brew" data-theme-row="dark-roast-cold-brew" aria-label="Cold Brew palette">
             <div class="palette-meta">
               <div class="palette-name"><strong>Cold Brew</strong><span class="palette-badge">Light &middot; daylight</span></div>
@@ -2086,6 +2155,9 @@
                 <option value="dark-roast-copper-roast">Copper Roast</option>
                 <option value="dark-roast-velvet">Velvet</option>
                 <option value="dark-roast-velvet-noir">Velvet Noir</option>
+                <option value="dark-roast-nitro">Nitro</option>
+                <option value="dark-roast-flash-chilled">Flash Chilled</option>
+                <option value="dark-roast-cascara">Cascara</option>
                 <option value="dark-roast-cold-brew">Cold Brew</option>
               </select>
             </label>
@@ -2097,6 +2169,9 @@
                 <option value="dark-roast-copper-roast">Copper Roast</option>
                 <option value="dark-roast-velvet">Velvet</option>
                 <option value="dark-roast-velvet-noir">Velvet Noir</option>
+                <option value="dark-roast-nitro">Nitro</option>
+                <option value="dark-roast-flash-chilled">Flash Chilled</option>
+                <option value="dark-roast-cascara">Cascara</option>
                 <option value="dark-roast-cold-brew">Cold Brew</option>
               </select>
             </label>
@@ -2260,7 +2335,10 @@
         'dark-roast-house-blend': { name: 'House Blend', intent: 'recommended companion' },
         'dark-roast-copper-roast': { name: 'Copper Roast', intent: 'rich brighter-room companion' },
         'dark-roast-velvet': { name: 'Velvet', intent: 'mahogany-wine terminal companion' },
-        'dark-roast-velvet-noir': { name: 'Velvet Noir', intent: 'plum-black terminal companion' }
+        'dark-roast-velvet-noir': { name: 'Velvet Noir', intent: 'plum-black terminal companion' },
+        'dark-roast-nitro': { name: 'Nitro', intent: 'a soft-light variation with diffused, nitrogen-infused surfa' },
+        'dark-roast-flash-chilled': { name: 'Flash Chilled', intent: 'a high-chroma, cool-spectrum light mode with crisp edges and' },
+        'dark-roast-cascara': { name: 'Cascara', intent: 'a botanical light mode inspired by the coffee cherry tea' }
       };
 
       var paletteTokens = [
