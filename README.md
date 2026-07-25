@@ -7,8 +7,12 @@ A warm espresso design system for every room, not one brightness setting. The or
 | **Black Label** | `#120C06` | OLED and very low light | Original v5 behavior, unchanged |
 | **House Blend** | `#241810` | Daily use and ordinary room light | ≥ 4.5:1 through the hover surface |
 | **Copper Roast** | `#34251C` | Moderate-to-bright rooms without washed-out color | ≥ 4.5:1 through the common panel surface |
+| **Velvet** | `#190605` | Terminals, when Black Label reads too flat | ≥ 4.5:1 on the terminal canvas |
+| **Velvet Noir** | `#14030C` | Terminals in dark rooms, lowest glare | ≥ 4.5:1 on the terminal canvas |
 
 House Blend is the recommended “less dark Dark Roast.” Copper Roast is the high-ambient option. Both use saturated kiln-enamel pigments while keeping the same severity hue families, warm/cool syntax grammar, typography, spacing, motion, and component API.
+
+Velvet and Velvet Noir are terminal-targeted companions. Where Black Label runs a near-neutral canvas (surface chroma `0.021`) under a stark `L=0.98` white, they raise surface chroma to `0.045`/`0.051`, pull the canvas toward mahogany-wine and plum-black, and soften the foreground to `L=0.944`/`0.931`. The extra saturation is carried by the warm pigments; cool accents stay deliberately dusty so the espresso identity still dominates.
 
 ## Quick Start
 
@@ -279,6 +283,7 @@ The VS Code/Cursor extension contributes all three themes. Companion files are a
 | **Tabby** | `platforms/tabby/dark-roast.yaml` | Merge into `config.yaml` under `terminal:`, then select in Settings |
 | **Terminal.app** | `platforms/terminal-app/generate-terminal-profile.py` | Run `python3 generate-terminal-profile.py`, then open the generated `.terminal` file |
 | **iTerm2** | `platforms/iterm2/Dark Roast.itermcolors` | Double-click to import, or Preferences → Profiles → Colors → Color Presets → Import |
+| **Blink Shell** (iOS/iPadOS) | `platforms/blink/Dark Roast.js` | Host the file over HTTPS (raw GitHub file or a gist), then in Blink: `config` → Appearance → Themes → New Theme → paste the URL |
 
 House Blend and Copper Roast use the same filenames with their theme name appended. Generated companions cover modern VS Code surfaces including inline edits, multi-file diffs, chat, terminal sticky scroll, Markdown alerts, multi-cursor states, and agent status.
 

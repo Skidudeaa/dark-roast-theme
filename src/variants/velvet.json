@@ -1,0 +1,71 @@
+{
+  "id": "velvet",
+  "displayOrder": 7,
+  "name": "Dark Roast: Velvet",
+  "shortName": "Velvet",
+  "selector": "dark-roast-velvet",
+  "className": "dark-roast-velvet",
+  "version": "5.4.0",
+  "baseVersion": "5.0.0",
+  "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030",
+  "polarity": "dark",
+  "targets": [
+    "terminal"
+  ],
+  "description": "A mahogany-wine companion that trades Black Label's near-neutral canvas for visible surface chroma and plush, warm-forward accents.",
+  "intent": {
+    "position": "terminal companion",
+    "ambientLight": "low",
+    "surfaceLift": "matched to Black Label canvas luminance with roughly 2x the surface chroma",
+    "designRule": "Warm pigments carry the saturation while cool accents stay dusty, so the espresso identity dominates at every elevation."
+  },
+  "colors": {
+    "void": "#190605",
+    "obsidian": "#240A09",
+    "darkCacao": "#2F100E",
+    "espresso": "#3B1817",
+    "espressoHover": "#47211F",
+    "roastedBean": "#522D2A",
+    "crater": "#66433E",
+    "crema": "#F7EADE",
+    "warmWhite": "#F4E3D3",
+    "bone": "#E4D1C2",
+    "mocha": "#B49074",
+    "craterDeep": "#5C3834",
+    "asparagus": "#90AB6D",
+    "rustic": "#8C3439",
+    "rose": "#94436D",
+    "amber": "#E18826",
+    "amberHot": "#E46A37",
+    "amberMuted": "#CF8D5A",
+    "gold": "#E4AE28",
+    "brass": "#C5AA54",
+    "scarlet": "#D4494E",
+    "burntSienna": "#DA684A",
+    "teal": "#42B3A8",
+    "magenta": "#D260A0",
+    "harvest": "#E2912E",
+    "olive": "#93AB51"
+  },
+  "platform": {
+    "structural": "#AC8981",
+    "sage": "#60A659",
+    "slate": "#608BB7",
+    "mauve": "#BC60AD",
+    "scarletBright": "#ED6667",
+    "sageBright": "#7EBE77",
+    "slateBright": "#77A3D0",
+    "mauveBright": "#D47AC4",
+    "tealBright": "#63CDC1",
+    "tealActive": "#34BDB1",
+    "shadow": "#080000",
+    "hoverSurface": "#361512"
+  },
+  "quality": {
+    "contrastSurface": "void",
+    "minimumInformationalContrast": 4.5,
+    "minimumCoreAccentChromaAverage": 0.13,
+    "minimumPlatformAccentChromaAverage": 0.105
+  },
+  "textasticUuid": "3D4E640D-BE4E-48D3-9C49-DBB3B81CAEE0"
+}

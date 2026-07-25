@@ -1,6 +1,6 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.3.0",
+  "version": "5.4.0",
   "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions and the warm light-polarity Cold Brew, all with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",
@@ -14,6 +14,10 @@
     "./css/copper-roast/scoped": "./dist/css/dark-roast-copper-roast-scoped.css",
     "./css/cold-brew": "./dist/css/dark-roast-cold-brew.css",
     "./css/cold-brew/scoped": "./dist/css/dark-roast-cold-brew-scoped.css",
+    "./css/velvet": "./dist/css/dark-roast-velvet.css",
+    "./css/velvet/scoped": "./dist/css/dark-roast-velvet-scoped.css",
+    "./css/velvet-noir": "./dist/css/dark-roast-velvet-noir.css",
+    "./css/velvet-noir/scoped": "./dist/css/dark-roast-velvet-noir-scoped.css",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
     "./tokens/typography": "./dist/tokens/typography.js",
@@ -26,7 +30,11 @@
     "./themes/copper-roast": "./dist/themes/copper-roast/index.js",
     "./themes/copper-roast/tokens.json": "./dist/themes/copper-roast/tokens.json",
     "./themes/cold-brew": "./dist/themes/cold-brew/index.js",
-    "./themes/cold-brew/tokens.json": "./dist/themes/cold-brew/tokens.json"
+    "./themes/cold-brew/tokens.json": "./dist/themes/cold-brew/tokens.json",
+    "./themes/velvet": "./dist/themes/velvet/index.js",
+    "./themes/velvet/tokens.json": "./dist/themes/velvet/tokens.json",
+    "./themes/velvet-noir": "./dist/themes/velvet-noir/index.js",
+    "./themes/velvet-noir/tokens.json": "./dist/themes/velvet-noir/tokens.json"
   },
   "files": [
     "dist/",

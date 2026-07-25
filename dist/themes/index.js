@@ -2,3 +2,8 @@
 export { default as houseBlend } from './house-blend/index.js';
 export { default as copperRoast } from './copper-roast/index.js';
 export { default as coldBrew } from './cold-brew/index.js';
+export { default as nitro } from './nitro/index.js';
+export { default as flashChilled } from './flash-chilled/index.js';
+export { default as cascara } from './cascara/index.js';
+export { default as velvet } from './velvet/index.js';
+export { default as velvetNoir } from './velvet-noir/index.js';

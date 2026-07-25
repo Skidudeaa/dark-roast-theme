@@ -1,0 +1,71 @@
+{
+  "id": "velvet-noir",
+  "displayOrder": 8,
+  "name": "Dark Roast: Velvet Noir",
+  "shortName": "Velvet Noir",
+  "selector": "dark-roast-velvet-noir",
+  "className": "dark-roast-velvet-noir",
+  "version": "5.4.0",
+  "baseVersion": "5.0.0",
+  "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030",
+  "polarity": "dark",
+  "targets": [
+    "terminal"
+  ],
+  "description": "The deepest, most saturated companion: a plum-black canvas under a soft ivory foreground, tuned for low-light work.",
+  "intent": {
+    "position": "terminal companion",
+    "ambientLight": "low",
+    "surfaceLift": "the deepest canvas in the family at roughly 2.4x Black Label surface chroma",
+    "designRule": "A plum-black canvas carries berry-leaning warms while cool accents stay dusty, holding glare to a minimum in dark rooms."
+  },
+  "colors": {
+    "void": "#14030C",
+    "obsidian": "#1F0514",
+    "darkCacao": "#290B1C",
+    "espresso": "#3A1528",
+    "espressoHover": "#411C31",
+    "roastedBean": "#4C283B",
+    "crater": "#603E4D",
+    "crema": "#F6E4DA",
+    "warmWhite": "#F3DDD1",
+    "bone": "#E3CAC0",
+    "mocha": "#B68A78",
+    "craterDeep": "#563344",
+    "asparagus": "#87AB70",
+    "rustic": "#893142",
+    "rose": "#924074",
+    "amber": "#E28233",
+    "amberHot": "#E56347",
+    "amberMuted": "#D2885D",
+    "gold": "#E8A72D",
+    "brass": "#CAA550",
+    "scarlet": "#D4445E",
+    "burntSienna": "#DA6356",
+    "teal": "#36AFAB",
+    "magenta": "#D062AB",
+    "harvest": "#E48C2E",
+    "olive": "#8BAB53"
+  },
+  "platform": {
+    "structural": "#A88594",
+    "sage": "#51A460",
+    "slate": "#6486B9",
+    "mauve": "#C85BA0",
+    "scarletBright": "#EC6175",
+    "sageBright": "#70BB7C",
+    "slateBright": "#7B9ED2",
+    "mauveBright": "#E076B7",
+    "tealBright": "#59CAC5",
+    "tealActive": "#21BBB7",
+    "shadow": "#060003",
+    "hoverSurface": "#321124"
+  },
+  "quality": {
+    "contrastSurface": "void",
+    "minimumInformationalContrast": 4.5,
+    "minimumCoreAccentChromaAverage": 0.13,
+    "minimumPlatformAccentChromaAverage": 0.105
+  },
+  "textasticUuid": "30870CBA-5B56-4528-8773-C31ABD982CD0"
+}

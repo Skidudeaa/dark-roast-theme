@@ -33,7 +33,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.3.0",
+      "sourceVersion": "5.4.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -62,7 +62,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.3.0",
+      "sourceVersion": "5.4.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -71,24 +71,142 @@
       "name": "Dark Roast: Cold Brew",
       "selector": "dark-roast-cold-brew",
       "className": "dark-roast-cold-brew",
-      "description": "A warm, positive-polarity Dark Roast for bright rooms: a cream canvas that deepens with elevation, espresso ink, and dark kiln-enamel accents that stay legible in daylight.",
-      "intent": {
-        "position": "daylight companion",
-        "ambientLight": "moderate to bright",
-        "surfaceLift": "surfaces darken decisively with elevation over a cream canvas — wide ramp; light polarity needs surface separation to carry the depth that glows carry on OLED",
-        "designRule": "Every informational foreground stays >= 4.5:1 on the warm canvas; accents are dark and saturated rather than pale, so category color survives glare without changing clinical meaning."
-      },
+      "description": "The original warm cream light mode for bright rooms.",
       "quality": {
-        "contrastSurface": "obsidian",
+        "contrastSurface": "void",
         "minimumInformationalContrast": 4.5,
-        "minimumCoreAccentChromaAverage": 0.11,
-        "minimumPlatformAccentChromaAverage": 0.09
+        "minimumCoreAccentChromaAverage": 0.12,
+        "minimumPlatformAccentChromaAverage": 0.1
       },
       "polarity": "light",
       "targets": [
-        "web"
+        "web",
+        "editor",
+        "terminal",
+        "native"
       ],
-      "sourceVersion": "5.3.0",
+      "sourceVersion": "5.4.0",
+      "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
+    },
+    {
+      "id": "nitro",
+      "displayOrder": 4,
+      "name": "Dark Roast: Nitro",
+      "selector": "dark-roast-nitro",
+      "className": "dark-roast-nitro",
+      "description": "A soft-light variation with diffused, nitrogen-infused surfaces for low-fatigue daylight coding.",
+      "quality": {
+        "contrastSurface": "void",
+        "minimumInformationalContrast": 4,
+        "minimumCoreAccentChromaAverage": 0.12,
+        "minimumPlatformAccentChromaAverage": 0.1
+      },
+      "polarity": "light",
+      "targets": [
+        "web",
+        "editor",
+        "terminal",
+        "native"
+      ],
+      "sourceVersion": "5.4.0",
+      "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
+    },
+    {
+      "id": "flash-chilled",
+      "displayOrder": 5,
+      "name": "Dark Roast: Flash Chilled",
+      "selector": "dark-roast-flash-chilled",
+      "className": "dark-roast-flash-chilled",
+      "description": "A high-chroma, cool-spectrum light mode with crisp edges and clinical contrast.",
+      "quality": {
+        "contrastSurface": "void",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.12,
+        "minimumPlatformAccentChromaAverage": 0.1
+      },
+      "polarity": "light",
+      "targets": [
+        "web",
+        "editor",
+        "terminal",
+        "native"
+      ],
+      "sourceVersion": "5.4.0",
+      "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
+    },
+    {
+      "id": "cascara",
+      "displayOrder": 6,
+      "name": "Dark Roast: Cascara",
+      "selector": "dark-roast-cascara",
+      "className": "dark-roast-cascara",
+      "description": "A botanical light mode inspired by the coffee cherry tea: a pale rose-tan canvas with deep jammy reds and dried-leaf green accents.",
+      "quality": {
+        "contrastSurface": "void",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.12,
+        "minimumPlatformAccentChromaAverage": 0.1
+      },
+      "polarity": "light",
+      "targets": [
+        "web",
+        "editor",
+        "terminal",
+        "native"
+      ],
+      "sourceVersion": "5.4.0",
+      "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
+    },
+    {
+      "id": "velvet",
+      "displayOrder": 7,
+      "name": "Dark Roast: Velvet",
+      "selector": "dark-roast-velvet",
+      "className": "dark-roast-velvet",
+      "description": "A mahogany-wine companion that trades Black Label's near-neutral canvas for visible surface chroma and plush, warm-forward accents.",
+      "intent": {
+        "position": "terminal companion",
+        "ambientLight": "low",
+        "surfaceLift": "matched to Black Label canvas luminance with roughly 2x the surface chroma",
+        "designRule": "Warm pigments carry the saturation while cool accents stay dusty, so the espresso identity dominates at every elevation."
+      },
+      "quality": {
+        "contrastSurface": "void",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.13,
+        "minimumPlatformAccentChromaAverage": 0.105
+      },
+      "polarity": "dark",
+      "targets": [
+        "terminal"
+      ],
+      "sourceVersion": "5.4.0",
+      "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
+    },
+    {
+      "id": "velvet-noir",
+      "displayOrder": 8,
+      "name": "Dark Roast: Velvet Noir",
+      "selector": "dark-roast-velvet-noir",
+      "className": "dark-roast-velvet-noir",
+      "description": "The deepest, most saturated companion: a plum-black canvas under a soft ivory foreground, tuned for low-light work.",
+      "intent": {
+        "position": "terminal companion",
+        "ambientLight": "low",
+        "surfaceLift": "the deepest canvas in the family at roughly 2.4x Black Label surface chroma",
+        "designRule": "A plum-black canvas carries berry-leaning warms while cool accents stay dusty, holding glare to a minimum in dark rooms."
+      },
+      "quality": {
+        "contrastSurface": "void",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.13,
+        "minimumPlatformAccentChromaAverage": 0.105
+      },
+      "polarity": "dark",
+      "targets": [
+        "terminal"
+      ],
+      "sourceVersion": "5.4.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     }
   ]

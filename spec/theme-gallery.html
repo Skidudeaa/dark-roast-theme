@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="../dist/css/dark-roast-house-blend-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-copper-roast-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-cold-brew-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-velvet-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-velvet-noir-scoped.css">
   <style>
     :root {
       color-scheme: dark;
@@ -82,6 +84,34 @@
       --spec-teal-bright: #5FE0D1;
       --spec-function: #24C6B6;
       --spec-punctuation: #C4A78E;
+    }
+
+    [data-theme="dark-roast-velvet"] {
+      --spec-structural: #AC8981;
+      --spec-sage: #60A659;
+      --spec-slate: #608BB7;
+      --spec-mauve: #BC60AD;
+      --spec-scarlet-bright: #ED6667;
+      --spec-sage-bright: #7EBE77;
+      --spec-slate-bright: #77A3D0;
+      --spec-mauve-bright: #D47AC4;
+      --spec-teal-bright: #63CDC1;
+      --spec-function: #42B3A8;
+      --spec-punctuation: #AC8981;
+    }
+
+    [data-theme="dark-roast-velvet-noir"] {
+      --spec-structural: #A88594;
+      --spec-sage: #51A460;
+      --spec-slate: #6486B9;
+      --spec-mauve: #C85BA0;
+      --spec-scarlet-bright: #EC6175;
+      --spec-sage-bright: #70BB7C;
+      --spec-slate-bright: #7B9ED2;
+      --spec-mauve-bright: #E076B7;
+      --spec-teal-bright: #59CAC5;
+      --spec-function: #36AFAB;
+      --spec-punctuation: #A88594;
     }
 
     [data-theme="dark-roast-cold-brew"] {
@@ -2000,6 +2030,22 @@
             <div class="signature-grid" data-palette-grid></div>
             <div class="surface-rail" aria-label="Copper Roast surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
           </article>
+          <article class="palette-row" data-theme="dark-roast-velvet" data-theme-row="dark-roast-velvet" aria-label="Velvet palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Velvet</strong><span class="palette-badge">Terminal &middot; mahogany</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Velvet surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
+          <article class="palette-row" data-theme="dark-roast-velvet-noir" data-theme-row="dark-roast-velvet-noir" aria-label="Velvet Noir palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Velvet Noir</strong><span class="palette-badge">Terminal &middot; plum</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Velvet Noir surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
           <article class="palette-row" data-theme="dark-roast-cold-brew" data-theme-row="dark-roast-cold-brew" aria-label="Cold Brew palette">
             <div class="palette-meta">
               <div class="palette-name"><strong>Cold Brew</strong><span class="palette-badge">Light &middot; daylight</span></div>
@@ -2038,6 +2084,8 @@
                 <option value="dark-roast">Black Label</option>
                 <option value="dark-roast-house-blend">House Blend</option>
                 <option value="dark-roast-copper-roast">Copper Roast</option>
+                <option value="dark-roast-velvet">Velvet</option>
+                <option value="dark-roast-velvet-noir">Velvet Noir</option>
                 <option value="dark-roast-cold-brew">Cold Brew</option>
               </select>
             </label>
@@ -2047,6 +2095,8 @@
                 <option value="dark-roast">Black Label</option>
                 <option value="dark-roast-house-blend" selected>House Blend</option>
                 <option value="dark-roast-copper-roast">Copper Roast</option>
+                <option value="dark-roast-velvet">Velvet</option>
+                <option value="dark-roast-velvet-noir">Velvet Noir</option>
                 <option value="dark-roast-cold-brew">Cold Brew</option>
               </select>
             </label>
@@ -2208,7 +2258,9 @@
       var themes = {
         'dark-roast': { name: 'Black Label', intent: 'preserved original' },
         'dark-roast-house-blend': { name: 'House Blend', intent: 'recommended companion' },
-        'dark-roast-copper-roast': { name: 'Copper Roast', intent: 'rich brighter-room companion' }
+        'dark-roast-copper-roast': { name: 'Copper Roast', intent: 'rich brighter-room companion' },
+        'dark-roast-velvet': { name: 'Velvet', intent: 'mahogany-wine terminal companion' },
+        'dark-roast-velvet-noir': { name: 'Velvet Noir', intent: 'plum-black terminal companion' }
       };
 
       var paletteTokens = [
