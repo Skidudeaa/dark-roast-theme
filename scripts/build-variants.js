@@ -760,6 +760,7 @@ const tabbySource = readFileSync(join(ROOT, 'platforms', 'tabby', 'dark-roast.ya
 const textasticSource = readFileSync(join(ROOT, 'platforms', 'textastic', 'Dark-Roast-Black-Label.tmTheme'), 'utf8');
 const xcodeSource = readFileSync(join(ROOT, 'platforms', 'xcode', 'Dark Roast Black Label.dvtcolortheme'), 'utf8');
 const itermSource = readFileSync(join(ROOT, 'platforms', 'iterm2', 'Dark Roast.itermcolors'), 'utf8');
+const blinkSource = readFileSync(join(ROOT, 'platforms', 'blink', 'Dark Roast.js'), 'utf8');
 const terminalSource = readFileSync(join(ROOT, 'platforms', 'terminal-app', 'generate-terminal-profile.py'), 'utf8');
 
 for (const variant of variants) {
@@ -853,6 +854,15 @@ for (const variant of variants) {
   iterm = iterm.replaceAll(`"${variant.name}"`, `"${variant.name.replace(':', '')}"`);
   pushIf(hasTarget(variant, 'terminal'), [join(ROOT, 'platforms', 'iterm2', `Dark Roast ${variant.shortName}.itermcolors`), addXmlBanner(iterm)]);
 
+  // Blink names an imported theme after its file, and the const identifier is
+  // cosmetic but should read as the companion rather than the base palette.
+  let blink = renameTheme(replaceColors(blinkSource, terminalMap), variant)
+    .replaceAll('"platforms/blink/Dark Roast.js"', `"platforms/blink/Dark Roast ${variant.shortName}.js"`)
+    .replaceAll('select "Dark Roast"', `select "Dark Roast ${variant.shortName}"`)
+    .replaceAll('darkRoast', `darkRoast${pascal(variant.id)}`);
+  blink = normalizePlatformNarrative(blink, variant);
+  pushIf(hasTarget(variant, 'terminal'), [join(ROOT, 'platforms', 'blink', `Dark Roast ${variant.shortName}.js`), `${JS_BANNER}\n${blink}`]);
+
   let terminal = renameTheme(replaceColors(terminalSource, terminalMap), variant)
     .replaceAll('generate-terminal-profile.py', `generate-${variant.id}-profile.py`)
     .replaceAll('Dark Roast.itermcolors', `Dark Roast ${variant.shortName}.itermcolors`);
@@ -935,6 +945,7 @@ const ownedOutputRoots = [
   join(ROOT, 'platforms', 'textastic'),
   join(ROOT, 'platforms', 'xcode'),
   join(ROOT, 'platforms', 'iterm2'),
+  join(ROOT, 'platforms', 'blink'),
   join(ROOT, 'platforms', 'terminal-app'),
   join(ROOT, 'platforms', 'swift'),
 ];

@@ -3,6 +3,7 @@
 // Zero dependencies: only Node's standard library and Python's plistlib are used.
 
 import { spawnSync } from 'node:child_process';
+import { runInNewContext } from 'node:vm';
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -878,34 +879,94 @@ function validateTerminalFiles(variant, readArtifact, fail) {
     }
   }
 
-  for (const [relative, source] of [[warpRelative, warp], [tabbyRelative, tabby], [terminalRelative, terminal]]) {
+  // Blink themes are executed by hterm, not parsed, so the only honest check is
+  // to run the file against a stub terminal and inspect the prefs it sets.
+  const blinkRelative = `platforms/blink/Dark Roast ${variant.shortName}.js`;
+  const blink = readArtifact(blinkRelative);
+  if (blink !== null) {
+    const prefs = new Map();
+    let evaluated = true;
+    try {
+      runInNewContext(blink, { t: { prefs_: { set: (key, value) => prefs.set(key, value) } } }, { timeout: 2000 });
+    } catch (error) {
+      evaluated = false;
+      fail(variant.id, `${blinkRelative} does not evaluate as an hterm theme: ${error.message}`);
+    }
+    if (evaluated) {
+      const palette = prefs.get('color-palette-overrides');
+      if (!Array.isArray(palette) || palette.length !== 16) {
+        fail(variant.id, `${blinkRelative} color-palette-overrides must contain exactly 16 entries (found ${Array.isArray(palette) ? palette.length : 'none'})`);
+      } else {
+        for (const [index, value] of palette.entries()) {
+          if (!compareColor(String(value), ansi.all[index])) {
+            fail(variant.id, `${blinkRelative} ANSI ${index} must be ${ansi.all[index]}`);
+          }
+        }
+      }
+      for (const [pref, expected] of [['foreground-color', colors.crema], ['background-color', colors.void]]) {
+        if (!compareColor(String(prefs.get(pref) ?? ''), expected)) {
+          fail(variant.id, `${blinkRelative} ${pref} must be ${expected}`);
+        }
+      }
+      // hterm paints the cursor over the glyph instead of inverting it, so the
+      // cursor must stay translucent or the character underneath disappears.
+      const cursor = String(prefs.get('cursor-color') ?? '');
+      const cursorMatch = cursor.match(/^rgba\(\s*(\d+),\s*(\d+),\s*(\d+),\s*(0?\.\d+|1(?:\.0+)?)\s*\)$/);
+      const [tealR, tealG, tealB] = [1, 3, 5].map((index) => Number.parseInt(variant.colors.teal.slice(index, index + 2), 16));
+      if (!cursorMatch) {
+        fail(variant.id, `${blinkRelative} cursor-color must be an rgba() value (found ${cursor || 'none'})`);
+      } else if (Number(cursorMatch[1]) !== tealR || Number(cursorMatch[2]) !== tealG || Number(cursorMatch[3]) !== tealB) {
+        fail(variant.id, `${blinkRelative} cursor-color must use teal ${variant.colors.teal}`);
+      } else if (Number(cursorMatch[4]) >= 1) {
+        fail(variant.id, `${blinkRelative} cursor-color must stay translucent so the glyph under the block stays legible`);
+      }
+    }
+    if (!blink.includes(`${variant.name} — Blink Shell Theme`)) {
+      fail(variant.id, `${blinkRelative} header must name ${variant.name}`);
+    }
+    if (!blink.includes(`select "Dark Roast ${variant.shortName}"`)) {
+      fail(variant.id, `${blinkRelative} install instructions must use the companion theme name`);
+    }
+  }
+
+  for (const [relative, source] of [[warpRelative, warp], [tabbyRelative, tabby], [terminalRelative, terminal], [blinkRelative, blink]]) {
     if (source !== null && /\b(?:1\.6|18\.5)ms\b|\b(?:17\.08|18\.31):1\b|OLED-safe|near-black/i.test(source)) {
       fail(variant.id, `${relative} inherits a Black Label-only display claim`);
     }
   }
 }
 
+// Textastic and Xcode are editor artifacts; iTerm2 is a terminal one. A variant
+// that ships to only one of those groups must not be asked for the other's
+// plists, or a legitimately terminal-only companion fails on files the
+// generator was never supposed to write.
 function plistRequestsFor(variant) {
-  return [
-    {
-      label: `${variant.id}/Textastic`,
-      kind: 'textastic',
-      path: join(ROOT, 'platforms', 'textastic', `Dark-Roast-${companionTextasticName(variant.id)}.tmTheme`),
-      variant,
-    },
-    {
-      label: `${variant.id}/Xcode`,
-      kind: 'xcode',
-      path: join(ROOT, 'platforms', 'xcode', `Dark Roast ${variant.shortName}.dvtcolortheme`),
-      variant,
-    },
-    {
+  const requests = [];
+  if (hasTarget(variant, 'editor')) {
+    requests.push(
+      {
+        label: `${variant.id}/Textastic`,
+        kind: 'textastic',
+        path: join(ROOT, 'platforms', 'textastic', `Dark-Roast-${companionTextasticName(variant.id)}.tmTheme`),
+        variant,
+      },
+      {
+        label: `${variant.id}/Xcode`,
+        kind: 'xcode',
+        path: join(ROOT, 'platforms', 'xcode', `Dark Roast ${variant.shortName}.dvtcolortheme`),
+        variant,
+      },
+    );
+  }
+  if (hasTarget(variant, 'terminal')) {
+    requests.push({
       label: `${variant.id}/iTerm2`,
       kind: 'iterm',
       path: join(ROOT, 'platforms', 'iterm2', `Dark Roast ${variant.shortName}.itermcolors`),
       variant,
-    },
-  ];
+    });
+  }
+  return requests;
 }
 
 function validatePlists(requests, fail) {
