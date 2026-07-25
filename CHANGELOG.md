@@ -51,6 +51,13 @@ first time; `npm test` is green across all eight companions.
 
 - `npm run brew` compiles recipes; `npm run build` runs it, and `npm test` gates
   brewed-registry drift with `reconcile-recipes.js --check`.
+- **Published package contains the theme, not the toolchain.** `scripts/` and
+  `lib/` are no longer in `files`. They shipped as source that could not run,
+  because the generators need devDependencies (`culori`) that consumers never
+  install, and `reconcile-recipes.js` additionally imported a `lib/` that was not
+  packaged at all. The build tooling lives in the repository; the package keeps
+  its zero-runtime-dependency surface (`dist/`, `src/`, `platforms/`, `docs/`,
+  `spec/`).
 - Cascara, Flash Chilled, and Nitro are added to `spec/theme-gallery.html`.
 
 ## [5.4.0] — 2026-07-24

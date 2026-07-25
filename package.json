@@ -39,8 +39,6 @@
   "files": [
     "dist/",
     "src/",
-    "scripts/",
-    "lib/",
     "docs/",
     "spec/",
     "platforms/",
