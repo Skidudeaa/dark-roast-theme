@@ -9,6 +9,7 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
     case nitro = "nitro"
     case flashChilled = "flash-chilled"
     case cascara = "cascara"
+    case blueMountain = "blue-mountain"
 
     public var id: String { rawValue }
 
@@ -211,6 +212,39 @@ public enum DarkRoastThemeVariant: String, CaseIterable, Identifiable {
             sage: drColor(0x144904),
             slate: drColor(0x015D8A),
             mauve: drColor(0x4C1D80)
+            )
+        case .blueMountain:
+            return DarkRoastPalette(
+            void_: drColor(0x000b1d),
+            obsidian: drColor(0x001228),
+            darkCacao: drColor(0x021b36),
+            espresso: drColor(0x052544),
+            espressoHover: drColor(0x0e2f50),
+            roastedBean: drColor(0x1f3c5c),
+            crater: drColor(0x38526f),
+            crema: drColor(0xe5ecf3),
+            warmWhite: drColor(0xdae2ec),
+            bone: drColor(0xc3cfdc),
+            mocha: drColor(0x8ea1b4),
+            craterDeep: drColor(0x2b4765),
+            asparagus: drColor(0x92b87e),
+            rustic: drColor(0x822b31),
+            rose: drColor(0x7c3367),
+            amber: drColor(0xef912d),
+            amberHot: drColor(0xef774b),
+            amberMuted: drColor(0xde8f57),
+            gold: drColor(0xebaa1f),
+            brass: drColor(0xcca641),
+            scarlet: drColor(0xf86572),
+            burntSienna: drColor(0xeb7355),
+            teal: drColor(0x00b5b5),
+            magenta: drColor(0xd473cd),
+            harvest: drColor(0xe99b2a),
+            olive: drColor(0x93b256),
+            structural: drColor(0x8797a9),
+            sage: drColor(0x60a563),
+            slate: drColor(0x49accf),
+            mauve: drColor(0xb181e5)
             )
         }
     }

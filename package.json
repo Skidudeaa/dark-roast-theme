@@ -1,6 +1,6 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions and the warm light-polarity Cold Brew, all with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",
@@ -18,6 +18,8 @@
     "./css/velvet/scoped": "./dist/css/dark-roast-velvet-scoped.css",
     "./css/velvet-noir": "./dist/css/dark-roast-velvet-noir.css",
     "./css/velvet-noir/scoped": "./dist/css/dark-roast-velvet-noir-scoped.css",
+    "./css/blue-mountain": "./dist/css/dark-roast-blue-mountain.css",
+    "./css/blue-mountain/scoped": "./dist/css/dark-roast-blue-mountain-scoped.css",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
     "./tokens/typography": "./dist/tokens/typography.js",
@@ -34,7 +36,9 @@
     "./themes/velvet": "./dist/themes/velvet/index.js",
     "./themes/velvet/tokens.json": "./dist/themes/velvet/tokens.json",
     "./themes/velvet-noir": "./dist/themes/velvet-noir/index.js",
-    "./themes/velvet-noir/tokens.json": "./dist/themes/velvet-noir/tokens.json"
+    "./themes/velvet-noir/tokens.json": "./dist/themes/velvet-noir/tokens.json",
+    "./themes/blue-mountain": "./dist/themes/blue-mountain/index.js",
+    "./themes/blue-mountain/tokens.json": "./dist/themes/blue-mountain/tokens.json"
   },
   "files": [
     "dist/",

@@ -6,6 +6,35 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.6.0] — 2026-07-26
+
+Adds **Dark Roast: Blue Mountain**, the family's first cold-canvas companion.
+**Dark Roast: Black Label is unchanged**, and no existing companion's palette
+moves.
+
+### Added
+
+- **Dark Roast: Blue Mountain** (`displayOrder` 9) — a deep navy canvas
+  (`#000B1D` void through `#38526F` crater at hue `252`) under a cool ivory
+  foreground. Hand-authored rather than brewed: the brew engine's dark ramp
+  seeds bottom out at `L=0.10`, roughly `#020405`, which reads black rather than
+  blue, and its accent placement overshoots to `L=0.82` neon against so dark a
+  surface. Blue Mountain instead mirrors Velvet Noir's proven dark lift profile
+  re-hued to navy, and validates against `espressoHover` — the stricter
+  multi-surface test House Blend uses — rather than the terminal-only canvas.
+- Blue Mountain is the family's highest-chroma companion at `0.146` core /
+  `0.136` platform, clearing 4.5:1 informational contrast at `4.56:1`, severity
+  hue separation at `44.7°`, and inverse-text actions at `6.66:1`.
+
+### Design note
+
+Every other companion varies along the espresso axis, so warm accents sit on
+warm ground. Blue Mountain inverts that: the canvas carries the only cool mass.
+Its cool accent family is therefore pushed cyan-ward — `slate` at hue `225`
+instead of the family's usual `240` — so it separates from the ground rather
+than dissolving into it, the same failure mode Velvet Noir's `e499ec6` note
+recorded when accents were raised uniformly.
+
 ## [5.5.0] — 2026-07-25
 
 Brew-engine correctness release. **Dark Roast: Black Label is unchanged.**
