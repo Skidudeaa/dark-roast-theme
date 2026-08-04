@@ -240,6 +240,32 @@
       ],
       "sourceVersion": "5.6.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
+    },
+    {
+      "id": "night-shift",
+      "displayOrder": 10,
+      "name": "Dark Roast: Night Shift",
+      "selector": "dark-roast-night-shift",
+      "className": "dark-roast-night-shift",
+      "description": "A low-light web companion that keeps Black Label's quiet canvas while lifting only the operational surface ladder for data-dense patient census work.",
+      "intent": {
+        "position": "proposed somaCura web companion",
+        "ambientLight": "low to moderate",
+        "surfaceLift": "Black Label-depth canvas with independently raised interactive surfaces",
+        "designRule": "Empty space remains near-black; cards and patient rows carry readable contrast. Clinical states retain House Blend's high-chroma severity palette and redundant direction cues."
+      },
+      "quality": {
+        "contrastSurface": "espressoHover",
+        "minimumInformationalContrast": 4.5,
+        "minimumCoreAccentChromaAverage": 0.13,
+        "minimumPlatformAccentChromaAverage": 0.105
+      },
+      "polarity": "dark",
+      "targets": [
+        "web"
+      ],
+      "sourceVersion": "5.6.0",
+      "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     }
   ]
 }

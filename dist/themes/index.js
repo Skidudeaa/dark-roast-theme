@@ -8,3 +8,4 @@ export { default as cascara } from './cascara/index.js';
 export { default as velvet } from './velvet/index.js';
 export { default as velvetNoir } from './velvet-noir/index.js';
 export { default as blueMountain } from './blue-mountain/index.js';
+export { default as nightShift } from './night-shift/index.js';

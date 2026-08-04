@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../dist/css/dark-roast-flash-chilled-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-cascara-scoped.css">
   <link rel="stylesheet" href="../dist/css/dark-roast-blue-mountain-scoped.css">
+  <link rel="stylesheet" href="../dist/css/dark-roast-night-shift-scoped.css">
   <style>
     :root {
       color-scheme: dark;
@@ -130,6 +131,20 @@
       --spec-teal-bright: #00CACA;
       --spec-function: #00B5B5;
       --spec-punctuation: #8797A9;
+    }
+
+    [data-theme="dark-roast-night-shift"] {
+      --spec-structural: #A88C73;
+      --spec-sage: #79B56C;
+      --spec-slate: #6AACE2;
+      --spec-mauve: #D28DE2;
+      --spec-scarlet-bright: #FF9286;
+      --spec-sage-bright: #98D083;
+      --spec-slate-bright: #68C7F4;
+      --spec-mauve-bright: #E792DF;
+      --spec-teal-bright: #72D8CA;
+      --spec-function: #2CB9AA;
+      --spec-punctuation: #A88C73;
     }
 
     [data-theme="dark-roast-nitro"] {
@@ -2114,6 +2129,14 @@
             <div class="signature-grid" data-palette-grid></div>
             <div class="surface-rail" aria-label="Blue Mountain surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
           </article>
+          <article class="palette-row" data-theme="dark-roast-night-shift" data-theme-row="dark-roast-night-shift" aria-label="Night Shift palette">
+            <div class="palette-meta">
+              <div class="palette-name"><strong>Night Shift</strong><span class="palette-badge">Dark &middot; low-light</span></div>
+              <span class="palette-measure" data-lift></span>
+            </div>
+            <div class="signature-grid" data-palette-grid></div>
+            <div class="surface-rail" aria-label="Night Shift surface ramp"><span></span><span></span><span></span><span></span><span></span></div>
+          </article>
           <article class="palette-row" data-theme="dark-roast-nitro" data-theme-row="dark-roast-nitro" aria-label="Nitro palette">
             <div class="palette-meta">
               <div class="palette-name"><strong>Nitro</strong><span class="palette-badge">Light &middot; brewed</span></div>
@@ -2179,6 +2202,7 @@
                 <option value="dark-roast-velvet">Velvet</option>
                 <option value="dark-roast-velvet-noir">Velvet Noir</option>
                 <option value="dark-roast-blue-mountain">Blue Mountain</option>
+                <option value="dark-roast-night-shift">Night Shift</option>
                 <option value="dark-roast-nitro">Nitro</option>
                 <option value="dark-roast-flash-chilled">Flash Chilled</option>
                 <option value="dark-roast-cascara">Cascara</option>
@@ -2194,6 +2218,7 @@
                 <option value="dark-roast-velvet">Velvet</option>
                 <option value="dark-roast-velvet-noir">Velvet Noir</option>
                 <option value="dark-roast-blue-mountain">Blue Mountain</option>
+                <option value="dark-roast-night-shift">Night Shift</option>
                 <option value="dark-roast-nitro">Nitro</option>
                 <option value="dark-roast-flash-chilled">Flash Chilled</option>
                 <option value="dark-roast-cascara">Cascara</option>
@@ -2362,6 +2387,7 @@
         'dark-roast-velvet': { name: 'Velvet', intent: 'mahogany-wine terminal companion' },
         'dark-roast-velvet-noir': { name: 'Velvet Noir', intent: 'plum-black terminal companion' },
         'dark-roast-blue-mountain': { name: 'Blue Mountain', intent: 'navy canvas under cool ivory' },
+        'dark-roast-night-shift': { name: 'Night Shift', intent: 'low-light web companion, raised work surfaces' },
         'dark-roast-nitro': { name: 'Nitro', intent: 'a soft-light variation with diffused, nitrogen-infused surfa' },
         'dark-roast-flash-chilled': { name: 'Flash Chilled', intent: 'a high-chroma, cool-spectrum light mode with crisp edges and' },
         'dark-roast-cascara': { name: 'Cascara', intent: 'a botanical light mode inspired by the coffee cherry tea' }
