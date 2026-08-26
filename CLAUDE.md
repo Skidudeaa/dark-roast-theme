@@ -2,6 +2,22 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Current State — update this block when something lands
+
+**As of 2026-08-26. Package 5.7.0, doctrine contract 0.1.0. `npm test` is green; CI runs it on every push to `master`.**
+
+The maintainer is a solo physician who codes on the side and will not remember the details below. Do not ask him to recall context. Read this block, then `docs/SYSTEM-ARCHITECTURE.md`, and tell him where things stand.
+
+**Done:** theme family (10 companions, 11 platforms); export map repaired so all companions are importable; `src/skins/` with the somaCura Night Shift skin; doctrine tranche 1 slice A — the contract manifest, its generator, and its validators.
+
+**Next:** tranche 1 slice B — `--oi-*` semantic contract CSS, the Dark Roast mapping generated from token source, a deliberately cold "alien" mapping to prove theme-neutrality, cascade layers, and a PostCSS AST validator. Then slice C (ten primitives), then slice D (`compact-monitor` + proof matrix).
+
+**Blocked, and it is not this repo's fault:** somaCura cannot adopt the doctrine or the skin yet. It does not install this package — it vendors **dark-roast-theme v3.0.0** at `packages/dark-roast/` inside the `Skidudeaa/somaNotes` repo, two majors behind. `magenta`, `harvest`, `olive`, `brass`, and `burntSienna` do not exist in 3.0.0, and the night-shift skin's severity system needs all five. Worse, **`crater` exists in both versions with different values** (`#3C2A21` then, `#4D3B31` now; the old value became `craterDeep`), so a partial migration shifts colors silently instead of failing. This is a clinical display. Do not migrate it unattended — it needs him looking at a real census screen. Rename map: the v3 → v4 table in `README.md` and the `_migration` block in `dist/themes/night-shift/tokens.json`. That repo has no CI either.
+
+**Deferred by choice:** the inline `rgba()` literals in `src/skins/somacura-night-shift.css` still hardcode alpha-blended token colors. Converting them would change values, so it needs visual review rather than a sweep.
+
+**If you are unsure whether something is safe to change, run `npm test`.** The failures are written to tell you what to do.
+
 ## What This Is
 
 This repository holds **two related systems**. Know which one you are touching before you edit anything.
