@@ -19,9 +19,9 @@ A successful operational interface lets the user answer four questions without r
 3. What matters now?
 4. What can I do about it?
 
-This doctrine governs the architecture beneath Dark Roast product interfaces. It is not another palette, theme variant, component catalog, or product-specific widget. It defines the semantic contracts, structural primitives, composition recipes, state model, truth model, validation system, and promotion rules that make visual patterns portable across somaNotes, somaCURA, MailMind, investment tooling, transfer-center systems, and future products.
+This doctrine governs the architecture beneath Dark Roast product interfaces. It is not another palette, theme variant, component catalog, or product-specific widget. It defines semantic contracts, structural primitives, composition recipes, state and truth models, adapter boundaries, and proof gates that make visual patterns portable across somaNotes, somaCURA, MailMind, investment tooling, transfer-center systems, and future products.
 
-Dark Roast supplies one excellent visual implementation. Products may replace that implementation without replacing the architecture.
+Dark Roast supplies one excellent implementation. A product may replace that implementation without replacing the architecture.
 
 ---
 
@@ -30,10 +30,10 @@ Dark Roast supplies one excellent visual implementation. Products may replace th
 The terms **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are normative.
 
 - **MUST / MUST NOT:** enforced invariant or required acceptance gate.
-- **SHOULD / SHOULD NOT:** default rule; exceptions require an explicit reason in code review or the pattern study.
+- **SHOULD / SHOULD NOT:** default rule; an exception requires an explicit reason in code review or the pattern study.
 - **MAY:** permitted but not required.
 
-A rule that cannot be enforced is guidance, not law. Stable doctrine rules MUST have at least one executable check, generated contract, behavioral test, or visual proof fixture.
+A rule that cannot be enforced is guidance, not law. Every stable doctrine rule MUST have at least one executable check, generated contract, behavioral test, or proof fixture.
 
 ---
 
@@ -42,15 +42,15 @@ A rule that cannot be enforced is guidance, not law. Stable doctrine rules MUST 
 The doctrine owns:
 
 - Theme-neutral semantic UI roles
-- Orthogonal state axes
-- Truth, provenance, freshness, certainty, and completeness semantics
-- Layout and surface primitives
+- Orthogonal state and truth axes
+- Provenance, freshness, certainty, and completeness semantics
+- Surface and layout primitives
 - Composition recipes
 - Responsive and density contracts
 - Interaction, keyboard, focus, and motion rules
-- Async rendering states
-- Adapter boundaries for frameworks and native platforms
-- Static, behavioral, accessibility, contrast, and visual validation
+- Async rendering behavior
+- Framework and native adapter boundaries
+- Static, behavioral, accessibility, contrast, content-stress, and visual validation
 - Pattern-study provenance and promotion
 - Versioning of public interface contracts
 
@@ -62,14 +62,15 @@ The doctrine does not own:
 - Data fetching
 - Domain wording
 - Patient, email, investment, agent, or transfer semantics
-- A generic component library for every HTML element
+- A component wrapper for every HTML element
 - A global CSS reset
 - Runtime dependence on React or another framework
 - Product identity, illustration, mascots, or copied source assets
+- Compatibility shims for obsolete browsers
 
 ---
 
-## 4. Architectural layers
+## 4. Architecture and dependency direction
 
 The dependency direction is one-way:
 
@@ -81,13 +82,14 @@ Doctrine
         -> Composition recipes
           -> Domain adapters
             -> Product assemblies
-              -> Proof system
 ```
+
+The proof system evaluates every layer and is not itself a runtime dependency.
 
 Dark Roast participates as a reference mapping:
 
 ```text
-Dark Roast palette primitives
+Dark Roast palette and foundation tokens
   -> Dark Roast semantic mapping
     -> Operational Interface semantic contract
       -> Theme-neutral primitives and recipes
@@ -103,7 +105,7 @@ Higher layers MUST NOT leak into lower layers. A primitive cannot contain produc
 
 Color, shadow, radius, and motion may express meaning. They MUST NOT define meaning.
 
-Recipes and primitives consume semantic roles such as:
+Primitives and recipes consume semantic roles such as:
 
 ```css
 --oi-surface-raised
@@ -121,7 +123,7 @@ They MUST NOT consume palette primitives such as:
 --dr-scarlet
 ```
 
-The Dark Roast mapping may consume `--dr-*` primitives to assign `--oi-*` semantic roles. Nothing above the mapping layer may do so.
+The Dark Roast mapping may consume `--dr-*` tokens to assign `--oi-*` roles. Nothing above the mapping layer may do so.
 
 ### 5.2 Hierarchy is structural
 
@@ -142,9 +144,9 @@ Critical information MUST NOT exist only behind disclosure. Collapse the tail, n
 
 ### 5.3 State is orthogonal
 
-The generic `data-state` attribute is prohibited in stable doctrine code. It collapses unrelated dimensions and inevitably becomes a semantic junk drawer.
+The generic `data-state` attribute is prohibited in stable doctrine code. It collapses unrelated dimensions into a semantic junk drawer.
 
-State MUST be represented on named axes. Loading is not severity. Staleness is not warning. Selection is not emphasis. Certainty is not freshness.
+State MUST be represented on named axes. Loading is not severity. Staleness is not warning. Selection is not emphasis. Certainty is not freshness. Partial data is not a loading state.
 
 ### 5.4 Truth is visible
 
@@ -177,17 +179,27 @@ Rules:
 - Visible surface nesting SHOULD NOT exceed three levels.
 - Every surface MUST have one clear responsibility.
 
-### 5.6 Density is engineered
+### 5.6 Attention is budgeted
+
+Attention is a finite operational resource.
+
+- A bounded region SHOULD have one dominant accent.
+- Persistent animation SHOULD be limited to one meaningful live process per visible region.
+- Warning and critical treatments MUST correspond to actual consequence or urgency.
+- Decorative urgency is prohibited.
+- The default state SHOULD be visually calm enough that exceptional states remain exceptional.
+
+### 5.7 Density is engineered
 
 Density is a coordinated mode, not scattered local padding.
 
 Supported density values are `compact`, `standard`, and `spacious`. Components declare which values they support.
 
-Density controls spacing, type scale, control chrome, disclosure, information count, and visible geometry. Physical pointer and touch targets MUST remain adequate even when visual chrome is compact.
+Density controls spacing, type scale, control chrome, disclosure, information count, and visible geometry. Pointer targets MUST provide at least a 24 by 24 CSS pixel hit area. Touch-oriented adapters SHOULD provide at least a 44 by 44 CSS pixel hit area, even when the visible control is smaller.
 
 Local variants named `tiny`, `mini`, `extra-compact`, or equivalent are prohibited unless promoted into the contract as a new system density.
 
-### 5.7 Parents own layout
+### 5.8 Parents own layout
 
 Parents own relationships between children. Children MUST NOT position themselves in unknown parents through external margins.
 
@@ -195,7 +207,7 @@ Layout primitives own `gap`, alignment, wrapping, tracks, and region relationshi
 
 Every layout decision must have one owner.
 
-### 5.8 Responsiveness is local
+### 5.9 Responsiveness is local
 
 Recipes and primitives respond to their allocated container, not the global viewport. Container queries are the default mechanism.
 
@@ -211,24 +223,25 @@ Every stable recipe declares:
 
 Viewport breakpoints belong to application shells. Component adaptation belongs to the component.
 
-### 5.9 Interaction is explicit
+### 5.10 Interaction is explicit
 
 Every interactive primitive defines default, hover, focus-visible, pressed, selected, disabled, busy, and error behavior when applicable.
 
-Interaction state uses native semantics wherever possible:
+Native semantics are authoritative:
 
 - `:hover`
 - `:focus-visible`
 - `:active`
+- native `disabled` and `:disabled` where supported
 - `aria-selected`
 - `aria-current`
 - `aria-expanded`
-- `aria-disabled`
+- `aria-disabled` only when native disabling is unavailable or inappropriate
 - `aria-busy`
 
 Selection and focus MUST NOT be conflated. Busy and disabled MUST NOT be conflated. A loading action MUST preserve its geometry. Focus MUST survive asynchronous rerenders.
 
-### 5.10 Motion earns every frame
+### 5.11 Motion earns every frame
 
 Motion is allowed only for orientation, causality, continuity, or urgency.
 
@@ -244,20 +257,21 @@ Infinite animation is allowed only for a genuinely active or live process. Criti
 
 Reduced-motion mode MUST preserve the communicated state through static indicators, instant transitions, contrast, iconography, or text.
 
-### 5.11 Async state is architecture
+### 5.12 Async behavior is architecture
 
-Every data-bearing surface defines the applicable subset of:
+Every data-bearing surface MUST define rendering behavior for the applicable scenarios below. These are scenario combinations, not a replacement state axis:
 
 ```text
-unrequested
-loading
-partial
-ready
-refreshing
-stale
-failed
-unavailable
-empty
+initial request          activity=loading
+successful data          activity=ready, completeness=complete
+background refresh       activity=refreshing, prior data retained
+live stream              activity=live
+partial result           completeness=partial
+stale result             freshness=stale
+missing expected data    completeness=missing
+source unavailable       completeness=unavailable
+request failure          activity=failed
+valid empty result       domain-defined empty presentation
 ```
 
 Rules:
@@ -273,25 +287,25 @@ Rules:
 - Unknown is not normal.
 - Optimistic updates are allowed only when rollback is safe and intelligible.
 
-### 5.12 Domain semantics stay at the edge
+### 5.13 Domain semantics stay at the edge
 
-The doctrine understands severity, freshness, certainty, completeness, activity, emphasis, selection, and priority. It does not understand deteriorating patients, critical potassium, urgent email, portfolio drawdown, Claude usage, or transfer acceptance.
+The doctrine understands surface, activity, severity, freshness, certainty, completeness, source, emphasis, density, and native interaction semantics. It does not understand deteriorating patients, critical potassium, urgent email, portfolio drawdown, Claude usage, or transfer acceptance.
 
 Domain adapters translate product meaning into doctrine axes. The product owns the mapping and the doctrine owns representation.
 
-### 5.13 Primitives describe responsibility
+### 5.14 Primitives describe responsibility
 
 A primitive qualifies only when it owns a stable responsibility. Repeated CSS is not sufficient justification.
 
 A new primitive requires evidence that existing primitives cannot express the responsibility cleanly.
 
-### 5.14 Recipes encode composition
+### 5.15 Recipes encode composition
 
 Recipes are the primary unit of reusable design intelligence. A recipe defines region order, slot anatomy, relationships, density, responsive transformation, surface nesting, optionality, overflow, and disclosure.
 
 A recipe MUST NOT define business logic, product actions, data fetching, domain language, or palette selection.
 
-### 5.15 Stable contract, replaceable implementation
+### 5.16 Stable contract, replaceable implementation
 
 Public contracts include semantic token names, primitive names, recipe names, slot names, state axes, attribute values, keyboard behavior, and accessibility behavior.
 
@@ -299,7 +313,7 @@ Private implementation includes exact gradients, shadow formulas, internal selec
 
 Consumers must be able to upgrade private implementation without rewriting product semantics or domain mappings.
 
-### 5.16 Doctrine is executable
+### 5.17 Doctrine is executable
 
 Stable laws MUST be represented by generated contracts, validators, tests, or proof fixtures. Prose without enforcement is not sufficient for stable status.
 
@@ -312,27 +326,201 @@ The doctrine uses the neutral `oi` namespace.
 ```text
 CSS classes          .oi-*
 CSS variables        --oi-*
-HTML data axes       data-oi-*
+HTML contract axes   data-oi-*
 Recipe slots         data-oi-slot="*"
 TypeScript types     Oi*
 Swift types          OI*
 ```
 
-Examples:
+Example:
 
 ```html
 <section
   class="oi-surface oi-recipe-compact-monitor"
+  data-oi-surface="raised"
   data-oi-activity="refreshing"
   data-oi-severity="warning"
   data-oi-freshness="stale"
   data-oi-certainty="inferred"
   data-oi-completeness="partial"
+  data-oi-source="generated"
   data-oi-emphasis="strong"
   data-oi-density="compact"
   aria-busy="true"
 >
 ```
+
+Unknown stable-axis values MUST trigger development assertions. Production CSS falls back to neutral presentation because only known values receive semantic selectors.
+
+---
+
+## 7. Canonical contract axes
+
+### 7.1 Surface
+
+```text
+canvas
+base
+raised
+interactive
+inset
+overlay
+scrim
+```
+
+Public attribute: `data-oi-surface`.
+
+### 7.2 Activity
+
+```text
+idle
+loading
+refreshing
+live
+ready
+failed
+```
+
+Public attribute: `data-oi-activity`.
+
+`loading` and `refreshing` SHOULD also set `aria-busy="true"` on the responsible region.
+
+### 7.3 Severity
+
+```text
+neutral
+informational
+positive
+warning
+negative
+critical
+```
+
+Public attribute: `data-oi-severity`.
+
+Severity describes consequence or urgency. It does not describe freshness, certainty, process state, or selection.
+
+### 7.4 Freshness
+
+```text
+live
+recent
+stale
+unknown
+```
+
+Public attribute: `data-oi-freshness`.
+
+Freshness MUST be accompanied by a timestamp, age, or accessible textual label when it can alter a user decision.
+
+### 7.5 Certainty
+
+```text
+confirmed
+inferred
+uncertain
+disputed
+```
+
+Public attribute: `data-oi-certainty`.
+
+`disputed` means authoritative inputs conflict. It is not equivalent to low model confidence.
+
+### 7.6 Completeness
+
+```text
+complete
+partial
+missing
+unavailable
+```
+
+Public attribute: `data-oi-completeness`.
+
+`missing` means expected data is absent. `unavailable` means the source cannot currently be accessed or evaluated.
+
+### 7.7 Source
+
+```text
+direct
+derived
+generated
+user-entered
+external
+```
+
+Public attribute: `data-oi-source`.
+
+Source describes provenance category, not trustworthiness. Trust depends on the domain adapter and accompanying provenance detail.
+
+### 7.8 Emphasis
+
+```text
+quiet
+normal
+strong
+```
+
+Public attribute: `data-oi-emphasis`.
+
+Emphasis controls visual priority within a surface. It MUST NOT change semantic severity.
+
+### 7.9 Density
+
+```text
+compact
+standard
+spacious
+```
+
+Public attribute: `data-oi-density`.
+
+Density is inherited unless a recipe explicitly creates a density boundary.
+
+### 7.10 Interaction
+
+Interaction is not a custom closed axis. Native pseudo-classes, native attributes, and ARIA own interaction state. Adapters MUST NOT mirror native interaction state into redundant `data-oi-*` attributes.
+
+---
+
+## 8. Semantic contract
+
+The semantic contract separates portable interface meaning from any palette or product implementation.
+
+Required categories:
+
+```text
+surfaces
+  canvas, base, raised, interactive, hover, inset, overlay, scrim
+
+text
+  primary, body, muted, inverse, link
+
+borders
+  subtle, default, strong, focus
+
+status
+  informational, positive, warning, negative, critical, live
+
+accent
+  primary, active, muted
+
+typography
+  body, heading, display, mono
+
+geometry
+  space scale, control radius, surface radius, overlay radius
+
+motion
+  fast, normal, slow, standard easing, emphasized easing
+
+interaction
+  focus ring width, focus offset, pointer target minimum, touch target minimum
+```
+
+The semantic contract and each palette mapping are separate artifacts.
+
+Dark Roast mapping example:
 
 ```css
 .oi-root {
@@ -351,7 +539,7 @@ Examples:
   --oi-border-default: var(--dr-crater-deep);
   --oi-border-strong: var(--dr-crater);
 
-  --oi-accent: var(--dr-amber);
+  --oi-accent-primary: var(--dr-amber);
   --oi-status-live: var(--dr-teal);
   --oi-status-positive: var(--dr-teal);
   --oi-status-warning: var(--dr-brass);
@@ -360,175 +548,70 @@ Examples:
 }
 ```
 
-The semantic contract and the Dark Roast mapping are separate artifacts. Products may provide their own mapping without importing Dark Roast colors.
+The complete mapping is generated from the existing token source so it does not invent parallel geometry, typography, or motion values.
+
+A product may supply a different semantic mapping without importing Dark Roast colors. Mapping validation MUST prove that every required semantic variable resolves.
 
 ---
 
-## 7. Canonical state axes
+## 9. Truth and provenance contract
 
-### 7.1 Activity
+Information that is synthesized or operationally consequential SHOULD expose the applicable subset of source, freshness, certainty, and completeness.
 
-```text
-idle
-loading
-refreshing
-live
-complete
-failed
-```
-
-Activity describes process state only. `loading` and `refreshing` SHOULD also set `aria-busy="true"` on the responsible region.
-
-### 7.2 Severity
-
-```text
-neutral
-informational
-positive
-warning
-negative
-critical
-```
-
-Severity describes consequence or urgency. It does not describe freshness, certainty, process state, or selection.
-
-### 7.3 Freshness
-
-```text
-live
-recent
-stale
-unknown
-```
-
-Freshness MUST be accompanied by a timestamp, age, or accessible textual label when it can alter a user decision.
-
-### 7.4 Certainty
-
-```text
-confirmed
-inferred
-uncertain
-disputed
-```
-
-`disputed` means authoritative inputs conflict. It is not equivalent to low model confidence.
-
-### 7.5 Completeness
-
-```text
-complete
-partial
-missing
-unavailable
-```
-
-`missing` means expected data is absent. `unavailable` means the source cannot currently be accessed or evaluated.
-
-### 7.6 Emphasis
-
-```text
-quiet
-normal
-strong
-```
-
-Emphasis controls visual priority within a surface. It MUST NOT change semantic severity.
-
-### 7.7 Density
-
-```text
-compact
-standard
-spacious
-```
-
-Density is inherited unless a recipe explicitly creates a density boundary.
-
-### 7.8 Unknown values
-
-Stable runtime adapters MUST reject unknown values during development. Production CSS MUST fall back to neutral presentation rather than accidentally assigning warning or critical semantics.
-
----
-
-## 8. Truth and provenance contract
-
-Information that is synthesized or operationally consequential SHOULD expose the applicable subset of:
-
-```text
-source
-  direct
-  derived
-  generated
-  user-entered
-  external
-
-freshness
-  live
-  recent
-  stale
-  unknown
-
-certainty
-  confirmed
-  inferred
-  uncertain
-  disputed
-
-completeness
-  complete
-  partial
-  missing
-  unavailable
-```
-
-A truth-bearing primitive MUST provide a non-color channel for any truth property it renders. Acceptable channels include visible text, icon plus accessible name, tooltip paired with persistent marker, or expandable provenance detail.
+A truth-bearing primitive MUST provide a non-color channel for every truth property it renders. Acceptable channels include visible text, icon plus accessible name, persistent marker plus accessible description, or expandable provenance detail.
 
 Tooltips alone are insufficient for critical truth state.
 
+Domain adapters MUST define:
+
+- Which source values can be considered authoritative
+- How freshness is calculated
+- What evidence distinguishes confirmed, inferred, uncertain, and disputed
+- What complete means for that domain
+- Which truth changes alter user action and therefore require persistent display
+
 ---
 
-## 9. Initial structural primitives
+## 10. Initial structural primitives
 
 The first implementation contains exactly ten primitives.
 
 | Primitive | Responsibility | Required semantics |
 |---|---|---|
-| `surface` | Containment, background, border, elevation, clipping | Surface level and optional emphasis/severity |
+| `surface` | Containment, background, border, elevation, clipping | `data-oi-surface`; optional emphasis and severity |
 | `stack` | Vertical rhythm | Parent-owned gap and alignment |
 | `cluster` | Inline grouping and wrapping | Gap, alignment, and wrap policy |
 | `rail` | Fixed/fluid column relationship | Rail side, minimum content width, collapse rule |
-| `inset` | Recessed focus/evidence/visualization region | Surface level `inset`; overflow policy |
-| `divider` | Structural separation | Orientation and semantic/decorative status |
-| `metric` | Label, value, unit, trend, provenance alignment | Tabular value option; truth axes where applicable |
-| `meter` | Normalized quantitative progress | Accessible minimum, maximum, current value, label |
-| `disclosure` | Expandable content structure | Button ownership, `aria-expanded`, focus behavior |
-| `history-strip` | Compact temporal distribution | Accessible summary and temporal ordering |
+| `inset` | Recessed focus, evidence, or visualization region | Surface level `inset`; overflow policy |
+| `divider` | Structural separation | Orientation and semantic or decorative status |
+| `metric` | Label, value, unit, trend, and provenance alignment | Tabular value option; truth axes where applicable |
+| `meter` | Normalized quantitative progress | Accessible minimum, maximum, current value, and label |
+| `disclosure` | Expandable content structure | Button ownership, `aria-expanded`, and focus behavior |
+| `history-strip` | Compact temporal distribution | Accessible summary, temporal ordering, and non-color intensity channel |
 
 Primitive CSS MUST remain domain-neutral. Primitive JavaScript is allowed only where native HTML cannot satisfy the interaction contract.
 
 ---
 
-## 10. Recipe model
-
-### 10.1 Recipe contract
+## 11. Recipe model
 
 Every recipe declares:
 
 - Stability: `study`, `candidate`, `experimental`, `proven`, `stable`, or `deprecated`
 - Required and optional slots
 - Slot order
-- Supported state axes
+- Supported axes
 - Supported densities
 - Minimum viable width
 - Preferred width
 - Wide-layout threshold
 - Overflow and truncation behavior
-- Async-state behavior
+- Async scenario behavior
 - Keyboard and focus behavior
 - Proof fixtures
+- Public override variables
 
-### 10.2 Compact monitor
+### 11.1 Compact monitor
 
 `compact-monitor` is the first experimental recipe.
 
@@ -536,13 +619,13 @@ Slot order:
 
 ```text
 context      optional
- actions     optional, shares header region with context
- focus       optional
- status      required
- primary     required
- details     optional
- history     optional
- settings    optional, not part of the default scan path
+actions      optional, shares the header region with context
+focus        optional
+status       required
+primary      required
+details      optional
+history      optional
+settings     optional, outside the default operational scan path
 ```
 
 DOM contract:
@@ -572,12 +655,13 @@ Invariants:
 - The recipe does not prescribe domain labels or data sources.
 - Narrow layout is one column.
 - Wide layout may place primary metrics in multiple columns while retaining DOM order.
-- Refreshing retains primary data and marks freshness/activity.
+- Refreshing retains primary data and marks activity and freshness independently.
 - Failed detail regions do not erase healthy primary regions.
+- DOM order remains the reading and keyboard order at every width.
 
 The recipe remains experimental until it survives one real product integration and the complete proof matrix. Stable promotion requires a second materially different use or an explicit architecture review accepting one high-stakes consumer as sufficient evidence.
 
-### 10.3 Candidate recipes
+### 11.2 Candidate recipe names
 
 The following names are reserved as candidates but are not public contracts until separately designed and proven:
 
@@ -585,11 +669,11 @@ The following names are reserved as candidates but are not public contracts unti
 - `operational-summary`
 - `contextual-sidebar`
 
-Reserved names prevent competing implementations while avoiding premature API promises.
+Reserved names prevent competing implementations without promising premature APIs.
 
 ---
 
-## 11. CSS architecture
+## 12. CSS architecture
 
 The system uses cascade layers:
 
@@ -605,7 +689,7 @@ The system uses cascade layers:
 Dependency rules:
 
 ```text
-mapping    may reference palette/foundation tokens
+mapping    may reference palette and foundation tokens
 contracts  may reference semantic variables only
 primitives may reference contracts
 recipes    may reference contracts and primitives
@@ -613,20 +697,22 @@ utilities  may reference contracts and primitives
 product    may override semantic contracts and documented recipe hooks
 ```
 
-Additional rules:
+Rules:
 
 - The kernel ships no global reset.
 - `!important` is prohibited outside forced-colors and explicit accessibility overrides.
 - ID selectors are prohibited.
-- Selectors coupled to DOM depth are prohibited.
+- Logical properties are required for new spatial CSS unless a physical axis is intentional.
+- Public selectors may address a root, one state attribute, or one direct named slot. Deeper descendant chains are prohibited.
 - Public selectors are documented and versioned.
 - Recipes expose a small documented set of override variables; arbitrary internal hooks are not public API.
 - Raw color literals are prohibited outside token sources, semantic mappings, test fixtures, and documented source studies.
 - External margins on primitives are prohibited.
+- Container queries own recipe adaptation. Viewport media queries are reserved for accessibility, input modality, and product shells.
 
 ---
 
-## 12. Runtime and adapter boundary
+## 13. Runtime and adapter boundary
 
 CSS and semantic DOM contracts are canonical for web. Framework adapters provide typed convenience only.
 
@@ -644,7 +730,7 @@ The initial runtime is limited to:
 - Roving focus for composite widgets
 - Development-only contract assertions
 
-No runtime network dependency is allowed.
+No runtime network dependency is allowed. Static primitives and recipes MUST work without JavaScript unless their interaction contract inherently requires behavior.
 
 React adapters MUST remain removable without changing the CSS, slot, state, or accessibility contract.
 
@@ -652,32 +738,35 @@ SwiftUI generation begins only after the web contract survives a real integratio
 
 ---
 
-## 13. Contract manifest
+## 14. Contract manifest
 
 `src/system/contract.json` is the machine-readable source of truth for:
 
 - Doctrine contract version
-- Stable and experimental state axes
+- Stable and experimental axes
 - Semantic role names
 - Primitive names and supported axes
-- Recipe names, stability, slots, and densities
+- Recipe names, stability, slots, densities, and public hooks
 - Public attribute names
 - Generated adapter type names
+- Forbidden domain terms for lower-layer source scans
 
 `src/system/contract.schema.json` validates the manifest itself.
 
-Illustrative shape:
+Normative shape:
 
 ```json
 {
   "name": "operational-interface-doctrine",
   "version": "0.1.0",
   "axes": {
-    "activity": ["idle", "loading", "refreshing", "live", "complete", "failed"],
+    "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
+    "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
     "severity": ["neutral", "informational", "positive", "warning", "negative", "critical"],
     "freshness": ["live", "recent", "stale", "unknown"],
     "certainty": ["confirmed", "inferred", "uncertain", "disputed"],
     "completeness": ["complete", "partial", "missing", "unavailable"],
+    "source": ["direct", "derived", "generated", "user-entered", "external"],
     "emphasis": ["quiet", "normal", "strong"],
     "density": ["compact", "standard", "spacious"]
   },
@@ -694,18 +783,21 @@ Illustrative shape:
 
 Generated artifacts include:
 
+- JavaScript constants and validators
 - TypeScript string-literal unions and interfaces
-- Swift enums after native adoption begins
+- Published contract JSON
 - Development assertions
 - Reference tables for documentation
 - Fixture matrices
-- Published contract JSON
+- Swift enums after native adoption begins
 
 CSS layout remains hand-authored. The generator produces contracts and repetitive bindings, not opaque generated layout code.
 
 ---
 
-## 14. Repository architecture
+## 15. Repository architecture
+
+Initial implementation paths:
 
 ```text
 docs/
@@ -750,10 +842,6 @@ src/system/
   studies/
     claude-usage-monitor.md
 
-src/adapters/
-  react/
-  swiftui/
-
 scripts/
   build-system.js
   validate-contract.js
@@ -768,15 +856,21 @@ spec/system/
   truth-matrix.html
   async-matrix.html
   responsive-matrix.html
+  content-stress-matrix.html
   cross-theme.html
 ```
+
+Framework adapters are future additive paths and are not created empty in the initial tranche.
 
 Generated output:
 
 ```text
 dist/system/
-  contract.json
+  index.js
+  index.d.ts
+  contract.js
   contract.d.ts
+  contract.json
   contracts.css
   primitives.css
   recipes.css
@@ -785,18 +879,23 @@ dist/system/
   recipes/compact-monitor.css
 ```
 
-Potential React and Swift outputs are added only when their adapters exist.
-
 ---
 
-## 15. Package surface
+## 16. Package surface
 
 Existing exports remain unchanged. New exports are additive:
 
 ```json
 {
-  "./system/contract": "./dist/system/contract.json",
-  "./system/types": "./dist/system/contract.d.ts",
+  "./system": {
+    "types": "./dist/system/index.d.ts",
+    "default": "./dist/system/index.js"
+  },
+  "./system/contract": {
+    "types": "./dist/system/contract.d.ts",
+    "default": "./dist/system/contract.js"
+  },
+  "./system/contract.json": "./dist/system/contract.json",
   "./system/css": "./dist/system/index.css",
   "./system/contracts": "./dist/system/contracts.css",
   "./system/primitives": "./dist/system/primitives.css",
@@ -806,36 +905,38 @@ Existing exports remain unchanged. New exports are additive:
 }
 ```
 
-The package remains `dark-roast-theme`. A separate package or monorepo is prohibited until at least two independent repositories require doctrine artifacts without Dark Roast assets and the split demonstrably reduces, rather than increases, maintenance.
+The package remains `dark-roast-theme`. A separate package or monorepo is prohibited until at least two independent repositories require doctrine artifacts without Dark Roast assets and the split demonstrably reduces maintenance.
 
 ---
 
-## 16. Enforcement and proof system
+## 17. Enforcement and proof system
 
-### 16.1 Static contract checks
+### 17.1 Static contract checks
 
 The build fails on:
 
 - Invalid contract manifest
 - Generated contract drift
-- Unknown public state values
+- Unknown public axis values
 - Raw color literals outside approved locations
 - Direct `--dr-*` use in contracts, primitives, or recipes
-- Product or domain vocabulary in primitives
+- Forbidden product or domain terms in lower layers
 - ID selectors
-- DOM-depth-dependent selectors
+- Selector chains deeper than the documented root, state, or direct-slot contract
+- Physical spatial properties where logical properties are required
 - External margins on primitives
-- Undocumented public selectors
+- Undocumented public selectors or variables
 - Unsupported recipe slots
 - Missing required recipe slots in fixtures
-- Infinite animation without an activity/live contract
+- Infinite animation without an active or live contract
 - Electron-only properties outside a dedicated adapter
 - Unscoped global styles
 - `!important` outside approved accessibility rules
+- Incomplete semantic mappings
 
 CSS validation MUST use an AST parser rather than regular-expression-only parsing.
 
-### 16.2 Behavioral checks
+### 17.2 Behavioral checks
 
 Interactive primitives prove:
 
@@ -849,39 +950,41 @@ Interactive primitives prove:
 - Pointer and touch operation
 - Accessible names and state announcements
 
-### 16.3 Async checks
+### 17.3 Async scenario checks
 
 Data-bearing fixtures prove:
 
-- Loading
-- Partial
-- Ready
+- Initial loading
+- Complete ready data
+- Partial data
 - Refreshing with retained data
-- Stale
-- Failed
-- Unavailable
-- Empty
+- Live data
+- Stale data
+- Request failure
+- Missing expected data
+- Source unavailable
+- Valid empty result
 
-### 16.4 Visual proof matrix
+### 17.4 Visual and content proof matrix
 
-Every stable recipe renders across:
+Every stable recipe, and every experimental recipe proposed for product use, renders across:
 
 ```text
-Themes
+Mappings
   Black Label
   Night Shift
   House Blend
   Alien semantic reference mapping
 
 Widths
-  narrow
-  standard
+  minimum viable
+  preferred
   wide
 
 Densities
   every supported density
 
-States
+State scenarios
   neutral
   live
   warning
@@ -890,17 +993,25 @@ States
   stale
   uncertain
   partial
+  refreshing
+  failed
 
-Accessibility
+Accessibility and content stress
   reduced motion
   increased contrast
   forced colors
   keyboard focus
+  200 percent zoom and reflow
+  left-to-right and right-to-left direction
+  long labels at twice expected length
+  large and negative numeric values
+  missing, unknown, and unavailable values
+  no-color interpretation
 ```
 
 The alien mapping is intentionally cold, flat, and unrelated to Dark Roast. It proves that recipes consume semantic contracts rather than warm-palette assumptions.
 
-### 16.5 Tooling
+### 17.5 Tooling
 
 The implementation uses:
 
@@ -908,14 +1019,21 @@ The implementation uses:
 - JSON Schema validation for the contract manifest
 - PostCSS AST parsing for CSS contract enforcement
 - Existing APCA tooling for assigned-surface contrast checks
-- Playwright for responsive, keyboard, forced-color, and screenshot fixtures
+- Playwright for responsive, keyboard, directionality, forced-color, zoom, and screenshot fixtures
 - Axe integration within Playwright for automated accessibility checks
 
 All checks join `npm test`. Generated-file checks support `--check` and never rewrite during CI.
 
+### 17.6 Determinism and package integrity
+
+- Repeated builds from the same source MUST produce byte-identical generated output.
+- The package tarball MUST resolve every exported JavaScript, type, JSON, and CSS path.
+- Runtime artifacts MUST NOT import development dependencies.
+- Build output size is reported in CI. An unexplained increase greater than 10 percent in any system bundle blocks merge pending review.
+
 ---
 
-## 17. Pattern study and promotion
+## 18. Pattern study and promotion
 
 External designs do not move directly into stable infrastructure.
 
@@ -938,7 +1056,7 @@ Removes source nouns and proposes a theme-neutral primitive or recipe.
 
 ### Experimental
 
-Has a public-looking contract but no compatibility guarantee. Must be used in one real product surface.
+Has a public-looking contract but no compatibility guarantee. It must be used in one real product surface.
 
 ### Proven
 
@@ -956,15 +1074,15 @@ No stable primitive or recipe is created without a real consumer.
 
 ---
 
-## 18. Versioning
+## 19. Versioning
 
 The doctrine contract has an independent semantic version recorded in `contract.json`.
 
 For stable contracts:
 
 - **Major:** rename or remove an axis, axis value, semantic role, primitive, recipe, slot, attribute, or required behavior; add a required slot; change meaning.
-- **Minor:** add a new optional primitive, recipe, slot, semantic role, or non-breaking generated artifact.
-- **Patch:** documentation clarification, validator correction, visual bug fix that preserves public behavior, or generated-output correction.
+- **Minor:** add an optional primitive, recipe, slot, semantic role, or non-breaking generated artifact.
+- **Patch:** clarify documentation, correct a validator, fix a visual defect without changing public behavior, or correct generated output.
 
 Adding a value to a stable closed axis is major because domain adapters may be exhaustive.
 
@@ -974,20 +1092,20 @@ Existing Dark Roast package versioning remains authoritative for package release
 
 ---
 
-## 19. Failure behavior
+## 20. Failure behavior
 
-- Unknown axis values trigger development assertions and render neutral in production.
+- Unknown axis values trigger development assertions and render neutrally in production.
 - Missing optional slots collapse without residue.
 - Missing required slots fail fixtures and development assertions.
 - Contract validation failure aborts generation.
 - Generated drift aborts `npm test`.
-- A recipe without semantic mapping remains visibly unthemed rather than silently borrowing palette defaults.
-- Accessibility failures block stable promotion.
+- Missing semantic mapping triggers a development assertion; structural markup remains usable but receives no inferred severity styling.
+- Accessibility failures block proven or stable promotion.
 - Visual diffs require explicit baseline review; snapshots are never auto-accepted in CI.
 
 ---
 
-## 20. Source study: Clauddy
+## 21. Source study: Clauddy
 
 Initial design study:
 
@@ -998,7 +1116,7 @@ Initial design study:
 Extracted relationships:
 
 - Context and compact controls precede operational content
-- Recessed focal region separates live or illustrative content from metrics
+- A recessed focal region separates live or illustrative content from metrics
 - Status precedes quantitative detail
 - Primary meters precede categorized breakdowns
 - Progressive disclosure protects scan speed
@@ -1019,16 +1137,16 @@ The study ports relationships and behavior through an independent implementation
 
 ---
 
-## 21. Agent decision protocol
+## 22. Agent decision protocol
 
 Before modifying doctrine-owned UI, an agent must answer:
 
 1. What user decision or action does this surface support?
 2. Is the change a semantic contract, primitive, recipe, domain adapter, or product assembly?
 3. Which existing owner already covers the responsibility?
-4. Which state axes actually apply?
+4. Which axes actually apply?
 5. What are the source, freshness, certainty, and completeness semantics?
-6. What happens while loading, refreshing, stale, partial, failed, unavailable, and empty?
+6. What happens during initial loading, refresh, stale data, partial data, failure, unavailability, and valid empty results?
 7. Who owns spacing and layout?
 8. What is the minimum viable container width?
 9. What are the keyboard and focus contracts?
@@ -1048,7 +1166,7 @@ Hard stops:
 
 ---
 
-## 22. Named anti-patterns
+## 23. Named anti-patterns
 
 ### Token soup
 
@@ -1090,53 +1208,59 @@ Small abstractions are created without a stable responsibility.
 
 An attractive source is transplanted intact rather than decomposed into relationships and contracts.
 
+### Truth laundering
+
+Generated, inferred, stale, or partial information is presented with the visual authority of direct confirmed data.
+
 ---
 
-## 23. Initial implementation tranche
+## 24. Initial implementation tranche
 
 The first implementation is additive and contained within `dark-roast-theme`:
 
 1. Add `contract.json` and its schema.
-2. Generate TypeScript contract types and published contract JSON.
-3. Add semantic contract CSS and the separate Dark Roast mapping.
+2. Generate JavaScript constants, runtime validators, TypeScript types, and published contract JSON.
+3. Add semantic contract CSS and a separate Dark Roast mapping.
 4. Add cascade-layer orchestration.
 5. Implement the ten initial structural primitives.
 6. Implement `compact-monitor` as experimental.
-7. Add the state, truth, async, responsive, and cross-theme proof fixtures.
+7. Add state, truth, async, responsive, content-stress, and cross-mapping proof fixtures.
 8. Add AST-based CSS validation, contract validation, Playwright, and axe gates.
-9. Add additive package exports.
+9. Add additive package exports and tarball integrity checks.
 10. Integrate all new checks into `npm test` without weakening existing Black Label, variant, platform, contrast, or generated-drift gates.
 
 No consumer repository is changed in this tranche. Product adoption is a separate implementation with its own repository inspection and public-interface review. `compact-monitor` remains experimental until that adoption succeeds.
 
 ---
 
-## 24. Acceptance criteria
+## 25. Acceptance criteria
 
 The architecture is implemented when:
 
 - Existing Dark Roast tests remain green.
 - Existing exports and visual outputs remain compatible.
-- The doctrine manifest validates and generated artifacts are in sync.
+- The doctrine manifest validates and generated artifacts are byte-stable and in sync.
 - Reusable CSS contains no direct Dark Roast palette references outside the mapping file.
+- Every required semantic variable resolves in the Dark Roast and alien mappings.
 - All ten primitives render under Dark Roast and the alien mapping.
-- `compact-monitor` satisfies required-slot, narrow/wide, density, async, state, keyboard, accessibility, contrast, and screenshot fixtures.
+- `compact-monitor` satisfies required-slot, width, density, async, state, keyboard, accessibility, contrast, content-stress, and screenshot fixtures.
 - Reduced motion preserves meaning.
 - Forced colors remains operable.
-- Unknown state values fail in development and fall back neutrally in production.
-- The package tarball resolves every new subpath export without development dependencies at runtime.
+- Unknown axis values fail in development and fall back neutrally in production.
+- The package tarball resolves every new subpath export without runtime development dependencies.
 - No source-specific Clauddy asset, selector, application behavior, or fixed widget geometry is shipped.
 
 ---
 
-## 25. Locked decisions
+## 26. Locked decisions
 
 - The doctrine is theme-neutral.
 - Dark Roast is the first reference implementation.
 - The public namespace is `oi`, not `dr`.
 - Generic `data-state` is prohibited.
-- State axes are orthogonal and closed when stable.
-- Interaction uses native pseudo-classes and ARIA before custom data state.
+- Surface, activity, severity, freshness, certainty, completeness, source, emphasis, and density are separate axes.
+- Interaction uses native pseudo-classes, native attributes, and ARIA before custom state.
+- Async scenarios are combinations of orthogonal axes, not another overloaded state enum.
 - CSS and semantic DOM are canonical for web.
 - Framework adapters are optional and subordinate.
 - No global reset is added.
