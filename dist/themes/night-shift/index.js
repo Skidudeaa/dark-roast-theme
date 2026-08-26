@@ -17,7 +17,7 @@ export const colors = Object.freeze({
   "void": "#0D0906",
   "obsidian": "#120C06",
   "darkCacao": "#1B120C",
-  "espresso": "#21160F",
+  "espresso": "#251A11",
   "espressoHover": "#302117",
   "roastedBean": "#4F392B",
   "crater": "#6A5140",
@@ -91,7 +91,7 @@ export const semantic = Object.freeze({
     "canvas": "#0D0906",
     "surface": "#120C06",
     "elevated": "#1B120C",
-    "panel": "#21160F",
+    "panel": "#251A11",
     "interactive": "#302117"
   },
   "foreground": {
