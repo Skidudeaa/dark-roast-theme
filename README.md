@@ -1,5 +1,9 @@
 # Dark Roast Theme Family
 
+> **Returning to this project and don't remember it? Read [`START-HERE.md`](START-HERE.md).**
+> Current status lives in the Current State block at the top of [`CLAUDE.md`](CLAUDE.md).
+> Before touching CSS in the somaNotes repo, read [`docs/SOMACURA-MIGRATION.md`](docs/SOMACURA-MIGRATION.md).
+
 A warm espresso design system for every room, not one brightness setting. The original **Dark Roast: Black Label** remains unchanged; v5.1 adds two independent companions with the same semantic DNA and deliberately recalibrated contrast.
 
 | Theme | Canvas | Best for | Informational contrast guarantee |
@@ -422,7 +426,9 @@ docs/THEME-FAMILY.md        Companion family rationale and acceptance
 docs/SYNTAX-COLOR-SPEC.md   Syntax highlighting color rules
 docs/OPERATIONAL-INTERFACE-DOCTRINE.md  Doctrine specification (theme-neutral)
 docs/SYSTEM-ARCHITECTURE.md  What is actually built, and how the layers depend
+docs/SOMACURA-MIGRATION.md   Cross-repo adoption state, measured version gap, sequence
 docs/REORG-PLAN.md          v5 restructure plan / rationale (complete)
+START-HERE.md               Orientation map for returning to this project cold
 .github/workflows/ci.yml    Runs npm test on every push to master
 ```
 
