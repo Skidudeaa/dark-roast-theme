@@ -20,6 +20,15 @@
     "./css/velvet-noir/scoped": "./dist/css/dark-roast-velvet-noir-scoped.css",
     "./css/blue-mountain": "./dist/css/dark-roast-blue-mountain.css",
     "./css/blue-mountain/scoped": "./dist/css/dark-roast-blue-mountain-scoped.css",
+    "./css/night-shift": "./dist/css/dark-roast-night-shift.css",
+    "./css/night-shift/scoped": "./dist/css/dark-roast-night-shift-scoped.css",
+    "./css/cascara": "./dist/css/dark-roast-cascara.css",
+    "./css/cascara/scoped": "./dist/css/dark-roast-cascara-scoped.css",
+    "./css/flash-chilled": "./dist/css/dark-roast-flash-chilled.css",
+    "./css/flash-chilled/scoped": "./dist/css/dark-roast-flash-chilled-scoped.css",
+    "./css/nitro": "./dist/css/dark-roast-nitro.css",
+    "./css/nitro/scoped": "./dist/css/dark-roast-nitro-scoped.css",
+    "./skins/somacura-night-shift": "./src/skins/somacura-night-shift.css",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
     "./tokens/typography": "./dist/tokens/typography.js",
@@ -38,7 +47,15 @@
     "./themes/velvet-noir": "./dist/themes/velvet-noir/index.js",
     "./themes/velvet-noir/tokens.json": "./dist/themes/velvet-noir/tokens.json",
     "./themes/blue-mountain": "./dist/themes/blue-mountain/index.js",
-    "./themes/blue-mountain/tokens.json": "./dist/themes/blue-mountain/tokens.json"
+    "./themes/blue-mountain/tokens.json": "./dist/themes/blue-mountain/tokens.json",
+    "./themes/night-shift": "./dist/themes/night-shift/index.js",
+    "./themes/night-shift/tokens.json": "./dist/themes/night-shift/tokens.json",
+    "./themes/cascara": "./dist/themes/cascara/index.js",
+    "./themes/cascara/tokens.json": "./dist/themes/cascara/tokens.json",
+    "./themes/flash-chilled": "./dist/themes/flash-chilled/index.js",
+    "./themes/flash-chilled/tokens.json": "./dist/themes/flash-chilled/tokens.json",
+    "./themes/nitro": "./dist/themes/nitro/index.js",
+    "./themes/nitro/tokens.json": "./dist/themes/nitro/tokens.json"
   },
   "files": [
     "dist/",
@@ -56,7 +73,7 @@
     "build:variants": "node scripts/build-variants.js",
     "brew": "node scripts/reconcile-recipes.js",
     "report:apca": "node scripts/report-apca.js",
-    "test": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js",
+    "test": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-exports.js && node scripts/validate-skins.js",
     "prepublishOnly": "npm test"
   },
   "keywords": [

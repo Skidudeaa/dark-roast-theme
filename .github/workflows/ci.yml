@@ -1,0 +1,41 @@
+name: CI
+
+# The validator suite is the enforcement layer for the token contracts and the
+# Operational Interface Doctrine. It only means anything if it runs on its own.
+# Commit 9a40e50 edited a variant source without regenerating dist/, and the
+# stale output survived three further commits because nothing checked.
+#
+# Solo maintainer, no PR workflow: this runs on push and reports.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: npm test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Pinned LTS. Local dev may run ahead; CI is the reproducible target.
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Runs, in order: Black Label sha256 contract, brewed recipe registries,
+      # 10-theme APCA/chroma/severity thresholds, token drift, cold-brew seeds,
+      # companion drift, platform parseability, gallery parity, export map,
+      # and skin/token divergence.
+      - name: Validate
+        run: npm test
