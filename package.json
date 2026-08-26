@@ -29,6 +29,11 @@
     "./css/nitro": "./dist/css/dark-roast-nitro.css",
     "./css/nitro/scoped": "./dist/css/dark-roast-nitro-scoped.css",
     "./skins/somacura-night-shift": "./src/skins/somacura-night-shift.css",
+    "./system/contract": {
+      "types": "./dist/system/contract.d.ts",
+      "default": "./dist/system/contract.js"
+    },
+    "./system/contract.json": "./dist/system/contract.json",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
     "./tokens/typography": "./dist/tokens/typography.js",
@@ -67,13 +72,14 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "npm run build:tokens && npm run build:cold-brew && npm run brew && npm run build:variants",
+    "build": "npm run build:tokens && npm run build:cold-brew && npm run brew && npm run build:variants && npm run build:system",
     "build:tokens": "node scripts/build-tokens.js",
     "build:cold-brew": "node scripts/build-cold-brew.js",
     "build:variants": "node scripts/build-variants.js",
+    "build:system": "node scripts/build-system.js",
     "brew": "node scripts/reconcile-recipes.js",
     "report:apca": "node scripts/report-apca.js",
-    "test": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-exports.js && node scripts/validate-skins.js",
+    "test": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-exports.js && node scripts/validate-skins.js && node scripts/validate-contract.js && node scripts/build-system.js --check",
     "prepublishOnly": "npm test"
   },
   "keywords": [
@@ -98,6 +104,7 @@
     "url": "https://github.com/Skidudeaa/dark-roast-theme/issues"
   },
   "devDependencies": {
+    "ajv": "^8.20.0",
     "apca-w3": "^0.1.9",
     "culori": "^4.0.2"
   }

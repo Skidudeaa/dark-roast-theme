@@ -22,6 +22,13 @@ const entries = Object.entries(pkg.exports).map(([subpath, value]) => [
   typeof value === 'string' ? value : value.default,
 ]);
 const targets = new Set(entries.map(([, target]) => target));
+
+// Conditional exports may also declare a "types" path. It is not a subpath of
+// its own, but a dangling one silently breaks TypeScript consumers.
+const typePaths = Object.entries(pkg.exports)
+  .filter(([, value]) => typeof value === 'object' && value.types)
+  .map(([subpath, value]) => [subpath, value.types]);
+
 const failures = [];
 
 // ── 1. Reachable ────────────────────────────────────────────
@@ -40,6 +47,10 @@ const collect = (relDir, filter) => {
 collect('dist/css', (n) => n.endsWith('.css'));
 collect('dist/tokens', (n) => n.endsWith('.js'));
 collect('src/skins', (n) => n.endsWith('.css'));
+// dist/system carries the doctrine contract. Declaration files are reached via
+// a "types" condition rather than their own subpath, so they are not required
+// here — they are checked for existence below instead.
+collect('dist/system', (n) => n.endsWith('.js') || n.endsWith('.json'));
 
 const themesDir = join(ROOT, 'dist', 'themes');
 if (existsSync(themesDir)) {
@@ -54,10 +65,15 @@ for (const rel of required) {
   if (!targets.has(rel)) failures.push(`unreachable: ${rel} is built but has no "exports" entry`);
 }
 
-// ── 2. Resolvable ───────────────────────────────────────────
+// ── 2. Resolvable ───────────────────────────────────────
 for (const [subpath, target] of entries) {
   if (!existsSync(join(ROOT, target))) {
     failures.push(`dangling: "${subpath}" points at ${target}, which does not exist`);
+  }
+}
+for (const [subpath, types] of typePaths) {
+  if (!existsSync(join(ROOT, types))) {
+    failures.push(`dangling types: "${subpath}" declares ${types}, which does not exist`);
   }
 }
 

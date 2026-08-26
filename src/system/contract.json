@@ -1,0 +1,175 @@
+{
+  "$schema": "./contract.schema.json",
+  "name": "operational-interface-doctrine",
+  "version": "0.1.0",
+  "_doctrine": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
+  "_note": "Machine-readable source of truth for the doctrine's public contract (§14). Hand-edited. scripts/build-system.js generates dist/system/* from this file; scripts/validate-contract.js enforces the schema and cross-references. Changing a stable axis value is a MAJOR version bump (§19) because domain adapters may switch exhaustively.",
+
+  "naming": {
+    "_note": "Public naming contract (§6). The namespace is intentionally 'oi', never 'dr' — the doctrine is theme-neutral and Dark Roast is only its first reference mapping.",
+    "cssClassPrefix": "oi-",
+    "cssVariablePrefix": "--oi-",
+    "axisAttributePrefix": "data-oi-",
+    "slotAttribute": "data-oi-slot",
+    "typeScriptTypePrefix": "Oi",
+    "swiftTypePrefix": "OI"
+  },
+
+  "axes": {
+    "_note": "Orthogonal state axes (§7). The generic `data-state` attribute is prohibited (§5.3): loading is not severity, staleness is not warning, selection is not emphasis, certainty is not freshness, partial data is not a loading state. Interaction is deliberately absent — native pseudo-classes, native attributes, and ARIA own it (§7.10).",
+    "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
+    "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
+    "severity": ["neutral", "informational", "positive", "warning", "negative", "critical"],
+    "freshness": ["live", "recent", "stale", "unknown"],
+    "certainty": ["confirmed", "inferred", "uncertain", "disputed"],
+    "completeness": ["complete", "partial", "missing", "unavailable"],
+    "source": ["direct", "derived", "generated", "user-entered", "external"],
+    "emphasis": ["quiet", "normal", "strong"],
+    "density": ["compact", "standard", "spacious"]
+  },
+
+  "axisStability": {
+    "_note": "Stable axes carry semantic-version protection. Adding a value to a stable closed axis is MAJOR (§19).",
+    "surface": "stable",
+    "activity": "stable",
+    "severity": "stable",
+    "freshness": "stable",
+    "certainty": "stable",
+    "completeness": "stable",
+    "source": "stable",
+    "emphasis": "stable",
+    "density": "stable"
+  },
+
+  "truthAxes": {
+    "_note": "The subset that carries provenance semantics (§9). A truth-bearing primitive MUST provide a non-color channel for every truth property it renders; tooltips alone are insufficient for critical truth state.",
+    "members": ["source", "freshness", "certainty", "completeness"]
+  },
+
+  "semanticRoles": {
+    "_note": "Required semantic contract categories (§8). Primitives and recipes consume ONLY these. Direct use of a palette primitive such as --dr-espresso above the mapping layer is the 'token soup' anti-pattern (§23) and fails validation.",
+    "surface": ["canvas", "base", "raised", "interactive", "hover", "inset", "overlay", "scrim"],
+    "text": ["primary", "body", "muted", "inverse", "link"],
+    "border": ["subtle", "default", "strong", "focus"],
+    "status": ["informational", "positive", "warning", "negative", "critical", "live"],
+    "accent": ["primary", "active", "muted"],
+    "typography": ["body", "heading", "display", "mono"],
+    "geometry": ["space", "radius-control", "radius-surface", "radius-overlay"],
+    "motion": ["duration-fast", "duration-normal", "duration-slow", "ease-standard", "ease-emphasized"],
+    "interaction": ["focus-ring-width", "focus-ring-offset", "pointer-target-min", "touch-target-min"]
+  },
+
+  "primitives": {
+    "_note": "The ten initial structural primitives (§10). A primitive qualifies only when it owns a stable responsibility — repeated CSS is not sufficient justification (§5.14). `axes` lists the contract axes the primitive consumes.",
+    "surface": {
+      "responsibility": "Containment, background, border, elevation, clipping",
+      "axes": ["surface", "emphasis", "severity"]
+    },
+    "stack": {
+      "responsibility": "Vertical rhythm; parent owns gap and alignment",
+      "axes": ["density"]
+    },
+    "cluster": {
+      "responsibility": "Inline grouping with gap, alignment, and wrap policy",
+      "axes": ["density"]
+    },
+    "rail": {
+      "responsibility": "Fixed and fluid column relationship with an explicit collapse rule",
+      "axes": ["density"]
+    },
+    "inset": {
+      "responsibility": "Recessed focus, evidence, or visualization region with an overflow policy",
+      "axes": ["surface"]
+    },
+    "divider": {
+      "responsibility": "Structural separation, declared semantic or decorative",
+      "axes": ["emphasis"]
+    },
+    "metric": {
+      "responsibility": "Label, value, unit, trend, and provenance alignment with tabular numerics",
+      "axes": ["severity", "emphasis", "source", "freshness", "certainty", "completeness"]
+    },
+    "meter": {
+      "responsibility": "Normalized quantitative progress with accessible min, max, current, and label",
+      "axes": ["severity", "activity"]
+    },
+    "disclosure": {
+      "responsibility": "Expandable content structure owning aria-expanded and focus behavior",
+      "axes": ["density"]
+    },
+    "history-strip": {
+      "responsibility": "Compact temporal distribution with a non-color intensity channel",
+      "axes": ["severity", "freshness"]
+    }
+  },
+
+  "recipes": {
+    "_note": "Recipes are the primary unit of reusable design intelligence (§5.15). They define region order, slot anatomy, relationships, density, responsive transformation, surface nesting, optionality, overflow, and disclosure — never business logic, product actions, data fetching, domain language, or palette selection.",
+    "compact-monitor": {
+      "stability": "experimental",
+      "study": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
+      "_studyNote": "Recorded inline as doctrine §21 (Clauddy). §15 reserves src/system/studies/claude-usage-monitor.md for the extracted standalone study; that file is not yet written, so the reference points at the section that exists rather than a placeholder.",
+      "slotOrder": ["context", "actions", "focus", "status", "primary", "details", "history", "settings"],
+      "requiredSlots": ["status", "primary"],
+      "optionalSlots": ["context", "actions", "focus", "details", "history", "settings"],
+      "supportedDensities": ["compact", "standard"],
+      "publicHooks": []
+    }
+  },
+
+  "reservedRecipeNames": {
+    "_note": "Reserved to prevent competing implementations, but not public contracts until separately designed and proven (§11.2). `conversation-shell` and `context-composer` are candidates arising from src/system/studies/phind-extension.md.",
+    "names": [
+      "dense-inspector",
+      "operational-summary",
+      "contextual-sidebar",
+      "conversation-shell",
+      "context-composer"
+    ]
+  },
+
+  "stabilityLadder": {
+    "_note": "External designs enter through documented studies, never direct transplantation (§18). No stable primitive or recipe exists without a real consumer.",
+    "stages": ["study", "candidate", "experimental", "proven", "stable", "deprecated"]
+  },
+
+  "forbiddenDomainTerms": {
+    "_note": "Domain vocabulary that must not appear in contracts, primitives, or recipes (§5.13, §17.1). Matched case-insensitively on word boundaries by the source scan. Deliberately conservative: generic words such as 'note', 'chart', and 'transfer' are excluded because substring collisions would produce false failures.",
+    "terms": [
+      "patient",
+      "physician",
+      "clinician",
+      "diagnosis",
+      "medication",
+      "potassium",
+      "vitals",
+      "census",
+      "discharge",
+      "admission",
+      "encounter",
+      "triage",
+      "acuity",
+      "portfolio",
+      "drawdown",
+      "ticker",
+      "inbox",
+      "mailbox"
+    ]
+  },
+
+  "generatedTypes": {
+    "_note": "TypeScript type names emitted by scripts/build-system.js for each axis, plus the structural enumerations.",
+    "surface": "OiSurface",
+    "activity": "OiActivity",
+    "severity": "OiSeverity",
+    "freshness": "OiFreshness",
+    "certainty": "OiCertainty",
+    "completeness": "OiCompleteness",
+    "source": "OiSource",
+    "emphasis": "OiEmphasis",
+    "density": "OiDensity",
+    "primitive": "OiPrimitive",
+    "recipe": "OiRecipe",
+    "slot": "OiSlot"
+  }
+}
