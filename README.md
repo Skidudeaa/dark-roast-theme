@@ -56,7 +56,22 @@ Each companion is a complete stylesheet, not a fragile override on Black Label:
 <body data-theme="dark-roast-copper-roast">
 ```
 
-Package imports are `dark-roast-theme/css/house-blend`, `dark-roast-theme/css/house-blend/scoped`, `dark-roast-theme/css/copper-roast`, and `dark-roast-theme/css/copper-roast/scoped`.
+Every companion is importable by subpath, standalone or scoped:
+
+| Companion | Import | Scoped import |
+|---|---|---|
+| House Blend | `dark-roast-theme/css/house-blend` | `.../house-blend/scoped` |
+| Copper Roast | `dark-roast-theme/css/copper-roast` | `.../copper-roast/scoped` |
+| Cold Brew | `dark-roast-theme/css/cold-brew` | `.../cold-brew/scoped` |
+| Velvet | `dark-roast-theme/css/velvet` | `.../velvet/scoped` |
+| Velvet Noir | `dark-roast-theme/css/velvet-noir` | `.../velvet-noir/scoped` |
+| Blue Mountain | `dark-roast-theme/css/blue-mountain` | `.../blue-mountain/scoped` |
+| Night Shift | `dark-roast-theme/css/night-shift` | `.../night-shift/scoped` |
+| Cascara | `dark-roast-theme/css/cascara` | `.../cascara/scoped` |
+| Flash Chilled | `dark-roast-theme/css/flash-chilled` | `.../flash-chilled/scoped` |
+| Nitro | `dark-roast-theme/css/nitro` | `.../nitro/scoped` |
+
+Night Shift, Cascara, Flash Chilled, and Nitro became importable in v5.7.0. They were built and shipped before that but had no export entry, so Node's `exports` allowlist rejected them — which is worth knowing if you ever hand-copied one to work around it.
 
 ### JavaScript (ES modules)
 
@@ -101,6 +116,44 @@ import tokens from 'dark-roast-theme/tokens.json' assert { type: 'json' };
 console.log(tokens.colors.void);     // '#120C06'
 console.log(tokens.colors.espresso); // '#2A1C13'
 ```
+
+### Product skins
+
+A **skin** is the concrete look of one application built on a companion theme. It references theme tokens rather than copying their values, so the product tracks the theme instead of drifting from it.
+
+```css
+/* Your app's entry stylesheet. Load the theme first — the skin resolves --dr-* from it. */
+@import 'dark-roast-theme/css/night-shift';
+@import 'dark-roast-theme/skins/somacura-night-shift';
+```
+
+Skins deliberately contain no build-tool directives, so they parse under any toolchain. If you use Tailwind, keep `@tailwind base/components/utilities` in your own entry file above the imports.
+
+### Operational interface contract
+
+The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 43 semantic roles, ten structural primitives — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
+
+```js
+import {
+  severity, axisAttributes, assertAxisValue, requiresProvenanceDisclosure,
+} from 'dark-roast-theme/system/contract';
+
+severity;                                  // ['neutral','informational','positive','warning','negative','critical']
+axisAttributes.severity;                   // 'data-oi-severity'
+
+// Throws in development, returns false in production so the surface degrades
+// to neutral presentation instead of crashing.
+assertAxisValue('severity', 'critical');   // true
+
+// Anything not direct + confirmed + live + complete must show its provenance,
+// so inferred or stale data never wears the authority of confirmed data.
+requiresProvenanceDisclosure({ source: 'generated' });   // true
+requiresProvenanceDisclosure({ freshness: 'stale' });    // true
+```
+
+TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). The raw manifest is available at `dark-roast-theme/system/contract.json`.
+
+The CSS layer of this system — semantic role declarations, the ten primitives, and composition recipes — is not built yet. Only the contract and its generated adapters exist today.
 
 ### SwiftUI
 
@@ -317,24 +370,41 @@ All terminal targets (Warp, Tabby, iTerm2, Terminal.app, and VS Code integrated)
 ```
 src/tokens.json             SOURCE OF TRUTH — hand-edited canonical token definitions
 src/variants/*.json         ADDITIVE companion palettes, pinned to the Black Label fingerprint
+                            (cascara/flash-chilled/nitro are brewed; cold-brew is seed-compiled)
+src/recipes/*.json          Brew-engine recipes for the brewed companions
+src/cold-brew.seeds.json    OKLCH seeds Cold Brew is compiled from
 src/black-label-contract.json Frozen hashes for Black Label's public 5.0 surface
 src/css-templates/          Hand-authored CSS (app-layer vars, utilities, base) + @generated markers
+src/skins/*.css             Product skins consuming a companion theme by reference, not by copy
+src/system/contract.json    SOURCE OF TRUTH — Operational Interface Doctrine contract manifest
+src/system/contract.schema.json JSON Schema for the manifest
+src/system/studies/*.md     Pattern studies — the only intake path for an external design
+
 scripts/build-tokens.js     Black Label generator (unchanged)
 scripts/build-variants.js   Companion generator: CSS, JS, editor, terminal, native palettes
+scripts/build-cold-brew.js  Cold Brew OKLCH seed compiler
+scripts/build-system.js     Doctrine contract generator (constants, TS types, published manifest)
+scripts/reconcile-recipes.js Brew engine; refuses to overwrite registries it does not own
 scripts/check-black-label-contract.js Byte-for-byte additive-change guard
 scripts/validate-themes.js  Luminance, contrast, perceptual chroma, severity, fingerprint, and identity checks
 scripts/validate-platforms.js Generated-platform parity and parseability checks
 scripts/validate-gallery.js Gallery identity plus platform/syntax color-fidelity checks
+scripts/validate-exports.js Export reachability, resolution, and packaging checks
+scripts/validate-skins.js   Fails when a skin duplicates a theme token value
+scripts/validate-contract.js Doctrine manifest schema + cross-reference integrity
 
 dist/css/dark-roast.css         GENERATED — standalone, tokens on :root, utilities unscoped
 dist/css/dark-roast-scoped.css  GENERATED — scoped to [data-theme="dark-roast"]
-dist/css/dark-roast-*.css       GENERATED — independent House Blend / Copper Roast stylesheets
+dist/css/dark-roast-*.css       GENERATED — independent companion stylesheets (10 companions)
 dist/themes/                    GENERATED — namespaced companion JS + JSON contracts
 dist/tokens/colors.js           GENERATED — color hex + opacity variants + roles
 dist/tokens/typography.js       GENERATED — font stacks + type scale
 dist/tokens/glows.js            GENERATED — box-shadow phosphor glows
 dist/tokens/spacing.js          GENERATED — spacing, radii, motion, z-index, icon, elevation
 dist/tokens/index.js            GENERATED — barrel re-export
+dist/system/contract.js         GENERATED — frozen axis constants + runtime assertions
+dist/system/contract.d.ts       GENERATED — Oi* TypeScript unions and interfaces
+dist/system/contract.json       GENERATED — published manifest, documentation stripped
 
 platforms/swift/            SwiftUI reference implementation
 platforms/xcode/            Xcode .dvtcolortheme
@@ -343,12 +413,17 @@ platforms/warp/             Warp terminal YAML
 platforms/tabby/            Tabby terminal YAML
 platforms/terminal-app/     macOS Terminal.app profile generator (Python + PyObjC)
 platforms/iterm2/           iTerm2 .itermcolors
+platforms/blink/            Blink Shell (iOS/iPadOS) hterm themes
 platforms/vscode/           VS Code / Cursor extension
-spec/theme-gallery.html     Self-contained three-theme comparison / acceptance gallery
+spec/theme-gallery.html     Self-contained theme comparison / acceptance gallery
 spec/dark-roast-spec.html   Legacy Black Label visual specification
 docs/DESIGN-SYSTEM.md       Full design system reference
+docs/THEME-FAMILY.md        Companion family rationale and acceptance
 docs/SYNTAX-COLOR-SPEC.md   Syntax highlighting color rules
-docs/REORG-PLAN.md          v5 restructure plan / rationale
+docs/OPERATIONAL-INTERFACE-DOCTRINE.md  Doctrine specification (theme-neutral)
+docs/SYSTEM-ARCHITECTURE.md  What is actually built, and how the layers depend
+docs/REORG-PLAN.md          v5 restructure plan / rationale (complete)
+.github/workflows/ci.yml    Runs npm test on every push to master
 ```
 
 Bundler imports use the package subpath exports and don't need the `dist/` prefix:
@@ -380,6 +455,8 @@ v4 renamed several tokens and expanded the surface scale. Deprecated aliases rem
 | `crater` / `--dr-crater` | `craterDeep` / `--dr-crater-deep` | Geological accent |
 
 New in v4: `darkCacao`, `roastedBean`, `warmWhite`, `amberMuted`, `brass`, `burntSienna`, 6-layer surface scale, elevation shadows, z-index scale, icon scale.
+
+> **Upgrading from v3 deserves care.** Note the third and fourth rows: `crater` exists in both versions with *different values*. In v3 it was the geological accent; in v4 it became the top of the surface scale, and the old value moved to `craterDeep`. A partial upgrade therefore shifts colors silently rather than failing loudly. If you vendored a v3 copy, migrate the names in one pass and check the result visually.
 
 ---
 

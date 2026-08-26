@@ -33,7 +33,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -62,7 +62,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -88,7 +88,7 @@
       "targets": [
         "web"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -111,7 +111,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -134,7 +134,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -157,7 +157,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -183,7 +183,7 @@
       "targets": [
         "terminal"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -209,7 +209,7 @@
       "targets": [
         "terminal"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -238,7 +238,7 @@
         "terminal",
         "native"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     },
     {
@@ -264,7 +264,7 @@
       "targets": [
         "web"
       ],
-      "sourceVersion": "5.6.0",
+      "sourceVersion": "5.7.0",
       "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030"
     }
   ]

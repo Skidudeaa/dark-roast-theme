@@ -6,6 +6,93 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.7.0] — 2026-08-26
+
+Distribution and architecture release. **Dark Roast: Black Label is unchanged**,
+and no palette moves. Four companions become importable for the first time, the
+first product skin ships, and the Operational Interface Doctrine gains a
+machine-readable contract.
+
+### Fixed
+
+- **Night Shift generated output was stale.** `9a40e50` widened Night Shift's
+  espresso from `#21160F` to `#251A11` in `src/variants/night-shift.json` but
+  never ran `build:variants`, so four generated files kept the old value and rode
+  through three subsequent commits with `npm test` failing on `master`.
+- **`package-lock.json` was pinned at 5.3.0** against a 5.6.0 `package.json`.
+- **Eight stylesheets and four theme modules were unreachable.** Night Shift,
+  Cascara, Flash Chilled, and Nitro were built and shipped inside the tarball but
+  had no `exports` entry, and Node's `exports` field is an allowlist — so
+  `import 'dark-roast-theme/css/night-shift'` threw. This was not cosmetic: it is
+  the reason a downstream product had hand-copied a palette instead of importing
+  it. All twelve paths are now declared.
+
+### Added
+
+- **`src/system/contract.json`** — the machine-readable Operational Interface
+  Doctrine contract (doctrine v0.1.0, versioned independently of the package).
+  Declares the nine orthogonal state axes, 43 semantic roles, the ten structural
+  primitives with the axes each consumes, `compact-monitor` with its full slot
+  order, axis stability for semver protection, and forbidden domain terms for
+  lower-layer source scans.
+- **`dist/system/`** — generated adapters: frozen constants and an axis→attribute
+  map, `Oi*` TypeScript unions, and the published manifest with documentation
+  stripped. Exported at `dark-roast-theme/system/contract`.
+  `assertAxisValue()` throws in development and returns `false` in production,
+  so an unknown value surfaces loudly while developing and degrades to neutral
+  presentation in production rather than crashing an operational surface.
+  `requiresProvenanceDisclosure()` guards against inferred, stale, or partial
+  information wearing the visual authority of confirmed data.
+- **`src/skins/`** — product skins, a layer between a companion theme and one
+  application. `somacura-night-shift.css` is the first: 20 properties whose values
+  the theme owns now reference `var(--dr-*)`, while the 20 genuinely
+  product-specific values (ledger fields, severity rails, label tints) stay
+  literal and documented. Published skins carry no build-tool directives, so they
+  parse under any toolchain.
+- **`docs/SYSTEM-ARCHITECTURE.md`** — an implementation record distinct from the
+  doctrine specification: what is built, the dependency direction, what each
+  validator guards, what is not built yet, and every deliberate deviation from
+  doctrine §15.
+- **CI** — `.github/workflows/ci.yml` runs `npm test` on every push to `master`
+  under pinned Node 22. Its absence is precisely why the espresso drift above
+  survived three commits.
+
+### Validation
+
+`npm test` grows from eight checks to thirteen.
+
+- `validate-exports.js` proves three invariants: every consumer-facing artifact
+  has an export entry, every entry resolves on disk, and every target is covered
+  by `files`. It also catches dangling `types` paths, which break TypeScript
+  consumers silently.
+- `validate-skins.js` fails when a skin hardcodes a value its theme already owns,
+  or references a `--dr-*` variable the target theme does not declare. It earned
+  its place immediately by finding `#0d0906` inside an atmosphere gradient, where
+  a by-hand review of the `:root` block had missed it.
+- `validate-contract.js` layers JSON Schema (§17.5, via `ajv`) over the
+  cross-references a schema cannot express: required and optional slots must
+  partition `slotOrder` exactly, primitive and truth axes must resolve against
+  declared axes, stability must sit on the ladder, anything above `candidate`
+  needs a study that exists on disk, and the contract must not contain its own
+  forbidden domain terms.
+- `build-system.js --check` proves byte-identical rebuilds (§17.6).
+
+### Changed
+
+- `npm run build` now also runs `build:system`.
+- `ajv` added as a devDependency — the only new dependency. Runtime dependencies
+  remain zero.
+- `CLAUDE.md` and `README.md` document the two-system split, the skins layer, and
+  which four variant sources are generator-owned rather than hand-edited.
+
+### Migration note
+
+Nothing in this release changes a color. If you consume a companion by raw
+`dist/` path, nothing changes either; the new export subpaths are additive. If you
+vendored a pre-v4 copy of this package, read the v3 → v4 table below before
+upgrading — `crater` exists in both with different values, so a partial migration
+shifts colors silently instead of failing.
+
 ## [5.6.0] — 2026-07-26
 
 Adds **Dark Roast: Blue Mountain**, the family's first cold-canvas companion.

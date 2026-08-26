@@ -4,9 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Dark Roast is a multi-platform theme family (npm package `dark-roast-theme` v5.1.0). The original Black Label remains the unchanged default. House Blend and Copper Roast are additive, independently generated companions for brighter environments. Targets: CSS, ES modules, JSON, SwiftUI, VS Code, Xcode, Textastic, Warp, Tabby, Terminal.app, and iTerm2.
+This repository holds **two related systems**. Know which one you are touching before you edit anything.
 
-**Separated sources of truth.** `src/tokens.json` is canonical for Black Label. `src/variants/*.json` defines additive companions and pins the exact Black Label base fingerprint. `scripts/build-tokens.js` owns Black Label outputs; `scripts/build-variants.js` owns every companion output. Do not hand-edit generated files. `npm test` checks drift, contrast, semantics, and platform parseability.
+**1. The theme family** (npm package `dark-roast-theme`, currently v5.7.0) answers *what color is this?* The original Black Label remains the unchanged default; ten additive companions serve different ambient conditions. Targets: CSS, ES modules, JSON, SwiftUI, VS Code, Xcode, Textastic, Warp, Tabby, Terminal.app, iTerm2, and Blink. Namespace: `--dr-*`.
+
+**2. The operational interface system** (`src/system/`, doctrine contract v0.1.0) answers *what does this element mean?* It is theme-neutral by design — Dark Roast is its first reference mapping, not its definition. Namespace: `--oi-*`. Specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`; **implementation status is recorded in `docs/SYSTEM-ARCHITECTURE.md` — read that before working on the system layer.** Partially built: the contract manifest and its generated adapters exist; semantic contract CSS, primitives, and recipes do not yet.
+
+The two meet at exactly one seam: a mapping file that reads `--dr-*` and assigns `--oi-*`. Nothing above that seam may read a palette token.
+
+**Separated sources of truth.** `src/tokens.json` is canonical for Black Label. `src/variants/*.json` defines additive companions and pins the exact Black Label base fingerprint. `src/system/contract.json` is canonical for the doctrine contract. `scripts/build-tokens.js` owns Black Label outputs; `scripts/build-variants.js` owns every companion output; `scripts/build-system.js` owns `dist/system/`. Do not hand-edit generated files. `npm test` runs thirteen checks covering drift, contrast, semantics, platform parseability, export reachability, skin/token divergence, and doctrine contract integrity. CI runs the same suite on every push to `master`.
 
 ## Architecture
 
@@ -16,15 +22,28 @@ Dark Roast is a multi-platform theme family (npm package `dark-roast-theme` v5.1
 
 ### Repository Layout
 
-- `src/tokens.json` — source of truth (hand-edited)
-- `src/variants/*.json` — additive companion sources (hand-edited, fingerprint-pinned)
+**Theme family**
+- `src/tokens.json` — source of truth for Black Label (hand-edited)
+- `src/variants/*.json` — companion sources, fingerprint-pinned. Mostly hand-edited, **but four are generator-owned**: `cascara`, `flash-chilled`, and `nitro` are brewed from `src/recipes/*.json`, and `cold-brew` is compiled from `src/cold-brew.seeds.json`. `npm run build` rewrites those four; edit their recipes or seeds instead. Each brewed registry records `generator: "brew-engine"`, and `reconcile-recipes.js` refuses to overwrite a registry it does not own.
 - `src/css-templates/*.css` — hand-authored CSS: app-layer vars, keyframes, utilities, base styles, with a `@generated:tokens` marker region the generator fills
-- `dist/tokens/*.js` — GENERATED JS modules (do not edit)
-- `dist/css/*.css` — GENERATED CSS (template + injected var region; do not edit)
-- `scripts/build-tokens.js` — the generator (`npm run build` / `npm test --check`)
-- `scripts/build-variants.js` — complete companion generator; detects and prunes retired generator-owned artifacts
-- `scripts/validate-themes.js`, `scripts/validate-platforms.js` — quality gates
-- `platforms/` — editor/terminal/native targets (swift, vscode, xcode, textastic, warp, tabby, terminal-app, iterm2)
+- `dist/tokens/*.js`, `dist/css/*.css`, `dist/themes/` — GENERATED (do not edit)
+- `platforms/` — editor/terminal/native targets (swift, vscode, xcode, textastic, warp, tabby, terminal-app, iterm2, blink)
+
+**Operational interface system**
+- `src/system/contract.json` — the doctrine contract manifest (hand-edited source of truth)
+- `src/system/contract.schema.json` — JSON Schema for the manifest
+- `src/system/studies/*.md` — pattern studies; the only legitimate intake path for an external design
+- `dist/system/*` — GENERATED constants, TypeScript declarations, and published manifest (do not edit)
+
+**Product skins**
+- `src/skins/*.css` — hand-authored per-product skins consuming a companion theme. Filename must contain the target variant id (`somacura-night-shift` → `night-shift`). A skin may own product-specific values but must never re-declare a theme token's value.
+
+**Tooling**
+- `scripts/build-tokens.js` — Black Label generator (`--check` for drift)
+- `scripts/build-variants.js` — companion generator; prunes retired generator-owned artifacts
+- `scripts/build-system.js` — doctrine contract generator (`--check` for drift)
+- `scripts/validate-*.js` — quality gates: themes, platforms, gallery, exports, skins, contract
+- `.github/workflows/ci.yml` — runs `npm test` on push to `master`, pinned Node 22
 
 ### Generated Token Modules (ES modules, `"type": "module"`)
 
@@ -92,9 +111,27 @@ Tokens are production-locked. Changes require a version bump (in both `package.j
 
 ## Modifying Companion Themes
 
-1. Edit only `src/variants/<id>.json`.
+1. Edit only `src/variants/<id>.json` — unless it is brewed (`cascara`, `flash-chilled`, `nitro`) or seed-compiled (`cold-brew`), in which case edit `src/recipes/<id>.json` or `src/cold-brew.seeds.json`.
 2. Keep Black Label `src/tokens.json`, root exports, and existing platform files visually unchanged.
 3. Run `npm run build:variants`.
 4. Run `npm test`; do not weaken assigned-surface contrast thresholds to make a palette pass.
 5. Review `spec/theme-gallery.html` at narrow and wide viewports.
 6. If Black Label legitimately changes, update each variant fingerprint only after reviewing its generated CSS, syntax, ANSI, and contrast results.
+
+## Modifying the Doctrine Contract
+
+Read `docs/SYSTEM-ARCHITECTURE.md` first — it records what is actually built versus what the doctrine specifies.
+
+1. Edit `src/system/contract.json`.
+2. Run `npm run build:system`, then `npm test`.
+3. The contract carries its own semantic version, independent of the package version. Renaming or removing an axis, axis value, role, primitive, recipe, or slot — or adding a required slot, or adding a value to a stable closed axis — is a MAJOR contract bump, because domain adapters may switch exhaustively.
+4. Never add a primitive merely to share styling; a primitive must own a stable responsibility no existing primitive can express.
+5. Never promote anything past `candidate` without a study in `src/system/studies/` and a real consumer. The validator enforces the study reference.
+
+## Adding a Skin
+
+1. Create `src/skins/<product>-<variant-id>.css`; the basename must contain a real variant id.
+2. Reference `var(--dr-*)` for anything the theme owns. Keep literals only for genuinely product-specific values, grouped and commented.
+3. Add the `./skins/<name>` entry to `package.json` exports.
+4. Do not put `@tailwind` directives or other build-tool syntax in a published skin — the consumer's entry stylesheet owns those.
+5. Run `npm test`. `validate-skins.js` will name any literal that duplicates a token and any `var(--dr-*)` that does not resolve.
