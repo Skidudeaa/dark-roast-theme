@@ -8,7 +8,7 @@
 // false quietly otherwise so callers can omit the attribute.
 
 export const CONTRACT_NAME = 'operational-interface-doctrine';
-export const CONTRACT_VERSION = '0.2.0';
+export const CONTRACT_VERSION = '0.3.0';
 
 // ── Naming contract (§6) ──
 export const cssClassPrefix = 'oi-';
@@ -81,7 +81,7 @@ export const semanticRoles = Object.freeze({
   border: Object.freeze(['--oi-border-subtle', '--oi-border-default', '--oi-border-strong', '--oi-border-focus']),
   status: Object.freeze(['--oi-status-informational', '--oi-status-positive', '--oi-status-warning', '--oi-status-negative', '--oi-status-critical', '--oi-status-live']),
   accent: Object.freeze(['--oi-accent-primary', '--oi-accent-active', '--oi-accent-muted']),
-  typography: Object.freeze(['--oi-typography-body', '--oi-typography-heading', '--oi-typography-display', '--oi-typography-mono']),
+  typography: Object.freeze(['--oi-typography-body', '--oi-typography-heading', '--oi-typography-display', '--oi-typography-mono', '--oi-typography-size-label', '--oi-typography-size-body', '--oi-typography-size-title', '--oi-typography-size-display', '--oi-typography-line-compact', '--oi-typography-line-reading']),
   geometry: Object.freeze(['--oi-geometry-space', '--oi-geometry-radius-control', '--oi-geometry-radius-surface', '--oi-geometry-radius-overlay']),
   elevation: Object.freeze(['--oi-elevation-flat', '--oi-elevation-raised', '--oi-elevation-overlay', '--oi-elevation-live', '--oi-elevation-critical']),
   motion: Object.freeze(['--oi-motion-duration-fast', '--oi-motion-duration-normal', '--oi-motion-duration-slow', '--oi-motion-ease-standard', '--oi-motion-ease-emphasized']),
@@ -119,6 +119,12 @@ export const semanticRoleVariables = Object.freeze([
   '--oi-typography-heading',
   '--oi-typography-display',
   '--oi-typography-mono',
+  '--oi-typography-size-label',
+  '--oi-typography-size-body',
+  '--oi-typography-size-title',
+  '--oi-typography-size-display',
+  '--oi-typography-line-compact',
+  '--oi-typography-line-reading',
   '--oi-geometry-space',
   '--oi-geometry-radius-control',
   '--oi-geometry-radius-surface',
@@ -153,6 +159,436 @@ export const primitiveAxes = Object.freeze({
   'meter': Object.freeze(['severity', 'activity']),
   'disclosure': Object.freeze(['density']),
   'history-strip': Object.freeze(['severity', 'freshness']),
+});
+
+// Full DOM, part, and public-hook contract for each primitive.
+export const primitiveContracts = Object.freeze({
+  'surface': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Containment, background, border, elevation, clipping",
+    "axes": Object.freeze(["surface", "emphasis", "severity"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["*"]),
+      "requiredAttributes": Object.freeze({
+        "data-oi-surface": Object.freeze(["*"]),
+      }),
+      "forbiddenAttributes": Object.freeze([]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze([]),
+    "partOrderPolicy": "none",
+    "parts": Object.freeze({
+
+    }),
+    "publicHooks": Object.freeze(["--oi-surface-padding", "--oi-surface-overflow"]),
+  }),
+  'stack': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Vertical rhythm; parent owns gap and alignment",
+    "axes": Object.freeze(["density"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["*"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze([]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze([]),
+    "partOrderPolicy": "none",
+    "parts": Object.freeze({
+
+    }),
+    "publicHooks": Object.freeze(["--oi-stack-gap", "--oi-stack-align"]),
+  }),
+  'cluster': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Inline grouping with gap, alignment, and wrap policy",
+    "axes": Object.freeze(["density"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["*"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze([]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze([]),
+    "partOrderPolicy": "none",
+    "parts": Object.freeze({
+
+    }),
+    "publicHooks": Object.freeze(["--oi-cluster-gap", "--oi-cluster-align", "--oi-cluster-justify", "--oi-cluster-wrap"]),
+  }),
+  'rail': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Fixed and fluid column relationship with an explicit collapse rule",
+    "axes": Object.freeze(["density"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["*"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze([]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze(["rail", "content"]),
+    "partOrderPolicy": "either",
+    "parts": Object.freeze({
+      "rail": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["*"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+      "content": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["*"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+    }),
+    "publicHooks": Object.freeze(["--oi-rail-gap", "--oi-rail-size", "--oi-rail-content-min"]),
+  }),
+  'inset': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Recessed focus, evidence, or visualization region with an overflow policy",
+    "axes": Object.freeze(["surface"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["*"]),
+      "requiredAttributes": Object.freeze({
+        "data-oi-surface": Object.freeze(["inset"]),
+      }),
+      "forbiddenAttributes": Object.freeze([]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze([]),
+    "partOrderPolicy": "none",
+    "parts": Object.freeze({
+
+    }),
+    "publicHooks": Object.freeze(["--oi-inset-padding", "--oi-inset-overflow"]),
+  }),
+  'divider': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Structural separation, declared semantic or decorative",
+    "axes": Object.freeze(["emphasis"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["hr"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze(["tabindex"]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze([]),
+    "partOrderPolicy": "none",
+    "parts": Object.freeze({
+
+    }),
+    "publicHooks": Object.freeze(["--oi-divider-size"]),
+  }),
+  'metric': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Label, value, unit, trend, and provenance alignment with tabular numerics",
+    "axes": Object.freeze(["severity", "emphasis", "source", "freshness", "certainty", "completeness"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["dl"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze(["role"]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze(["label", "value", "unit", "trend", "provenance"]),
+    "partOrderPolicy": "listed",
+    "parts": Object.freeze({
+      "label": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["dt"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "value": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["dd"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "unit": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["dd"]),
+        "cardinality": "zero-or-one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "trend": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["dd"]),
+        "cardinality": "zero-or-one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "provenance": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["dd"]),
+        "cardinality": "zero-or-one",
+        "requiredAttributes": Object.freeze({
+          "id": Object.freeze(["*"]),
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+    }),
+    "publicHooks": Object.freeze(["--oi-metric-value-size"]),
+  }),
+  'meter': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Bounded scalar measure with accessible minimum, maximum, current value, and label",
+    "axes": Object.freeze(["severity", "activity"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["div"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze(["role"]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze(["label", "control", "track", "fill", "value", "description"]),
+    "partOrderPolicy": "listed",
+    "parts": Object.freeze({
+      "label": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["label"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+          "for": Object.freeze(["*"]),
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "control": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["meter"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+          "id": Object.freeze(["*"]),
+          "min": Object.freeze(["*"]),
+          "max": Object.freeze(["*"]),
+          "value": Object.freeze(["*"]),
+        }),
+        "forbiddenAttributes": Object.freeze(["role", "aria-valuemin", "aria-valuemax", "aria-valuenow"]),
+        "accessibleName": "required",
+      }),
+      "track": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["div"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+          "aria-hidden": Object.freeze(["true"]),
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+      "fill": Object.freeze({
+        "parent": "track",
+        "elements": Object.freeze(["span"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+      "value": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["span", "output"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "description": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["small", "span"]),
+        "cardinality": "zero-or-one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+    }),
+    "publicHooks": Object.freeze(["--oi-meter-track-size", "--oi-meter-value", "--oi-meter-value-size"]),
+  }),
+  'disclosure': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Native expandable structure with summary ownership and focus behavior",
+    "axes": Object.freeze(["density"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["details"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze(["role", "tabindex", "aria-expanded"]),
+      "accessibleName": "none",
+    }),
+    "partOrder": Object.freeze(["summary", "content"]),
+    "partOrderPolicy": "listed",
+    "parts": Object.freeze({
+      "summary": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["summary"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze(["role", "tabindex", "aria-expanded"]),
+        "accessibleName": "contents",
+      }),
+      "content": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["div", "section"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+    }),
+    "publicHooks": Object.freeze([]),
+  }),
+  'history-strip': Object.freeze({
+    "stability": "experimental",
+    "responsibility": "Compact temporal distribution with a non-color intensity channel",
+    "axes": Object.freeze(["severity", "freshness"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["ol"]),
+      "requiredAttributes": Object.freeze({
+
+      }),
+      "forbiddenAttributes": Object.freeze(["role"]),
+      "accessibleName": "required",
+    }),
+    "partOrder": Object.freeze(["item", "time", "bar", "value"]),
+    "partOrderPolicy": "listed",
+    "parts": Object.freeze({
+      "item": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["li"]),
+        "cardinality": "one-or-more",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+      "time": Object.freeze({
+        "parent": "item",
+        "elements": Object.freeze(["time"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+          "datetime": Object.freeze(["*"]),
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+      "bar": Object.freeze({
+        "parent": "item",
+        "elements": Object.freeze(["span"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+          "aria-hidden": Object.freeze(["true"]),
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "none",
+      }),
+      "value": Object.freeze({
+        "parent": "item",
+        "elements": Object.freeze(["span"]),
+        "cardinality": "one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze([]),
+        "accessibleName": "contents",
+      }),
+    }),
+    "publicHooks": Object.freeze(["--oi-history-intensity", "--oi-history-item-size", "--oi-history-gap"]),
+  }),
+});
+
+// Owner-qualified public part classes; arbitrary BEM selectors are not contract.
+export const primitivePartClasses = Object.freeze({
+  'surface': Object.freeze({
+
+  }),
+  'stack': Object.freeze({
+
+  }),
+  'cluster': Object.freeze({
+
+  }),
+  'rail': Object.freeze({
+    "rail": "oi-rail__rail",
+    "content": "oi-rail__content",
+  }),
+  'inset': Object.freeze({
+
+  }),
+  'divider': Object.freeze({
+
+  }),
+  'metric': Object.freeze({
+    "label": "oi-metric__label",
+    "value": "oi-metric__value",
+    "unit": "oi-metric__unit",
+    "trend": "oi-metric__trend",
+    "provenance": "oi-metric__provenance",
+  }),
+  'meter': Object.freeze({
+    "label": "oi-meter__label",
+    "control": "oi-meter__control",
+    "track": "oi-meter__track",
+    "fill": "oi-meter__fill",
+    "value": "oi-meter__value",
+    "description": "oi-meter__description",
+  }),
+  'disclosure': Object.freeze({
+    "summary": "oi-disclosure__summary",
+    "content": "oi-disclosure__content",
+  }),
+  'history-strip': Object.freeze({
+    "item": "oi-history-strip__item",
+    "time": "oi-history-strip__time",
+    "bar": "oi-history-strip__bar",
+    "value": "oi-history-strip__value",
+  }),
 });
 
 // ── Recipes (§11) ──

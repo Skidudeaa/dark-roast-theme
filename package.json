@@ -1,6 +1,6 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.8.0",
+  "version": "5.9.0",
   "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions and the warm light-polarity Cold Brew, all with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",
@@ -40,6 +40,7 @@
     "./system/contract.json": "./dist/system/contract.json",
     "./system/css": "./dist/system/index.css",
     "./system/contracts": "./dist/system/contracts.css",
+    "./system/primitives": "./dist/system/primitives.css",
     "./system/mappings/dark-roast": "./dist/system/mappings/dark-roast.css",
     "./tokens": "./dist/tokens/index.js",
     "./tokens/colors": "./dist/tokens/colors.js",
@@ -86,7 +87,7 @@
     "build:system": "node scripts/build-system.js",
     "brew": "node scripts/reconcile-recipes.js",
     "report:apca": "node scripts/report-apca.js",
-    "test": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-skins.js && node scripts/validate-contract.js && node scripts/build-system.js --check && node scripts/validate-system-runtime.js && node scripts/validate-system-css.js && node scripts/validate-exports.js && node scripts/validate-package.js",
+    "test": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-skins.js && node scripts/validate-contract.js && node scripts/build-system.js --check && node scripts/validate-system-runtime.js && node scripts/validate-system-dom.js && node scripts/validate-system-css.js && node scripts/validate-exports.js && node scripts/validate-package.js",
     "prepublishOnly": "npm test"
   },
   "keywords": [
@@ -114,6 +115,7 @@
     "ajv": "^8.20.0",
     "apca-w3": "^0.1.9",
     "culori": "^4.0.2",
+    "parse5": "^8.0.1",
     "postcss": "^8.5.26",
     "postcss-selector-parser": "^7.1.5",
     "postcss-value-parser": "^4.2.0"

@@ -135,7 +135,7 @@ Skins deliberately contain no build-tool directives, so they parse under any too
 
 ### Operational interface contract
 
-The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 48 semantic roles, ten named structural primitives — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
+The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 54 semantic roles, and ten implemented structural primitives — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
 
 Load a palette, the ordered semantic contracts, and one explicit mapping:
 
@@ -152,6 +152,32 @@ Load a palette, the ordered semantic contracts, and one explicit mapping:
 The system CSS contains no implicit palette. Only the generated mapping reads
 `--dr-*`; semantic contracts consume `--oi-*`. The cold alien mapping under
 `spec/system/` is a proof fixture, not a supported export or product theme.
+
+Primitive anatomy is public and generated from the manifest. Parts use only
+declared owner-qualified classes:
+
+```html
+<dl
+  class="oi-metric"
+  data-oi-source="generated"
+  data-oi-freshness="stale"
+  data-oi-certainty="inferred"
+  data-oi-completeness="partial"
+  aria-describedby="metric-provenance"
+>
+  <dt class="oi-metric__label">Current measure</dt>
+  <dd class="oi-metric__value">37.5</dd>
+  <dd id="metric-provenance" class="oi-metric__provenance">
+    Generated, inferred, stale, partial.
+  </dd>
+</dl>
+```
+
+The complex primitives are native-first: `dl`, `meter`, `details/summary`,
+`ol/li/time`, and `hr` retain browser accessibility semantics. The proof
+fixture checks each meter's visual track against its hidden native value;
+product adapters must derive both from the same measurement because
+browser-native meter pigment does not honor semantic mappings.
 
 ```js
 import {
@@ -175,7 +201,7 @@ requiresProvenanceDisclosure({ freshness: 'stale' });    // true
 
 TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
 
-The semantic contract and Dark Roast mapping are built. Primitive and recipe CSS are not: their names and responsibilities exist in the manifest, but slice C must reconcile public DOM/part anatomy before implementation.
+The semantic contracts, Dark Roast mapping, and all ten primitives are built. `compact-monitor` recipe CSS and its Playwright/axe proof matrices remain Slice D.
 
 ### SwiftUI
 
@@ -403,8 +429,10 @@ src/system/contract.schema.json JSON Schema for the manifest
 src/system/mappings/dark-roast.json SOURCE — generated semantic mapping relationships
 src/system/layers.css       SOURCE — public cascade order, no reset
 src/system/contracts/*.css  SOURCE — theme-neutral semantic CSS
+src/system/primitives/*.css SOURCE — ten native-first structural primitives
 src/system/studies/*.md     Pattern studies — the only intake path for an external design
 spec/system/mappings/alien.css Cold, flat mapping proof fixture; not an export
+spec/system/primitives.html Dual-mapping primitive DOM and rendered proof fixture
 
 scripts/build-tokens.js     Black Label generator (unchanged)
 scripts/build-variants.js   Companion generator: CSS, JS, editor, terminal, native palettes
@@ -419,6 +447,7 @@ scripts/validate-exports.js Export reachability, resolution, and packaging check
 scripts/validate-skins.js   Fails when a skin duplicates a theme token value
 scripts/validate-contract.js Doctrine manifest schema + cross-reference integrity
 scripts/validate-system-runtime.js Browser/runtime contract predicates
+scripts/validate-system-dom.js parse5 primitive DOM/ARIA contract enforcement
 scripts/validate-system-css.js PostCSS selector/value AST enforcement
 scripts/validate-package.js Actual npm tarball and zero-runtime-dependency integrity
 
@@ -436,6 +465,7 @@ dist/system/contract.d.ts       GENERATED — Oi* TypeScript unions and interfac
 dist/system/contract.json       GENERATED — published manifest, documentation stripped
 dist/system/index.{js,d.ts}     GENERATED — package runtime/type barrels
 dist/system/{contracts,index}.css GENERATED — ordered semantic contracts
+dist/system/primitives.css       GENERATED — ten structural primitives
 dist/system/mappings/dark-roast.css GENERATED — sole --dr-* / --oi-* seam
 
 platforms/swift/            SwiftUI reference implementation

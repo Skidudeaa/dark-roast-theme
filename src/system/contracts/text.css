@@ -2,6 +2,8 @@
   .oi-root {
     color: var(--oi-text-body);
     font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-reading);
     text-rendering: optimizeLegibility;
   }
 

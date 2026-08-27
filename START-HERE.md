@@ -11,8 +11,9 @@ Two systems that share a package.
    eleven platforms, generated from `src/tokens.json`. Namespace `--dr-*`. Mature,
    in production, published to npm.
 2. **The operational interface system** answers *what does this element mean?*
-   Nine orthogonal state axes, semantic roles, structural primitives. Namespace
-   `--oi-*`, deliberately theme-neutral. Partly built.
+   Nine orthogonal state axes, 54 semantic roles, and ten implemented structural
+   primitives. Namespace `--oi-*`, deliberately theme-neutral. Composition
+   recipes and their full proof matrices remain unfinished.
 
 ## The three things to do when you sit down
 

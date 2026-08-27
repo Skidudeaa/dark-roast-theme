@@ -34,6 +34,63 @@
     "stability": {
       "type": "string",
       "enum": ["study", "candidate", "experimental", "proven", "stable", "deprecated"]
+    },
+    "kebabArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" }
+    },
+    "elementList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^(\\*|[a-z][a-z0-9-]*)$" }
+    },
+    "attributeRules": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": { "type": "string", "minLength": 1 }
+      }
+    },
+    "attributeList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+    },
+    "accessibleName": {
+      "type": "string",
+      "enum": ["none", "contents", "required"]
+    },
+    "rootContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elements", "requiredAttributes", "forbiddenAttributes", "accessibleName"],
+      "properties": {
+        "elements": { "$ref": "#/definitions/elementList" },
+        "requiredAttributes": { "$ref": "#/definitions/attributeRules" },
+        "forbiddenAttributes": { "$ref": "#/definitions/attributeList" },
+        "accessibleName": { "$ref": "#/definitions/accessibleName" }
+      }
+    },
+    "partContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent", "elements", "cardinality", "requiredAttributes", "forbiddenAttributes", "accessibleName"],
+      "properties": {
+        "parent": { "type": "string", "pattern": "^(root|[a-z][a-z0-9]*(-[a-z0-9]+)*)$" },
+        "elements": { "$ref": "#/definitions/elementList" },
+        "cardinality": {
+          "type": "string",
+          "enum": ["one", "zero-or-one", "one-or-more", "zero-or-more"]
+        },
+        "requiredAttributes": { "$ref": "#/definitions/attributeRules" },
+        "forbiddenAttributes": { "$ref": "#/definitions/attributeList" },
+        "accessibleName": { "$ref": "#/definitions/accessibleName" }
+      }
     }
   },
   "properties": {
@@ -157,13 +214,39 @@
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["responsibility", "axes"],
+        "required": [
+          "stability",
+          "responsibility",
+          "axes",
+          "root",
+          "partOrder",
+          "partOrderPolicy",
+          "parts",
+          "publicHooks"
+        ],
         "properties": {
+          "stability": { "$ref": "#/definitions/stability" },
           "responsibility": { "type": "string", "minLength": 12 },
           "axes": {
             "type": "array",
             "uniqueItems": true,
             "items": { "type": "string" }
+          },
+          "root": { "$ref": "#/definitions/rootContract" },
+          "partOrder": { "$ref": "#/definitions/kebabArray" },
+          "partOrderPolicy": {
+            "type": "string",
+            "enum": ["none", "listed", "either"]
+          },
+          "parts": {
+            "type": "object",
+            "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+            "additionalProperties": { "$ref": "#/definitions/partContract" }
+          },
+          "publicHooks": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^--oi-[a-z][a-z0-9-]*$" }
           }
         }
       },

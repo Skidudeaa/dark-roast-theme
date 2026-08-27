@@ -1,6 +1,6 @@
 /* Cold, flat proof mapping. It is intentionally unrelated to Dark Roast and is not a supported export. */
 @layer oi.mapping {
-  .oi-root {
+  .oi-root[data-oi-mapping="alien"] {
     --oi-surface-canvas: #e8f1f7;
     --oi-surface-base: #f7fbfe;
     --oi-surface-raised: #dce8f1;
@@ -36,6 +36,12 @@
     --oi-typography-heading: ui-sans-serif, system-ui, sans-serif;
     --oi-typography-display: ui-serif, Georgia, serif;
     --oi-typography-mono: ui-monospace, monospace;
+    --oi-typography-size-label: 0.75rem;
+    --oi-typography-size-body: 0.875rem;
+    --oi-typography-size-title: 1.125rem;
+    --oi-typography-size-display: 1.75rem;
+    --oi-typography-line-compact: 1.5;
+    --oi-typography-line-reading: 1.6;
 
     --oi-geometry-space: 4px;
     --oi-geometry-radius-control: 2px;

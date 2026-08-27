@@ -1,0 +1,12 @@
+@layer oi.primitives {
+  .oi-cluster {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: var(--oi-cluster-wrap, wrap);
+    align-items: var(--oi-cluster-align, center);
+    justify-content: var(--oi-cluster-justify, start);
+    min-inline-size: 0;
+    margin: 0;
+    gap: var(--oi-cluster-gap, var(--_oi-density-gap));
+  }
+}

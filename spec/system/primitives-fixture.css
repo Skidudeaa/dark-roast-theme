@@ -1,0 +1,98 @@
+/* Product-shell layout for the primitive proof page. Primitive presentation is
+   owned by src/system/primitives; this file only arranges and labels fixtures. */
+@layer product {
+  body {
+    min-block-size: 100vh;
+    margin: 0;
+  }
+
+  .fixture-shell {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .fixture-mapping {
+    min-inline-size: 0;
+    padding: calc(var(--oi-geometry-space) * 4);
+    background: var(--oi-surface-canvas);
+    color: var(--oi-text-body);
+    font-family: var(--oi-typography-body);
+  }
+
+  .fixture-panel {
+    --oi-surface-padding: calc(var(--oi-geometry-space) * 5);
+  }
+
+  .fixture-header {
+    display: grid;
+    gap: var(--oi-geometry-space);
+  }
+
+  .fixture-header > * {
+    margin: 0;
+  }
+
+  .fixture-header h1 {
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-heading);
+    font-size: var(--oi-typography-size-title);
+    line-height: var(--oi-typography-line-compact);
+  }
+
+  .fixture-kicker {
+    color: var(--oi-accent-primary);
+    font-size: var(--oi-typography-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .fixture-summary {
+    color: var(--oi-text-muted);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-reading);
+  }
+
+  .fixture-sample {
+    min-inline-size: 0;
+    padding-block-start: calc(var(--oi-geometry-space) * 3);
+    border-block-start: 1px solid var(--oi-border-subtle);
+  }
+
+  .fixture-sample > h2 {
+    margin-block: 0 calc(var(--oi-geometry-space) * 2);
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-heading);
+    font-size: var(--oi-typography-size-label);
+    line-height: var(--oi-typography-line-compact);
+    text-transform: uppercase;
+  }
+
+  .fixture-sample > p {
+    margin-block: var(--oi-geometry-space);
+  }
+
+  .fixture-chip {
+    padding-block: var(--oi-geometry-space);
+    padding-inline: calc(var(--oi-geometry-space) * 2);
+    border: 1px solid var(--oi-border-default);
+    border-radius: var(--oi-geometry-radius-control);
+    background: var(--oi-surface-interactive);
+    color: var(--oi-text-primary);
+  }
+
+  .fixture-divider-row {
+    display: flex;
+    min-block-size: calc(var(--oi-interaction-pointer-target-min) * 2);
+    align-items: center;
+    gap: calc(var(--oi-geometry-space) * 3);
+  }
+
+  @media (max-width: 72rem) {
+    .fixture-shell {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@layer oi.primitives {
+  .oi-divider {
+    --_oi-divider-color: var(--oi-border-default);
+
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--_oi-divider-color);
+    border: 0;
+    border-block-start: var(--oi-divider-size, 1px) solid var(--_oi-divider-color);
+  }
+
+  .oi-divider[data-oi-emphasis="quiet"] {
+    --_oi-divider-color: var(--oi-border-subtle);
+  }
+
+  .oi-divider[data-oi-emphasis="strong"] {
+    --_oi-divider-color: var(--oi-border-strong);
+  }
+
+  .oi-divider[aria-orientation="vertical"] {
+    align-self: stretch;
+    inline-size: 0;
+    block-size: auto;
+    border-block-start: 0;
+    border-inline-start: var(--oi-divider-size, 1px) solid var(--_oi-divider-color);
+  }
+
+  @media (forced-colors: active) {
+    .oi-divider {
+      --_oi-divider-color: CanvasText;
+    }
+  }
+}

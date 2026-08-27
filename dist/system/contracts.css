@@ -92,6 +92,8 @@
   .oi-root {
     color: var(--oi-text-body);
     font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-reading);
     text-rendering: optimizeLegibility;
   }
 
@@ -250,13 +252,8 @@
     --_oi-truth-font-style: normal;
     --_oi-truth-decoration-line: none;
     --_oi-truth-decoration-style: solid;
-
-    border-style: var(--_oi-truth-border-style);
-    font-style: var(--_oi-truth-font-style);
-    text-decoration-line: var(--_oi-truth-decoration-line);
-    text-decoration-style: var(--_oi-truth-decoration-style);
-    text-decoration-color: var(--oi-text-muted);
-    text-underline-offset: calc(var(--oi-geometry-space) / 2);
+    --_oi-truth-completeness-border-style: solid;
+    --_oi-truth-completeness-border-width: 1px;
   }
 
   :where([data-oi-source="derived"], [data-oi-source="generated"]) {
@@ -284,15 +281,18 @@
   }
 
   :where([data-oi-completeness="partial"]) {
-    border-inline-start: var(--oi-interaction-focus-ring-width) dashed var(--oi-border-strong);
+    --_oi-truth-completeness-border-style: dashed;
+    --_oi-truth-completeness-border-width: var(--oi-interaction-focus-ring-width);
   }
 
   :where([data-oi-completeness="missing"]) {
-    border-inline-start: calc(var(--oi-interaction-focus-ring-width) * 2) double var(--oi-border-strong);
+    --_oi-truth-completeness-border-style: double;
+    --_oi-truth-completeness-border-width: calc(var(--oi-interaction-focus-ring-width) * 2);
   }
 
   :where([data-oi-completeness="unavailable"]) {
-    border-inline-start: var(--oi-interaction-focus-ring-width) dotted var(--oi-border-strong);
+    --_oi-truth-completeness-border-style: dotted;
+    --_oi-truth-completeness-border-width: var(--oi-interaction-focus-ring-width);
   }
 }
 

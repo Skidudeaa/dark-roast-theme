@@ -42,6 +42,53 @@ if (!validate(manifest)) {
 const axisNames = keys(manifest.axes);
 const axisSet = new Set(axisNames);
 const ladder = new Set(manifest.stabilityLadder.stages);
+const semanticRoleVariables = new Set(
+  entries(manifest.semanticRoles).flatMap(([category, roles]) =>
+    roles.map((role) => `${manifest.naming.cssVariablePrefix}${category}-${role}`),
+  ),
+);
+const publicHookOwners = new Map();
+
+function validateAttributeContract(context, requiredAttributes, forbiddenAttributes) {
+  const required = requiredAttributes ?? {};
+  const forbidden = new Set(forbiddenAttributes ?? []);
+
+  for (const [attribute, values] of Object.entries(required)) {
+    if (values.includes('*') && values.length !== 1) {
+      failures.push(`${context}: attribute "${attribute}" wildcard must be its only allowed value`);
+    }
+    if (forbidden.has(attribute)) {
+      failures.push(`${context}: attribute "${attribute}" is both required and forbidden`);
+    }
+  }
+}
+
+function validateElementContract(context, elements) {
+  if (elements?.includes('*') && elements.length !== 1) {
+    failures.push(`${context}: element wildcard must be the only allowed element`);
+  }
+}
+
+function registerPublicHook(ownerType, ownerName, hook, requiredPrefix) {
+  if (!hook.startsWith(requiredPrefix)) {
+    failures.push(
+      `${ownerType} "${ownerName}": public hook "${hook}" must start with "${requiredPrefix}"`,
+    );
+  }
+  if (semanticRoleVariables.has(hook)) {
+    failures.push(
+      `${ownerType} "${ownerName}": public hook "${hook}" collides with a semantic role`,
+    );
+  }
+  const previousOwner = publicHookOwners.get(hook);
+  if (previousOwner) {
+    failures.push(
+      `${ownerType} "${ownerName}": public hook "${hook}" is already owned by ${previousOwner}`,
+    );
+  } else {
+    publicHookOwners.set(hook, `${ownerType} "${ownerName}"`);
+  }
+}
 
 // Every axis declares a stability, and no stability names a phantom axis.
 for (const axis of axisNames) {
@@ -66,12 +113,84 @@ if (primitiveNames.length !== 10) {
   );
 }
 
-// Every primitive consumes only declared axes (§5.1 dependency direction).
+// Primitive anatomy is public API: every part has one owner, deterministic
+// order, valid DOM constraints, and a private hook namespace.
 for (const [name, def] of entries(manifest.primitives)) {
-  for (const axis of def.axes) {
+  for (const axis of def.axes ?? []) {
     if (!axisSet.has(axis)) {
       failures.push(`primitive "${name}": axis "${axis}" is not declared in axes`);
     }
+  }
+
+  if (!ladder.has(def.stability)) {
+    failures.push(`primitive "${name}": stability "${def.stability}" is not on the stability ladder`);
+  }
+
+  validateElementContract(`primitive "${name}" root`, def.root?.elements);
+  validateAttributeContract(
+    `primitive "${name}" root`,
+    def.root?.requiredAttributes,
+    def.root?.forbiddenAttributes,
+  );
+
+  const partNames = keys(def.parts ?? {});
+  const partSet = new Set(partNames);
+  const order = def.partOrder ?? [];
+  const orderSet = new Set(order);
+  if (order.length !== orderSet.size) {
+    failures.push(`primitive "${name}": partOrder contains duplicates`);
+  }
+  for (const part of partNames) {
+    if (!orderSet.has(part)) {
+      failures.push(`primitive "${name}": part "${part}" is absent from partOrder`);
+    }
+  }
+  for (const part of order) {
+    if (!partSet.has(part)) {
+      failures.push(`primitive "${name}": partOrder names undeclared part "${part}"`);
+    }
+  }
+
+  const hasParts = partNames.length > 0;
+  if (hasParts === (def.partOrderPolicy === 'none')) {
+    failures.push(
+      `primitive "${name}": partOrderPolicy must be "none" if and only if parts is empty`,
+    );
+  }
+
+  for (const [partName, part] of entries(def.parts ?? {})) {
+    validateElementContract(`primitive "${name}" part "${partName}"`, part.elements);
+    validateAttributeContract(
+      `primitive "${name}" part "${partName}"`,
+      part.requiredAttributes,
+      part.forbiddenAttributes,
+    );
+    if (part.parent !== 'root' && !partSet.has(part.parent)) {
+      failures.push(
+        `primitive "${name}" part "${partName}": parent "${part.parent}" is not root or a declared part`,
+      );
+    }
+
+    const ancestry = new Set([partName]);
+    let parent = part.parent;
+    while (parent && parent !== 'root' && partSet.has(parent)) {
+      if (ancestry.has(parent)) {
+        failures.push(`primitive "${name}" part "${partName}": parent graph contains a cycle`);
+        break;
+      }
+      ancestry.add(parent);
+      parent = def.parts[parent]?.parent;
+    }
+  }
+
+  const hookNamespace = name.split('-')[0];
+  for (const hook of def.publicHooks ?? []) {
+    registerPublicHook(
+      'primitive',
+      name,
+      hook,
+      `${manifest.naming.cssVariablePrefix}${hookNamespace}-`,
+    );
   }
 }
 
@@ -127,6 +246,15 @@ for (const [name, def] of entries(manifest.recipes)) {
   if (reserved.has(name)) {
     failures.push(`recipe "${name}": implemented recipes must not also be listed in reservedRecipeNames`);
   }
+
+  for (const hook of def.publicHooks ?? []) {
+    registerPublicHook(
+      'recipe',
+      name,
+      hook,
+      `${manifest.naming.cssVariablePrefix}${name}-`,
+    );
+  }
 }
 
 // Generated type coverage: every axis plus the structural enumerations.
@@ -135,7 +263,7 @@ for (const axis of axisNames) {
     failures.push(`generatedTypes: missing type name for axis "${axis}"`);
   }
 }
-for (const structural of ['primitive', 'recipe', 'slot']) {
+for (const structural of ['primitive', 'part', 'recipe', 'slot']) {
   if (!manifest.generatedTypes[structural]) {
     failures.push(`generatedTypes: missing type name for "${structural}"`);
   }

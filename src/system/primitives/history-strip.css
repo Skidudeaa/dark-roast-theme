@@ -1,0 +1,79 @@
+@layer oi.primitives {
+  .oi-history-strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(
+      min(
+        100%,
+        var(--oi-history-item-size, calc(var(--oi-geometry-space) * 28))
+      ),
+      1fr
+    );
+    min-inline-size: 0;
+    margin: 0;
+    padding-block: var(--_oi-density-gap);
+    padding-inline-start: var(--_oi-density-inset);
+    gap: var(--oi-history-gap, var(--_oi-density-gap));
+    overflow-block: hidden;
+    overflow-inline: auto;
+    overscroll-behavior-inline: contain;
+    list-style-position: outside;
+    list-style-type: decimal;
+    scrollbar-gutter: stable;
+    border: 1px solid var(--_oi-status-color);
+  }
+
+  .oi-history-strip__item {
+    min-inline-size: 0;
+    padding-inline-start: var(--oi-geometry-space);
+    color: var(--oi-text-body);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-history-strip__item::marker {
+    color: var(--oi-text-muted);
+    font-family: var(--oi-typography-mono);
+    font-size: var(--oi-typography-size-label);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .oi-history-strip__time {
+    display: block;
+    padding-block-end: var(--oi-geometry-space);
+    color: var(--oi-text-muted);
+    font-family: var(--oi-typography-mono);
+    font-size: var(--oi-typography-size-label);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--oi-typography-line-compact);
+  }
+
+  .oi-history-strip__bar {
+    box-sizing: border-box;
+    display: block;
+    inline-size: calc(clamp(0, var(--oi-history-intensity, 0), 1) * 100%);
+    max-inline-size: 100%;
+    block-size: calc(var(--oi-geometry-space) * 2);
+    background-color: var(--_oi-status-color);
+    border: 1px solid var(--_oi-status-color);
+    border-radius: var(--oi-geometry-radius-control);
+  }
+
+  .oi-history-strip__value {
+    display: block;
+    padding-block-start: var(--oi-geometry-space);
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-mono);
+    font-size: var(--oi-typography-size-label);
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  @media (forced-colors: active) {
+    .oi-history-strip__bar {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      border-color: CanvasText;
+    }
+  }
+}

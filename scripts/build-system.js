@@ -35,6 +35,7 @@ const TOKENS_SRC = join(ROOT, 'src', 'tokens.json');
 const MAPPING_SRC = join(ROOT, 'src', 'system', 'mappings', 'dark-roast.json');
 const LAYERS_SRC = join(ROOT, 'src', 'system', 'layers.css');
 const CONTRACTS_SRC = join(ROOT, 'src', 'system', 'contracts');
+const PRIMITIVES_SRC = join(ROOT, 'src', 'system', 'primitives');
 const OUT_DIR = join(ROOT, 'dist', 'system');
 const CHECK = process.argv.includes('--check');
 const CONTRACT_SOURCE_ORDER = [
@@ -101,9 +102,34 @@ const axes = entries(manifest.axes);
 const roles = entries(manifest.semanticRoles);
 const primitiveNames = entries(manifest.primitives).map(([k]) => k);
 const recipeNames = entries(manifest.recipes).map(([k]) => k);
+const primitiveSourceOrder = primitiveNames.map((name) => `${name}.css`);
+const allParts = [
+  ...new Set(
+    entries(manifest.primitives).flatMap(([, primitive]) => keys(primitive.parts ?? {})),
+  ),
+].sort();
 const allSlots = [
   ...new Set(entries(manifest.recipes).flatMap(([, r]) => r.slotOrder)),
 ].sort();
+
+function keys(object) {
+  return Object.keys(object).filter((key) => !isMeta(key));
+}
+
+function frozenLiteral(value, depth = 0) {
+  if (Array.isArray(value)) {
+    return `Object.freeze([${value.map((item) => frozenLiteral(item, depth)).join(', ')}])`;
+  }
+  if (value && typeof value === 'object') {
+    const indent = '  '.repeat(depth);
+    const childIndent = '  '.repeat(depth + 1);
+    const properties = Object.entries(value).map(
+      ([key, child]) => `${childIndent}${JSON.stringify(key)}: ${frozenLiteral(child, depth + 1)},`,
+    );
+    return `Object.freeze({\n${properties.join('\n')}\n${indent}})`;
+  }
+  return JSON.stringify(value);
+}
 
 function darkRoastVariableInventory(tokens) {
   const variables = new Set();
@@ -229,25 +255,66 @@ function buildDarkRoastMapping() {
   ].join('\n');
 }
 
-function buildContractsCss() {
-  const layers = readRequired(LAYERS_SRC, 'system cascade-layer source').trim();
-  if (!existsSync(CONTRACTS_SRC)) {
-    throw new Error(`[oi] missing semantic contract source directory: ${CONTRACTS_SRC}`);
+function readCssSources(directory, sourceOrder, description) {
+  if (!existsSync(directory)) {
+    throw new Error(`[oi] missing ${description} source directory: ${directory}`);
   }
-  const discoveredNames = readdirSync(CONTRACTS_SRC, { withFileTypes: true })
+  const discoveredNames = readdirSync(directory, { withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith('.css'))
     .map((entry) => entry.name)
     .sort();
-  exactKeys(discoveredNames, CONTRACT_SOURCE_ORDER, 'semantic contract CSS sources');
+  exactKeys(discoveredNames, sourceOrder, `${description} CSS sources`);
 
-  const sources = CONTRACT_SOURCE_ORDER.map((name) =>
-    `/* source: src/system/contracts/${name} */\n${readRequired(join(CONTRACTS_SRC, name), `semantic contract ${name}`).trim()}`,
+  const relativeDirectory = directory === CONTRACTS_SRC ? 'contracts' : 'primitives';
+  return sourceOrder.map((name) =>
+    `/* source: src/system/${relativeDirectory}/${name} */\n${readRequired(join(directory, name), `${description} ${name}`).trim()}`,
   );
-  return `${[
+}
+
+function buildCssBundle(banner, sources) {
+  const layers = readRequired(LAYERS_SRC, 'system cascade-layer source').trim();
+  return `${[banner, layers, ...sources].join('\n\n')}\n`;
+}
+
+function buildContractsCss() {
+  const sources = readCssSources(
+    CONTRACTS_SRC,
+    CONTRACT_SOURCE_ORDER,
+    'semantic contract',
+  );
+  return buildCssBundle(
     '/* AUTO-GENERATED from src/system/layers.css and src/system/contracts/*.css by scripts/build-system.js — DO NOT EDIT. */',
-    layers,
-    ...sources,
-  ].join('\n\n')}\n`;
+    sources,
+  );
+}
+
+function buildPrimitivesCss() {
+  const sources = readCssSources(
+    PRIMITIVES_SRC,
+    primitiveSourceOrder,
+    'structural primitive',
+  );
+  return buildCssBundle(
+    '/* AUTO-GENERATED from src/system/layers.css and src/system/primitives/*.css by scripts/build-system.js — DO NOT EDIT. */',
+    sources,
+  );
+}
+
+function buildSystemCss() {
+  const contractSources = readCssSources(
+    CONTRACTS_SRC,
+    CONTRACT_SOURCE_ORDER,
+    'semantic contract',
+  );
+  const primitiveSources = readCssSources(
+    PRIMITIVES_SRC,
+    primitiveSourceOrder,
+    'structural primitive',
+  );
+  return buildCssBundle(
+    '/* AUTO-GENERATED from src/system/layers.css, src/system/contracts/*.css, and src/system/primitives/*.css by scripts/build-system.js — DO NOT EDIT. */',
+    [...contractSources, ...primitiveSources],
+  );
 }
 
 function buildIndexJs() {
@@ -340,6 +407,28 @@ function buildJs() {
   L.push('export const primitiveAxes = Object.freeze({');
   for (const [name, def] of entries(manifest.primitives)) {
     L.push(`  '${name}': Object.freeze([${list(def.axes)}]),`);
+  }
+  L.push('});');
+
+  L.push('');
+  L.push('// Full DOM, part, and public-hook contract for each primitive.');
+  L.push('export const primitiveContracts = Object.freeze({');
+  for (const [name, def] of entries(manifest.primitives)) {
+    L.push(`  '${name}': ${frozenLiteral(strip(def), 1)},`);
+  }
+  L.push('});');
+
+  L.push('');
+  L.push('// Owner-qualified public part classes; arbitrary BEM selectors are not contract.');
+  L.push('export const primitivePartClasses = Object.freeze({');
+  for (const [name, def] of entries(manifest.primitives)) {
+    const partClasses = Object.fromEntries(
+      keys(def.parts ?? {}).map((part) => [
+        part,
+        `${manifest.naming.cssClassPrefix}${name}__${part}`,
+      ]),
+    );
+    L.push(`  '${name}': ${frozenLiteral(partClasses, 1)},`);
   }
   L.push('});');
 
@@ -466,6 +555,17 @@ function buildDts() {
   L.push(`/** Structural primitives (§10). */`);
   L.push(`export type ${T.primitive ?? 'OiPrimitive'} = ${union(primitiveNames)};`);
   L.push('');
+  L.push('/** Public part names declared by structural primitives. */');
+  L.push(`export type ${T.part ?? 'OiPart'} = ${union(allParts)};`);
+  L.push('');
+  L.push('/** Primitive-specific part-name narrowing for framework adapters. */');
+  L.push('export interface OiPrimitivePartMap {');
+  for (const [name, def] of entries(manifest.primitives)) {
+    const parts = keys(def.parts ?? {});
+    L.push(`  readonly '${name}': ${parts.length ? union(parts) : 'never'};`);
+  }
+  L.push('}');
+  L.push('');
   L.push(`/** Composition recipes (§11). */`);
   L.push(`export type ${T.recipe ?? 'OiRecipe'} = ${union(recipeNames)};`);
   L.push('');
@@ -487,6 +587,40 @@ function buildDts() {
     const typeName = T[axis] ?? `Oi${pascal(axis)}`;
     L.push(`  ${camel(axis)}?: ${typeName};`);
   }
+  L.push('}');
+  L.push('');
+
+  L.push("export type OiAccessibleName = 'none' | 'contents' | 'required';");
+  L.push("export type OiPartCardinality = 'one' | 'zero-or-one' | 'one-or-more' | 'zero-or-more';");
+  L.push("export type OiPartOrderPolicy = 'none' | 'listed' | 'either';");
+  L.push('');
+
+  L.push('/** Element and attribute obligations shared by primitive roots and parts. */');
+  L.push('export interface OiPrimitiveNodeContract {');
+  L.push('  readonly elements: readonly string[];');
+  L.push('  readonly requiredAttributes: Readonly<Record<string, readonly string[]>>;');
+  L.push('  readonly forbiddenAttributes: readonly string[];');
+  L.push('  readonly accessibleName: OiAccessibleName;');
+  L.push('}');
+  L.push('');
+
+  L.push('/** Public contract of one owner-qualified primitive part. */');
+  L.push('export interface OiPrimitivePartContract extends OiPrimitiveNodeContract {');
+  L.push(`  readonly parent: 'root' | ${T.part ?? 'OiPart'};`);
+  L.push('  readonly cardinality: OiPartCardinality;');
+  L.push('}');
+  L.push('');
+
+  L.push('/** Public DOM and styling contract of one structural primitive. */');
+  L.push('export interface OiPrimitiveContract {');
+  L.push('  readonly stability: OiStability;');
+  L.push('  readonly responsibility: string;');
+  L.push('  readonly axes: readonly (keyof OiState)[];');
+  L.push('  readonly root: OiPrimitiveNodeContract;');
+  L.push(`  readonly partOrder: readonly ${T.part ?? 'OiPart'}[];`);
+  L.push('  readonly partOrderPolicy: OiPartOrderPolicy;');
+  L.push(`  readonly parts: Readonly<Partial<Record<${T.part ?? 'OiPart'}, OiPrimitivePartContract>>>;`);
+  L.push('  readonly publicHooks: readonly string[];');
   L.push('}');
   L.push('');
 
@@ -520,6 +654,10 @@ function buildDts() {
   L.push('export declare const semanticRoleVariables: readonly string[];');
   L.push(`export declare const primitives: readonly ${T.primitive ?? 'OiPrimitive'}[];`);
   L.push(`export declare const primitiveAxes: Readonly<Record<${T.primitive ?? 'OiPrimitive'}, readonly string[]>>;`);
+  L.push(`export declare const primitiveContracts: Readonly<Record<${T.primitive ?? 'OiPrimitive'}, OiPrimitiveContract>>;`);
+  L.push('export declare const primitivePartClasses: {');
+  L.push(`  readonly [K in ${T.primitive ?? 'OiPrimitive'}]: Readonly<Partial<Record<OiPrimitivePartMap[K], string>>>;`);
+  L.push('};');
   L.push(`export declare const recipes: readonly ${T.recipe ?? 'OiRecipe'}[];`);
   L.push(`export declare const recipeContracts: Readonly<Record<${T.recipe ?? 'OiRecipe'}, OiRecipeContract>>;`);
   L.push('export declare const reservedRecipeNames: readonly string[];');
@@ -535,6 +673,8 @@ function buildDts() {
 
 // ── write / check ───────────────────────────────────────────
 const contractsCss = buildContractsCss();
+const primitivesCss = buildPrimitivesCss();
+const systemCss = buildSystemCss();
 const outputs = {
   'index.js': buildIndexJs(),
   'index.d.ts': buildIndexJs(),
@@ -542,7 +682,8 @@ const outputs = {
   'contract.d.ts': buildDts(),
   'contract.json': `${JSON.stringify(strip(manifest), null, 2)}\n`,
   'contracts.css': contractsCss,
-  'index.css': contractsCss,
+  'primitives.css': primitivesCss,
+  'index.css': systemCss,
   'mappings/dark-roast.css': buildDarkRoastMapping(),
 };
 

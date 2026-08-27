@@ -6,7 +6,7 @@
 // source scans (doctrine §17.1).
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { dirname, extname, join, relative } from 'node:path';
+import { basename, dirname, extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import postcss from 'postcss';
 import selectorParser from 'postcss-selector-parser';
@@ -15,12 +15,13 @@ import valueParser from 'postcss-value-parser';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SYSTEM_SOURCE = join(ROOT, 'src', 'system');
 const LAYERS_SOURCE = join(SYSTEM_SOURCE, 'layers.css');
+const CONTRACTS_SOURCE = join(SYSTEM_SOURCE, 'contracts');
+const PRIMITIVES_SOURCE = join(SYSTEM_SOURCE, 'primitives');
+const RECIPES_SOURCE = join(SYSTEM_SOURCE, 'recipes');
 const MAPPINGS_OUTPUT = join(ROOT, 'dist', 'system', 'mappings');
 const DARK_ROAST_MAPPING = join(MAPPINGS_OUTPUT, 'dark-roast.css');
 const ALIEN_MAPPING = join(ROOT, 'spec', 'system', 'mappings', 'alien.css');
-const SOURCE_DIRECTORIES = ['contracts', 'primitives', 'recipes'].map((name) =>
-  join(SYSTEM_SOURCE, name),
-);
+const SOURCE_DIRECTORIES = [CONTRACTS_SOURCE, PRIMITIVES_SOURCE, RECIPES_SOURCE];
 const EXPECTED_LAYER_ORDER = [
   'oi.mapping',
   'oi.contracts',
@@ -62,24 +63,42 @@ const semanticRoleVariables = new Set(
   ),
 );
 const publicHookVariables = new Set(
-  entries(manifest.recipes).flatMap(([, recipe]) => recipe.publicHooks ?? []),
+  [
+    ...entries(manifest.primitives).flatMap(([, primitive]) => primitive.publicHooks ?? []),
+    ...entries(manifest.recipes).flatMap(([, recipe]) => recipe.publicHooks ?? []),
+  ],
 );
+const primitiveHookToOwner = new Map(
+  entries(manifest.primitives).flatMap(([name, primitive]) =>
+    (primitive.publicHooks ?? []).map((hook) => [hook, name]),
+  ),
+);
+const usedPrimitiveHooks = new Set();
 const publicVariables = new Set([
   ...semanticRoleVariables,
   ...publicHookVariables,
 ]);
 
-const primitiveClasses = new Set(
-  entries(manifest.primitives).map(([name]) => `oi-${name}`),
+const primitiveClassToName = new Map(
+  entries(manifest.primitives).map(([name]) => [`oi-${name}`, name]),
 );
+const primitiveClasses = new Set(primitiveClassToName.keys());
+const primitivePartClassToOwner = new Map(
+  entries(manifest.primitives).flatMap(([name, primitive]) =>
+    entries(primitive.parts ?? {}).map(([part]) => [`oi-${name}__${part}`, name]),
+  ),
+);
+const primitivePartClasses = new Set(primitivePartClassToOwner.keys());
 const recipeClassToName = new Map(
   entries(manifest.recipes).map(([name]) => [`oi-recipe-${name}`, name]),
 );
 const componentClasses = new Set([
   ...primitiveClasses,
+  ...primitivePartClasses,
   ...recipeClassToName.keys(),
 ]);
 const exactAllowedOiClasses = new Set(['oi-root', ...componentClasses]);
+const styledPrimitiveClasses = new Set();
 
 const INTERACTIVE_TYPES = new Set([
   'a',
@@ -246,9 +265,9 @@ function isWithin(directory, file) {
 }
 
 function expectedLayer(file) {
-  if (isWithin(join(SYSTEM_SOURCE, 'contracts'), file)) return 'oi.contracts';
-  if (isWithin(join(SYSTEM_SOURCE, 'primitives'), file)) return 'oi.primitives';
-  if (isWithin(join(SYSTEM_SOURCE, 'recipes'), file)) return 'oi.recipes';
+  if (isWithin(CONTRACTS_SOURCE, file)) return 'oi.contracts';
+  if (isWithin(PRIMITIVES_SOURCE, file)) return 'oi.primitives';
+  if (isWithin(RECIPES_SOURCE, file)) return 'oi.recipes';
   if (isWithin(MAPPINGS_OUTPUT, file) || isAlienMapping(file)) return 'oi.mapping';
   return null;
 }
@@ -389,6 +408,15 @@ function validateAttribute(file, rule, selector, attribute) {
   const name = attribute.attribute;
   if (!name) return;
 
+  if (
+    name === 'class' &&
+    attribute.value !== undefined &&
+    attribute.value.includes(manifest.naming.cssClassPrefix)
+  ) {
+    fail(file, rule, 'oi-* public classes must use class selectors, not class attribute selectors');
+    return;
+  }
+
   if (name === 'data-state') {
     fail(file, rule, 'generic data-state is prohibited');
     return;
@@ -460,6 +488,26 @@ function validateStateAttributeCardinality(file, rule, selector, inheritedCount 
   }
 }
 
+function hasExactMappingRoot(file, selectorRoot) {
+  if (selectorRoot.nodes.length !== 1) return false;
+  const nodes = selectorRoot.nodes[0]?.nodes ?? [];
+  if (
+    nodes[0]?.type !== 'class' ||
+    nodes[0].value !== 'oi-root'
+  ) {
+    return false;
+  }
+  if (isDarkRoastMapping(file)) return nodes.length === 1;
+  return (
+    isAlienMapping(file) &&
+    nodes.length === 2 &&
+    nodes[1].type === 'attribute' &&
+    nodes[1].attribute === 'data-oi-mapping' &&
+    nodes[1].operator === '=' &&
+    nodes[1].value === 'alien'
+  );
+}
+
 function validateSelectors(file, rule, primitiveMarginRules) {
   if (isInsideKeyframes(rule)) return;
 
@@ -471,16 +519,11 @@ function validateSelectors(file, rule, primitiveMarginRules) {
     return;
   }
 
-  if (isDarkRoastMapping(file) || isAlienMapping(file)) {
-    const selector = selectorRoot.nodes[0];
-    const exactRoot =
-      selectorRoot.nodes.length === 1 &&
-      selector?.nodes.length === 1 &&
-      selector.nodes[0].type === 'class' &&
-      selector.nodes[0].value === 'oi-root';
-    if (!exactRoot) {
-      fail(file, rule, 'semantic mappings must resolve directly on ".oi-root"');
-    }
+  if ((isDarkRoastMapping(file) || isAlienMapping(file)) && !hasExactMappingRoot(file, selectorRoot)) {
+    const expected = isAlienMapping(file)
+      ? '.oi-root[data-oi-mapping="alien"]'
+      : '.oi-root';
+    fail(file, rule, `semantic mapping selector must be exactly "${expected}"`);
   }
 
   let targetsPrimitiveRoot = false;
@@ -508,6 +551,7 @@ function validateSelectors(file, rule, primitiveMarginRules) {
         fail(file, rule, `brittle positional selector "${pseudo.value}"`);
       }
     });
+    const ownsDeclarations = rule.nodes?.some((node) => node.type === 'decl');
     selector.walkClasses((classNode) => {
       if (
         classNode.value.startsWith(manifest.naming.cssClassPrefix) &&
@@ -518,6 +562,27 @@ function validateSelectors(file, rule, primitiveMarginRules) {
           rule,
           `undocumented public class ".${classNode.value}"`,
         );
+      }
+      if (
+        ownsDeclarations &&
+        (primitiveClasses.has(classNode.value) || primitivePartClasses.has(classNode.value))
+      ) {
+        if (!isWithin(PRIMITIVES_SOURCE, file)) {
+          fail(file, rule, `primitive selector ".${classNode.value}" is outside src/system/primitives`);
+        } else {
+          const fileOwner = basename(file, '.css');
+          const selectorOwner = primitiveClassToName.get(classNode.value)
+            ?? primitivePartClassToOwner.get(classNode.value);
+          if (selectorOwner !== fileOwner) {
+            fail(
+              file,
+              rule,
+              `primitive selector ".${classNode.value}" belongs in ${selectorOwner}.css`,
+            );
+          } else {
+            styledPrimitiveClasses.add(classNode.value);
+          }
+        }
       }
     });
     selector.walkAttributes((attribute) =>
@@ -726,7 +791,37 @@ function valueContainsInfinite(value) {
   return found;
 }
 
-function validateFile(file, mappingFiles) {
+function recordPrimitiveHookUse(file, node, hook) {
+  const owner = primitiveHookToOwner.get(hook);
+  if (!owner) return;
+  if (!isWithin(PRIMITIVES_SOURCE, file) || basename(file, '.css') !== owner) {
+    fail(file, node, `primitive hook "${hook}" belongs in ${owner}.css`);
+    return;
+  }
+  usedPrimitiveHooks.add(hook);
+}
+
+function collectPrivateVariables(files) {
+  const variables = new Set();
+  for (const file of files) {
+    let root;
+    try {
+      root = postcss.parse(readFileSync(file, 'utf8'), { from: file });
+    } catch {
+      continue;
+    }
+    root.walkDecls((declaration) => {
+      if (declaration.prop.startsWith('--_oi-')) variables.add(declaration.prop);
+    });
+    root.walkAtRules('property', (atRule) => {
+      const property = atRule.params.trim();
+      if (property.startsWith('--_oi-')) variables.add(property);
+    });
+  }
+  return variables;
+}
+
+function validateFile(file, mappingFiles, privateVariables) {
   const css = readFileSync(file, 'utf8');
   let root;
   try {
@@ -739,11 +834,20 @@ function validateFile(file, mappingFiles) {
   validateLayer(file, root);
   validateForbiddenTerms(file, root);
 
-  const localVariables = new Set();
+  root.walkRules((rule) => {
+    if (rule.parent?.type === 'rule') {
+      fail(file, rule, 'nested style rules are prohibited in kernel CSS');
+    }
+  });
+  root.walkAtRules((atRule) => {
+    if (atRule.parent?.type === 'rule') {
+      fail(file, atRule, 'nested conditional rules are prohibited in kernel CSS');
+    }
+  });
+
   root.walkDecls((declaration) => {
-    if (declaration.prop.startsWith('--_oi-')) {
-      localVariables.add(declaration.prop);
-    } else if (
+    if (
+      !declaration.prop.startsWith('--_oi-') &&
       declaration.prop.startsWith('--oi-') &&
       !publicVariables.has(declaration.prop)
     ) {
@@ -753,12 +857,15 @@ function validateFile(file, mappingFiles) {
         `undocumented public variable definition "${declaration.prop}"`,
       );
     }
+    recordPrimitiveHookUse(file, declaration, declaration.prop);
   });
   root.walkAtRules('property', (atRule) => {
     const property = atRule.params.trim();
-    if (property.startsWith('--_oi-')) {
-      localVariables.add(property);
-    } else if (property.startsWith('--oi-') && !publicVariables.has(property)) {
+    if (
+      !property.startsWith('--_oi-') &&
+      property.startsWith('--oi-') &&
+      !publicVariables.has(property)
+    ) {
       fail(file, atRule, `undocumented public variable definition "${property}"`);
     }
   });
@@ -789,9 +896,14 @@ function validateFile(file, mappingFiles) {
         `physical spatial property "${property}" has a logical equivalent`,
       );
     }
+    let enclosingRule = declaration.parent;
+    while (enclosingRule && enclosingRule.type !== 'rule') {
+      enclosingRule = enclosingRule.parent;
+    }
     if (
-      primitiveMarginRules.has(declaration.parent) &&
-      (property === 'margin' || property.startsWith('margin-'))
+      primitiveMarginRules.has(enclosingRule) &&
+      (property === 'margin' || property.startsWith('margin-')) &&
+      declaration.value.trim() !== '0'
     ) {
       fail(file, declaration, 'primitive roots must not own external margins');
     }
@@ -806,7 +918,7 @@ function validateFile(file, mappingFiles) {
     });
     for (const reference of references) {
       const declared = reference.startsWith('--_oi-')
-        ? localVariables.has(reference)
+        ? privateVariables.has(reference)
         : publicVariables.has(reference);
       if (!declared) {
         fail(
@@ -815,6 +927,7 @@ function validateFile(file, mappingFiles) {
           `undeclared operational variable "${reference}"`,
         );
       }
+      recordPrimitiveHookUse(file, declaration, reference);
     }
 
     if (
@@ -865,7 +978,7 @@ function validateFile(file, mappingFiles) {
     });
     for (const reference of references) {
       const declared = reference.startsWith('--_oi-')
-        ? localVariables.has(reference)
+        ? privateVariables.has(reference)
         : publicVariables.has(reference);
       if (!declared) {
         fail(
@@ -874,6 +987,7 @@ function validateFile(file, mappingFiles) {
           `undeclared operational variable "${reference}"`,
         );
       }
+      recordPrimitiveHookUse(file, atRule, reference);
     }
 
     const parsed = valueParser(atRule.params);
@@ -902,7 +1016,25 @@ function validateFile(file, mappingFiles) {
   }
 }
 
+const expectedPrimitiveSourceFiles = entries(manifest.primitives).map(([name]) =>
+  join(PRIMITIVES_SOURCE, `${name}.css`),
+);
+const discoveredPrimitiveSourceFiles = collectCssFiles(PRIMITIVES_SOURCE);
+const expectedPrimitiveSourceSet = new Set(expectedPrimitiveSourceFiles);
+const discoveredPrimitiveSourceSet = new Set(discoveredPrimitiveSourceFiles);
+for (const file of expectedPrimitiveSourceFiles) {
+  if (!discoveredPrimitiveSourceSet.has(file)) {
+    failPath(file, 'required primitive CSS source is missing');
+  }
+}
+for (const file of discoveredPrimitiveSourceFiles) {
+  if (!expectedPrimitiveSourceSet.has(file)) {
+    failPath(file, 'undeclared primitive CSS source');
+  }
+}
+
 const sourceFiles = SOURCE_DIRECTORIES.flatMap(collectCssFiles).sort();
+const privateVariables = collectPrivateVariables(sourceFiles);
 const generatedMappingFiles = collectCssFiles(MAPPINGS_OUTPUT);
 const proofMappingFiles = [DARK_ROAST_MAPPING, ALIEN_MAPPING].filter(existsSync);
 const mappingFileSet = new Set(proofMappingFiles);
@@ -933,7 +1065,32 @@ const files = [
 ].sort();
 for (const file of files) {
   if (file === LAYERS_SOURCE) continue;
-  validateFile(file, mappingFileSet);
+  validateFile(file, mappingFileSet, privateVariables);
+}
+
+for (const [className, primitiveName] of primitiveClassToName) {
+  if (!styledPrimitiveClasses.has(className)) {
+    failPath(
+      join(PRIMITIVES_SOURCE, `${primitiveName}.css`),
+      `missing required primitive root selector ".${className}"`,
+    );
+  }
+}
+for (const [className, primitiveName] of primitivePartClassToOwner) {
+  if (!styledPrimitiveClasses.has(className)) {
+    failPath(
+      join(PRIMITIVES_SOURCE, `${primitiveName}.css`),
+      `missing required primitive part selector ".${className}"`,
+    );
+  }
+}
+for (const [hook, primitiveName] of primitiveHookToOwner) {
+  if (!usedPrimitiveHooks.has(hook)) {
+    failPath(
+      join(PRIMITIVES_SOURCE, `${primitiveName}.css`),
+      `declared primitive hook "${hook}" is unused`,
+    );
+  }
 }
 
 if (failures.length) {

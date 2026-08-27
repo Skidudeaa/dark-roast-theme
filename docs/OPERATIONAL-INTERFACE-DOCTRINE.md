@@ -1,8 +1,8 @@
 # Operational Interface Doctrine
 
-**Version:** 0.2.0
+**Version:** 0.3.0
 **Status:** APPROVED ARCHITECTURE  
-**Date:** 2026-08-25  
+**Date:** 2026-08-27
 **Repository role:** Dark Roast is the first reference implementation; the doctrine is theme-neutral.  
 **Compatibility:** Additive to the existing Dark Roast token, theme, editor, terminal, and platform contracts.
 
@@ -506,7 +506,8 @@ accent
   primary, active, muted
 
 typography
-  body, heading, display, mono
+  body, heading, display, mono, mapped label/body/title/display sizes,
+  compact and reading line heights
 
 geometry
   space scale, control radius, surface radius, overlay radius
@@ -588,11 +589,31 @@ The first implementation contains exactly ten primitives.
 | `inset` | Recessed focus, evidence, or visualization region | Surface level `inset`; overflow policy |
 | `divider` | Structural separation | Orientation and semantic or decorative status |
 | `metric` | Label, value, unit, trend, and provenance alignment | Tabular value option; truth axes where applicable |
-| `meter` | Normalized quantitative progress | Accessible minimum, maximum, current value, and label |
-| `disclosure` | Expandable content structure | Button ownership, `aria-expanded`, and focus behavior |
+| `meter` | Bounded scalar measurement within a known range | Native meter, visible value, accessible minimum, maximum, current value, and label; task progress uses `progress` instead |
+| `disclosure` | Expandable content structure | Native `details`/`summary`; `open` owns expansion state and the browser owns focus/announcement behavior |
 | `history-strip` | Compact temporal distribution | Accessible summary, temporal ordering, and non-color intensity channel |
 
 Primitive CSS MUST remain domain-neutral. Primitive JavaScript is allowed only where native HTML cannot satisfy the interaction contract.
+
+Primitive roots and owner-qualified parts are public contract. Parts use the
+manifest-declared form `.oi-<primitive>__<part>`; arbitrary BEM elements remain
+prohibited. The contract records allowed root/part elements, parentage,
+cardinality, order, required and forbidden attributes, accessible-name
+obligations, consumed axes, and public hooks.
+
+The first implementation is native-first:
+
+- `metric` uses `dl` with `dt`/`dd` parts. Non-default truth state requires a
+  visible provenance part referenced by `aria-describedby`.
+- `meter` retains a labelled native `meter` as the accessibility source. Its
+  semantic visual track/fill is a declared presentational part because native
+  browser pigment does not reliably consume theme mappings; adapters MUST derive
+  native value and visual percentage from the same measurement.
+- `disclosure` uses `details` with the first `summary` child and MUST NOT mirror
+  native state into authored `role`, `tabindex`, or `aria-expanded` attributes.
+- `history-strip` uses an accessible chronological `ol` with `li`/`time`, a
+  non-color visible value, and a presentational intensity bar.
+- `divider` uses nonfocusable `hr`; a resizable separator is a different widget.
 
 ---
 
@@ -748,7 +769,8 @@ SwiftUI generation begins only after the web contract survives a real integratio
 - Doctrine contract version
 - Stable and experimental axes
 - Semantic role names
-- Primitive names and supported axes
+- Primitive names, stability, roots, parts, DOM/ARIA obligations, supported
+  axes, and public hooks
 - Recipe names, stability, slots, densities, and public hooks
 - Public attribute names
 - Generated adapter type names
@@ -761,7 +783,7 @@ Normative shape:
 ```json
 {
   "name": "operational-interface-doctrine",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "axes": {
     "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
     "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
@@ -1062,7 +1084,8 @@ Removes source nouns and proposes a theme-neutral primitive or recipe.
 
 ### Experimental
 
-Has a public-looking contract but no compatibility guarantee. It must be used in one real product surface.
+Has a public-looking contract but no compatibility guarantee. It must enter one
+real product surface before it can advance to proven.
 
 ### Proven
 
@@ -1086,7 +1109,10 @@ The doctrine contract has an independent semantic version recorded in `contract.
 
 For stable contracts:
 
-- **Major:** rename or remove an axis, axis value, semantic role, primitive, recipe, slot, attribute, or required behavior; add a required slot; change meaning.
+- **Major:** rename or remove a stable axis, axis value, semantic role,
+  primitive, primitive part, recipe, slot, attribute, or required behavior;
+  tighten stable root/part/cardinality obligations; add a required slot; change
+  meaning.
 - **Minor:** add an optional primitive, recipe, slot, semantic role, or non-breaking generated artifact.
 - **Patch:** clarify documentation, correct a validator, fix a visual defect without changing public behavior, or correct generated output.
 

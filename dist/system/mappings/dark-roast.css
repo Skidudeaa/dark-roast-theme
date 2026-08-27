@@ -31,6 +31,12 @@
     --oi-typography-heading: var(--dr-font-heading);
     --oi-typography-display: var(--dr-font-display);
     --oi-typography-mono: var(--dr-font-mono);
+    --oi-typography-size-label: var(--dr-text-sm);
+    --oi-typography-size-body: var(--dr-text-base);
+    --oi-typography-size-title: var(--dr-text-lg);
+    --oi-typography-size-display: var(--dr-text-2xl);
+    --oi-typography-line-compact: var(--dr-leading-sm);
+    --oi-typography-line-reading: var(--dr-leading-base);
     --oi-geometry-space: var(--dr-space-1);
     --oi-geometry-radius-control: var(--dr-radius-sm);
     --oi-geometry-radius-surface: var(--dr-radius-md);

@@ -1,0 +1,26 @@
+@layer oi.primitives {
+  .oi-rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    min-inline-size: 0;
+    margin: 0;
+    gap: var(--oi-rail-gap, var(--_oi-density-gap));
+  }
+
+  .oi-rail__rail {
+    flex: 1 1 var(--oi-rail-size, calc(var(--oi-geometry-space) * 48));
+    min-inline-size: min(
+      100%,
+      var(--oi-rail-size, calc(var(--oi-geometry-space) * 48))
+    );
+    max-inline-size: 100%;
+  }
+
+  .oi-rail__content {
+    container-type: inline-size;
+    flex: 999 1 0;
+    min-inline-size: min(100%, var(--oi-rail-content-min, 50%));
+    max-inline-size: 100%;
+  }
+}

@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-26 (package 5.8.0, doctrine contract 0.2.0)
+**Last updated:** 2026-08-27 (package 5.9.0, doctrine contract 0.3.0)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -37,7 +37,7 @@ One-way, per doctrine §4. Higher layers must not leak into lower ones.
 docs/OPERATIONAL-INTERFACE-DOCTRINE.md   the specification
   └─> src/system/contract.json           machine-readable contract      [BUILT]
         └─> semantic contract CSS        --oi-* role declarations       [BUILT]
-              └─> structural primitives  the ten building blocks        [pending]
+              └─> structural primitives  the ten building blocks        [BUILT]
                     └─> recipes          composition, e.g. compact-monitor
                           └─> domain adapters   product meaning -> axes
                                 └─> product assemblies / skins
@@ -75,10 +75,11 @@ Hand-edited source of truth (§14). It declares:
   `interaction` axis — native pseudo-classes, native attributes, and ARIA own
   interaction state (§7.10). There is deliberately no generic `data-state`; it
   collapses unrelated dimensions into a junk drawer (§5.3).
-- **48 semantic roles** across ten required categories (§8), including the five
-  additive elevation roles introduced in contract 0.2.0.
-- **The ten structural primitives** with the responsibility each owns and the
-  axes each consumes (§10).
+- **54 semantic roles** across ten required categories (§8): the slice B roles
+  plus six mapped typography size/line roles required by real primitives.
+- **The ten experimental structural primitives** with root elements, exact
+  owner-qualified parts, cardinality/parentage, allowed tags, required and
+  forbidden attributes, accessible-name obligations, axes, and public hooks.
 - **`compact-monitor`** as experimental, with its full slot order (§11.1).
 - **Reserved recipe names**, including `conversation-shell` and
   `context-composer` proposed by `src/system/studies/phind-extension.md`.
@@ -100,10 +101,12 @@ validator instead.
 | File | Contents |
 |---|---|
 | `contract.js` | Frozen constants, axis→attribute map, semantic role variable names, and three runtime helpers |
-| `contract.d.ts` | `Oi*` string-literal unions, `OiState`, `OiRecipeContract` |
+| `contract.d.ts` | `Oi*` unions/interfaces, including primitive-specific part maps and DOM contracts |
 | `contract.json` | The manifest with documentation keys stripped |
 | `index.js`, `index.d.ts` | Package-level runtime and type barrels |
-| `contracts.css`, `index.css` | Ordered, theme-neutral semantic contract CSS; no palette is implicit |
+| `contracts.css` | Ordered, theme-neutral semantic contract CSS; no palette is implicit |
+| `primitives.css` | The ten structural primitives in manifest order |
+| `index.css` | Contracts followed by primitives under the canonical cascade order |
 | `mappings/dark-roast.css` | Generated `--dr-*` to `--oi-*` mapping seam |
 
 Three runtime helpers are worth knowing:
@@ -134,7 +137,7 @@ that does exist rather than a placeholder.
 
 ### Slice B semantic infrastructure
 
-- `src/system/mappings/dark-roast.json` maps all 48 roles to canonical Dark Roast
+- `src/system/mappings/dark-roast.json` maps all 54 roles to canonical Dark Roast
   foundations. The generator rejects missing/extra roles and any `--dr-*`
   reference that cannot be derived from `src/tokens.json`.
 - `spec/system/mappings/alien.css` is a complete cold, flat, light-polarity proof
@@ -152,6 +155,26 @@ that does exist rather than a placeholder.
 - `scripts/validate-package.js` packs and extracts the actual npm artifact,
   resolves every JS/type/JSON/CSS export, rejects private/toolchain paths, and
   proves zero runtime dependencies.
+
+### Slice C structural primitives
+
+- `src/system/primitives/*.css` implements `surface`, `stack`, `cluster`,
+  `rail`, `inset`, `divider`, `metric`, `meter`, `disclosure`, and
+  `history-strip`. Layout is intrinsic and logical; primitive roots carry no
+  nonzero external margins, palette references, product nouns, or motion.
+- Native semantics are canonical: `dl` for metrics, a visually hidden native
+  `meter` synchronized with semantic visual track/fill parts, `details/summary`
+  for disclosure, `ol/li/time` for ordered history, and `hr` for dividers.
+- `primitiveContracts` and `primitivePartClasses` are generated and deeply
+  frozen. Types expose `OiPart`, `OiPrimitivePartMap`, and
+  `OiPrimitiveContract` while preserving the earlier runtime exports.
+- `scripts/validate-system-dom.js` parses `spec/system/primitives.html` with
+  parse5 and enforces root/part anatomy, ordering, ID references, accessible
+  names, meter bounds plus visual-value parity, disclosure native behavior,
+  conditional metric provenance, and chronological history.
+- The fixture renders all ten primitives under Dark Roast and the cold alien
+  mapping in one document. Wide, 720px, and 390px browser smoke renders are
+  clean; this is not the Slice D Playwright/axe/screenshot matrix.
 
 ---
 
@@ -178,7 +201,7 @@ version-correct somaCura adoption recorded in `docs/SOMACURA-MIGRATION.md`.
 
 ## 5. The validator suite
 
-`npm test` runs fifteen gates in order. Each one exists because something
+`npm test` runs sixteen gates in order. Each one exists because something
 either did go wrong or provably could.
 
 **Theme family**
@@ -210,13 +233,15 @@ either did go wrong or provably could.
     artifact is byte-identical to source (§17.6).
 12. `validate-system-runtime.js` — development/production/browser assertions,
     required slots, and provenance predicates behave as specified.
-13. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
-    mappings across all 48 roles.
+13. `validate-system-dom.js` — executable native DOM/ARIA anatomy for both
+    mappings and all ten primitives.
+14. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
+    mappings across all 54 roles.
 
 **Distribution**
-14. `validate-exports.js` — recursively proves every generated artifact is
+15. `validate-exports.js` — recursively proves every generated artifact is
     reachable, resolvable, typed where declared, and covered by `files`.
-15. `validate-package.js` — validates the actual packed/extracted tarball and
+16. `validate-package.js` — validates the actual packed/extracted tarball and
     zero runtime dependencies.
 
 CI (`.github/workflows/ci.yml`) runs the suite on every push to `master` under
@@ -230,13 +255,11 @@ because nothing ran the gate.
 
 Tranche 1 continues (§24). In dependency order:
 
-- **Slice C contract reconciliation** — declare public DOM anatomy/parts for the
-  ten primitives before implementation. Responsibilities and axes exist;
-  `metric`, `meter`, `disclosure`, and `history-strip` markup does not.
-- **Slice C implementation** — the ten primitives as real CSS, each rendering
-  under both mappings.
-- **Slice D** — `compact-monitor`, plus the state / truth / async / responsive /
-  content-stress / cross-theme proof matrices with Playwright and axe.
+- **Slice D contract reconciliation** — complete `compact-monitor` widths,
+  overflow/truncation, optional-slot collapse, async behavior, keyboard/focus,
+  proof fixtures, and public hooks before layout CSS.
+- **Slice D implementation** — `compact-monitor`, plus the state / truth / async /
+  responsive / content-stress / cross-theme proof matrices with Playwright and axe.
 
 Tranche 2 is first real adoption, which promotes `compact-monitor` from
 experimental toward proven. Tranche 3 adds the remaining reserved recipes,
@@ -262,9 +285,8 @@ call then.
 role coverage and canonical token references before emitting CSS. Layout CSS
 remains hand-authored as required.
 
-**`dist/system/` does not yet contain primitive or recipe bundles.** Those arrive
-with slices C and D; empty placeholders would imply implementation that does not
-exist.
+**`dist/system/` does not yet contain recipe bundles.** Those arrive with slice
+D; empty placeholders would imply implementation that does not exist.
 
 ---
 
@@ -278,6 +300,10 @@ bump `version` in the manifest, which is independent of the package version.
 **To change semantic CSS:** edit `src/system/contracts/*.css`; edit
 `src/system/mappings/dark-roast.json` only for a mapping relationship. Run
 `npm run build:system`, then `npm test`. Never hand-edit `dist/system/`.
+
+**To change a primitive:** change its DOM/part/hook contract in
+`src/system/contract.json` before changing `src/system/primitives/<name>.css` or
+the fixture. Regenerate and run the full suite; undeclared parts and hooks fail.
 
 **To change a theme token:** unchanged from before — see `CLAUDE.md`. Black Label
 is production-locked behind a SHA-256 contract; companions are edited only in

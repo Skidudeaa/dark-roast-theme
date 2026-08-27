@@ -1,0 +1,92 @@
+@layer oi.primitives {
+  .oi-meter {
+    --_oi-meter-accent: var(--_oi-status-color);
+
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-inline-size: 0;
+    margin: 0;
+    gap: var(--oi-geometry-space) calc(var(--oi-geometry-space) * 2);
+  }
+
+  .oi-meter__label {
+    grid-column: 1;
+    min-inline-size: 0;
+    color: var(--oi-text-body);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-meter__control {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .oi-meter__track {
+    box-sizing: border-box;
+    grid-column: 1 / -1;
+    inline-size: 100%;
+    min-inline-size: 0;
+    block-size: var(
+      --oi-meter-track-size,
+      calc(var(--oi-geometry-space) * 3)
+    );
+    overflow: clip;
+    background-color: var(--oi-surface-inset);
+    border: 1px solid var(--oi-border-default);
+    border-radius: var(--oi-geometry-radius-control);
+  }
+
+  .oi-meter__fill {
+    display: block;
+    inline-size: clamp(0%, var(--oi-meter-value, 0%), 100%);
+    max-inline-size: 100%;
+    block-size: 100%;
+    background-color: var(--_oi-meter-accent);
+  }
+
+  .oi-meter__value {
+    grid-column: 2;
+    min-inline-size: 0;
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-mono);
+    font-size: var(--oi-meter-value-size, var(--oi-typography-size-title));
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-meter__description {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+    color: var(--oi-text-muted);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-label);
+    line-height: var(--oi-typography-line-reading);
+    overflow-wrap: anywhere;
+  }
+
+  @media (forced-colors: active) {
+    .oi-meter {
+      box-shadow: none;
+    }
+
+    .oi-meter__track {
+      background-color: Canvas;
+      border-color: CanvasText;
+    }
+
+    .oi-meter__fill {
+      background-color: Highlight;
+    }
+  }
+}

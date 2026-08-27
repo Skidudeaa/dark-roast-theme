@@ -6,6 +6,53 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.9.0] — 2026-08-27
+
+Operational Interface Doctrine tranche 1 slice C. **Dark Roast: Black Label and
+all companion color values are unchanged.** The package now ships the ten
+structural primitives beneath future composition recipes.
+
+### Added
+
+- **Doctrine contract 0.3.0** — all ten primitives now carry experimental
+  stability, executable root/part DOM anatomy, cardinality and parentage,
+  element and attribute constraints, accessible-name obligations, consumed
+  axes, and owner-scoped public hooks. Six mapped typography size/line roles
+  bring the semantic contract to 54 roles.
+- **Structural primitive CSS** — `surface`, `stack`, `cluster`, `rail`, `inset`,
+  `divider`, `metric`, `meter`, `disclosure`, and `history-strip`, aggregated at
+  `dark-roast-theme/system/primitives` and included by `/system/css`.
+- **Native-first anatomy** — `dl` metrics, a labelled native `meter` accessibility
+  source plus declared semantic track/fill parts, `details/summary` disclosure,
+  chronological `ol/li/time` history, and nonfocusable `hr` dividers.
+- **Generated primitive adapters** — deeply frozen `primitiveContracts` and
+  `primitivePartClasses`, plus `OiPart`, `OiPrimitivePartMap`, and
+  `OiPrimitiveContract` TypeScript surfaces.
+- **Dual-mapping primitive fixture** — all ten primitives under Dark Roast and
+  the cold alien mapping in one document, with product-shell CSS isolated to the
+  `product` layer.
+
+### Enforcement
+
+- `validate-system-dom.js` parses the fixture with `parse5` and rejects invalid
+  root/part tags, parentage, cardinality, order, attributes, ID references,
+  names, meter bounds or visual drift, redundant disclosure ARIA, missing metric
+  provenance, and nonchronological history.
+- CSS enforcement now requires the exact ten primitive sources, declared
+  owner-qualified part selectors, owner-scoped hooks, valid cross-file private
+  variables, zero-only native margin resets, and styling coverage for every
+  public root and part.
+- Wide, 720px, and 390px local browser smoke renders are clean under both
+  mappings with no console errors. Full Playwright/axe/screenshot matrices remain
+  Slice D rather than being claimed here.
+
+### Distribution
+
+- Adds `parse5` as a development-only dependency; runtime dependencies remain
+  zero.
+- Package and companion registry metadata advance to 5.9.0; generated palette
+  values remain protected by the existing Black Label and theme gates.
+
 ## [5.8.0] — 2026-08-26
 
 Operational Interface Doctrine tranche 1 slice B. **Dark Roast: Black Label and

@@ -1,0 +1,43 @@
+@layer oi.primitives {
+  .oi-disclosure {
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .oi-disclosure__summary {
+    box-sizing: border-box;
+    display: list-item;
+    min-inline-size: 0;
+    padding-block: calc(var(--oi-geometry-space) * 2);
+    padding-inline: 0;
+    color: var(--oi-text-body);
+    cursor: pointer;
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-reading);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-disclosure__summary::marker {
+    color: var(--oi-accent-primary);
+  }
+
+  .oi-disclosure[open] > .oi-disclosure__summary {
+    color: var(--oi-text-primary);
+    font-weight: 600;
+  }
+
+  .oi-disclosure__content {
+    min-inline-size: 0;
+    padding-block-start: var(--_oi-density-gap);
+    padding-inline-start: var(--_oi-density-gap);
+    line-height: var(--oi-typography-line-reading);
+  }
+
+  @media (forced-colors: active) {
+    .oi-disclosure__summary,
+    .oi-disclosure__summary::marker {
+      color: CanvasText;
+    }
+  }
+}

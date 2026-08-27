@@ -1,0 +1,93 @@
+@layer oi.primitives {
+  .oi-metric {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-inline-size: 0;
+    margin: 0;
+    padding: var(--_oi-density-gap);
+    gap: var(--oi-geometry-space) calc(var(--oi-geometry-space) * 2);
+    border-color: var(--_oi-status-color);
+    border-style: var(--_oi-truth-border-style);
+    border-width: 1px;
+  }
+
+  .oi-metric__label,
+  .oi-metric__value,
+  .oi-metric__unit,
+  .oi-metric__trend,
+  .oi-metric__provenance {
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .oi-metric__label {
+    grid-column: 1 / -1;
+    color: var(--oi-text-muted);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-label);
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-metric__value {
+    grid-column: 1;
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-mono);
+    font-size: var(--oi-metric-value-size, var(--oi-typography-size-display));
+    font-variant-numeric: lining-nums tabular-nums;
+    font-weight: 700;
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-metric__unit {
+    align-self: end;
+    grid-column: 2;
+    color: var(--oi-text-muted);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-metric__trend {
+    grid-column: 1 / -1;
+    color: var(--_oi-status-color);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-label);
+    line-height: var(--oi-typography-line-reading);
+    overflow-wrap: anywhere;
+  }
+
+  .oi-metric__provenance {
+    grid-column: 1 / -1;
+    padding-inline-start: calc(var(--oi-geometry-space) * 2);
+    color: var(--oi-text-muted);
+    border-inline-start-color: var(--oi-border-strong);
+    border-inline-start-style: var(--_oi-truth-completeness-border-style);
+    border-inline-start-width: var(--_oi-truth-completeness-border-width);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-label);
+    font-style: var(--_oi-truth-font-style);
+    line-height: var(--oi-typography-line-reading);
+    overflow-wrap: anywhere;
+    text-decoration-color: var(--oi-text-muted);
+    text-decoration-line: var(--_oi-truth-decoration-line);
+    text-decoration-style: var(--_oi-truth-decoration-style);
+    text-underline-offset: calc(var(--oi-geometry-space) / 2);
+  }
+
+  @media (forced-colors: active) {
+    .oi-metric {
+      box-shadow: none;
+    }
+
+    .oi-metric__trend {
+      color: CanvasText;
+    }
+
+    .oi-metric__provenance {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@layer oi.primitives {
+  .oi-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: var(--oi-stack-align, stretch);
+    min-inline-size: 0;
+    margin: 0;
+    gap: var(--oi-stack-gap, var(--_oi-density-gap));
+  }
+}

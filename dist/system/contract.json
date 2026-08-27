@@ -1,6 +1,6 @@
 {
   "name": "operational-interface-doctrine",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "naming": {
     "cssClassPrefix": "oi-",
     "cssVariablePrefix": "--oi-",
@@ -131,7 +131,13 @@
       "body",
       "heading",
       "display",
-      "mono"
+      "mono",
+      "size-label",
+      "size-body",
+      "size-title",
+      "size-display",
+      "line-compact",
+      "line-reading"
     ],
     "geometry": [
       "space",
@@ -162,44 +168,177 @@
   },
   "primitives": {
     "surface": {
+      "stability": "experimental",
       "responsibility": "Containment, background, border, elevation, clipping",
       "axes": [
         "surface",
         "emphasis",
         "severity"
+      ],
+      "root": {
+        "elements": [
+          "*"
+        ],
+        "requiredAttributes": {
+          "data-oi-surface": [
+            "*"
+          ]
+        },
+        "forbiddenAttributes": [],
+        "accessibleName": "none"
+      },
+      "partOrder": [],
+      "partOrderPolicy": "none",
+      "parts": {},
+      "publicHooks": [
+        "--oi-surface-padding",
+        "--oi-surface-overflow"
       ]
     },
     "stack": {
+      "stability": "experimental",
       "responsibility": "Vertical rhythm; parent owns gap and alignment",
       "axes": [
         "density"
+      ],
+      "root": {
+        "elements": [
+          "*"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [],
+        "accessibleName": "none"
+      },
+      "partOrder": [],
+      "partOrderPolicy": "none",
+      "parts": {},
+      "publicHooks": [
+        "--oi-stack-gap",
+        "--oi-stack-align"
       ]
     },
     "cluster": {
+      "stability": "experimental",
       "responsibility": "Inline grouping with gap, alignment, and wrap policy",
       "axes": [
         "density"
+      ],
+      "root": {
+        "elements": [
+          "*"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [],
+        "accessibleName": "none"
+      },
+      "partOrder": [],
+      "partOrderPolicy": "none",
+      "parts": {},
+      "publicHooks": [
+        "--oi-cluster-gap",
+        "--oi-cluster-align",
+        "--oi-cluster-justify",
+        "--oi-cluster-wrap"
       ]
     },
     "rail": {
+      "stability": "experimental",
       "responsibility": "Fixed and fluid column relationship with an explicit collapse rule",
       "axes": [
         "density"
+      ],
+      "root": {
+        "elements": [
+          "*"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [],
+        "accessibleName": "none"
+      },
+      "partOrder": [
+        "rail",
+        "content"
+      ],
+      "partOrderPolicy": "either",
+      "parts": {
+        "rail": {
+          "parent": "root",
+          "elements": [
+            "*"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        },
+        "content": {
+          "parent": "root",
+          "elements": [
+            "*"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        }
+      },
+      "publicHooks": [
+        "--oi-rail-gap",
+        "--oi-rail-size",
+        "--oi-rail-content-min"
       ]
     },
     "inset": {
+      "stability": "experimental",
       "responsibility": "Recessed focus, evidence, or visualization region with an overflow policy",
       "axes": [
         "surface"
+      ],
+      "root": {
+        "elements": [
+          "*"
+        ],
+        "requiredAttributes": {
+          "data-oi-surface": [
+            "inset"
+          ]
+        },
+        "forbiddenAttributes": [],
+        "accessibleName": "none"
+      },
+      "partOrder": [],
+      "partOrderPolicy": "none",
+      "parts": {},
+      "publicHooks": [
+        "--oi-inset-padding",
+        "--oi-inset-overflow"
       ]
     },
     "divider": {
+      "stability": "experimental",
       "responsibility": "Structural separation, declared semantic or decorative",
       "axes": [
         "emphasis"
+      ],
+      "root": {
+        "elements": [
+          "hr"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [
+          "tabindex"
+        ],
+        "accessibleName": "none"
+      },
+      "partOrder": [],
+      "partOrderPolicy": "none",
+      "parts": {},
+      "publicHooks": [
+        "--oi-divider-size"
       ]
     },
     "metric": {
+      "stability": "experimental",
       "responsibility": "Label, value, unit, trend, and provenance alignment with tabular numerics",
       "axes": [
         "severity",
@@ -208,26 +347,337 @@
         "freshness",
         "certainty",
         "completeness"
+      ],
+      "root": {
+        "elements": [
+          "dl"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [
+          "role"
+        ],
+        "accessibleName": "none"
+      },
+      "partOrder": [
+        "label",
+        "value",
+        "unit",
+        "trend",
+        "provenance"
+      ],
+      "partOrderPolicy": "listed",
+      "parts": {
+        "label": {
+          "parent": "root",
+          "elements": [
+            "dt"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "value": {
+          "parent": "root",
+          "elements": [
+            "dd"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "unit": {
+          "parent": "root",
+          "elements": [
+            "dd"
+          ],
+          "cardinality": "zero-or-one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "trend": {
+          "parent": "root",
+          "elements": [
+            "dd"
+          ],
+          "cardinality": "zero-or-one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "provenance": {
+          "parent": "root",
+          "elements": [
+            "dd"
+          ],
+          "cardinality": "zero-or-one",
+          "requiredAttributes": {
+            "id": [
+              "*"
+            ]
+          },
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        }
+      },
+      "publicHooks": [
+        "--oi-metric-value-size"
       ]
     },
     "meter": {
-      "responsibility": "Normalized quantitative progress with accessible min, max, current, and label",
+      "stability": "experimental",
+      "responsibility": "Bounded scalar measure with accessible minimum, maximum, current value, and label",
       "axes": [
         "severity",
         "activity"
+      ],
+      "root": {
+        "elements": [
+          "div"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [
+          "role"
+        ],
+        "accessibleName": "none"
+      },
+      "partOrder": [
+        "label",
+        "control",
+        "track",
+        "fill",
+        "value",
+        "description"
+      ],
+      "partOrderPolicy": "listed",
+      "parts": {
+        "label": {
+          "parent": "root",
+          "elements": [
+            "label"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {
+            "for": [
+              "*"
+            ]
+          },
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "control": {
+          "parent": "root",
+          "elements": [
+            "meter"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {
+            "id": [
+              "*"
+            ],
+            "min": [
+              "*"
+            ],
+            "max": [
+              "*"
+            ],
+            "value": [
+              "*"
+            ]
+          },
+          "forbiddenAttributes": [
+            "role",
+            "aria-valuemin",
+            "aria-valuemax",
+            "aria-valuenow"
+          ],
+          "accessibleName": "required"
+        },
+        "track": {
+          "parent": "root",
+          "elements": [
+            "div"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {
+            "aria-hidden": [
+              "true"
+            ]
+          },
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        },
+        "fill": {
+          "parent": "track",
+          "elements": [
+            "span"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        },
+        "value": {
+          "parent": "root",
+          "elements": [
+            "span",
+            "output"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "description": {
+          "parent": "root",
+          "elements": [
+            "small",
+            "span"
+          ],
+          "cardinality": "zero-or-one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        }
+      },
+      "publicHooks": [
+        "--oi-meter-track-size",
+        "--oi-meter-value",
+        "--oi-meter-value-size"
       ]
     },
     "disclosure": {
-      "responsibility": "Expandable content structure owning aria-expanded and focus behavior",
+      "stability": "experimental",
+      "responsibility": "Native expandable structure with summary ownership and focus behavior",
       "axes": [
         "density"
-      ]
+      ],
+      "root": {
+        "elements": [
+          "details"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [
+          "role",
+          "tabindex",
+          "aria-expanded"
+        ],
+        "accessibleName": "none"
+      },
+      "partOrder": [
+        "summary",
+        "content"
+      ],
+      "partOrderPolicy": "listed",
+      "parts": {
+        "summary": {
+          "parent": "root",
+          "elements": [
+            "summary"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [
+            "role",
+            "tabindex",
+            "aria-expanded"
+          ],
+          "accessibleName": "contents"
+        },
+        "content": {
+          "parent": "root",
+          "elements": [
+            "div",
+            "section"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        }
+      },
+      "publicHooks": []
     },
     "history-strip": {
+      "stability": "experimental",
       "responsibility": "Compact temporal distribution with a non-color intensity channel",
       "axes": [
         "severity",
         "freshness"
+      ],
+      "root": {
+        "elements": [
+          "ol"
+        ],
+        "requiredAttributes": {},
+        "forbiddenAttributes": [
+          "role"
+        ],
+        "accessibleName": "required"
+      },
+      "partOrder": [
+        "item",
+        "time",
+        "bar",
+        "value"
+      ],
+      "partOrderPolicy": "listed",
+      "parts": {
+        "item": {
+          "parent": "root",
+          "elements": [
+            "li"
+          ],
+          "cardinality": "one-or-more",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        },
+        "time": {
+          "parent": "item",
+          "elements": [
+            "time"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {
+            "datetime": [
+              "*"
+            ]
+          },
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        },
+        "bar": {
+          "parent": "item",
+          "elements": [
+            "span"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {
+            "aria-hidden": [
+              "true"
+            ]
+          },
+          "forbiddenAttributes": [],
+          "accessibleName": "none"
+        },
+        "value": {
+          "parent": "item",
+          "elements": [
+            "span"
+          ],
+          "cardinality": "one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [],
+          "accessibleName": "contents"
+        }
+      },
+      "publicHooks": [
+        "--oi-history-intensity",
+        "--oi-history-item-size",
+        "--oi-history-gap"
       ]
     }
   },
@@ -316,6 +766,7 @@
     "emphasis": "OiEmphasis",
     "density": "OiDensity",
     "primitive": "OiPrimitive",
+    "part": "OiPart",
     "recipe": "OiRecipe",
     "slot": "OiSlot"
   }

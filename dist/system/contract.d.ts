@@ -35,6 +35,23 @@ export type OiDensity = 'compact' | 'standard' | 'spacious';
 /** Structural primitives (§10). */
 export type OiPrimitive = 'surface' | 'stack' | 'cluster' | 'rail' | 'inset' | 'divider' | 'metric' | 'meter' | 'disclosure' | 'history-strip';
 
+/** Public part names declared by structural primitives. */
+export type OiPart = 'bar' | 'content' | 'control' | 'description' | 'fill' | 'item' | 'label' | 'provenance' | 'rail' | 'summary' | 'time' | 'track' | 'trend' | 'unit' | 'value';
+
+/** Primitive-specific part-name narrowing for framework adapters. */
+export interface OiPrimitivePartMap {
+  readonly 'surface': never;
+  readonly 'stack': never;
+  readonly 'cluster': never;
+  readonly 'rail': 'rail' | 'content';
+  readonly 'inset': never;
+  readonly 'divider': never;
+  readonly 'metric': 'label' | 'value' | 'unit' | 'trend' | 'provenance';
+  readonly 'meter': 'label' | 'control' | 'track' | 'fill' | 'value' | 'description';
+  readonly 'disclosure': 'summary' | 'content';
+  readonly 'history-strip': 'item' | 'time' | 'bar' | 'value';
+}
+
 /** Composition recipes (§11). */
 export type OiRecipe = 'compact-monitor';
 
@@ -59,6 +76,36 @@ export interface OiState {
   source?: OiSource;
   emphasis?: OiEmphasis;
   density?: OiDensity;
+}
+
+export type OiAccessibleName = 'none' | 'contents' | 'required';
+export type OiPartCardinality = 'one' | 'zero-or-one' | 'one-or-more' | 'zero-or-more';
+export type OiPartOrderPolicy = 'none' | 'listed' | 'either';
+
+/** Element and attribute obligations shared by primitive roots and parts. */
+export interface OiPrimitiveNodeContract {
+  readonly elements: readonly string[];
+  readonly requiredAttributes: Readonly<Record<string, readonly string[]>>;
+  readonly forbiddenAttributes: readonly string[];
+  readonly accessibleName: OiAccessibleName;
+}
+
+/** Public contract of one owner-qualified primitive part. */
+export interface OiPrimitivePartContract extends OiPrimitiveNodeContract {
+  readonly parent: 'root' | OiPart;
+  readonly cardinality: OiPartCardinality;
+}
+
+/** Public DOM and styling contract of one structural primitive. */
+export interface OiPrimitiveContract {
+  readonly stability: OiStability;
+  readonly responsibility: string;
+  readonly axes: readonly (keyof OiState)[];
+  readonly root: OiPrimitiveNodeContract;
+  readonly partOrder: readonly OiPart[];
+  readonly partOrderPolicy: OiPartOrderPolicy;
+  readonly parts: Readonly<Partial<Record<OiPart, OiPrimitivePartContract>>>;
+  readonly publicHooks: readonly string[];
 }
 
 /** Public contract of one recipe. */
@@ -98,6 +145,10 @@ export declare const semanticRoles: Readonly<Record<string, readonly string[]>>;
 export declare const semanticRoleVariables: readonly string[];
 export declare const primitives: readonly OiPrimitive[];
 export declare const primitiveAxes: Readonly<Record<OiPrimitive, readonly string[]>>;
+export declare const primitiveContracts: Readonly<Record<OiPrimitive, OiPrimitiveContract>>;
+export declare const primitivePartClasses: {
+  readonly [K in OiPrimitive]: Readonly<Partial<Record<OiPrimitivePartMap[K], string>>>;
+};
 export declare const recipes: readonly OiRecipe[];
 export declare const recipeContracts: Readonly<Record<OiRecipe, OiRecipeContract>>;
 export declare const reservedRecipeNames: readonly string[];

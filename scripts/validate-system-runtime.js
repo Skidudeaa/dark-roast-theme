@@ -5,8 +5,18 @@ import assert from 'node:assert/strict';
 import {
   assertAxisValue,
   missingRequiredSlots,
+  primitiveContracts,
+  primitivePartClasses,
+  primitives,
   requiresProvenanceDisclosure,
+  semanticRoleVariables,
 } from '../dist/system/contract.js';
+
+function assertDeepFrozen(value) {
+  if (!value || typeof value !== 'object') return;
+  assert.equal(Object.isFrozen(value), true);
+  for (const child of Object.values(value)) assertDeepFrozen(child);
+}
 
 assert.equal(assertAxisValue('severity', 'critical'), true);
 
@@ -40,6 +50,17 @@ assert.equal(
 );
 assert.equal(requiresProvenanceDisclosure({ source: 'generated' }), true);
 
+assert.equal(primitives.length, 10);
+assert.equal(semanticRoleVariables.length, 54);
+assert.equal(primitiveContracts.surface.root.requiredAttributes['data-oi-surface'][0], '*');
+assert.equal(primitiveContracts.meter.parts.control.elements[0], 'meter');
+assert.equal(primitiveContracts.disclosure.root.elements[0], 'details');
+assert.equal(primitiveContracts['history-strip'].parts.item.cardinality, 'one-or-more');
+assert.equal(primitivePartClasses.metric.provenance, 'oi-metric__provenance');
+assert.equal(primitivePartClasses.surface.label, undefined);
+assertDeepFrozen(primitiveContracts);
+assertDeepFrozen(primitivePartClasses);
+
 const processDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'process');
 try {
   delete globalThis.process;
@@ -64,4 +85,4 @@ try {
   }
 }
 
-console.log('PASS system runtime: dev, production, browser, slots, and provenance predicates');
+console.log('PASS system runtime: dev, production, browser, primitive, slot, and provenance predicates');

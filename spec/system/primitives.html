@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operational Interface primitive proof</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../dist/css/dark-roast.css">
+  <link rel="stylesheet" href="../../dist/system/index.css">
+  <link rel="stylesheet" href="../../dist/system/mappings/dark-roast.css">
+  <link rel="stylesheet" href="./mappings/alien.css">
+  <link rel="stylesheet" href="./primitives-fixture.css">
+</head>
+<body class="dark-roast">
+  <main class="fixture-shell">
+    <section
+      id="dark-fixture"
+      class="oi-root fixture-mapping"
+      data-oi-density="standard"
+      aria-labelledby="dark-fixture-title"
+    >
+      <article class="oi-surface fixture-panel" data-oi-surface="raised">
+        <header class="fixture-header">
+          <p class="fixture-kicker">Reference mapping</p>
+          <h1 id="dark-fixture-title">Dark Roast primitives</h1>
+          <p class="fixture-summary">The complete structural contract under the warm reference mapping.</p>
+        </header>
+
+        <div class="oi-stack" data-oi-density="standard">
+          <section class="fixture-sample" aria-labelledby="dark-cluster-title">
+            <h2 id="dark-cluster-title">Cluster</h2>
+            <div class="oi-cluster" data-oi-density="compact">
+              <span class="fixture-chip">Current</span>
+              <span class="fixture-chip">Bounded</span>
+              <span class="fixture-chip">Explicit</span>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-rail-title">
+            <h2 id="dark-rail-title">Rail</h2>
+            <div class="oi-rail" data-oi-density="standard">
+              <aside class="oi-rail__rail">
+                <strong>Fixed rail</strong>
+              </aside>
+              <div class="oi-rail__content">
+                Fluid content retains its minimum readable width before collapse.
+              </div>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-inset-title">
+            <h2 id="dark-inset-title">Inset</h2>
+            <aside class="oi-inset" data-oi-surface="inset" aria-label="Contained evidence region">
+              Recessed material remains visibly related to its containing surface.
+            </aside>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-divider-title">
+            <h2 id="dark-divider-title">Divider</h2>
+            <p>Structure before the break.</p>
+            <hr class="oi-divider" data-oi-emphasis="quiet" aria-orientation="horizontal">
+            <p>Structure after the break.</p>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-metric-title">
+            <h2 id="dark-metric-title">Metric</h2>
+            <dl
+              class="oi-metric"
+              data-oi-severity="positive"
+              data-oi-emphasis="strong"
+              data-oi-source="direct"
+              data-oi-freshness="recent"
+              data-oi-certainty="confirmed"
+              data-oi-completeness="complete"
+              aria-describedby="dark-metric-provenance"
+            >
+              <dt class="oi-metric__label">Current measure</dt>
+              <dd class="oi-metric__value">37.5</dd>
+              <dd class="oi-metric__unit">percent</dd>
+              <dd class="oi-metric__trend">Up 2.5 percentage points</dd>
+              <dd id="dark-metric-provenance" class="oi-metric__provenance">
+                Direct, confirmed, updated two minutes ago, complete.
+              </dd>
+            </dl>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-meter-title">
+            <h2 id="dark-meter-title">Meter</h2>
+            <div
+              class="oi-meter"
+              data-oi-severity="informational"
+              data-oi-activity="ready"
+              style="--oi-meter-value: 64%"
+            >
+              <label class="oi-meter__label" for="dark-meter-control">Bounded level</label>
+              <meter
+                id="dark-meter-control"
+                class="oi-meter__control"
+                min="0"
+                max="100"
+                value="64"
+              >64 of 100</meter>
+              <div class="oi-meter__track" aria-hidden="true">
+                <span class="oi-meter__fill"></span>
+              </div>
+              <span class="oi-meter__value">64 percent</span>
+              <small class="oi-meter__description">Defined from zero through one hundred.</small>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-disclosure-title">
+            <h2 id="dark-disclosure-title">Disclosure</h2>
+            <details class="oi-disclosure" data-oi-density="standard">
+              <summary class="oi-disclosure__summary">Additional context</summary>
+              <div class="oi-disclosure__content">
+                The native details element owns expansion, focus, and announcement.
+              </div>
+            </details>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="dark-history-title">
+            <h2 id="dark-history-title">History strip</h2>
+            <ol
+              class="oi-history-strip"
+              data-oi-severity="neutral"
+              data-oi-freshness="recent"
+              aria-label="Four-interval recent history, oldest to newest"
+            >
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0.2">
+                <time class="oi-history-strip__time" datetime="2026-08-23">August 23</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">2 of 10</span>
+              </li>
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0.5">
+                <time class="oi-history-strip__time" datetime="2026-08-24">August 24</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">5 of 10</span>
+              </li>
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0.8">
+                <time class="oi-history-strip__time" datetime="2026-08-25">August 25</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">8 of 10</span>
+              </li>
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0.4">
+                <time class="oi-history-strip__time" datetime="2026-08-26">August 26</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">4 of 10</span>
+              </li>
+            </ol>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <section
+      id="alien-fixture"
+      class="oi-root fixture-mapping"
+      data-oi-mapping="alien"
+      data-oi-density="compact"
+      aria-labelledby="alien-fixture-title"
+    >
+      <article class="oi-surface fixture-panel" data-oi-surface="raised">
+        <header class="fixture-header">
+          <p class="fixture-kicker">Adversarial mapping</p>
+          <h1 id="alien-fixture-title">Alien primitives</h1>
+          <p class="fixture-summary">The same DOM contract under a cold, flat semantic mapping.</p>
+        </header>
+
+        <div class="oi-stack" data-oi-density="compact">
+          <section class="fixture-sample" aria-labelledby="alien-cluster-title">
+            <h2 id="alien-cluster-title">Cluster</h2>
+            <div class="oi-cluster" data-oi-density="compact">
+              <span class="fixture-chip">Recent</span>
+              <span class="fixture-chip">Derived</span>
+              <span class="fixture-chip">Partial</span>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-rail-title">
+            <h2 id="alien-rail-title">Rail</h2>
+            <div class="oi-rail" data-oi-density="compact">
+              <div class="oi-rail__content">
+                Reversed DOM order places the fixed rail at inline end without visual reordering.
+              </div>
+              <aside class="oi-rail__rail">
+                <strong>End rail</strong>
+              </aside>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-inset-title">
+            <h2 id="alien-inset-title">Inset</h2>
+            <div class="oi-inset" data-oi-surface="inset" aria-label="Contained inspection region">
+              The recessed relationship survives a light, shadow-free palette.
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-divider-title">
+            <h2 id="alien-divider-title">Divider</h2>
+            <div class="fixture-divider-row">
+              <span>Inline start</span>
+              <hr class="oi-divider" data-oi-emphasis="normal" aria-orientation="vertical">
+              <span>Inline end</span>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-metric-title">
+            <h2 id="alien-metric-title">Metric</h2>
+            <dl
+              class="oi-metric"
+              data-oi-severity="warning"
+              data-oi-emphasis="strong"
+              data-oi-source="generated"
+              data-oi-freshness="stale"
+              data-oi-certainty="inferred"
+              data-oi-completeness="partial"
+              aria-describedby="alien-metric-provenance"
+            >
+              <dt class="oi-metric__label">Current measure</dt>
+              <dd class="oi-metric__value">−12,480.75</dd>
+              <dd class="oi-metric__unit">units</dd>
+              <dd class="oi-metric__trend">Down 8.25 percent</dd>
+              <dd id="alien-metric-provenance" class="oi-metric__provenance">
+                Generated, inferred, updated one day ago, partial.
+              </dd>
+            </dl>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-meter-title">
+            <h2 id="alien-meter-title">Meter</h2>
+            <div
+              class="oi-meter"
+              data-oi-severity="warning"
+              data-oi-activity="refreshing"
+              style="--oi-meter-value: 37.5%"
+            >
+              <label class="oi-meter__label" for="alien-meter-control">Bounded level</label>
+              <meter
+                id="alien-meter-control"
+                class="oi-meter__control"
+                min="-50"
+                max="50"
+                value="-12.5"
+              >−12.5 of a range from −50 through 50</meter>
+              <div class="oi-meter__track" aria-hidden="true">
+                <span class="oi-meter__fill"></span>
+              </div>
+              <output class="oi-meter__value">−12.5 units</output>
+              <span class="oi-meter__description">Prior value remains visible during refresh.</span>
+            </div>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-disclosure-title">
+            <h2 id="alien-disclosure-title">Disclosure</h2>
+            <details class="oi-disclosure" data-oi-density="compact" open>
+              <summary class="oi-disclosure__summary">Expanded context</summary>
+              <section class="oi-disclosure__content" aria-label="Expanded material">
+                Expansion remains native and operable without a runtime helper.
+              </section>
+            </details>
+          </section>
+
+          <section class="fixture-sample" aria-labelledby="alien-history-title">
+            <h2 id="alien-history-title">History strip</h2>
+            <ol
+              class="oi-history-strip"
+              data-oi-severity="warning"
+              data-oi-freshness="stale"
+              aria-label="Four-interval stale history ending one day ago, oldest to newest"
+            >
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0">
+                <time class="oi-history-strip__time" datetime="2026-08-20T08:00:00-05:00">August 20</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">0 of 10</span>
+              </li>
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0.3">
+                <time class="oi-history-strip__time" datetime="2026-08-21T08:00:00-05:00">August 21</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">3 of 10</span>
+              </li>
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 1">
+                <time class="oi-history-strip__time" datetime="2026-08-22T08:00:00-05:00">August 22</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">10 of 10</span>
+              </li>
+              <li class="oi-history-strip__item" style="--oi-history-intensity: 0.7">
+                <time class="oi-history-strip__time" datetime="2026-08-23T08:00:00-05:00">August 23</time>
+                <span class="oi-history-strip__bar" aria-hidden="true"></span>
+                <span class="oi-history-strip__value">7 of 10</span>
+              </li>
+            </ol>
+          </section>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

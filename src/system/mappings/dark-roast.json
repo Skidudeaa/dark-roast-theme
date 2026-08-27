@@ -42,7 +42,13 @@
       "body": "var(--dr-font-body)",
       "heading": "var(--dr-font-heading)",
       "display": "var(--dr-font-display)",
-      "mono": "var(--dr-font-mono)"
+      "mono": "var(--dr-font-mono)",
+      "size-label": "var(--dr-text-sm)",
+      "size-body": "var(--dr-text-base)",
+      "size-title": "var(--dr-text-lg)",
+      "size-display": "var(--dr-text-2xl)",
+      "line-compact": "var(--dr-leading-sm)",
+      "line-reading": "var(--dr-leading-base)"
     },
     "geometry": {
       "space": "var(--dr-space-1)",
