@@ -1,6 +1,6 @@
 # Operational Interface Doctrine
 
-**Version:** 0.1.0  
+**Version:** 0.2.0
 **Status:** APPROVED ARCHITECTURE  
 **Date:** 2026-08-25  
 **Repository role:** Dark Roast is the first reference implementation; the doctrine is theme-neutral.  
@@ -511,6 +511,9 @@ typography
 geometry
   space scale, control radius, surface radius, overlay radius
 
+elevation
+  flat, raised, overlay, live, critical
+
 motion
   fast, normal, slow, standard easing, emphasized easing
 
@@ -758,7 +761,7 @@ Normative shape:
 ```json
 {
   "name": "operational-interface-doctrine",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "axes": {
     "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
     "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
@@ -806,9 +809,10 @@ docs/
 src/system/
   contract.json
   contract.schema.json
+  layers.css
 
   mappings/
-    dark-roast.css
+    dark-roast.json
 
   contracts/
     surfaces.css
@@ -845,11 +849,13 @@ src/system/
 scripts/
   build-system.js
   validate-contract.js
+  validate-system-runtime.js
   validate-system-css.js
   validate-system-dom.js
-  generate-system-types.js
+  validate-package.js
 
 spec/system/
+  mappings/alien.css
   primitives.html
   compact-monitor.html
   state-matrix.html

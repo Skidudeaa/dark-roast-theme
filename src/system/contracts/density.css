@@ -1,0 +1,20 @@
+@layer oi.contracts {
+  .oi-root,
+  :where([data-oi-density="standard"]) {
+    --_oi-density-gap: calc(var(--oi-geometry-space) * 3);
+    --_oi-density-inset: calc(var(--oi-geometry-space) * 4);
+    --_oi-density-control-size: var(--oi-interaction-pointer-target-min);
+  }
+
+  :where([data-oi-density="compact"]) {
+    --_oi-density-gap: calc(var(--oi-geometry-space) * 2);
+    --_oi-density-inset: calc(var(--oi-geometry-space) * 3);
+    --_oi-density-control-size: var(--oi-interaction-pointer-target-min);
+  }
+
+  :where([data-oi-density="spacious"]) {
+    --_oi-density-gap: calc(var(--oi-geometry-space) * 4);
+    --_oi-density-inset: calc(var(--oi-geometry-space) * 6);
+    --_oi-density-control-size: var(--oi-interaction-touch-target-min);
+  }
+}

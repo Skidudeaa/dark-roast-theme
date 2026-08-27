@@ -1,6 +1,6 @@
 {
   "name": "operational-interface-doctrine",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "naming": {
     "cssClassPrefix": "oi-",
     "cssVariablePrefix": "--oi-",
@@ -138,6 +138,13 @@
       "radius-control",
       "radius-surface",
       "radius-overlay"
+    ],
+    "elevation": [
+      "flat",
+      "raised",
+      "overlay",
+      "live",
+      "critical"
     ],
     "motion": [
       "duration-fast",

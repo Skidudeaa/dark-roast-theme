@@ -1,0 +1,74 @@
+{
+  "name": "dark-roast",
+  "_note": "Reference mapping only. Values point into generated --dr-* foundations; scripts/build-system.js validates every reference against src/tokens.json and emits the CSS artifact.",
+  "roles": {
+    "surface": {
+      "canvas": "var(--dr-void)",
+      "base": "var(--dr-obsidian)",
+      "raised": "var(--dr-dark-cacao)",
+      "interactive": "var(--dr-espresso)",
+      "hover": "var(--dr-espresso-hover)",
+      "inset": "var(--dr-void)",
+      "overlay": "var(--dr-roasted-bean)",
+      "scrim": "color-mix(in srgb, var(--dr-void) 82%, transparent)"
+    },
+    "text": {
+      "primary": "var(--dr-crema)",
+      "body": "var(--dr-bone)",
+      "muted": "var(--dr-mocha)",
+      "inverse": "var(--dr-void)",
+      "link": "var(--dr-teal)"
+    },
+    "border": {
+      "subtle": "var(--dr-divider)",
+      "default": "var(--dr-crater-deep)",
+      "strong": "var(--dr-crater)",
+      "focus": "var(--dr-amber)"
+    },
+    "status": {
+      "informational": "var(--dr-gold)",
+      "positive": "var(--dr-teal)",
+      "warning": "var(--dr-brass)",
+      "negative": "var(--dr-burnt-sienna)",
+      "critical": "var(--dr-scarlet)",
+      "live": "var(--dr-teal)"
+    },
+    "accent": {
+      "primary": "var(--dr-amber)",
+      "active": "var(--dr-amber-hot)",
+      "muted": "var(--dr-amber-muted)"
+    },
+    "typography": {
+      "body": "var(--dr-font-body)",
+      "heading": "var(--dr-font-heading)",
+      "display": "var(--dr-font-display)",
+      "mono": "var(--dr-font-mono)"
+    },
+    "geometry": {
+      "space": "var(--dr-space-1)",
+      "radius-control": "var(--dr-radius-sm)",
+      "radius-surface": "var(--dr-radius-md)",
+      "radius-overlay": "var(--dr-radius-lg)"
+    },
+    "elevation": {
+      "flat": "var(--dr-elevation-flat-shadow)",
+      "raised": "var(--dr-elevation-raised-shadow)",
+      "overlay": "var(--dr-elevation-floating-shadow)",
+      "live": "var(--dr-elevation-live-shadow)",
+      "critical": "var(--dr-elevation-critical-shadow)"
+    },
+    "motion": {
+      "duration-fast": "var(--dr-duration-fast)",
+      "duration-normal": "var(--dr-duration-base)",
+      "duration-slow": "var(--dr-duration-moderate)",
+      "ease-standard": "var(--dr-easing)",
+      "ease-emphasized": "var(--dr-easing-ease-out)"
+    },
+    "interaction": {
+      "focus-ring-width": "var(--dr-space-0-5)",
+      "focus-ring-offset": "var(--dr-space-0-5)",
+      "pointer-target-min": "var(--dr-space-6)",
+      "touch-target-min": "var(--dr-space-12)"
+    }
+  }
+}

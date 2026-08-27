@@ -1,0 +1,2 @@
+/* Public cascade order. Product overrides are last; the kernel ships no reset. */
+@layer oi.mapping, oi.contracts, oi.primitives, oi.recipes, oi.utilities, product;

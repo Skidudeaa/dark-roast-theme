@@ -1,0 +1,74 @@
+@layer oi.contracts {
+  .oi-root :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [role="button"],
+    [tabindex]:not([tabindex="-1"])
+  ) {
+    min-block-size: var(--oi-interaction-pointer-target-min);
+    min-inline-size: var(--oi-interaction-pointer-target-min);
+  }
+
+  .oi-root :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [role="button"],
+    [tabindex]:not([tabindex="-1"])
+  ):focus-visible {
+    outline: var(--oi-interaction-focus-ring-width) solid var(--oi-border-focus);
+    outline-offset: var(--oi-interaction-focus-ring-offset);
+  }
+
+  .oi-root :where(:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .oi-root :where([aria-busy="true"]) {
+    cursor: progress;
+  }
+
+  .oi-root :where([aria-selected="true"], [aria-current]:not([aria-current="false"])) {
+    background-color: var(--oi-surface-hover);
+    border-color: var(--oi-accent-primary);
+  }
+
+  @media (pointer: coarse) {
+    .oi-root :where(
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [role="button"],
+      [tabindex]:not([tabindex="-1"])
+    ) {
+      min-block-size: var(--oi-interaction-touch-target-min);
+      min-inline-size: var(--oi-interaction-touch-target-min);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .oi-root :where(
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [role="button"],
+      [tabindex]:not([tabindex="-1"])
+    ):focus-visible {
+      outline-color: CanvasText;
+    }
+  }
+}

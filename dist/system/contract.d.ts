@@ -43,6 +43,11 @@ export type OiSlot = 'actions' | 'context' | 'details' | 'focus' | 'history' | '
 
 export type OiStability = 'study' | 'candidate' | 'experimental' | 'proven' | 'stable' | 'deprecated';
 
+/** Explicit assertion mode for native browser ESM without Node environment globals. */
+export interface OiRuntimeOptions {
+  readonly development?: boolean;
+}
+
 /** The orthogonal state of a single operational surface (§5.3). */
 export interface OiState {
   surface?: OiSurface;
@@ -99,6 +104,6 @@ export declare const reservedRecipeNames: readonly string[];
 export declare const stabilityLadder: readonly OiStability[];
 export declare const forbiddenDomainTerms: readonly string[];
 
-export declare function assertAxisValue(axis: string, value: string): boolean;
-export declare function missingRequiredSlots(recipe: OiRecipe, providedSlots: readonly string[]): OiSlot[];
+export declare function assertAxisValue(axis: string, value: string, options?: OiRuntimeOptions): boolean;
+export declare function missingRequiredSlots(recipe: OiRecipe, providedSlots: readonly string[], options?: OiRuntimeOptions): OiSlot[];
 export declare function requiresProvenanceDisclosure(state: Pick<OiState, 'source' | 'certainty' | 'freshness' | 'completeness'>): boolean;

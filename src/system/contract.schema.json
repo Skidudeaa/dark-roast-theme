@@ -130,6 +130,7 @@
         "accent",
         "typography",
         "geometry",
+        "elevation",
         "motion",
         "interaction"
       ],
@@ -142,6 +143,7 @@
         "accent": { "$ref": "#/definitions/kebabList" },
         "typography": { "$ref": "#/definitions/kebabList" },
         "geometry": { "$ref": "#/definitions/kebabList" },
+        "elevation": { "$ref": "#/definitions/kebabList" },
         "motion": { "$ref": "#/definitions/kebabList" },
         "interaction": { "$ref": "#/definitions/kebabList" }
       }

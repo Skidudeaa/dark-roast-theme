@@ -1,0 +1,53 @@
+/* AUTO-GENERATED from src/system/mappings/dark-roast.json by scripts/build-system.js — DO NOT EDIT. */
+@layer oi.mapping {
+  .oi-root {
+    --oi-surface-canvas: var(--dr-void);
+    --oi-surface-base: var(--dr-obsidian);
+    --oi-surface-raised: var(--dr-dark-cacao);
+    --oi-surface-interactive: var(--dr-espresso);
+    --oi-surface-hover: var(--dr-espresso-hover);
+    --oi-surface-inset: var(--dr-void);
+    --oi-surface-overlay: var(--dr-roasted-bean);
+    --oi-surface-scrim: color-mix(in srgb, var(--dr-void) 82%, transparent);
+    --oi-text-primary: var(--dr-crema);
+    --oi-text-body: var(--dr-bone);
+    --oi-text-muted: var(--dr-mocha);
+    --oi-text-inverse: var(--dr-void);
+    --oi-text-link: var(--dr-teal);
+    --oi-border-subtle: var(--dr-divider);
+    --oi-border-default: var(--dr-crater-deep);
+    --oi-border-strong: var(--dr-crater);
+    --oi-border-focus: var(--dr-amber);
+    --oi-status-informational: var(--dr-gold);
+    --oi-status-positive: var(--dr-teal);
+    --oi-status-warning: var(--dr-brass);
+    --oi-status-negative: var(--dr-burnt-sienna);
+    --oi-status-critical: var(--dr-scarlet);
+    --oi-status-live: var(--dr-teal);
+    --oi-accent-primary: var(--dr-amber);
+    --oi-accent-active: var(--dr-amber-hot);
+    --oi-accent-muted: var(--dr-amber-muted);
+    --oi-typography-body: var(--dr-font-body);
+    --oi-typography-heading: var(--dr-font-heading);
+    --oi-typography-display: var(--dr-font-display);
+    --oi-typography-mono: var(--dr-font-mono);
+    --oi-geometry-space: var(--dr-space-1);
+    --oi-geometry-radius-control: var(--dr-radius-sm);
+    --oi-geometry-radius-surface: var(--dr-radius-md);
+    --oi-geometry-radius-overlay: var(--dr-radius-lg);
+    --oi-elevation-flat: var(--dr-elevation-flat-shadow);
+    --oi-elevation-raised: var(--dr-elevation-raised-shadow);
+    --oi-elevation-overlay: var(--dr-elevation-floating-shadow);
+    --oi-elevation-live: var(--dr-elevation-live-shadow);
+    --oi-elevation-critical: var(--dr-elevation-critical-shadow);
+    --oi-motion-duration-fast: var(--dr-duration-fast);
+    --oi-motion-duration-normal: var(--dr-duration-base);
+    --oi-motion-duration-slow: var(--dr-duration-moderate);
+    --oi-motion-ease-standard: var(--dr-easing);
+    --oi-motion-ease-emphasized: var(--dr-easing-ease-out);
+    --oi-interaction-focus-ring-width: var(--dr-space-0-5);
+    --oi-interaction-focus-ring-offset: var(--dr-space-0-5);
+    --oi-interaction-pointer-target-min: var(--dr-space-6);
+    --oi-interaction-touch-target-min: var(--dr-space-12);
+  }
+}

@@ -1,0 +1,62 @@
+/* Cold, flat proof mapping. It is intentionally unrelated to Dark Roast and is not a supported export. */
+@layer oi.mapping {
+  .oi-root {
+    --oi-surface-canvas: #e8f1f7;
+    --oi-surface-base: #f7fbfe;
+    --oi-surface-raised: #dce8f1;
+    --oi-surface-interactive: #cbdde9;
+    --oi-surface-hover: #b7d1e2;
+    --oi-surface-inset: #d4e3ed;
+    --oi-surface-overlay: #ffffff;
+    --oi-surface-scrim: rgb(11 31 48 / 48%);
+
+    --oi-text-primary: #102a43;
+    --oi-text-body: #243b53;
+    --oi-text-muted: #526d82;
+    --oi-text-inverse: #f7fbfe;
+    --oi-text-link: #005ea8;
+
+    --oi-border-subtle: #c5d7e3;
+    --oi-border-default: #9fb8c9;
+    --oi-border-strong: #627d98;
+    --oi-border-focus: #006adc;
+
+    --oi-status-informational: #006adc;
+    --oi-status-positive: #087f5b;
+    --oi-status-warning: #805600;
+    --oi-status-negative: #b53b2d;
+    --oi-status-critical: #9b1c31;
+    --oi-status-live: #006c78;
+
+    --oi-accent-primary: #005ea8;
+    --oi-accent-active: #003f75;
+    --oi-accent-muted: #557f9e;
+
+    --oi-typography-body: ui-sans-serif, system-ui, sans-serif;
+    --oi-typography-heading: ui-sans-serif, system-ui, sans-serif;
+    --oi-typography-display: ui-serif, Georgia, serif;
+    --oi-typography-mono: ui-monospace, monospace;
+
+    --oi-geometry-space: 4px;
+    --oi-geometry-radius-control: 2px;
+    --oi-geometry-radius-surface: 4px;
+    --oi-geometry-radius-overlay: 6px;
+
+    --oi-elevation-flat: none;
+    --oi-elevation-raised: 0 1px 2px rgb(20 55 80 / 12%);
+    --oi-elevation-overlay: 0 8px 20px rgb(20 55 80 / 18%);
+    --oi-elevation-live: 0 0 0 2px rgb(0 108 120 / 20%);
+    --oi-elevation-critical: 0 0 0 2px rgb(155 28 49 / 24%);
+
+    --oi-motion-duration-fast: 100ms;
+    --oi-motion-duration-normal: 180ms;
+    --oi-motion-duration-slow: 280ms;
+    --oi-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --oi-motion-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    --oi-interaction-focus-ring-width: 2px;
+    --oi-interaction-focus-ring-offset: 2px;
+    --oi-interaction-pointer-target-min: 24px;
+    --oi-interaction-touch-target-min: 44px;
+  }
+}

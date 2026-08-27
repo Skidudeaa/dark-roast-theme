@@ -135,7 +135,23 @@ Skins deliberately contain no build-tool directives, so they parse under any too
 
 ### Operational interface contract
 
-The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 43 semantic roles, ten structural primitives — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
+The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 48 semantic roles, ten named structural primitives — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
+
+Load a palette, the ordered semantic contracts, and one explicit mapping:
+
+```css
+@import 'dark-roast-theme/css';
+@import 'dark-roast-theme/system/css';
+@import 'dark-roast-theme/system/mappings/dark-roast';
+```
+
+```html
+<body class="dark-roast oi-root" data-oi-surface="canvas" data-oi-density="standard">
+```
+
+The system CSS contains no implicit palette. Only the generated mapping reads
+`--dr-*`; semantic contracts consume `--oi-*`. The cold alien mapping under
+`spec/system/` is a proof fixture, not a supported export or product theme.
 
 ```js
 import {
@@ -145,19 +161,21 @@ import {
 severity;                                  // ['neutral','informational','positive','warning','negative','critical']
 axisAttributes.severity;                   // 'data-oi-severity'
 
-// Throws in development, returns false in production so the surface degrades
-// to neutral presentation instead of crashing.
+// Throws in Node/bundler development, returns false in production so the
+// surface degrades to neutral presentation instead of crashing. Native browser
+// ESM defaults to the safe production behavior; pass { development: true } to
+// opt into development assertions without a Node environment global.
 assertAxisValue('severity', 'critical');   // true
 
-// Anything not direct + confirmed + live + complete must show its provenance,
+// Anything not direct + confirmed + live-or-recent + complete must show provenance,
 // so inferred or stale data never wears the authority of confirmed data.
 requiresProvenanceDisclosure({ source: 'generated' });   // true
 requiresProvenanceDisclosure({ freshness: 'stale' });    // true
 ```
 
-TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). The raw manifest is available at `dark-roast-theme/system/contract.json`.
+TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
 
-The CSS layer of this system — semantic role declarations, the ten primitives, and composition recipes — is not built yet. Only the contract and its generated adapters exist today.
+The semantic contract and Dark Roast mapping are built. Primitive and recipe CSS are not: their names and responsibilities exist in the manifest, but slice C must reconcile public DOM/part anatomy before implementation.
 
 ### SwiftUI
 
@@ -382,12 +400,16 @@ src/css-templates/          Hand-authored CSS (app-layer vars, utilities, base) 
 src/skins/*.css             Product skins consuming a companion theme by reference, not by copy
 src/system/contract.json    SOURCE OF TRUTH — Operational Interface Doctrine contract manifest
 src/system/contract.schema.json JSON Schema for the manifest
+src/system/mappings/dark-roast.json SOURCE — generated semantic mapping relationships
+src/system/layers.css       SOURCE — public cascade order, no reset
+src/system/contracts/*.css  SOURCE — theme-neutral semantic CSS
 src/system/studies/*.md     Pattern studies — the only intake path for an external design
+spec/system/mappings/alien.css Cold, flat mapping proof fixture; not an export
 
 scripts/build-tokens.js     Black Label generator (unchanged)
 scripts/build-variants.js   Companion generator: CSS, JS, editor, terminal, native palettes
 scripts/build-cold-brew.js  Cold Brew OKLCH seed compiler
-scripts/build-system.js     Doctrine contract generator (constants, TS types, published manifest)
+scripts/build-system.js     Doctrine runtime/types/mapping/semantic-CSS generator
 scripts/reconcile-recipes.js Brew engine; refuses to overwrite registries it does not own
 scripts/check-black-label-contract.js Byte-for-byte additive-change guard
 scripts/validate-themes.js  Luminance, contrast, perceptual chroma, severity, fingerprint, and identity checks
@@ -396,6 +418,9 @@ scripts/validate-gallery.js Gallery identity plus platform/syntax color-fidelity
 scripts/validate-exports.js Export reachability, resolution, and packaging checks
 scripts/validate-skins.js   Fails when a skin duplicates a theme token value
 scripts/validate-contract.js Doctrine manifest schema + cross-reference integrity
+scripts/validate-system-runtime.js Browser/runtime contract predicates
+scripts/validate-system-css.js PostCSS selector/value AST enforcement
+scripts/validate-package.js Actual npm tarball and zero-runtime-dependency integrity
 
 dist/css/dark-roast.css         GENERATED — standalone, tokens on :root, utilities unscoped
 dist/css/dark-roast-scoped.css  GENERATED — scoped to [data-theme="dark-roast"]
@@ -409,6 +434,9 @@ dist/tokens/index.js            GENERATED — barrel re-export
 dist/system/contract.js         GENERATED — frozen axis constants + runtime assertions
 dist/system/contract.d.ts       GENERATED — Oi* TypeScript unions and interfaces
 dist/system/contract.json       GENERATED — published manifest, documentation stripped
+dist/system/index.{js,d.ts}     GENERATED — package runtime/type barrels
+dist/system/{contracts,index}.css GENERATED — ordered semantic contracts
+dist/system/mappings/dark-roast.css GENERATED — sole --dr-* / --oi-* seam
 
 platforms/swift/            SwiftUI reference implementation
 platforms/xcode/            Xcode .dvtcolortheme

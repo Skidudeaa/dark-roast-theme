@@ -1,0 +1,51 @@
+@layer oi.contracts {
+  .oi-root {
+    --_oi-status-color: var(--oi-border-default);
+  }
+
+  :where([data-oi-severity]) {
+    border-color: var(--_oi-status-color);
+  }
+
+  :where([data-oi-severity="neutral"]) {
+    --_oi-status-color: var(--oi-border-default);
+  }
+
+  :where([data-oi-severity="informational"]) {
+    --_oi-status-color: var(--oi-status-informational);
+  }
+
+  :where([data-oi-severity="positive"]) {
+    --_oi-status-color: var(--oi-status-positive);
+  }
+
+  :where([data-oi-severity="warning"]) {
+    --_oi-status-color: var(--oi-status-warning);
+  }
+
+  :where([data-oi-severity="negative"]) {
+    --_oi-status-color: var(--oi-status-negative);
+  }
+
+  :where([data-oi-severity="critical"]) {
+    --_oi-status-color: var(--oi-status-critical);
+    box-shadow: var(--oi-elevation-critical);
+  }
+
+  :where([data-oi-activity="loading"], [data-oi-activity="refreshing"]) {
+    cursor: progress;
+  }
+
+  :where([data-oi-activity="failed"]) {
+    border-block-end-color: var(--oi-status-negative);
+    border-block-end-style: solid;
+    border-block-end-width: var(--oi-interaction-focus-ring-width);
+  }
+
+  :where([data-oi-activity="live"]) {
+    border-block-start-color: var(--oi-status-live);
+    border-block-start-style: solid;
+    border-block-start-width: var(--oi-interaction-focus-ring-width);
+  }
+
+}

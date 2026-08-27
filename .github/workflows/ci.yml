@@ -33,9 +33,7 @@ jobs:
       - name: Install
         run: npm ci
 
-      # Runs, in order: Black Label sha256 contract, brewed recipe registries,
-      # 10-theme APCA/chroma/severity thresholds, token drift, cold-brew seeds,
-      # companion drift, platform parseability, gallery parity, export map,
-      # and skin/token divergence.
+      # Runs the complete theme, platform, doctrine, semantic-CSS, export, and
+      # actual-package integrity suite. package.json owns the exact order.
       - name: Validate
         run: npm test

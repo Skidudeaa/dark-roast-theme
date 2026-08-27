@@ -1,0 +1,20 @@
+@layer oi.contracts {
+  .oi-root {
+    color: var(--oi-text-body);
+    font-family: var(--oi-typography-body);
+    text-rendering: optimizeLegibility;
+  }
+
+  :where([data-oi-emphasis="quiet"]) {
+    color: var(--oi-text-muted);
+  }
+
+  :where([data-oi-emphasis="normal"]) {
+    color: var(--oi-text-body);
+  }
+
+  :where([data-oi-emphasis="strong"]) {
+    color: var(--oi-text-primary);
+    font-weight: 600;
+  }
+}

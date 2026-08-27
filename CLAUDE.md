@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Current State — update this block when something lands
 
-**As of 2026-08-26. Package 5.7.0, doctrine contract 0.1.0. `npm test` is green; CI runs it on every push to `master`.**
+**As of 2026-08-26. Package 5.8.0, doctrine contract 0.2.0. `npm test` is green; CI runs it on every push to `master`.**
 
 The maintainer is a solo physician who codes on the side and will not remember the details below. Do not ask him to recall context. Read this block, then `docs/SYSTEM-ARCHITECTURE.md`, and tell him where things stand. `START-HERE.md` is the human-facing map of the same territory.
 
-**Done:** theme family (10 companions, 11 platforms); export map repaired so all companions are importable; `src/skins/` with the somaCura Night Shift skin; doctrine tranche 1 slice A — the contract manifest, its generator, and its validators.
+**Done:** theme family (10 companions, 11 platforms); export map repaired so all companions are importable; `src/skins/` with the somaCura Night Shift skin; doctrine tranche 1 slices A and B — contract manifest/runtime, 48 semantic roles, generated Dark Roast mapping, cold alien proof mapping, layered semantic CSS, PostCSS AST enforcement, deterministic output, and real tarball integrity.
 
-**Next:** tranche 1 slice B — `--oi-*` semantic contract CSS, the Dark Roast mapping generated from token source, a deliberately cold "alien" mapping to prove theme-neutrality, cascade layers, and a PostCSS AST validator. Then slice C (ten primitives), then slice D (`compact-monitor` + proof matrix).
+**Next:** reconcile the public DOM/part anatomy of the ten named primitives before slice C. The manifest currently owns responsibilities and axes but not the markup contract for `metric`, `meter`, `disclosure`, or `history-strip`; silently inventing those selectors would create an accidental public API. After that: slice C primitives, then slice D (`compact-monitor`, Playwright/axe, and the proof matrix).
 
 **Blocked, and it is not this repo's fault — full detail in `docs/SOMACURA-MIGRATION.md`, read it before touching somaNotes CSS:** somaCura cannot adopt the doctrine or the skin yet. It does not install this package — it vendors **dark-roast-theme v3.0.0** at `packages/dark-roast/` inside the `Skidudeaa/somaNotes` repo, two majors behind, plus a third app-local copy at `static/css/dark-roast-tokens.css`. The skin is referenced in **zero** app files, so this is a first adoption rather than a live migration. `magenta`, `harvest`, `olive`, `brass`, and `burntSienna` do not exist in 3.0.0, and the night-shift skin's severity system needs all five. Worse, **`crater` exists in both versions with different values** (`#3C2A21` then, `#4D3B31` now; the old value became `craterDeep`), so a partial migration shifts colors silently instead of failing. That app also runs five competing token systems totalling ~8,700 references, of which `--dr-*` is the smallest at 268. It already has a four-document rollout plan at `.planning/dark-roast-rollout/` — sound in structure, but version-blind, so the npm consolidation must happen *before* its Phase 0 bridge bakes v3 token names into everything. This is a clinical display: do not migrate it unattended, and never ship a partial rename. That repo has no CI either.
 
@@ -22,13 +22,13 @@ The maintainer is a solo physician who codes on the side and will not remember t
 
 This repository holds **two related systems**. Know which one you are touching before you edit anything.
 
-**1. The theme family** (npm package `dark-roast-theme`, currently v5.7.0) answers *what color is this?* The original Black Label remains the unchanged default; ten additive companions serve different ambient conditions. Targets: CSS, ES modules, JSON, SwiftUI, VS Code, Xcode, Textastic, Warp, Tabby, Terminal.app, iTerm2, and Blink. Namespace: `--dr-*`.
+**1. The theme family** (npm package `dark-roast-theme`, currently v5.8.0) answers *what color is this?* The original Black Label remains the unchanged default; ten additive companions serve different ambient conditions. Targets: CSS, ES modules, JSON, SwiftUI, VS Code, Xcode, Textastic, Warp, Tabby, Terminal.app, iTerm2, and Blink. Namespace: `--dr-*`.
 
-**2. The operational interface system** (`src/system/`, doctrine contract v0.1.0) answers *what does this element mean?* It is theme-neutral by design — Dark Roast is its first reference mapping, not its definition. Namespace: `--oi-*`. Specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`; **implementation status is recorded in `docs/SYSTEM-ARCHITECTURE.md` — read that before working on the system layer.** Partially built: the contract manifest and its generated adapters exist; semantic contract CSS, primitives, and recipes do not yet.
+**2. The operational interface system** (`src/system/`, doctrine contract v0.2.0) answers *what does this element mean?* It is theme-neutral by design — Dark Roast is its first reference mapping, not its definition. Namespace: `--oi-*`. Specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`; **implementation status is recorded in `docs/SYSTEM-ARCHITECTURE.md` — read that before working on the system layer.** Partially built: the contract/runtime, semantic mapping and contract CSS exist; primitives and recipes do not yet.
 
 The two meet at exactly one seam: a mapping file that reads `--dr-*` and assigns `--oi-*`. Nothing above that seam may read a palette token.
 
-**Separated sources of truth.** `src/tokens.json` is canonical for Black Label. `src/variants/*.json` defines additive companions and pins the exact Black Label base fingerprint. `src/system/contract.json` is canonical for the doctrine contract. `scripts/build-tokens.js` owns Black Label outputs; `scripts/build-variants.js` owns every companion output; `scripts/build-system.js` owns `dist/system/`. Do not hand-edit generated files. `npm test` runs thirteen checks covering drift, contrast, semantics, platform parseability, export reachability, skin/token divergence, and doctrine contract integrity. CI runs the same suite on every push to `master`.
+**Separated sources of truth.** `src/tokens.json` is canonical for Black Label. `src/variants/*.json` defines additive companions and pins the exact Black Label base fingerprint. `src/system/contract.json` is canonical for the doctrine contract; `src/system/mappings/dark-roast.json` and `src/system/contracts/*.css` own slice B. `scripts/build-tokens.js` owns Black Label outputs; `scripts/build-variants.js` owns every companion output; `scripts/build-system.js` owns `dist/system/`. Do not hand-edit generated files. `npm test` covers drift, contrast, semantics, platform parseability, browser-safe runtime behavior, AST CSS policy, export reachability, actual package contents, skin/token divergence, and doctrine integrity. CI runs the same suite on every push to `master`.
 
 ## Architecture
 
@@ -48,8 +48,11 @@ The two meet at exactly one seam: a mapping file that reads `--dr-*` and assigns
 **Operational interface system**
 - `src/system/contract.json` — the doctrine contract manifest (hand-edited source of truth)
 - `src/system/contract.schema.json` — JSON Schema for the manifest
+- `src/system/mappings/dark-roast.json` — semantic-to-Dark-Roast alias map; generated CSS never copies palette values
+- `src/system/layers.css`, `src/system/contracts/*.css` — hand-authored cascade order and semantic contract CSS
 - `src/system/studies/*.md` — pattern studies; the only legitimate intake path for an external design
-- `dist/system/*` — GENERATED constants, TypeScript declarations, and published manifest (do not edit)
+- `spec/system/mappings/alien.css` — cold, flat proof mapping; not a supported export
+- `dist/system/*` — GENERATED runtime/types, semantic CSS, and Dark Roast mapping (do not edit)
 
 **Product skins**
 - `src/skins/*.css` — hand-authored per-product skins consuming a companion theme. Filename must contain the target variant id (`somacura-night-shift` → `night-shift`). A skin may own product-specific values but must never re-declare a theme token's value.
@@ -57,8 +60,8 @@ The two meet at exactly one seam: a mapping file that reads `--dr-*` and assigns
 **Tooling**
 - `scripts/build-tokens.js` — Black Label generator (`--check` for drift)
 - `scripts/build-variants.js` — companion generator; prunes retired generator-owned artifacts
-- `scripts/build-system.js` — doctrine contract generator (`--check` for drift)
-- `scripts/validate-*.js` — quality gates: themes, platforms, gallery, exports, skins, contract
+- `scripts/build-system.js` — doctrine runtime, mapping, and semantic CSS generator (`--check` for drift)
+- `scripts/validate-*.js` — quality gates including AST CSS policy, browser/runtime behavior, exports, and actual tarball integrity
 - `.github/workflows/ci.yml` — runs `npm test` on push to `master`, pinned Node 22
 
 ### Generated Token Modules (ES modules, `"type": "module"`)

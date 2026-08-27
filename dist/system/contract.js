@@ -8,7 +8,7 @@
 // false quietly otherwise so callers can omit the attribute.
 
 export const CONTRACT_NAME = 'operational-interface-doctrine';
-export const CONTRACT_VERSION = '0.1.0';
+export const CONTRACT_VERSION = '0.2.0';
 
 // ── Naming contract (§6) ──
 export const cssClassPrefix = 'oi-';
@@ -83,6 +83,7 @@ export const semanticRoles = Object.freeze({
   accent: Object.freeze(['--oi-accent-primary', '--oi-accent-active', '--oi-accent-muted']),
   typography: Object.freeze(['--oi-typography-body', '--oi-typography-heading', '--oi-typography-display', '--oi-typography-mono']),
   geometry: Object.freeze(['--oi-geometry-space', '--oi-geometry-radius-control', '--oi-geometry-radius-surface', '--oi-geometry-radius-overlay']),
+  elevation: Object.freeze(['--oi-elevation-flat', '--oi-elevation-raised', '--oi-elevation-overlay', '--oi-elevation-live', '--oi-elevation-critical']),
   motion: Object.freeze(['--oi-motion-duration-fast', '--oi-motion-duration-normal', '--oi-motion-duration-slow', '--oi-motion-ease-standard', '--oi-motion-ease-emphasized']),
   interaction: Object.freeze(['--oi-interaction-focus-ring-width', '--oi-interaction-focus-ring-offset', '--oi-interaction-pointer-target-min', '--oi-interaction-touch-target-min']),
 });
@@ -122,6 +123,11 @@ export const semanticRoleVariables = Object.freeze([
   '--oi-geometry-radius-control',
   '--oi-geometry-radius-surface',
   '--oi-geometry-radius-overlay',
+  '--oi-elevation-flat',
+  '--oi-elevation-raised',
+  '--oi-elevation-overlay',
+  '--oi-elevation-live',
+  '--oi-elevation-critical',
   '--oi-motion-duration-fast',
   '--oi-motion-duration-normal',
   '--oi-motion-duration-slow',
@@ -169,6 +175,11 @@ export const forbiddenDomainTerms = Object.freeze(['patient', 'physician', 'clin
 
 // ── Development assertions (§13, §20) ──
 
+function isDevelopmentEnvironment(options) {
+  if (typeof options?.development === 'boolean') return options.development;
+  return typeof process !== 'undefined' && process?.env?.NODE_ENV !== 'production';
+}
+
 /**
  * Validate a value against a contract axis.
  *
@@ -178,18 +189,19 @@ export const forbiddenDomainTerms = Object.freeze(['patient', 'physician', 'clin
  *
  * @param {string} axis  Axis name, e.g. "severity".
  * @param {string} value Candidate value, e.g. "critical".
+ * @param {{development?: boolean}} [options] Explicit native-browser development mode.
  * @returns {boolean} true when the value is valid for the axis.
  */
-export function assertAxisValue(axis, value) {
+export function assertAxisValue(axis, value, options) {
   const allowed = axes[axis];
   if (!allowed) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isDevelopmentEnvironment(options)) {
       throw new Error(`[oi] unknown axis "${axis}"; expected one of ${Object.keys(axes).join(', ')}`);
     }
     return false;
   }
   if (allowed.includes(value)) return true;
-  if (process.env.NODE_ENV !== 'production') {
+  if (isDevelopmentEnvironment(options)) {
     throw new Error(`[oi] "${value}" is not a valid ${axis}; expected one of ${allowed.join(', ')}`);
   }
   return false;
@@ -202,12 +214,13 @@ export function assertAxisValue(axis, value) {
  *
  * @param {string} recipe Recipe name, e.g. "compact-monitor".
  * @param {string[]} providedSlots Slot names present in the DOM.
+ * @param {{development?: boolean}} [options] Explicit native-browser development mode.
  * @returns {string[]} Missing required slot names; empty when satisfied.
  */
-export function missingRequiredSlots(recipe, providedSlots) {
+export function missingRequiredSlots(recipe, providedSlots, options) {
   const contract = recipeContracts[recipe];
   if (!contract) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isDevelopmentEnvironment(options)) {
       throw new Error(`[oi] unknown recipe "${recipe}"; expected one of ${recipes.join(', ')}`);
     }
     return [];

@@ -19,14 +19,33 @@
 // No runtime dependencies. CSS layout stays hand-authored (§14) — the generator
 // produces contracts and repetitive bindings, never opaque generated layout.
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  existsSync,
+  readdirSync,
+} from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'src', 'system', 'contract.json');
+const TOKENS_SRC = join(ROOT, 'src', 'tokens.json');
+const MAPPING_SRC = join(ROOT, 'src', 'system', 'mappings', 'dark-roast.json');
+const LAYERS_SRC = join(ROOT, 'src', 'system', 'layers.css');
+const CONTRACTS_SRC = join(ROOT, 'src', 'system', 'contracts');
 const OUT_DIR = join(ROOT, 'dist', 'system');
 const CHECK = process.argv.includes('--check');
+const CONTRACT_SOURCE_ORDER = [
+  'surfaces.css',
+  'text.css',
+  'interaction.css',
+  'state.css',
+  'truth.css',
+  'density.css',
+  'motion.css',
+];
 
 const manifest = JSON.parse(readFileSync(SRC, 'utf8'));
 
@@ -45,6 +64,29 @@ const camel = (s) => {
 };
 const union = (values) => values.map((v) => `'${v}'`).join(' | ');
 const list = (values) => values.map((v) => `'${v}'`).join(', ');
+const kebab = (s) =>
+  s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').replace(/[._ ]/g, '-').toLowerCase();
+
+function readRequired(path, description) {
+  if (!existsSync(path)) {
+    throw new Error(`[oi] missing ${description}: ${path}`);
+  }
+  return readFileSync(path, 'utf8');
+}
+
+function exactKeys(actual, expected, description) {
+  const actualSet = new Set(actual);
+  const expectedSet = new Set(expected);
+  const missing = expected.filter((key) => !actualSet.has(key));
+  const extra = actual.filter((key) => !expectedSet.has(key));
+  if (missing.length || extra.length) {
+    const details = [
+      missing.length ? `missing ${missing.join(', ')}` : '',
+      extra.length ? `unexpected ${extra.join(', ')}` : '',
+    ].filter(Boolean).join('; ');
+    throw new Error(`[oi] ${description} does not match the contract: ${details}`);
+  }
+}
 
 /** Recursively drop documentation keys so published JSON carries contract only. */
 function strip(value) {
@@ -62,6 +104,160 @@ const recipeNames = entries(manifest.recipes).map(([k]) => k);
 const allSlots = [
   ...new Set(entries(manifest.recipes).flatMap(([, r]) => r.slotOrder)),
 ].sort();
+
+function darkRoastVariableInventory(tokens) {
+  const variables = new Set();
+  const add = (name) => variables.add(`--dr-${name}`);
+
+  for (const [name] of entries(tokens.colors)) add(kebab(name));
+
+  for (const name of [
+    'accent',
+    'accentHot',
+    'accentMuted',
+    'success',
+    'warning',
+    'error',
+    'critical',
+    'stable',
+    'live',
+  ]) {
+    add(kebab(name));
+  }
+  for (const name of ['display', 'workhorse', 'secondary', 'tertiary', 'body', 'muted']) {
+    add(`fg-${name}`);
+  }
+
+  for (const color of tokens._build.opacityVariantColors) {
+    for (const tier of Object.keys(tokens._build.opacityTiers)) {
+      add(`${kebab(color)}-${kebab(tier)}`);
+    }
+  }
+  add('divider');
+
+  for (const [name] of entries(tokens.glows)) add(`glow-${kebab(name)}`);
+  add('glass-gradient');
+
+  for (const [name] of entries(tokens.elevation)) {
+    add(`elevation-${kebab(name)}-shadow`);
+    add(`elevation-${kebab(name)}-border`);
+  }
+
+  for (const [name] of entries(tokens.typography.families)) add(`font-${kebab(name)}`);
+  for (const [name] of entries(tokens.typography.scale)) {
+    add(`text-${kebab(name)}`);
+    add(`leading-${kebab(name)}`);
+  }
+  add('text-huge');
+  for (const [name] of entries(tokens.typography.tracking)) add(`tracking-${kebab(name)}`);
+
+  for (const [name] of entries(tokens.spacing.scale)) add(`space-${kebab(name)}`);
+  for (const [name] of entries(tokens.spacing.aliases)) add(`space-${kebab(name)}`);
+  for (const [name] of entries(tokens.radii)) add(`radius-${kebab(name)}`);
+  add('stripe-height');
+  add('stripe-opacity');
+  for (const [name] of entries(tokens.icon.size)) add(`icon-${kebab(name)}`);
+
+  for (const [name] of entries(tokens.motion.durations)) add(`duration-${kebab(name)}`);
+  for (const [name] of entries(tokens.motion._legacyDurations)) add(`duration-${kebab(name)}`);
+  for (const [name] of entries(tokens.motion.easings)) {
+    if (name.startsWith('swiftui')) continue;
+    add(name === 'default' ? 'easing' : `easing-${kebab(name)}`);
+  }
+
+  for (const [name] of entries(tokens.zIndex)) add(`z-${kebab(name)}`);
+  return variables;
+}
+
+function buildDarkRoastMapping() {
+  const mapping = JSON.parse(readRequired(MAPPING_SRC, 'Dark Roast semantic mapping source'));
+  const tokens = JSON.parse(readRequired(TOKENS_SRC, 'canonical Dark Roast token source'));
+
+  if (mapping.name !== 'dark-roast') {
+    throw new Error(`[oi] mapping name must be "dark-roast", got ${JSON.stringify(mapping.name)}`);
+  }
+  if (!mapping.roles || typeof mapping.roles !== 'object' || Array.isArray(mapping.roles)) {
+    throw new Error('[oi] dark-roast mapping must define a roles object');
+  }
+
+  const mappingCategories = entries(mapping.roles).map(([category]) => category);
+  const expectedCategories = roles.map(([category]) => category);
+  exactKeys(mappingCategories, expectedCategories, 'dark-roast mapping categories');
+
+  const canonicalVariables = darkRoastVariableInventory(tokens);
+  const declarations = [];
+  for (const [category, roleNames] of roles) {
+    const categoryMapping = mapping.roles[category];
+    if (!categoryMapping || typeof categoryMapping !== 'object' || Array.isArray(categoryMapping)) {
+      throw new Error(`[oi] dark-roast mapping category "${category}" must be an object`);
+    }
+
+    const actualRoles = entries(categoryMapping).map(([role]) => role);
+    exactKeys(actualRoles, roleNames, `dark-roast mapping category "${category}"`);
+
+    for (const role of roleNames) {
+      const value = categoryMapping[role];
+      if (typeof value !== 'string' || value.trim() === '') {
+        throw new Error(`[oi] dark-roast mapping ${category}.${role} must be a non-empty CSS value`);
+      }
+      const references = value.match(/--dr-[a-z0-9-]+/g) ?? [];
+      if (references.length === 0) {
+        throw new Error(
+          `[oi] dark-roast mapping ${category}.${role} must reference a canonical --dr-* foundation`,
+        );
+      }
+      for (const reference of references) {
+        if (!canonicalVariables.has(reference)) {
+          throw new Error(
+            `[oi] dark-roast mapping ${category}.${role} references ${reference}, ` +
+              'which is not derived from src/tokens.json',
+          );
+        }
+      }
+      declarations.push(`    ${manifest.naming.cssVariablePrefix}${category}-${role}: ${value};`);
+    }
+  }
+
+  return [
+    '/* AUTO-GENERATED from src/system/mappings/dark-roast.json by scripts/build-system.js — DO NOT EDIT. */',
+    '@layer oi.mapping {',
+    `  .${manifest.naming.cssClassPrefix}root {`,
+    ...declarations,
+    '  }',
+    '}',
+    '',
+  ].join('\n');
+}
+
+function buildContractsCss() {
+  const layers = readRequired(LAYERS_SRC, 'system cascade-layer source').trim();
+  if (!existsSync(CONTRACTS_SRC)) {
+    throw new Error(`[oi] missing semantic contract source directory: ${CONTRACTS_SRC}`);
+  }
+  const discoveredNames = readdirSync(CONTRACTS_SRC, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.css'))
+    .map((entry) => entry.name)
+    .sort();
+  exactKeys(discoveredNames, CONTRACT_SOURCE_ORDER, 'semantic contract CSS sources');
+
+  const sources = CONTRACT_SOURCE_ORDER.map((name) =>
+    `/* source: src/system/contracts/${name} */\n${readRequired(join(CONTRACTS_SRC, name), `semantic contract ${name}`).trim()}`,
+  );
+  return `${[
+    '/* AUTO-GENERATED from src/system/layers.css and src/system/contracts/*.css by scripts/build-system.js — DO NOT EDIT. */',
+    layers,
+    ...sources,
+  ].join('\n\n')}\n`;
+}
+
+function buildIndexJs() {
+  return [
+    BANNER,
+    '',
+    "export * from './contract.js';",
+    '',
+  ].join('\n');
+}
 
 // ── dist/system/contract.js ─────────────────────────────────
 function buildJs() {
@@ -172,6 +368,11 @@ function buildJs() {
   L.push('');
   L.push('// ── Development assertions (§13, §20) ──');
   L.push('');
+  L.push('function isDevelopmentEnvironment(options) {');
+  L.push('  if (typeof options?.development === \'boolean\') return options.development;');
+  L.push('  return typeof process !== \'undefined\' && process?.env?.NODE_ENV !== \'production\';');
+  L.push('}');
+  L.push('');
   L.push('/**');
   L.push(' * Validate a value against a contract axis.');
   L.push(' *');
@@ -181,18 +382,19 @@ function buildJs() {
   L.push(' *');
   L.push(' * @param {string} axis  Axis name, e.g. "severity".');
   L.push(' * @param {string} value Candidate value, e.g. "critical".');
+  L.push(' * @param {{development?: boolean}} [options] Explicit native-browser development mode.');
   L.push(' * @returns {boolean} true when the value is valid for the axis.');
   L.push(' */');
-  L.push('export function assertAxisValue(axis, value) {');
+  L.push('export function assertAxisValue(axis, value, options) {');
   L.push('  const allowed = axes[axis];');
   L.push('  if (!allowed) {');
-  L.push('    if (process.env.NODE_ENV !== \'production\') {');
+  L.push('    if (isDevelopmentEnvironment(options)) {');
   L.push('      throw new Error(`[oi] unknown axis "${axis}"; expected one of ${Object.keys(axes).join(\', \')}`);');
   L.push('    }');
   L.push('    return false;');
   L.push('  }');
   L.push('  if (allowed.includes(value)) return true;');
-  L.push('  if (process.env.NODE_ENV !== \'production\') {');
+  L.push('  if (isDevelopmentEnvironment(options)) {');
   L.push('    throw new Error(`[oi] "${value}" is not a valid ${axis}; expected one of ${allowed.join(\', \')}`);');
   L.push('  }');
   L.push('  return false;');
@@ -205,12 +407,13 @@ function buildJs() {
   L.push(' *');
   L.push(' * @param {string} recipe Recipe name, e.g. "compact-monitor".');
   L.push(' * @param {string[]} providedSlots Slot names present in the DOM.');
+  L.push(' * @param {{development?: boolean}} [options] Explicit native-browser development mode.');
   L.push(' * @returns {string[]} Missing required slot names; empty when satisfied.');
   L.push(' */');
-  L.push('export function missingRequiredSlots(recipe, providedSlots) {');
+  L.push('export function missingRequiredSlots(recipe, providedSlots, options) {');
   L.push('  const contract = recipeContracts[recipe];');
   L.push('  if (!contract) {');
-  L.push('    if (process.env.NODE_ENV !== \'production\') {');
+  L.push('    if (isDevelopmentEnvironment(options)) {');
   L.push('      throw new Error(`[oi] unknown recipe "${recipe}"; expected one of ${recipes.join(\', \')}`);');
   L.push('    }');
   L.push('    return [];');
@@ -272,6 +475,12 @@ function buildDts() {
   L.push(`export type OiStability = ${union(manifest.stabilityLadder.stages)};`);
   L.push('');
 
+  L.push('/** Explicit assertion mode for native browser ESM without Node environment globals. */');
+  L.push('export interface OiRuntimeOptions {');
+  L.push('  readonly development?: boolean;');
+  L.push('}');
+  L.push('');
+
   L.push('/** The orthogonal state of a single operational surface (§5.3). */');
   L.push('export interface OiState {');
   for (const [axis] of axes) {
@@ -317,18 +526,24 @@ function buildDts() {
   L.push('export declare const stabilityLadder: readonly OiStability[];');
   L.push('export declare const forbiddenDomainTerms: readonly string[];');
   L.push('');
-  L.push('export declare function assertAxisValue(axis: string, value: string): boolean;');
-  L.push(`export declare function missingRequiredSlots(recipe: ${T.recipe ?? 'OiRecipe'}, providedSlots: readonly string[]): ${T.slot ?? 'OiSlot'}[];`);
+  L.push('export declare function assertAxisValue(axis: string, value: string, options?: OiRuntimeOptions): boolean;');
+  L.push(`export declare function missingRequiredSlots(recipe: ${T.recipe ?? 'OiRecipe'}, providedSlots: readonly string[], options?: OiRuntimeOptions): ${T.slot ?? 'OiSlot'}[];`);
   L.push('export declare function requiresProvenanceDisclosure(state: Pick<OiState, \'source\' | \'certainty\' | \'freshness\' | \'completeness\'>): boolean;');
 
   return L.join('\n') + '\n';
 }
 
 // ── write / check ───────────────────────────────────────────
+const contractsCss = buildContractsCss();
 const outputs = {
+  'index.js': buildIndexJs(),
+  'index.d.ts': buildIndexJs(),
   'contract.js': buildJs(),
   'contract.d.ts': buildDts(),
   'contract.json': `${JSON.stringify(strip(manifest), null, 2)}\n`,
+  'contracts.css': contractsCss,
+  'index.css': contractsCss,
+  'mappings/dark-roast.css': buildDarkRoastMapping(),
 };
 
 if (CHECK) {
@@ -346,9 +561,10 @@ if (CHECK) {
   }
   console.log('✓ dist/system in sync with src/system/contract.json');
 } else {
-  mkdirSync(OUT_DIR, { recursive: true });
   for (const [name, content] of Object.entries(outputs)) {
-    writeFileSync(join(OUT_DIR, name), content);
+    const path = join(OUT_DIR, name);
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, content);
   }
   console.log(
     `✓ generated dist/system: ${Object.keys(outputs).join(', ')} (contract ${manifest.version})`,

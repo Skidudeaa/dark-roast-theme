@@ -1,0 +1,82 @@
+@layer oi.contracts {
+  .oi-root {
+    --_oi-surface-background: var(--oi-surface-base);
+    --_oi-surface-border: var(--oi-border-subtle);
+    --_oi-surface-elevation: var(--oi-elevation-flat);
+    --_oi-surface-radius: var(--oi-geometry-radius-surface);
+
+    min-inline-size: 0;
+    background-color: var(--oi-surface-canvas);
+    color: var(--oi-text-body);
+    font-family: var(--oi-typography-body);
+  }
+
+  :where([data-oi-surface]) {
+    min-inline-size: 0;
+    background-color: var(--_oi-surface-background);
+    border-color: var(--_oi-surface-border);
+    border-radius: var(--_oi-surface-radius);
+    box-shadow: var(--_oi-surface-elevation);
+  }
+
+  :where([data-oi-surface="canvas"]) {
+    --_oi-surface-background: var(--oi-surface-canvas);
+    --_oi-surface-border: var(--oi-border-subtle);
+    --_oi-surface-elevation: var(--oi-elevation-flat);
+  }
+
+  :where([data-oi-surface="base"]) {
+    --_oi-surface-background: var(--oi-surface-base);
+    --_oi-surface-border: var(--oi-border-subtle);
+    --_oi-surface-elevation: var(--oi-elevation-flat);
+  }
+
+  :where([data-oi-surface="raised"]) {
+    --_oi-surface-background: var(--oi-surface-raised);
+    --_oi-surface-border: var(--oi-border-default);
+    --_oi-surface-elevation: var(--oi-elevation-raised);
+  }
+
+  :where([data-oi-surface="interactive"]) {
+    --_oi-surface-background: var(--oi-surface-interactive);
+    --_oi-surface-border: var(--oi-border-default);
+    --_oi-surface-elevation: var(--oi-elevation-flat);
+  }
+
+  :where([data-oi-surface="interactive"]):is(:hover, :focus-within) {
+    --_oi-surface-background: var(--oi-surface-hover);
+    --_oi-surface-border: var(--oi-border-strong);
+  }
+
+  :where([data-oi-surface="inset"]) {
+    --_oi-surface-background: var(--oi-surface-inset);
+    --_oi-surface-border: var(--oi-border-subtle);
+    --_oi-surface-elevation: var(--oi-elevation-flat);
+  }
+
+  :where([data-oi-surface="overlay"]) {
+    --_oi-surface-background: var(--oi-surface-overlay);
+    --_oi-surface-border: var(--oi-border-strong);
+    --_oi-surface-elevation: var(--oi-elevation-overlay);
+    --_oi-surface-radius: var(--oi-geometry-radius-overlay);
+  }
+
+  :where([data-oi-surface="scrim"]) {
+    --_oi-surface-background: var(--oi-surface-scrim);
+    --_oi-surface-border: var(--oi-border-subtle);
+    --_oi-surface-elevation: var(--oi-elevation-flat);
+  }
+
+  @media (prefers-contrast: more) {
+    :where(
+      [data-oi-surface="base"],
+      [data-oi-surface="raised"],
+      [data-oi-surface="interactive"],
+      [data-oi-surface="inset"],
+      [data-oi-surface="overlay"],
+      [data-oi-surface="scrim"]
+    ) {
+      --_oi-surface-border: var(--oi-border-strong);
+    }
+  }
+}

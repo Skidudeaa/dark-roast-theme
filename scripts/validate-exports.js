@@ -34,23 +34,30 @@ const failures = [];
 // ── 1. Reachable ────────────────────────────────────────────
 // Consumer-facing artifacts, by directory and extension.
 const required = [];
-const collect = (relDir, filter) => {
+const collect = (relDir, filter, recursive = false) => {
   const abs = join(ROOT, relDir);
   if (!existsSync(abs)) return;
-  for (const name of readdirSync(abs)) {
+  for (const name of readdirSync(abs).sort()) {
     const rel = `${relDir}/${name}`;
-    if (statSync(join(ROOT, rel)).isDirectory()) continue;
-    if (filter(name)) required.push(`./${rel}`);
+    if (statSync(join(ROOT, rel)).isDirectory()) {
+      if (recursive) collect(rel, filter, true);
+      continue;
+    }
+    if (filter(name, rel)) required.push(`./${rel}`);
   }
 };
 
 collect('dist/css', (n) => n.endsWith('.css'));
 collect('dist/tokens', (n) => n.endsWith('.js'));
 collect('src/skins', (n) => n.endsWith('.css'));
-// dist/system carries the doctrine contract. Declaration files are reached via
-// a "types" condition rather than their own subpath, so they are not required
-// here — they are checked for existence below instead.
-collect('dist/system', (n) => n.endsWith('.js') || n.endsWith('.json'));
+// dist/system is nested as the kernel grows. Declaration files are reached via
+// a "types" condition rather than their own subpath, so they are checked below
+// rather than requiring a redundant export of their own.
+collect(
+  'dist/system',
+  (n) => n.endsWith('.js') || n.endsWith('.json') || n.endsWith('.css'),
+  true,
+);
 
 const themesDir = join(ROOT, 'dist', 'themes');
 if (existsSync(themesDir)) {
@@ -85,6 +92,12 @@ for (const [subpath, target] of entries) {
   const rel = target.replace(/^\.\//, '');
   if (!shipped(rel)) {
     failures.push(`not shipped: "${subpath}" -> ${rel} is excluded by package.json "files"`);
+  }
+}
+for (const [subpath, types] of typePaths) {
+  const rel = types.replace(/^\.\//, '');
+  if (!shipped(rel)) {
+    failures.push(`types not shipped: "${subpath}" -> ${rel} is excluded by package.json "files"`);
   }
 }
 

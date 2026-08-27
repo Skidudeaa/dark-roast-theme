@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-26 (package 5.7.0, doctrine contract 0.1.0)
+**Last updated:** 2026-08-26 (package 5.8.0, doctrine contract 0.2.0)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -36,7 +36,7 @@ One-way, per doctrine §4. Higher layers must not leak into lower ones.
 ```
 docs/OPERATIONAL-INTERFACE-DOCTRINE.md   the specification
   └─> src/system/contract.json           machine-readable contract      [BUILT]
-        └─> semantic contract CSS        --oi-* role declarations       [pending]
+        └─> semantic contract CSS        --oi-* role declarations       [BUILT]
               └─> structural primitives  the ten building blocks        [pending]
                     └─> recipes          composition, e.g. compact-monitor
                           └─> domain adapters   product meaning -> axes
@@ -52,15 +52,15 @@ of them.
 src/tokens.json  ->  src/variants/*.json  ->  dist/css/dark-roast-*.css
                                                      |
                                                      v
-                                        src/system/mappings/dark-roast.css  [pending]
+                           src/system/mappings/dark-roast.json -> generated CSS
                                                      |
                                                      v
                                               --oi-* semantic roles
 ```
 
 Only the mapping layer may read `--dr-*`. Anything above it consuming a palette
-token directly is the "token soup" anti-pattern (§23) and is a validation
-failure once slice B lands.
+token directly is the "token soup" anti-pattern (§23) and is an AST validation
+failure.
 
 ---
 
@@ -75,7 +75,8 @@ Hand-edited source of truth (§14). It declares:
   `interaction` axis — native pseudo-classes, native attributes, and ARIA own
   interaction state (§7.10). There is deliberately no generic `data-state`; it
   collapses unrelated dimensions into a junk drawer (§5.3).
-- **43 semantic roles** across the nine required categories (§8).
+- **48 semantic roles** across ten required categories (§8), including the five
+  additive elevation roles introduced in contract 0.2.0.
 - **The ten structural primitives** with the responsibility each owns and the
   axes each consumes (§10).
 - **`compact-monitor`** as experimental, with its full slot order (§11.1).
@@ -101,6 +102,9 @@ validator instead.
 | `contract.js` | Frozen constants, axis→attribute map, semantic role variable names, and three runtime helpers |
 | `contract.d.ts` | `Oi*` string-literal unions, `OiState`, `OiRecipeContract` |
 | `contract.json` | The manifest with documentation keys stripped |
+| `index.js`, `index.d.ts` | Package-level runtime and type barrels |
+| `contracts.css`, `index.css` | Ordered, theme-neutral semantic contract CSS; no palette is implicit |
+| `mappings/dark-roast.css` | Generated `--dr-*` to `--oi-*` mapping seam |
 
 Three runtime helpers are worth knowing:
 
@@ -111,21 +115,43 @@ Three runtime helpers are worth knowing:
 - **`missingRequiredSlots(recipe, provided)`** — returns the required slots a
   caller failed to supply.
 - **`requiresProvenanceDisclosure(state)`** — true when source, certainty,
-  freshness, or completeness is anything other than direct/confirmed/live/complete.
+  freshness, or completeness is outside direct/confirmed/live-or-recent/complete.
   Guards against "truth laundering" (§23): generated, inferred, stale, or partial
   information wearing the visual authority of confirmed data.
 
 ### `src/system/studies/` — the intake pipeline
 
 External designs enter through documented studies, never direct transplantation
-(§18). Currently one: `phind-extension.md`, which extracts eleven theme-neutral
-relationships from the Phind VS Code extension with file-level provenance, and
-proposes `conversation-shell` plus a proposal-resolution interaction contract.
+(§18). `phind-extension.md` extracts conversation/context/proposal relationships.
+`codecompanion-ai.md` records a sanitized proprietary-source study of workbench,
+mutation-gate, checkpoint, and recovery behavior; it explicitly justifies zero
+new public manifest entries in this tranche.
 
 The Clauddy study that motivated `compact-monitor` is recorded inline as doctrine
 §21. §15 reserves `studies/claude-usage-monitor.md` for a standalone extraction;
 that file is not yet written, so the manifest references the doctrine section
 that does exist rather than a placeholder.
+
+### Slice B semantic infrastructure
+
+- `src/system/mappings/dark-roast.json` maps all 48 roles to canonical Dark Roast
+  foundations. The generator rejects missing/extra roles and any `--dr-*`
+  reference that cannot be derived from `src/tokens.json`.
+- `spec/system/mappings/alien.css` is a complete cold, flat, light-polarity proof
+  mapping. It ships with the existing spec fixtures but is deliberately not a
+  supported mapping export.
+- `src/system/layers.css` fixes the public order: mapping, contracts,
+  primitives, recipes, utilities, product. There is no reset layer.
+- `src/system/contracts/*.css` implements surface, text, interaction, state,
+  truth, density, and motion contracts using public `--oi-*` roles and private
+  `--_oi-*` implementation variables.
+- `scripts/validate-system-css.js` uses PostCSS plus selector/value ASTs to
+  enforce layer ownership, mapping completeness, selector and state contracts,
+  logical properties, raw-color boundaries, motion ownership, domain neutrality,
+  and `--dr-*` quarantine.
+- `scripts/validate-package.js` packs and extracts the actual npm artifact,
+  resolves every JS/type/JSON/CSS export, rejects private/toolchain paths, and
+  proves zero runtime dependencies.
 
 ---
 
@@ -142,16 +168,17 @@ espresso value — and so stopped tracking its own theme. The skin now reference
 keeps literal only the 20 that are genuinely product-specific.
 
 **Known transitional deviation.** A skin sits above the mapping layer, so under
-§5.1 it should consume `--oi-*` rather than `--dr-*`. It consumes `--dr-*` today
-because the `--oi-*` layer does not exist yet. When slice B lands, the skin
-should migrate. This is recorded rather than quietly tolerated, because an
-undocumented exception is how a doctrine becomes decorative.
+§5.1 it should ultimately consume `--oi-*` rather than `--dr-*`. The published
+somaCura skin still references `--dr-*`: migrating its five clinical severity
+hues is product adoption with visual/clinical acceptance, not a safe kernel
+sweep. It remains outside system CSS validation and must migrate with the
+version-correct somaCura adoption recorded in `docs/SOMACURA-MIGRATION.md`.
 
 ---
 
 ## 5. The validator suite
 
-`npm test` runs thirteen checks in order. Each one exists because something
+`npm test` runs fifteen gates in order. Each one exists because something
 either did go wrong or provably could.
 
 **Theme family**
@@ -168,23 +195,29 @@ either did go wrong or provably could.
    its registry.
 8. `validate-gallery.js` — the gallery cannot drift from source palettes.
 
-**Distribution**
-9. `validate-exports.js` — every generated artifact is reachable, every export
-   resolves on disk, every target ships under `files`, and no `types` path
-   dangles. Added after 8 stylesheets and 4 theme modules were found shipping
-   with no export entry, which is why a consumer had hand-copied a palette.
-10. `validate-skins.js` — a skin may own product-specific values but never a copy
-    of a theme token, and every `var(--dr-*)` must resolve.
+**Product assembly**
+9. `validate-skins.js` — a skin may own product-specific values but never a copy
+   of a theme token, and every `var(--dr-*)` must resolve.
 
-**Doctrine**
-11. `validate-contract.js` — JSON Schema (§17.5) plus the cross-references a
+**Doctrine and semantic CSS**
+10. `validate-contract.js` — JSON Schema (§17.5) plus the cross-references a
     schema cannot express: required and optional slots must partition `slotOrder`
     exactly, primitive and truth axes must resolve, stability must sit on the
     ladder, anything above `candidate` needs a study that exists, generated type
     names must be present and unique, and the contract must not contain its own
     forbidden domain terms.
-12. `build-system.js --check` — `dist/system/` matches the manifest byte for byte
-    (§17.6).
+11. `build-system.js --check` — every generated runtime, type, mapping, and CSS
+    artifact is byte-identical to source (§17.6).
+12. `validate-system-runtime.js` — development/production/browser assertions,
+    required slots, and provenance predicates behave as specified.
+13. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
+    mappings across all 48 roles.
+
+**Distribution**
+14. `validate-exports.js` — recursively proves every generated artifact is
+    reachable, resolvable, typed where declared, and covered by `files`.
+15. `validate-package.js` — validates the actual packed/extracted tarball and
+    zero runtime dependencies.
 
 CI (`.github/workflows/ci.yml`) runs the suite on every push to `master` under
 pinned Node 22. It exists because commit `9a40e50` edited a variant source
@@ -197,12 +230,11 @@ because nothing ran the gate.
 
 Tranche 1 continues (§24). In dependency order:
 
-- **Slice B** — semantic contract CSS, the Dark Roast mapping generated from
-  existing token source, the deliberately cold "alien" mapping that proves
-  theme-neutrality, cascade-layer orchestration, and an AST-based CSS validator
-  (PostCSS, per §17.5 — regex parsing is explicitly insufficient).
-- **Slice C** — the ten primitives as real CSS, each rendering under both
-  mappings.
+- **Slice C contract reconciliation** — declare public DOM anatomy/parts for the
+  ten primitives before implementation. Responsibilities and axes exist;
+  `metric`, `meter`, `disclosure`, and `history-strip` markup does not.
+- **Slice C implementation** — the ten primitives as real CSS, each rendering
+  under both mappings.
 - **Slice D** — `compact-monitor`, plus the state / truth / async / responsive /
   content-stress / cross-theme proof matrices with Playwright and axe.
 
@@ -225,9 +257,14 @@ a second parse for no benefit. If type generation later grows independent
 concerns — Swift enums after native adoption begins — splitting is the right
 call then.
 
-**`dist/system/` currently holds only the contract.** §15's fuller listing
-(`index.js`, `contracts.css`, `primitives.css`, `recipes.css`, `index.css`,
-`mappings/`) arrives with slices B through D.
+**The Dark Roast mapping source is JSON, not hand-authored CSS.** §15 sketches
+`src/system/mappings/dark-roast.css`, but JSON lets the generator prove exact
+role coverage and canonical token references before emitting CSS. Layout CSS
+remains hand-authored as required.
+
+**`dist/system/` does not yet contain primitive or recipe bundles.** Those arrive
+with slices C and D; empty placeholders would imply implementation that does not
+exist.
 
 ---
 
@@ -237,6 +274,10 @@ call then.
 `npm run build:system`, run `npm test`. Adding a value to a stable axis, renaming
 anything public, or adding a required slot is a MAJOR contract bump (§19) —
 bump `version` in the manifest, which is independent of the package version.
+
+**To change semantic CSS:** edit `src/system/contracts/*.css`; edit
+`src/system/mappings/dark-roast.json` only for a mapping relationship. Run
+`npm run build:system`, then `npm test`. Never hand-edit `dist/system/`.
 
 **To change a theme token:** unchanged from before — see `CLAUDE.md`. Black Label
 is production-locked behind a SHA-256 contract; companions are edited only in

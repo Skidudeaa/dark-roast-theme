@@ -6,6 +6,49 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.8.0] — 2026-08-26
+
+Operational Interface Doctrine tranche 1 slice B. **Dark Roast: Black Label and
+all companion color values are unchanged.** The package now ships the
+theme-neutral semantic infrastructure beneath future primitives and recipes.
+
+### Added
+
+- **Doctrine contract 0.2.0** — five additive elevation roles (`flat`, `raised`,
+  `overlay`, `live`, `critical`) bring the semantic contract to 48 roles. The
+  nine orthogonal axes, ten primitive names, and `compact-monitor` slot contract
+  are unchanged.
+- **Generated Dark Roast mapping** — `src/system/mappings/dark-roast.json` maps
+  all semantic roles to canonical `--dr-*` foundations. Generation fails on a
+  missing/extra role or a token reference not derived from `src/tokens.json`.
+- **Alien proof mapping** — a cold, flat, light-polarity fixture independently
+  defines all 48 roles and is validated but not exposed as a supported export.
+- **Semantic contract CSS** — ordered mapping/contracts/primitives/recipes/
+  utilities/product layers plus surface, text, interaction, state, truth,
+  density, and motion contracts. There is no reset and no implicit palette.
+- **Sanitized CodeCompanion.AI v7.1.23 study** — independently records
+  workbench, context, mutation-gate, checkpoint, and recovery relationships from
+  a local proprietary reference. It ships no source material and justifies zero
+  new public manifest entries.
+
+### Enforcement
+
+- PostCSS, selector-parser, and value-parser enforce layer ownership, complete
+  mappings, semantic-variable boundaries, orthogonal axis values, selector
+  depth, logical properties, domain neutrality, and state-owned infinite motion.
+- Generated runtime predicates are tested in development, production, and a
+  browser-like environment without Node's `process` global.
+- Export validation now recurses through `dist/system/**`. A separate integrity
+  gate packs and extracts the actual npm tarball, resolves/imports every export,
+  rejects private/toolchain paths, and proves zero runtime dependencies.
+
+### Distribution
+
+- Adds `dark-roast-theme/system`, `/system/css`, `/system/contracts`, and
+  `/system/mappings/dark-roast` exports while preserving every existing export.
+- Package and companion registry metadata advance to 5.8.0; generated palette
+  values remain byte-stable under the Black Label and theme validators.
+
 ## [5.7.0] — 2026-08-26
 
 Distribution and architecture release. **Dark Roast: Black Label is unchanged**,
@@ -59,7 +102,7 @@ machine-readable contract.
 
 ### Validation
 
-`npm test` grows from eight checks to thirteen.
+`npm test` grows from ten chained gates to twelve.
 
 - `validate-exports.js` proves three invariants: every consumer-facing artifact
   has an export entry, every entry resolves on disk, and every target is covered

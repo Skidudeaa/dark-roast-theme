@@ -1,0 +1,13 @@
+@layer oi.contracts {
+  :where([data-oi-activity], [data-oi-severity], [data-oi-freshness]) {
+    transition-duration: var(--oi-motion-duration-fast);
+    transition-property: background-color, border-color, box-shadow, color, outline-color;
+    transition-timing-function: var(--oi-motion-ease-standard);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-oi-activity], [data-oi-severity], [data-oi-freshness]) {
+      transition-duration: 0ms;
+    }
+  }
+}

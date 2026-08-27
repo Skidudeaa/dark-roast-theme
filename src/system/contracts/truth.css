@@ -1,0 +1,56 @@
+@layer oi.contracts {
+  :where(
+    [data-oi-source],
+    [data-oi-freshness],
+    [data-oi-certainty],
+    [data-oi-completeness]
+  ) {
+    --_oi-truth-border-style: solid;
+    --_oi-truth-font-style: normal;
+    --_oi-truth-decoration-line: none;
+    --_oi-truth-decoration-style: solid;
+
+    border-style: var(--_oi-truth-border-style);
+    font-style: var(--_oi-truth-font-style);
+    text-decoration-line: var(--_oi-truth-decoration-line);
+    text-decoration-style: var(--_oi-truth-decoration-style);
+    text-decoration-color: var(--oi-text-muted);
+    text-underline-offset: calc(var(--oi-geometry-space) / 2);
+  }
+
+  :where([data-oi-source="derived"], [data-oi-source="generated"]) {
+    --_oi-truth-font-style: italic;
+  }
+
+  :where([data-oi-source="external"]) {
+    --_oi-truth-font-style: oblique;
+  }
+
+  :where([data-oi-freshness="stale"], [data-oi-freshness="unknown"]) {
+    --_oi-truth-decoration-line: underline;
+    --_oi-truth-decoration-style: dashed;
+  }
+
+  :where([data-oi-certainty="inferred"], [data-oi-certainty="uncertain"]) {
+    --_oi-truth-border-style: dashed;
+    --_oi-truth-font-style: italic;
+  }
+
+  :where([data-oi-certainty="disputed"]) {
+    --_oi-truth-border-style: double;
+    --_oi-truth-decoration-line: underline;
+    --_oi-truth-decoration-style: wavy;
+  }
+
+  :where([data-oi-completeness="partial"]) {
+    border-inline-start: var(--oi-interaction-focus-ring-width) dashed var(--oi-border-strong);
+  }
+
+  :where([data-oi-completeness="missing"]) {
+    border-inline-start: calc(var(--oi-interaction-focus-ring-width) * 2) double var(--oi-border-strong);
+  }
+
+  :where([data-oi-completeness="unavailable"]) {
+    border-inline-start: var(--oi-interaction-focus-ring-width) dotted var(--oi-border-strong);
+  }
+}

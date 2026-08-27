@@ -16,8 +16,8 @@ Two systems that share a package.
 
 ## The three things to do when you sit down
 
-1. **Run `npm test`.** Thirteen checks. Every failure names the file and tells you
-   the command to fix it. You do not need to remember the rules — the build
+1. **Run `npm test`.** Every failure names the file and tells you the command to
+   fix it. You do not need to remember the rules — the build
    re-teaches you the relevant one at the moment it matters.
 2. **Read the "Current State" block at the top of `CLAUDE.md`.** That is where
    project state lives: what is done, what is next, what is blocked and why.
