@@ -8,7 +8,7 @@
 // false quietly otherwise so callers can omit the attribute.
 
 export const CONTRACT_NAME = 'operational-interface-doctrine';
-export const CONTRACT_VERSION = '0.3.0';
+export const CONTRACT_VERSION = '0.4.0';
 
 // ── Naming contract (§6) ──
 export const cssClassPrefix = 'oi-';
@@ -596,12 +596,112 @@ export const recipes = Object.freeze(['compact-monitor']);
 
 export const recipeContracts = Object.freeze({
   'compact-monitor': Object.freeze({
-    stability: 'experimental',
-    slotOrder: Object.freeze(['context', 'actions', 'focus', 'status', 'primary', 'details', 'history', 'settings']),
-    requiredSlots: Object.freeze(['status', 'primary']),
-    optionalSlots: Object.freeze(['context', 'actions', 'focus', 'details', 'history', 'settings']),
-    supportedDensities: Object.freeze(['compact', 'standard']),
-    publicHooks: Object.freeze([]),
+    "stability": "experimental",
+    "study": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
+    "axes": Object.freeze(["surface", "activity", "severity", "freshness", "certainty", "completeness", "source", "density"]),
+    "root": Object.freeze({
+      "elements": Object.freeze(["section"]),
+      "requiredClasses": Object.freeze(["oi-surface"]),
+      "requiredAttributes": Object.freeze({
+        "data-oi-surface": Object.freeze(["base", "raised"]),
+        "data-oi-density": Object.freeze(["compact", "standard"]),
+      }),
+      "forbiddenAttributes": Object.freeze(["tabindex"]),
+      "accessibleName": "required",
+    }),
+    "partOrder": Object.freeze(["chrome"]),
+    "partOrderPolicy": "listed",
+    "parts": Object.freeze({
+      "chrome": Object.freeze({
+        "parent": "root",
+        "elements": Object.freeze(["header"]),
+        "cardinality": "zero-or-one",
+        "requiredAttributes": Object.freeze({
+
+        }),
+        "forbiddenAttributes": Object.freeze(["tabindex"]),
+        "accessibleName": "none",
+      }),
+    }),
+    "slotOrder": Object.freeze(["context", "actions", "focus", "status", "primary", "details", "history", "settings"]),
+    "requiredSlots": Object.freeze(["status", "primary"]),
+    "optionalSlots": Object.freeze(["context", "actions", "focus", "details", "history", "settings"]),
+    "slotParents": Object.freeze({
+      "context": "chrome",
+      "actions": "chrome",
+      "focus": "root",
+      "status": "root",
+      "primary": "root",
+      "details": "root",
+      "history": "root",
+      "settings": "root",
+    }),
+    "supportedDensities": Object.freeze(["compact", "standard"]),
+    "widths": Object.freeze({
+      "minimumViable": "20rem",
+      "preferred": "36rem",
+      "wide": "52rem",
+    }),
+    "overflowBehavior": Object.freeze({
+      "root": "no-scroll-container",
+      "text": "wrap-anywhere",
+      "scrollSlots": Object.freeze(["focus", "history"]),
+      "documentInlineOverflow": "forbidden",
+    }),
+    "truncationBehavior": Object.freeze({
+      "default": "none",
+      "ellipsisSlots": Object.freeze([]),
+      "preserveNumericValues": true,
+    }),
+    "optionalSlotCollapse": Object.freeze({
+      "strategy": "omit",
+      "emptySlotElements": "forbidden",
+      "residualSpace": "forbidden",
+      "conditionalParts": Object.freeze({
+        "chrome": Object.freeze(["context", "actions"]),
+      }),
+    }),
+    "densityBehavior": Object.freeze({
+      "boundary": "required",
+      "changes": Object.freeze(["gap", "padding", "control-size"]),
+      "preserves": Object.freeze(["slot-order", "slot-visibility"]),
+    }),
+    "asyncBehavior": Object.freeze({
+      "scenarios": Object.freeze(["initial-loading", "ready-complete", "refreshing-retained", "live", "partial", "stale", "missing", "unavailable", "failed", "valid-empty"]),
+      "ariaBusyActivities": Object.freeze(["loading", "refreshing"]),
+      "geometryPreservedSlotsOnLoading": Object.freeze(["status", "primary"]),
+      "retainedSlotsOnRefresh": Object.freeze(["primary"]),
+      "retainedSlotsWhenStale": Object.freeze(["primary"]),
+      "failureIsolation": "smallest-responsible-slot",
+      "recovery": "visible-action",
+      "validEmpty": "ready-not-loading",
+    }),
+    "keyboardFocus": Object.freeze({
+      "model": "native",
+      "tabOrder": "dom",
+      "rootFocusable": false,
+      "rovingFocus": false,
+      "recipeShortcuts": Object.freeze([]),
+      "escapeBehavior": "none",
+      "responsiveReordering": "forbidden",
+      "asyncFocus": "preserve-existing-node",
+    }),
+    "proofFixtures": Object.freeze({
+      "mappings": Object.freeze(["dark-roast", "night-shift", "house-blend", "alien"]),
+      "widths": Object.freeze(["minimum-viable", "preferred", "wide"]),
+      "densities": Object.freeze(["compact", "standard"]),
+      "asyncScenarios": Object.freeze(["initial-loading", "ready-complete", "refreshing-retained", "live", "partial", "stale", "missing", "unavailable", "failed", "valid-empty"]),
+      "states": Object.freeze(["neutral", "live", "warning", "critical", "disabled", "stale", "uncertain", "disputed", "partial", "refreshing", "failed"]),
+      "stress": Object.freeze(["reduced-motion", "increased-contrast", "forced-colors", "keyboard-focus", "zoom-200-reflow", "ltr", "rtl", "long-labels-2x", "large-negative-numbers", "missing-unknown-unavailable", "no-color"]),
+    }),
+    "publicHooks": Object.freeze(["--oi-compact-monitor-gap", "--oi-compact-monitor-primary-gap", "--oi-compact-monitor-loading-min-block-size"]),
+  }),
+});
+
+// Owner-qualified public recipe part classes; slots continue to use data-oi-slot.
+export const recipePartClasses = Object.freeze({
+  'compact-monitor': Object.freeze({
+    "chrome": "oi-recipe-compact-monitor__chrome",
   }),
 });
 

@@ -192,7 +192,7 @@
 
   .oi-metric__trend {
     grid-column: 1 / -1;
-    color: var(--_oi-status-color);
+    color: var(--oi-text-body);
     font-family: var(--oi-typography-body);
     font-size: var(--oi-typography-size-label);
     line-height: var(--oi-typography-line-reading);

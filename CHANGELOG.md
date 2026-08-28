@@ -6,6 +6,64 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.10.0] — 2026-08-27
+
+Operational Interface Doctrine tranche 1 slice D. **Dark Roast: Black Label and
+all companion palette values remain unchanged.** The first composition recipe
+and its executable browser proof system now ship.
+
+### Added
+
+- **Doctrine contract 0.4.0** — `compact-monitor` now declares its eight axes,
+  named root, `chrome` part, slot parents, 20/36/52rem proof widths,
+  overflow/truncation/collapse, density, async retention/failure behavior,
+  native keyboard/focus contract, exhaustive proof identifiers, and three
+  public hooks.
+- **Compact monitor CSS** — one-column baseline, two primary tracks at 36rem,
+  three at 52rem, intrinsic wrapping, local focus/history overflow, retained
+  primary geometry during loading, and persistent settings separation. Width or
+  density never hides populated slots or reorders the scan path.
+- **Generated recipe artifacts** — deep-frozen recipe contracts and part classes,
+  aggregate/focused CSS bundles, TypeScript recipe-part surfaces, and exports at
+  `/system/recipes` and `/system/recipes/compact-monitor`.
+- **Browser proof system** — Playwright 1.62.1, axe 4.13.0, a hardened exclusive
+  localhost fixture server, declarative compact-monitor fixture, 90 Chromium
+  tests, and nine reviewed locator baselines.
+
+### Enforcement
+
+- Exhaustive layout coverage spans four mappings × three container widths × two
+  densities. Pairwise tests cover every declared async, state, stress, and
+  optional-collapse value without a useless Cartesian explosion.
+- Axe runs without suppressed contrast rules across every mapping and async
+  scenario. Browser checks cover native disclosure, DOM-order focus, visible
+  focus rings, focus-preserving refresh, retained stale/refresh data, localized
+  detail failure, required-slot geometry, reduced motion, increased contrast,
+  forced colors, RTL, long/pathological content, no-color interpretation, and
+  200%-equivalent reflow.
+- Static recipe DOM and CSS validators reject missing/reordered slots, chrome
+  drift, unsupported axes/densities, viewport breakpoints, wrong container
+  thresholds, undeclared parts/hooks, nonzero margins, and package drift.
+- The server accepts GET/HEAD only, prevents path escape, disables caching, and
+  refuses to reuse an unrelated listener. Browser tests/config/output/snapshots
+  are explicitly rejected from the npm tarball.
+
+### Fixed
+
+- Browser proof exposed real contrast defects. Dark Roast `--oi-text-muted` now
+  uses a canonical high-contrast `--dr-*` blend, alien muted text is darkened,
+  and metric trends use body text while severity remains on the non-text border
+  channel. No axe rule was disabled.
+
+### Distribution
+
+- Adds `@playwright/test` and `@axe-core/playwright` as development-only
+  dependencies; runtime dependencies remain zero.
+- Package and companion registry metadata advance to 5.10.0. CI pins Ubuntu
+  24.04 and Node 22, installs the lockfile-matched Chromium build, runs static
+  plus browser gates, and uploads failure artifacts without ever updating
+  baselines.
+
 ## [5.9.0] — 2026-08-27
 
 Operational Interface Doctrine tranche 1 slice C. **Dark Roast: Black Label and

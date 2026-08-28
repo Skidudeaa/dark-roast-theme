@@ -12,7 +12,7 @@
   "targets": [
     "web"
   ],
-  "sourceVersion": "5.9.0",
+  "sourceVersion": "5.10.0",
   "description": "A warm, positive-polarity Dark Roast for bright rooms: a cream canvas that deepens with elevation, espresso ink, and dark kiln-enamel accents that stay legible in daylight.",
   "intent": {
     "position": "daylight companion",

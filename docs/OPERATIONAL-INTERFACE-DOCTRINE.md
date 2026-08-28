@@ -1,6 +1,6 @@
 # Operational Interface Doctrine
 
-**Version:** 0.3.0
+**Version:** 0.4.0
 **Status:** APPROVED ARCHITECTURE  
 **Date:** 2026-08-27
 **Repository role:** Dark Roast is the first reference implementation; the doctrine is theme-neutral.  
@@ -655,19 +655,52 @@ settings     optional, outside the default operational scan path
 DOM contract:
 
 ```html
-<section class="oi-recipe-compact-monitor" data-oi-density="compact">
+<section
+  class="oi-surface oi-recipe-compact-monitor"
+  data-oi-surface="raised"
+  data-oi-density="compact"
+  aria-labelledby="monitor-title"
+  aria-describedby="monitor-status"
+>
   <header class="oi-recipe-compact-monitor__chrome">
-    <div data-oi-slot="context"></div>
+    <div data-oi-slot="context"><h2 id="monitor-title">Current context</h2></div>
     <div data-oi-slot="actions"></div>
   </header>
 
   <div class="oi-inset" data-oi-slot="focus"></div>
-  <div data-oi-slot="status"></div>
+  <p id="monitor-status" data-oi-slot="status" role="status"></p>
   <div data-oi-slot="primary"></div>
   <div data-oi-slot="details"></div>
   <div data-oi-slot="history"></div>
   <div data-oi-slot="settings"></div>
 </section>
+```
+
+`chrome` is the recipe's only BEM part. `context` and `actions` are its optional
+children; the remaining slots are direct root children. The root is a named
+`section`, composes `oi-surface`, is never focusable, and requires a supported
+density boundary.
+
+Proof container widths are:
+
+```text
+minimum viable   20rem   one primary track; tested support point, never a hard min-width
+preferred        36rem   two primary tracks
+wide             52rem   three primary tracks
+```
+
+The root is not a scroll container. Focus and history may scroll locally; text
+wraps without ellipsis; numeric values remain visible. Populated optional slots
+are never hidden because of width or density. Omission is the canonical collapse
+mechanism; empty/hidden nodes are rejected by fixtures or treated only as a
+defensive zero-residue fallback.
+
+Public hooks:
+
+```text
+--oi-compact-monitor-gap
+--oi-compact-monitor-primary-gap
+--oi-compact-monitor-loading-min-block-size
 ```
 
 Invariants:
@@ -682,6 +715,12 @@ Invariants:
 - Refreshing retains primary data and marks activity and freshness independently.
 - Failed detail regions do not erase healthy primary regions.
 - DOM order remains the reading and keyboard order at every width.
+- Loading and refreshing set `aria-busy`; refreshing and stale states retain the
+  primary node/value. Detail failure remains localized and cannot erase healthy
+  status or primary regions.
+- Native focus order is authoritative. The recipe adds no shortcuts, roving
+  focus, Escape behavior, or responsive reordering; async updates preserve the
+  existing focused node.
 
 The recipe remains experimental until it survives one real product integration and the complete proof matrix. Stable promotion requires a second materially different use or an explicit architecture review accepting one high-stakes consumer as sufficient evidence.
 
@@ -783,7 +822,7 @@ Normative shape:
 ```json
 {
   "name": "operational-interface-doctrine",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "axes": {
     "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
     "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
@@ -874,12 +913,24 @@ scripts/
   validate-system-runtime.js
   validate-system-css.js
   validate-system-dom.js
+  validate-system-recipe-dom.js
   validate-package.js
+  serve-system-fixtures.js
+
+playwright.config.js
+
+tests/system/
+  compact-monitor-layout.spec.js
+  compact-monitor-state.spec.js
+  compact-monitor-accessibility.spec.js
+  compact-monitor-accessibility.spec.js-snapshots/
 
 spec/system/
   mappings/alien.css
   primitives.html
   compact-monitor.html
+  compact-monitor-fixture.css
+  compact-monitor-fixture.js
   state-matrix.html
   truth-matrix.html
   async-matrix.html

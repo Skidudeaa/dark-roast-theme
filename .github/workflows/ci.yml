@@ -20,7 +20,7 @@ permissions:
 jobs:
   validate:
     name: npm test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +33,19 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+
       # Runs the complete theme, platform, doctrine, semantic-CSS, export, and
       # actual-package integrity suite. package.json owns the exact order.
       - name: Validate
         run: npm test
+
+      - name: Upload Playwright failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure
+          path: output/playwright/
+          if-no-files-found: ignore
+          retention-days: 7

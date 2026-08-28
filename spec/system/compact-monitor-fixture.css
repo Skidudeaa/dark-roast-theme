@@ -1,0 +1,174 @@
+@layer product {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    min-block-size: 100vh;
+    margin: 0;
+    background: Canvas;
+  }
+
+  .proof-page {
+    display: grid;
+    min-block-size: 100vh;
+    place-items: start center;
+    padding: 1rem;
+  }
+
+  .proof-stage {
+    inline-size: min(
+      calc(
+        var(--proof-container-width, 36rem) +
+        var(--proof-container-inline-extras, 0px)
+      ),
+      100%
+    );
+    min-inline-size: 0;
+  }
+
+  .proof-mapping {
+    min-inline-size: 0;
+  }
+
+  [data-proof-root] {
+    inline-size: 100%;
+    --oi-surface-padding: var(--_oi-density-inset);
+  }
+
+  .proof-context,
+  .proof-context > *,
+  .proof-status > *,
+  .proof-focus > *,
+  .proof-settings > * {
+    margin: 0;
+  }
+
+  .proof-context {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--oi-geometry-space);
+  }
+
+  .proof-kicker {
+    color: var(--oi-accent-primary);
+    font-size: var(--oi-typography-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .proof-title {
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-heading);
+    font-size: var(--oi-typography-size-title);
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .proof-subtitle,
+  .proof-status-detail,
+  .proof-focus-copy,
+  .proof-settings-copy {
+    color: var(--oi-text-muted);
+    font-size: var(--oi-typography-size-label);
+    line-height: var(--oi-typography-line-reading);
+    overflow-wrap: anywhere;
+  }
+
+  .proof-button,
+  .proof-link {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--_oi-density-control-size);
+    min-inline-size: var(--oi-interaction-pointer-target-min);
+    padding-block: var(--oi-geometry-space);
+    padding-inline: calc(var(--oi-geometry-space) * 2);
+    background: var(--oi-surface-interactive);
+    color: var(--oi-text-primary);
+    border: 1px solid var(--oi-border-default);
+    border-radius: var(--oi-geometry-radius-control);
+    font: inherit;
+    line-height: var(--oi-typography-line-compact);
+    text-decoration: none;
+  }
+
+  .proof-button:not(:disabled),
+  .proof-link {
+    cursor: pointer;
+  }
+
+  .proof-status {
+    display: grid;
+    gap: var(--oi-geometry-space);
+  }
+
+  .proof-status-label {
+    color: var(--oi-text-primary);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .proof-focus {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--oi-geometry-space);
+  }
+
+  .proof-primary > .oi-metric {
+    min-inline-size: 0;
+  }
+
+  .proof-loading-value {
+    min-block-size: var(--oi-interaction-pointer-target-min);
+    color: var(--oi-text-muted);
+  }
+
+  .proof-details-error {
+    padding-inline-start: calc(var(--oi-geometry-space) * 2);
+    color: var(--oi-text-primary);
+    border-inline-start: var(--oi-interaction-focus-ring-width) solid
+      var(--oi-status-negative);
+    font-weight: 700;
+  }
+
+  .proof-settings {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--_oi-density-gap);
+  }
+
+  [data-proof-no-color] {
+    filter: grayscale(1);
+  }
+
+  .proof-visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    body {
+      background: Canvas;
+    }
+
+    .proof-button,
+    .proof-link {
+      background: Canvas;
+      color: CanvasText;
+      border-color: CanvasText;
+    }
+  }
+}

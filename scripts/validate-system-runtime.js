@@ -8,6 +8,9 @@ import {
   primitiveContracts,
   primitivePartClasses,
   primitives,
+  recipeContracts,
+  recipePartClasses,
+  recipes,
   requiresProvenanceDisclosure,
   semanticRoleVariables,
 } from '../dist/system/contract.js';
@@ -61,6 +64,16 @@ assert.equal(primitivePartClasses.surface.label, undefined);
 assertDeepFrozen(primitiveContracts);
 assertDeepFrozen(primitivePartClasses);
 
+assert.deepEqual(recipes, ['compact-monitor']);
+assert.equal(recipeContracts['compact-monitor'].widths.minimumViable, '20rem');
+assert.equal(recipeContracts['compact-monitor'].widths.preferred, '36rem');
+assert.equal(recipeContracts['compact-monitor'].widths.wide, '52rem');
+assert.equal(recipeContracts['compact-monitor'].slotParents.status, 'root');
+assert.equal(recipeContracts['compact-monitor'].asyncBehavior.retainedSlotsOnRefresh[0], 'primary');
+assert.equal(recipePartClasses['compact-monitor'].chrome, 'oi-recipe-compact-monitor__chrome');
+assertDeepFrozen(recipeContracts);
+assertDeepFrozen(recipePartClasses);
+
 const processDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'process');
 try {
   delete globalThis.process;
@@ -85,4 +98,4 @@ try {
   }
 }
 
-console.log('PASS system runtime: dev, production, browser, primitive, slot, and provenance predicates');
+console.log('PASS system runtime: dev, production, browser, primitive, recipe, slot, and provenance predicates');

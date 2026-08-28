@@ -55,6 +55,14 @@ export interface OiPrimitivePartMap {
 /** Composition recipes (§11). */
 export type OiRecipe = 'compact-monitor';
 
+/** Public owner-qualified part names declared by composition recipes. */
+export type OiRecipePart = 'chrome';
+
+/** Recipe-specific part-name narrowing for framework adapters. */
+export interface OiRecipePartMap {
+  readonly 'compact-monitor': 'chrome';
+}
+
 /** Every slot name declared by any recipe. */
 export type OiSlot = 'actions' | 'context' | 'details' | 'focus' | 'history' | 'primary' | 'settings' | 'status';
 
@@ -85,6 +93,7 @@ export type OiPartOrderPolicy = 'none' | 'listed' | 'either';
 /** Element and attribute obligations shared by primitive roots and parts. */
 export interface OiPrimitiveNodeContract {
   readonly elements: readonly string[];
+  readonly requiredClasses?: readonly string[];
   readonly requiredAttributes: Readonly<Record<string, readonly string[]>>;
   readonly forbiddenAttributes: readonly string[];
   readonly accessibleName: OiAccessibleName;
@@ -108,13 +117,98 @@ export interface OiPrimitiveContract {
   readonly publicHooks: readonly string[];
 }
 
+/** Public contract of one owner-qualified recipe part. */
+export interface OiRecipePartContract extends OiPrimitiveNodeContract {
+  readonly parent: 'root' | OiRecipePart;
+  readonly cardinality: OiPartCardinality;
+}
+
+/** Named recipe support widths; these are proof points, not a forced minimum size. */
+export interface OiRecipeWidths {
+  readonly minimumViable: string;
+  readonly preferred: string;
+  readonly wide: string;
+}
+
+export interface OiRecipeOverflowBehavior {
+  readonly root: 'no-scroll-container';
+  readonly text: 'wrap-anywhere';
+  readonly scrollSlots: readonly OiSlot[];
+  readonly documentInlineOverflow: 'forbidden';
+}
+
+export interface OiRecipeTruncationBehavior {
+  readonly default: 'none';
+  readonly ellipsisSlots: readonly OiSlot[];
+  readonly preserveNumericValues: true;
+}
+
+export interface OiRecipeOptionalSlotCollapse {
+  readonly strategy: 'omit';
+  readonly emptySlotElements: 'forbidden';
+  readonly residualSpace: 'forbidden';
+  readonly conditionalParts: Readonly<Partial<Record<OiRecipePart, readonly OiSlot[]>>>;
+}
+
+export interface OiRecipeDensityBehavior {
+  readonly boundary: 'required';
+  readonly changes: readonly string[];
+  readonly preserves: readonly string[];
+}
+
+export interface OiRecipeAsyncBehavior {
+  readonly scenarios: readonly string[];
+  readonly ariaBusyActivities: readonly OiActivity[];
+  readonly geometryPreservedSlotsOnLoading: readonly OiSlot[];
+  readonly retainedSlotsOnRefresh: readonly OiSlot[];
+  readonly retainedSlotsWhenStale: readonly OiSlot[];
+  readonly failureIsolation: 'smallest-responsible-slot';
+  readonly recovery: 'visible-action';
+  readonly validEmpty: 'ready-not-loading';
+}
+
+export interface OiRecipeKeyboardFocus {
+  readonly model: 'native';
+  readonly tabOrder: 'dom';
+  readonly rootFocusable: false;
+  readonly rovingFocus: false;
+  readonly recipeShortcuts: readonly string[];
+  readonly escapeBehavior: 'none';
+  readonly responsiveReordering: 'forbidden';
+  readonly asyncFocus: 'preserve-existing-node';
+}
+
+export interface OiRecipeProofFixtures {
+  readonly mappings: readonly string[];
+  readonly widths: readonly string[];
+  readonly densities: readonly OiDensity[];
+  readonly asyncScenarios: readonly string[];
+  readonly states: readonly string[];
+  readonly stress: readonly string[];
+}
+
 /** Public contract of one recipe. */
 export interface OiRecipeContract {
   readonly stability: OiStability;
+  readonly study?: string;
+  readonly axes: readonly (keyof OiState)[];
+  readonly root: OiPrimitiveNodeContract;
+  readonly partOrder: readonly OiRecipePart[];
+  readonly partOrderPolicy: OiPartOrderPolicy;
+  readonly parts: Readonly<Partial<Record<OiRecipePart, OiRecipePartContract>>>;
   readonly slotOrder: readonly OiSlot[];
   readonly requiredSlots: readonly OiSlot[];
   readonly optionalSlots: readonly OiSlot[];
+  readonly slotParents: Readonly<Partial<Record<OiSlot, 'root' | OiRecipePart>>>;
   readonly supportedDensities: readonly OiDensity[];
+  readonly widths: OiRecipeWidths;
+  readonly overflowBehavior: OiRecipeOverflowBehavior;
+  readonly truncationBehavior: OiRecipeTruncationBehavior;
+  readonly optionalSlotCollapse: OiRecipeOptionalSlotCollapse;
+  readonly densityBehavior: OiRecipeDensityBehavior;
+  readonly asyncBehavior: OiRecipeAsyncBehavior;
+  readonly keyboardFocus: OiRecipeKeyboardFocus;
+  readonly proofFixtures: OiRecipeProofFixtures;
   readonly publicHooks: readonly string[];
 }
 
@@ -151,6 +245,9 @@ export declare const primitivePartClasses: {
 };
 export declare const recipes: readonly OiRecipe[];
 export declare const recipeContracts: Readonly<Record<OiRecipe, OiRecipeContract>>;
+export declare const recipePartClasses: {
+  readonly [K in OiRecipe]: Readonly<Partial<Record<OiRecipePartMap[K], string>>>;
+};
 export declare const reservedRecipeNames: readonly string[];
 export declare const stabilityLadder: readonly OiStability[];
 export declare const forbiddenDomainTerms: readonly string[];

@@ -15,7 +15,7 @@
     "text": {
       "primary": "var(--dr-crema)",
       "body": "var(--dr-bone)",
-      "muted": "var(--dr-mocha)",
+      "muted": "color-mix(in srgb, var(--dr-bone) 80%, var(--dr-dark-cacao))",
       "inverse": "var(--dr-void)",
       "link": "var(--dr-teal)"
     },

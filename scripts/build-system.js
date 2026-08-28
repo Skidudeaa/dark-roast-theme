@@ -36,6 +36,7 @@ const MAPPING_SRC = join(ROOT, 'src', 'system', 'mappings', 'dark-roast.json');
 const LAYERS_SRC = join(ROOT, 'src', 'system', 'layers.css');
 const CONTRACTS_SRC = join(ROOT, 'src', 'system', 'contracts');
 const PRIMITIVES_SRC = join(ROOT, 'src', 'system', 'primitives');
+const RECIPES_SRC = join(ROOT, 'src', 'system', 'recipes');
 const OUT_DIR = join(ROOT, 'dist', 'system');
 const CHECK = process.argv.includes('--check');
 const CONTRACT_SOURCE_ORDER = [
@@ -103,6 +104,7 @@ const roles = entries(manifest.semanticRoles);
 const primitiveNames = entries(manifest.primitives).map(([k]) => k);
 const recipeNames = entries(manifest.recipes).map(([k]) => k);
 const primitiveSourceOrder = primitiveNames.map((name) => `${name}.css`);
+const recipeSourceOrder = recipeNames.map((name) => `${name}.css`);
 const allParts = [
   ...new Set(
     entries(manifest.primitives).flatMap(([, primitive]) => keys(primitive.parts ?? {})),
@@ -110,6 +112,11 @@ const allParts = [
 ].sort();
 const allSlots = [
   ...new Set(entries(manifest.recipes).flatMap(([, r]) => r.slotOrder)),
+].sort();
+const allRecipeParts = [
+  ...new Set(
+    entries(manifest.recipes).flatMap(([, recipe]) => keys(recipe.parts ?? {})),
+  ),
 ].sort();
 
 function keys(object) {
@@ -255,7 +262,7 @@ function buildDarkRoastMapping() {
   ].join('\n');
 }
 
-function readCssSources(directory, sourceOrder, description) {
+function readCssSources(directory, sourceOrder, description, relativeDirectory) {
   if (!existsSync(directory)) {
     throw new Error(`[oi] missing ${description} source directory: ${directory}`);
   }
@@ -265,7 +272,6 @@ function readCssSources(directory, sourceOrder, description) {
     .sort();
   exactKeys(discoveredNames, sourceOrder, `${description} CSS sources`);
 
-  const relativeDirectory = directory === CONTRACTS_SRC ? 'contracts' : 'primitives';
   return sourceOrder.map((name) =>
     `/* source: src/system/${relativeDirectory}/${name} */\n${readRequired(join(directory, name), `${description} ${name}`).trim()}`,
   );
@@ -281,6 +287,7 @@ function buildContractsCss() {
     CONTRACTS_SRC,
     CONTRACT_SOURCE_ORDER,
     'semantic contract',
+    'contracts',
   );
   return buildCssBundle(
     '/* AUTO-GENERATED from src/system/layers.css and src/system/contracts/*.css by scripts/build-system.js — DO NOT EDIT. */',
@@ -293,6 +300,7 @@ function buildPrimitivesCss() {
     PRIMITIVES_SRC,
     primitiveSourceOrder,
     'structural primitive',
+    'primitives',
   );
   return buildCssBundle(
     '/* AUTO-GENERATED from src/system/layers.css and src/system/primitives/*.css by scripts/build-system.js — DO NOT EDIT. */',
@@ -305,15 +313,50 @@ function buildSystemCss() {
     CONTRACTS_SRC,
     CONTRACT_SOURCE_ORDER,
     'semantic contract',
+    'contracts',
   );
   const primitiveSources = readCssSources(
     PRIMITIVES_SRC,
     primitiveSourceOrder,
     'structural primitive',
+    'primitives',
+  );
+  const recipeSources = readCssSources(
+    RECIPES_SRC,
+    recipeSourceOrder,
+    'composition recipe',
+    'recipes',
   );
   return buildCssBundle(
-    '/* AUTO-GENERATED from src/system/layers.css, src/system/contracts/*.css, and src/system/primitives/*.css by scripts/build-system.js — DO NOT EDIT. */',
-    [...contractSources, ...primitiveSources],
+    '/* AUTO-GENERATED from src/system/layers.css and src/system/{contracts,primitives,recipes}/*.css by scripts/build-system.js — DO NOT EDIT. */',
+    [...contractSources, ...primitiveSources, ...recipeSources],
+  );
+}
+
+function buildRecipesCss() {
+  const sources = readCssSources(
+    RECIPES_SRC,
+    recipeSourceOrder,
+    'composition recipe',
+    'recipes',
+  );
+  return buildCssBundle(
+    '/* AUTO-GENERATED from src/system/layers.css and src/system/recipes/*.css by scripts/build-system.js — DO NOT EDIT. */',
+    sources,
+  );
+}
+
+function buildSingleRecipeCss(name) {
+  const sources = readCssSources(
+    RECIPES_SRC,
+    recipeSourceOrder,
+    'composition recipe',
+    'recipes',
+  );
+  const source = sources[recipeNames.indexOf(name)];
+  return buildCssBundle(
+    `/* AUTO-GENERATED from src/system/layers.css and src/system/recipes/${name}.css by scripts/build-system.js — DO NOT EDIT. */`,
+    [source],
   );
 }
 
@@ -438,14 +481,21 @@ function buildJs() {
   L.push('');
   L.push('export const recipeContracts = Object.freeze({');
   for (const [name, def] of entries(manifest.recipes)) {
-    L.push(`  '${name}': Object.freeze({`);
-    L.push(`    stability: '${def.stability}',`);
-    L.push(`    slotOrder: Object.freeze([${list(def.slotOrder)}]),`);
-    L.push(`    requiredSlots: Object.freeze([${list(def.requiredSlots)}]),`);
-    L.push(`    optionalSlots: Object.freeze([${list(def.optionalSlots)}]),`);
-    L.push(`    supportedDensities: Object.freeze([${list(def.supportedDensities)}]),`);
-    L.push(`    publicHooks: Object.freeze([${list(def.publicHooks ?? [])}]),`);
-    L.push('  }),');
+    L.push(`  '${name}': ${frozenLiteral(strip(def), 1)},`);
+  }
+  L.push('});');
+
+  L.push('');
+  L.push('// Owner-qualified public recipe part classes; slots continue to use data-oi-slot.');
+  L.push('export const recipePartClasses = Object.freeze({');
+  for (const [name, def] of entries(manifest.recipes)) {
+    const partClasses = Object.fromEntries(
+      keys(def.parts ?? {}).map((part) => [
+        part,
+        `${manifest.naming.cssClassPrefix}recipe-${name}__${part}`,
+      ]),
+    );
+    L.push(`  '${name}': ${frozenLiteral(partClasses, 1)},`);
   }
   L.push('});');
 
@@ -569,6 +619,17 @@ function buildDts() {
   L.push(`/** Composition recipes (§11). */`);
   L.push(`export type ${T.recipe ?? 'OiRecipe'} = ${union(recipeNames)};`);
   L.push('');
+  L.push('/** Public owner-qualified part names declared by composition recipes. */');
+  L.push(`export type OiRecipePart = ${allRecipeParts.length ? union(allRecipeParts) : 'never'};`);
+  L.push('');
+  L.push('/** Recipe-specific part-name narrowing for framework adapters. */');
+  L.push('export interface OiRecipePartMap {');
+  for (const [name, def] of entries(manifest.recipes)) {
+    const parts = keys(def.parts ?? {});
+    L.push(`  readonly '${name}': ${parts.length ? union(parts) : 'never'};`);
+  }
+  L.push('}');
+  L.push('');
   L.push(`/** Every slot name declared by any recipe. */`);
   L.push(`export type ${T.slot ?? 'OiSlot'} = ${union(allSlots)};`);
   L.push('');
@@ -598,6 +659,7 @@ function buildDts() {
   L.push('/** Element and attribute obligations shared by primitive roots and parts. */');
   L.push('export interface OiPrimitiveNodeContract {');
   L.push('  readonly elements: readonly string[];');
+  L.push('  readonly requiredClasses?: readonly string[];');
   L.push('  readonly requiredAttributes: Readonly<Record<string, readonly string[]>>;');
   L.push('  readonly forbiddenAttributes: readonly string[];');
   L.push('  readonly accessibleName: OiAccessibleName;');
@@ -624,13 +686,107 @@ function buildDts() {
   L.push('}');
   L.push('');
 
+  L.push('/** Public contract of one owner-qualified recipe part. */');
+  L.push('export interface OiRecipePartContract extends OiPrimitiveNodeContract {');
+  L.push("  readonly parent: 'root' | OiRecipePart;");
+  L.push('  readonly cardinality: OiPartCardinality;');
+  L.push('}');
+  L.push('');
+
+  L.push('/** Named recipe support widths; these are proof points, not a forced minimum size. */');
+  L.push('export interface OiRecipeWidths {');
+  L.push('  readonly minimumViable: string;');
+  L.push('  readonly preferred: string;');
+  L.push('  readonly wide: string;');
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeOverflowBehavior {');
+  L.push("  readonly root: 'no-scroll-container';");
+  L.push("  readonly text: 'wrap-anywhere';");
+  L.push(`  readonly scrollSlots: readonly ${T.slot ?? 'OiSlot'}[];`);
+  L.push("  readonly documentInlineOverflow: 'forbidden';");
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeTruncationBehavior {');
+  L.push("  readonly default: 'none';");
+  L.push(`  readonly ellipsisSlots: readonly ${T.slot ?? 'OiSlot'}[];`);
+  L.push('  readonly preserveNumericValues: true;');
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeOptionalSlotCollapse {');
+  L.push("  readonly strategy: 'omit';");
+  L.push("  readonly emptySlotElements: 'forbidden';");
+  L.push("  readonly residualSpace: 'forbidden';");
+  L.push(`  readonly conditionalParts: Readonly<Partial<Record<OiRecipePart, readonly ${T.slot ?? 'OiSlot'}[]>>>;`);
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeDensityBehavior {');
+  L.push("  readonly boundary: 'required';");
+  L.push('  readonly changes: readonly string[];');
+  L.push('  readonly preserves: readonly string[];');
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeAsyncBehavior {');
+  L.push('  readonly scenarios: readonly string[];');
+  L.push(`  readonly ariaBusyActivities: readonly ${T.activity ?? 'OiActivity'}[];`);
+  L.push(`  readonly geometryPreservedSlotsOnLoading: readonly ${T.slot ?? 'OiSlot'}[];`);
+  L.push(`  readonly retainedSlotsOnRefresh: readonly ${T.slot ?? 'OiSlot'}[];`);
+  L.push(`  readonly retainedSlotsWhenStale: readonly ${T.slot ?? 'OiSlot'}[];`);
+  L.push("  readonly failureIsolation: 'smallest-responsible-slot';");
+  L.push("  readonly recovery: 'visible-action';");
+  L.push("  readonly validEmpty: 'ready-not-loading';");
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeKeyboardFocus {');
+  L.push("  readonly model: 'native';");
+  L.push("  readonly tabOrder: 'dom';");
+  L.push('  readonly rootFocusable: false;');
+  L.push('  readonly rovingFocus: false;');
+  L.push('  readonly recipeShortcuts: readonly string[];');
+  L.push("  readonly escapeBehavior: 'none';");
+  L.push("  readonly responsiveReordering: 'forbidden';");
+  L.push("  readonly asyncFocus: 'preserve-existing-node';");
+  L.push('}');
+  L.push('');
+
+  L.push('export interface OiRecipeProofFixtures {');
+  L.push('  readonly mappings: readonly string[];');
+  L.push('  readonly widths: readonly string[];');
+  L.push(`  readonly densities: readonly ${T.density ?? 'OiDensity'}[];`);
+  L.push('  readonly asyncScenarios: readonly string[];');
+  L.push('  readonly states: readonly string[];');
+  L.push('  readonly stress: readonly string[];');
+  L.push('}');
+  L.push('');
+
   L.push('/** Public contract of one recipe. */');
   L.push('export interface OiRecipeContract {');
   L.push('  readonly stability: OiStability;');
+  L.push('  readonly study?: string;');
+  L.push('  readonly axes: readonly (keyof OiState)[];');
+  L.push('  readonly root: OiPrimitiveNodeContract;');
+  L.push('  readonly partOrder: readonly OiRecipePart[];');
+  L.push('  readonly partOrderPolicy: OiPartOrderPolicy;');
+  L.push('  readonly parts: Readonly<Partial<Record<OiRecipePart, OiRecipePartContract>>>;');
   L.push(`  readonly slotOrder: readonly ${T.slot ?? 'OiSlot'}[];`);
   L.push(`  readonly requiredSlots: readonly ${T.slot ?? 'OiSlot'}[];`);
   L.push(`  readonly optionalSlots: readonly ${T.slot ?? 'OiSlot'}[];`);
+  L.push(`  readonly slotParents: Readonly<Partial<Record<${T.slot ?? 'OiSlot'}, 'root' | OiRecipePart>>>;`);
   L.push(`  readonly supportedDensities: readonly ${T.density ?? 'OiDensity'}[];`);
+  L.push('  readonly widths: OiRecipeWidths;');
+  L.push('  readonly overflowBehavior: OiRecipeOverflowBehavior;');
+  L.push('  readonly truncationBehavior: OiRecipeTruncationBehavior;');
+  L.push('  readonly optionalSlotCollapse: OiRecipeOptionalSlotCollapse;');
+  L.push('  readonly densityBehavior: OiRecipeDensityBehavior;');
+  L.push('  readonly asyncBehavior: OiRecipeAsyncBehavior;');
+  L.push('  readonly keyboardFocus: OiRecipeKeyboardFocus;');
+  L.push('  readonly proofFixtures: OiRecipeProofFixtures;');
   L.push('  readonly publicHooks: readonly string[];');
   L.push('}');
   L.push('');
@@ -660,6 +816,9 @@ function buildDts() {
   L.push('};');
   L.push(`export declare const recipes: readonly ${T.recipe ?? 'OiRecipe'}[];`);
   L.push(`export declare const recipeContracts: Readonly<Record<${T.recipe ?? 'OiRecipe'}, OiRecipeContract>>;`);
+  L.push('export declare const recipePartClasses: {');
+  L.push(`  readonly [K in ${T.recipe ?? 'OiRecipe'}]: Readonly<Partial<Record<OiRecipePartMap[K], string>>>;`);
+  L.push('};');
   L.push('export declare const reservedRecipeNames: readonly string[];');
   L.push('export declare const stabilityLadder: readonly OiStability[];');
   L.push('export declare const forbiddenDomainTerms: readonly string[];');
@@ -674,6 +833,7 @@ function buildDts() {
 // ── write / check ───────────────────────────────────────────
 const contractsCss = buildContractsCss();
 const primitivesCss = buildPrimitivesCss();
+const recipesCss = buildRecipesCss();
 const systemCss = buildSystemCss();
 const outputs = {
   'index.js': buildIndexJs(),
@@ -683,8 +843,12 @@ const outputs = {
   'contract.json': `${JSON.stringify(strip(manifest), null, 2)}\n`,
   'contracts.css': contractsCss,
   'primitives.css': primitivesCss,
+  'recipes.css': recipesCss,
   'index.css': systemCss,
   'mappings/dark-roast.css': buildDarkRoastMapping(),
+  ...Object.fromEntries(
+    recipeNames.map((name) => [`recipes/${name}.css`, buildSingleRecipeCss(name)]),
+  ),
 };
 
 if (CHECK) {

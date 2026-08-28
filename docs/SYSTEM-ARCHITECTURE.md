@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-27 (package 5.9.0, doctrine contract 0.3.0)
+**Last updated:** 2026-08-27 (package 5.10.0, doctrine contract 0.4.0)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -38,7 +38,7 @@ docs/OPERATIONAL-INTERFACE-DOCTRINE.md   the specification
   └─> src/system/contract.json           machine-readable contract      [BUILT]
         └─> semantic contract CSS        --oi-* role declarations       [BUILT]
               └─> structural primitives  the ten building blocks        [BUILT]
-                    └─> recipes          composition, e.g. compact-monitor
+                    └─> recipes          compact-monitor composition     [BUILT]
                           └─> domain adapters   product meaning -> axes
                                 └─> product assemblies / skins
 ```
@@ -80,7 +80,9 @@ Hand-edited source of truth (§14). It declares:
 - **The ten experimental structural primitives** with root elements, exact
   owner-qualified parts, cardinality/parentage, allowed tags, required and
   forbidden attributes, accessible-name obligations, axes, and public hooks.
-- **`compact-monitor`** as experimental, with its full slot order (§11.1).
+- **`compact-monitor`** as experimental, with axes, root/part/slot anatomy,
+  20/36/52rem proof widths, overflow/truncation/collapse, density, async,
+  keyboard/focus, declared proof matrices, and owner-scoped hooks (§11.1).
 - **Reserved recipe names**, including `conversation-shell` and
   `context-composer` proposed by `src/system/studies/phind-extension.md`.
 - **Axis stability**, so semver protection is machine-readable: adding a value to
@@ -106,7 +108,8 @@ validator instead.
 | `index.js`, `index.d.ts` | Package-level runtime and type barrels |
 | `contracts.css` | Ordered, theme-neutral semantic contract CSS; no palette is implicit |
 | `primitives.css` | The ten structural primitives in manifest order |
-| `index.css` | Contracts followed by primitives under the canonical cascade order |
+| `recipes.css`, `recipes/compact-monitor.css` | Aggregate and focused recipe bundles |
+| `index.css` | Contracts, primitives, then recipes under the canonical cascade order |
 | `mappings/dark-roast.css` | Generated `--dr-*` to `--oi-*` mapping seam |
 
 Three runtime helpers are worth knowing:
@@ -176,6 +179,27 @@ that does exist rather than a placeholder.
   mapping in one document. Wide, 720px, and 390px browser smoke renders are
   clean; this is not the Slice D Playwright/axe/screenshot matrix.
 
+### Slice D compact monitor and proof system
+
+- `src/system/recipes/compact-monitor.css` implements a one-column baseline,
+  two primary tracks at 36rem, and three at 52rem using a named container.
+  Required status/primary regions never enter disclosure or disappear at narrow
+  widths; only focus/history own local scrolling.
+- `spec/system/compact-monitor.html` is a static valid baseline. Its fixture
+  module applies only manifest-declared mappings, widths, densities, optional
+  omission, async/state, direction, and stress cases.
+- `scripts/validate-system-recipe-dom.js` enforces the parse-time root, chrome,
+  eight flattened slots, accessibility relationships, required visibility,
+  optional collapse, and busy-state semantics.
+- Playwright 1.62.1 runs 90 Chromium tests: exhaustive four-mapping × three-width
+  × two-density layout, all async/state/stress values, native disclosure,
+  DOM-order keyboard focus, focus retention, overflow, reduced motion,
+  increased contrast, forced colors, RTL, 200%-equivalent reflow, axe WCAG
+  scans without suppression, and nine reviewed locator screenshots.
+- The dedicated localhost server accepts GET/HEAD only, confines real paths to
+  the repository, disables caching, rejects traversal, and never shares an
+  unrelated listener. Browser artifacts and tests are excluded from the package.
+
 ---
 
 ## 4. The skins layer
@@ -201,8 +225,8 @@ version-correct somaCura adoption recorded in `docs/SOMACURA-MIGRATION.md`.
 
 ## 5. The validator suite
 
-`npm test` runs sixteen gates in order. Each one exists because something
-either did go wrong or provably could.
+`npm test` runs seventeen static gates followed by 90 Chromium tests. Each gate
+exists because something either did go wrong or provably could.
 
 **Theme family**
 1. `check-black-label-contract.js` — 17 canonical files pinned by SHA-256 against
@@ -235,36 +259,42 @@ either did go wrong or provably could.
     required slots, and provenance predicates behave as specified.
 13. `validate-system-dom.js` — executable native DOM/ARIA anatomy for both
     mappings and all ten primitives.
-14. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
+14. `validate-system-recipe-dom.js` — compact-monitor root/part/slot order,
+    accessibility, visibility, collapse, and busy-state semantics.
+15. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
     mappings across all 54 roles.
 
 **Distribution**
-15. `validate-exports.js` — recursively proves every generated artifact is
+16. `validate-exports.js` — recursively proves every generated artifact is
     reachable, resolvable, typed where declared, and covered by `files`.
-16. `validate-package.js` — validates the actual packed/extracted tarball and
+17. `validate-package.js` — validates the actual packed/extracted tarball and
     zero runtime dependencies.
 
+**Browser proof**
+
+- `playwright test` executes 90 Chromium assertions and axe scans after the
+  static chain. Nine locator baselines are platform-qualified for Darwin and
+  Linux Chromium with a bounded 1% pixel-difference allowance; CI never updates
+  them.
+
 CI (`.github/workflows/ci.yml`) runs the suite on every push to `master` under
-pinned Node 22. It exists because commit `9a40e50` edited a variant source
-without regenerating `dist/`, and the stale output survived three further commits
-because nothing ran the gate.
+pinned Ubuntu 24.04 and Node 22. It exists because commit `9a40e50` edited a
+variant source without regenerating `dist/`, and the stale output survived three
+further commits because nothing ran the gate.
 
 ---
 
 ## 6. Not built yet
 
-Tranche 1 continues (§24). In dependency order:
+Tranche 1 is complete. Remaining work is deliberately outside the kernel build:
 
-- **Slice D contract reconciliation** — complete `compact-monitor` widths,
-  overflow/truncation, optional-slot collapse, async behavior, keyboard/focus,
-  proof fixtures, and public hooks before layout CSS.
-- **Slice D implementation** — `compact-monitor`, plus the state / truth / async /
-  responsive / content-stress / cross-theme proof matrices with Playwright and axe.
-
-Tranche 2 is first real adoption, which promotes `compact-monitor` from
-experimental toward proven. Tranche 3 adds the remaining reserved recipes,
-framework adapters, and — only after the web contract survives real use —
-SwiftUI generation.
+- **Tranche 2:** first real adoption in a lower-risk nonclinical operational
+  surface; repair product leakage and obtain owner acceptance before promotion.
+- **Tranche 3:** a second materially different consumer or explicit architecture
+  review, remaining reserved recipes, then optional React/SwiftUI adapters.
+- **Manual/device gates:** actual 200% browser zoom, VoiceOver/NVDA announcement
+  quality, Safari/Firefox behavior, Windows High Contrast, touch ergonomics,
+  human no-color interpretation, and product acceptance.
 
 ---
 
@@ -285,8 +315,9 @@ call then.
 role coverage and canonical token references before emitting CSS. Layout CSS
 remains hand-authored as required.
 
-**`dist/system/` does not yet contain recipe bundles.** Those arrive with slice
-D; empty placeholders would imply implementation that does not exist.
+**Pixel baselines are Chromium canaries, not device acceptance.** Font and browser
+rasterization differ across platforms, so geometry/DOM/axe assertions carry the
+exhaustive matrix and screenshots remain a bounded representative drift signal.
 
 ---
 
@@ -304,6 +335,10 @@ bump `version` in the manifest, which is independent of the package version.
 **To change a primitive:** change its DOM/part/hook contract in
 `src/system/contract.json` before changing `src/system/primitives/<name>.css` or
 the fixture. Regenerate and run the full suite; undeclared parts and hooks fail.
+
+**To change a recipe:** change the manifest contract before recipe CSS or
+fixtures. Run `npm run build:system`, both DOM validators, and the full static +
+browser suite. Never update screenshots in CI or hide an axe contrast failure.
 
 **To change a theme token:** unchanged from before — see `CLAUDE.md`. Black Label
 is production-locked behind a SHA-256 contract; companions are edited only in

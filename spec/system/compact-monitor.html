@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compact monitor browser proof</title>
+  <link rel="icon" href="data:,">
+  <link id="proof-theme" rel="stylesheet" href="../../dist/css/dark-roast.css">
+  <link rel="stylesheet" href="../../dist/system/index.css">
+  <link rel="stylesheet" href="../../dist/system/mappings/dark-roast.css">
+  <link rel="stylesheet" href="./mappings/alien.css">
+  <link rel="stylesheet" href="./compact-monitor-fixture.css">
+  <script type="module" src="./compact-monitor-fixture.js"></script>
+</head>
+<body>
+  <main class="proof-page" aria-label="Operational Interface browser proof">
+    <div class="proof-stage" data-proof-stage>
+      <div class="oi-root proof-mapping">
+        <section
+          class="oi-surface oi-recipe-compact-monitor"
+          data-proof-root
+          data-oi-surface="raised"
+          data-oi-activity="ready"
+          data-oi-severity="neutral"
+          data-oi-freshness="recent"
+          data-oi-certainty="confirmed"
+          data-oi-completeness="complete"
+          data-oi-source="direct"
+          data-oi-density="compact"
+          aria-labelledby="proof-title"
+          aria-describedby="proof-status"
+        >
+          <header class="oi-recipe-compact-monitor__chrome">
+            <div data-oi-slot="context">
+              <h1 id="proof-title">Compact monitor</h1>
+            </div>
+            <div data-oi-slot="actions">
+              <button type="button">Refresh</button>
+            </div>
+          </header>
+          <div data-oi-slot="focus">Focused evidence remains visible.</div>
+          <div id="proof-status" data-oi-slot="status" role="status" aria-describedby="proof-status-detail">
+            <strong>Ready and complete</strong>
+            <span id="proof-status-detail">Confirmed direct result updated two minutes ago.</span>
+          </div>
+          <div data-oi-slot="primary">37.5 percent</div>
+          <div data-oi-slot="details">Additional details are available.</div>
+          <div data-oi-slot="history">Four recent intervals are available.</div>
+          <div data-oi-slot="settings">Display settings are available.</div>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

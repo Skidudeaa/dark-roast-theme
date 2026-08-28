@@ -12,14 +12,17 @@ Two systems that share a package.
    in production, published to npm.
 2. **The operational interface system** answers *what does this element mean?*
    Nine orthogonal state axes, 54 semantic roles, and ten implemented structural
-   primitives. Namespace `--oi-*`, deliberately theme-neutral. Composition
-   recipes and their full proof matrices remain unfinished.
+   primitives plus the experimental `compact-monitor` recipe. Namespace
+   `--oi-*`, deliberately theme-neutral. Static, Playwright, axe, and visual
+   proof are built; first product adoption remains unfinished.
 
 ## The three things to do when you sit down
 
 1. **Run `npm test`.** Every failure names the file and tells you the command to
    fix it. You do not need to remember the rules — the build
-   re-teaches you the relevant one at the moment it matters.
+   re-teaches you the relevant one at the moment it matters. After a fresh
+   machine setup, run `npx playwright install chromium` once before the browser
+   half of the suite.
 2. **Read the "Current State" block at the top of `CLAUDE.md`.** That is where
    project state lives: what is done, what is next, what is blocked and why.
    Agents load that file automatically, so you can also just ask.

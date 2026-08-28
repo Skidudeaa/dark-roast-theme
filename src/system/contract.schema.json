@@ -61,6 +61,15 @@
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
     },
+    "classList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^oi-[a-z][a-z0-9-]*$" }
+    },
+    "remValue": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9]\\d*)(?:\\.\\d+)?rem$"
+    },
     "accessibleName": {
       "type": "string",
       "enum": ["none", "contents", "required"]
@@ -71,6 +80,7 @@
       "required": ["elements", "requiredAttributes", "forbiddenAttributes", "accessibleName"],
       "properties": {
         "elements": { "$ref": "#/definitions/elementList" },
+        "requiredClasses": { "$ref": "#/definitions/classList" },
         "requiredAttributes": { "$ref": "#/definitions/attributeRules" },
         "forbiddenAttributes": { "$ref": "#/definitions/attributeList" },
         "accessibleName": { "$ref": "#/definitions/accessibleName" }
@@ -260,15 +270,42 @@
         "additionalProperties": false,
         "required": [
           "stability",
+          "axes",
+          "root",
+          "partOrder",
+          "partOrderPolicy",
+          "parts",
           "slotOrder",
           "requiredSlots",
           "optionalSlots",
-          "supportedDensities"
+          "slotParents",
+          "supportedDensities",
+          "widths",
+          "overflowBehavior",
+          "truncationBehavior",
+          "optionalSlotCollapse",
+          "densityBehavior",
+          "asyncBehavior",
+          "keyboardFocus",
+          "proofFixtures",
+          "publicHooks"
         ],
         "properties": {
           "stability": { "$ref": "#/definitions/stability" },
           "study": { "type": "string" },
           "_studyNote": { "$ref": "#/definitions/note" },
+          "axes": { "$ref": "#/definitions/kebabList" },
+          "root": { "$ref": "#/definitions/rootContract" },
+          "partOrder": { "$ref": "#/definitions/kebabArray" },
+          "partOrderPolicy": {
+            "type": "string",
+            "enum": ["none", "listed", "either"]
+          },
+          "parts": {
+            "type": "object",
+            "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+            "additionalProperties": { "$ref": "#/definitions/partContract" }
+          },
           "slotOrder": { "$ref": "#/definitions/kebabList" },
           "requiredSlots": { "$ref": "#/definitions/kebabList" },
           "optionalSlots": {
@@ -276,7 +313,114 @@
             "uniqueItems": true,
             "items": { "type": "string" }
           },
+          "slotParents": {
+            "type": "object",
+            "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(root|[a-z][a-z0-9]*(-[a-z0-9]+)*)$"
+            }
+          },
           "supportedDensities": { "$ref": "#/definitions/kebabList" },
+          "widths": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["minimumViable", "preferred", "wide"],
+            "properties": {
+              "minimumViable": { "$ref": "#/definitions/remValue" },
+              "preferred": { "$ref": "#/definitions/remValue" },
+              "wide": { "$ref": "#/definitions/remValue" }
+            }
+          },
+          "overflowBehavior": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["root", "text", "scrollSlots", "documentInlineOverflow"],
+            "properties": {
+              "root": { "type": "string", "const": "no-scroll-container" },
+              "text": { "type": "string", "const": "wrap-anywhere" },
+              "scrollSlots": { "$ref": "#/definitions/kebabArray" },
+              "documentInlineOverflow": { "type": "string", "const": "forbidden" }
+            }
+          },
+          "truncationBehavior": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["default", "ellipsisSlots", "preserveNumericValues"],
+            "properties": {
+              "default": { "type": "string", "const": "none" },
+              "ellipsisSlots": { "$ref": "#/definitions/kebabArray" },
+              "preserveNumericValues": { "type": "boolean", "const": true }
+            }
+          },
+          "optionalSlotCollapse": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["strategy", "emptySlotElements", "residualSpace", "conditionalParts"],
+            "properties": {
+              "strategy": { "type": "string", "const": "omit" },
+              "emptySlotElements": { "type": "string", "const": "forbidden" },
+              "residualSpace": { "type": "string", "const": "forbidden" },
+              "conditionalParts": {
+                "type": "object",
+                "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+                "additionalProperties": { "$ref": "#/definitions/kebabList" }
+              }
+            }
+          },
+          "densityBehavior": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["boundary", "changes", "preserves"],
+            "properties": {
+              "boundary": { "type": "string", "const": "required" },
+              "changes": { "$ref": "#/definitions/kebabList" },
+              "preserves": { "$ref": "#/definitions/kebabList" }
+            }
+          },
+          "asyncBehavior": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["scenarios", "ariaBusyActivities", "geometryPreservedSlotsOnLoading", "retainedSlotsOnRefresh", "retainedSlotsWhenStale", "failureIsolation", "recovery", "validEmpty"],
+            "properties": {
+              "scenarios": { "$ref": "#/definitions/kebabList" },
+              "ariaBusyActivities": { "$ref": "#/definitions/kebabList" },
+              "geometryPreservedSlotsOnLoading": { "$ref": "#/definitions/kebabList" },
+              "retainedSlotsOnRefresh": { "$ref": "#/definitions/kebabList" },
+              "retainedSlotsWhenStale": { "$ref": "#/definitions/kebabList" },
+              "failureIsolation": { "type": "string", "const": "smallest-responsible-slot" },
+              "recovery": { "type": "string", "const": "visible-action" },
+              "validEmpty": { "type": "string", "const": "ready-not-loading" }
+            }
+          },
+          "keyboardFocus": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["model", "tabOrder", "rootFocusable", "rovingFocus", "recipeShortcuts", "escapeBehavior", "responsiveReordering", "asyncFocus"],
+            "properties": {
+              "model": { "type": "string", "const": "native" },
+              "tabOrder": { "type": "string", "const": "dom" },
+              "rootFocusable": { "type": "boolean", "const": false },
+              "rovingFocus": { "type": "boolean", "const": false },
+              "recipeShortcuts": { "$ref": "#/definitions/kebabArray" },
+              "escapeBehavior": { "type": "string", "const": "none" },
+              "responsiveReordering": { "type": "string", "const": "forbidden" },
+              "asyncFocus": { "type": "string", "const": "preserve-existing-node" }
+            }
+          },
+          "proofFixtures": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["mappings", "widths", "densities", "asyncScenarios", "states", "stress"],
+            "properties": {
+              "mappings": { "$ref": "#/definitions/kebabList" },
+              "widths": { "$ref": "#/definitions/kebabList" },
+              "densities": { "$ref": "#/definitions/kebabList" },
+              "asyncScenarios": { "$ref": "#/definitions/kebabList" },
+              "states": { "$ref": "#/definitions/kebabList" },
+              "stress": { "$ref": "#/definitions/kebabList" }
+            }
+          },
           "publicHooks": {
             "type": "array",
             "uniqueItems": true,

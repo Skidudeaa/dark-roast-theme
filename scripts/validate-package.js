@@ -104,7 +104,17 @@ function assertNoForbiddenFiles(files) {
   for (const file of files) {
     const parts = file.split('/');
     if (
-      ['scripts', 'lib', 'codecompanion-src'].includes(parts[0]) ||
+      [
+        'scripts',
+        'lib',
+        'codecompanion-src',
+        'tests',
+        'output',
+        'playwright-report',
+        'test-results',
+      ].includes(parts[0]) ||
+      file === 'playwright.config.js' ||
+      parts.some((part) => part.endsWith('-snapshots')) ||
       parts.includes('node_modules') ||
       parts.includes('.env')
     ) {

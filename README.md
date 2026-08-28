@@ -135,7 +135,7 @@ Skins deliberately contain no build-tool directives, so they parse under any too
 
 ### Operational interface contract
 
-The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 54 semantic roles, and ten implemented structural primitives — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
+The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 54 semantic roles, ten structural primitives, and the experimental `compact-monitor` recipe — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
 
 Load a palette, the ordered semantic contracts, and one explicit mapping:
 
@@ -179,6 +179,28 @@ fixture checks each meter's visual track against its hidden native value;
 product adapters must derive both from the same measurement because
 browser-native meter pigment does not honor semantic mappings.
 
+`compact-monitor` preserves the operational scan path while adapting to its own
+container: one primary track below 36rem, two at 36rem, and three at 52rem.
+Required status and primary regions never enter disclosure or disappear at
+narrow widths:
+
+```html
+<section
+  class="oi-surface oi-recipe-compact-monitor"
+  data-oi-surface="raised"
+  data-oi-density="compact"
+  aria-labelledby="monitor-title"
+  aria-describedby="monitor-status"
+>
+  <header class="oi-recipe-compact-monitor__chrome">
+    <div data-oi-slot="context"><h2 id="monitor-title">Current context</h2></div>
+    <div data-oi-slot="actions"><button type="button">Refresh</button></div>
+  </header>
+  <p id="monitor-status" data-oi-slot="status" role="status">Ready</p>
+  <div data-oi-slot="primary">Required primary content</div>
+</section>
+```
+
 ```js
 import {
   severity, axisAttributes, assertAxisValue, requiresProvenanceDisclosure,
@@ -201,7 +223,15 @@ requiresProvenanceDisclosure({ freshness: 'stale' });    // true
 
 TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
 
-The semantic contracts, Dark Roast mapping, and all ten primitives are built. `compact-monitor` recipe CSS and its Playwright/axe proof matrices remain Slice D.
+Tranche 1 is built. The next gate is a real nonclinical product adoption; framework adapters remain premature until that succeeds.
+
+Contributor validation requires the pinned browser once per machine:
+
+```bash
+npm ci
+npx playwright install chromium
+npm test
+```
 
 ### SwiftUI
 
@@ -430,9 +460,12 @@ src/system/mappings/dark-roast.json SOURCE — generated semantic mapping relati
 src/system/layers.css       SOURCE — public cascade order, no reset
 src/system/contracts/*.css  SOURCE — theme-neutral semantic CSS
 src/system/primitives/*.css SOURCE — ten native-first structural primitives
+src/system/recipes/*.css    SOURCE — composition recipes
 src/system/studies/*.md     Pattern studies — the only intake path for an external design
 spec/system/mappings/alien.css Cold, flat mapping proof fixture; not an export
 spec/system/primitives.html Dual-mapping primitive DOM and rendered proof fixture
+spec/system/compact-monitor.html Dynamic compact-monitor proof fixture
+tests/system/              Playwright/axe tests and reviewed visual baselines (not packaged)
 
 scripts/build-tokens.js     Black Label generator (unchanged)
 scripts/build-variants.js   Companion generator: CSS, JS, editor, terminal, native palettes
@@ -448,8 +481,11 @@ scripts/validate-skins.js   Fails when a skin duplicates a theme token value
 scripts/validate-contract.js Doctrine manifest schema + cross-reference integrity
 scripts/validate-system-runtime.js Browser/runtime contract predicates
 scripts/validate-system-dom.js parse5 primitive DOM/ARIA contract enforcement
+scripts/validate-system-recipe-dom.js Recipe root/part/slot DOM enforcement
 scripts/validate-system-css.js PostCSS selector/value AST enforcement
 scripts/validate-package.js Actual npm tarball and zero-runtime-dependency integrity
+scripts/serve-system-fixtures.js Hardened localhost browser-test server
+playwright.config.js        Exclusive Chromium proof configuration
 
 dist/css/dark-roast.css         GENERATED — standalone, tokens on :root, utilities unscoped
 dist/css/dark-roast-scoped.css  GENERATED — scoped to [data-theme="dark-roast"]
@@ -466,6 +502,8 @@ dist/system/contract.json       GENERATED — published manifest, documentation 
 dist/system/index.{js,d.ts}     GENERATED — package runtime/type barrels
 dist/system/{contracts,index}.css GENERATED — ordered semantic contracts
 dist/system/primitives.css       GENERATED — ten structural primitives
+dist/system/recipes.css          GENERATED — aggregate recipe CSS
+dist/system/recipes/compact-monitor.css GENERATED — focused compact-monitor CSS
 dist/system/mappings/dark-roast.css GENERATED — sole --dr-* / --oi-* seam
 
 platforms/swift/            SwiftUI reference implementation

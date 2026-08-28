@@ -1,6 +1,6 @@
 {
   "name": "operational-interface-doctrine",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "naming": {
     "cssClassPrefix": "oi-",
     "cssVariablePrefix": "--oi-",
@@ -685,6 +685,56 @@
     "compact-monitor": {
       "stability": "experimental",
       "study": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
+      "axes": [
+        "surface",
+        "activity",
+        "severity",
+        "freshness",
+        "certainty",
+        "completeness",
+        "source",
+        "density"
+      ],
+      "root": {
+        "elements": [
+          "section"
+        ],
+        "requiredClasses": [
+          "oi-surface"
+        ],
+        "requiredAttributes": {
+          "data-oi-surface": [
+            "base",
+            "raised"
+          ],
+          "data-oi-density": [
+            "compact",
+            "standard"
+          ]
+        },
+        "forbiddenAttributes": [
+          "tabindex"
+        ],
+        "accessibleName": "required"
+      },
+      "partOrder": [
+        "chrome"
+      ],
+      "partOrderPolicy": "listed",
+      "parts": {
+        "chrome": {
+          "parent": "root",
+          "elements": [
+            "header"
+          ],
+          "cardinality": "zero-or-one",
+          "requiredAttributes": {},
+          "forbiddenAttributes": [
+            "tabindex"
+          ],
+          "accessibleName": "none"
+        }
+      },
       "slotOrder": [
         "context",
         "actions",
@@ -707,11 +757,163 @@
         "history",
         "settings"
       ],
+      "slotParents": {
+        "context": "chrome",
+        "actions": "chrome",
+        "focus": "root",
+        "status": "root",
+        "primary": "root",
+        "details": "root",
+        "history": "root",
+        "settings": "root"
+      },
       "supportedDensities": [
         "compact",
         "standard"
       ],
-      "publicHooks": []
+      "widths": {
+        "minimumViable": "20rem",
+        "preferred": "36rem",
+        "wide": "52rem"
+      },
+      "overflowBehavior": {
+        "root": "no-scroll-container",
+        "text": "wrap-anywhere",
+        "scrollSlots": [
+          "focus",
+          "history"
+        ],
+        "documentInlineOverflow": "forbidden"
+      },
+      "truncationBehavior": {
+        "default": "none",
+        "ellipsisSlots": [],
+        "preserveNumericValues": true
+      },
+      "optionalSlotCollapse": {
+        "strategy": "omit",
+        "emptySlotElements": "forbidden",
+        "residualSpace": "forbidden",
+        "conditionalParts": {
+          "chrome": [
+            "context",
+            "actions"
+          ]
+        }
+      },
+      "densityBehavior": {
+        "boundary": "required",
+        "changes": [
+          "gap",
+          "padding",
+          "control-size"
+        ],
+        "preserves": [
+          "slot-order",
+          "slot-visibility"
+        ]
+      },
+      "asyncBehavior": {
+        "scenarios": [
+          "initial-loading",
+          "ready-complete",
+          "refreshing-retained",
+          "live",
+          "partial",
+          "stale",
+          "missing",
+          "unavailable",
+          "failed",
+          "valid-empty"
+        ],
+        "ariaBusyActivities": [
+          "loading",
+          "refreshing"
+        ],
+        "geometryPreservedSlotsOnLoading": [
+          "status",
+          "primary"
+        ],
+        "retainedSlotsOnRefresh": [
+          "primary"
+        ],
+        "retainedSlotsWhenStale": [
+          "primary"
+        ],
+        "failureIsolation": "smallest-responsible-slot",
+        "recovery": "visible-action",
+        "validEmpty": "ready-not-loading"
+      },
+      "keyboardFocus": {
+        "model": "native",
+        "tabOrder": "dom",
+        "rootFocusable": false,
+        "rovingFocus": false,
+        "recipeShortcuts": [],
+        "escapeBehavior": "none",
+        "responsiveReordering": "forbidden",
+        "asyncFocus": "preserve-existing-node"
+      },
+      "proofFixtures": {
+        "mappings": [
+          "dark-roast",
+          "night-shift",
+          "house-blend",
+          "alien"
+        ],
+        "widths": [
+          "minimum-viable",
+          "preferred",
+          "wide"
+        ],
+        "densities": [
+          "compact",
+          "standard"
+        ],
+        "asyncScenarios": [
+          "initial-loading",
+          "ready-complete",
+          "refreshing-retained",
+          "live",
+          "partial",
+          "stale",
+          "missing",
+          "unavailable",
+          "failed",
+          "valid-empty"
+        ],
+        "states": [
+          "neutral",
+          "live",
+          "warning",
+          "critical",
+          "disabled",
+          "stale",
+          "uncertain",
+          "disputed",
+          "partial",
+          "refreshing",
+          "failed"
+        ],
+        "stress": [
+          "reduced-motion",
+          "increased-contrast",
+          "forced-colors",
+          "keyboard-focus",
+          "zoom-200-reflow",
+          "ltr",
+          "rtl",
+          "long-labels-2x",
+          "large-negative-numbers",
+          "missing-unknown-unavailable",
+          "no-color"
+        ]
+      },
+      "publicHooks": [
+        "--oi-compact-monitor-gap",
+        "--oi-compact-monitor-primary-gap",
+        "--oi-compact-monitor-loading-min-block-size"
+      ]
     }
   },
   "reservedRecipeNames": {

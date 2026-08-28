@@ -74,6 +74,12 @@ const primitiveHookToOwner = new Map(
   ),
 );
 const usedPrimitiveHooks = new Set();
+const recipeHookToOwner = new Map(
+  entries(manifest.recipes).flatMap(([name, recipe]) =>
+    (recipe.publicHooks ?? []).map((hook) => [hook, name]),
+  ),
+);
+const usedRecipeHooks = new Set();
 const publicVariables = new Set([
   ...semanticRoleVariables,
   ...publicHookVariables,
@@ -92,13 +98,28 @@ const primitivePartClasses = new Set(primitivePartClassToOwner.keys());
 const recipeClassToName = new Map(
   entries(manifest.recipes).map(([name]) => [`oi-recipe-${name}`, name]),
 );
+const recipePartClassToOwner = new Map(
+  entries(manifest.recipes).flatMap(([name, recipe]) =>
+    entries(recipe.parts ?? {}).map(([part]) => [
+      `oi-recipe-${name}__${part}`,
+      name,
+    ]),
+  ),
+);
+const recipePartClasses = new Set(recipePartClassToOwner.keys());
 const componentClasses = new Set([
   ...primitiveClasses,
   ...primitivePartClasses,
   ...recipeClassToName.keys(),
+  ...recipePartClasses,
 ]);
 const exactAllowedOiClasses = new Set(['oi-root', ...componentClasses]);
 const styledPrimitiveClasses = new Set();
+const styledRecipeClasses = new Set();
+const declaredRecipeContainerNames = new Set();
+const seenRecipeContainerThresholds = new Map(
+  entries(manifest.recipes).map(([name]) => [name, new Set()]),
+);
 
 const INTERACTIVE_TYPES = new Set([
   'a',
@@ -304,13 +325,41 @@ function isAllowedOiClass(className) {
 function recipeNamesInSelector(selector) {
   const names = new Set();
   selector.walkClasses((classNode) => {
-    for (const [base, recipeName] of recipeClassToName) {
-      if (classNode.value === base) {
-        names.add(recipeName);
-      }
-    }
+    const recipeName = recipeClassToName.get(classNode.value)
+      ?? recipePartClassToOwner.get(classNode.value);
+    if (recipeName) names.add(recipeName);
   });
   return names;
+}
+
+function recipeOwnerForFile(file) {
+  return isWithin(RECIPES_SOURCE, file) ? basename(file, '.css') : null;
+}
+
+function selectorUsesDirectSlot(selector, attribute) {
+  const index = selector.nodes.indexOf(attribute);
+  if (index < 0) return false;
+  const preceding = selector.nodes.slice(0, index);
+  const combinators = preceding.filter((node) => node.type === 'combinator');
+  const last = combinators.at(-1);
+  return combinators.length === 1 && last?.value.trim() === '>';
+}
+
+function selectorDirectSlotParentClasses(selector, attribute) {
+  const index = selector.nodes.indexOf(attribute);
+  if (index < 0) return new Set();
+  const combinatorIndex = selector.nodes
+    .slice(0, index)
+    .reduce(
+      (last, node, nodeIndex) => (node.type === 'combinator' ? nodeIndex : last),
+      -1,
+    );
+  return new Set(
+    selector.nodes
+      .slice(0, combinatorIndex)
+      .filter((node) => node.type === 'class')
+      .map((node) => node.value),
+  );
 }
 
 function selectorHasOiScope(selector) {
@@ -357,6 +406,39 @@ function selectorTargetsPrimitiveRoot(selector) {
   };
   for (const node of subject) inspect(node);
   return targetsPrimitive;
+}
+
+function selectorTargetsRecipeRoot(selector) {
+  const lastCombinator = selector.nodes.reduce(
+    (last, node, index) => (node.type === 'combinator' ? index : last),
+    -1,
+  );
+  const subject = selector.nodes.slice(lastCombinator + 1);
+  const hasPseudoElement = subject.some(
+    (node) =>
+      node.type === 'pseudo' &&
+      (node.value.startsWith('::') ||
+        node.value === ':before' ||
+        node.value === ':after'),
+  );
+  if (hasPseudoElement) return false;
+
+  let targetsRecipe = false;
+  const inspect = (node) => {
+    if (node.type === 'class' && recipeClassToName.has(node.value)) {
+      targetsRecipe = true;
+      return;
+    }
+    if (
+      node.type === 'pseudo' &&
+      [':is', ':where'].includes(node.value) &&
+      Array.isArray(node.nodes)
+    ) {
+      for (const child of node.nodes) child.each(inspect);
+    }
+  };
+  for (const node of subject) inspect(node);
+  return targetsRecipe;
 }
 
 function isScopedInteractionFoundation(selector) {
@@ -435,9 +517,25 @@ function validateAttribute(file, rule, selector, attribute) {
   }
 
   if (name === slotAttribute) {
+    const selectorRecipes = recipeNamesInSelector(selector);
+    if (selectorRecipes.size !== 1) {
+      fail(file, rule, 'recipe slot selectors must name exactly one owning recipe root or part');
+      return;
+    }
+    const [selectorRecipe] = selectorRecipes;
+    const fileOwner = recipeOwnerForFile(file);
+    if (fileOwner !== selectorRecipe) {
+      fail(
+        file,
+        rule,
+        `recipe slot selector belongs in ${selectorRecipe}.css`,
+      );
+    }
+    if (!selectorUsesDirectSlot(selector, attribute)) {
+      fail(file, rule, 'recipe slot selectors must use one direct-child combinator');
+    }
     if (!attribute.operator || attribute.value === undefined) return;
     const value = attribute.value;
-    const selectorRecipes = recipeNamesInSelector(selector);
     const allowed = selectorRecipes.size
       ? new Set(
           [...selectorRecipes].flatMap((recipe) => [
@@ -447,6 +545,18 @@ function validateAttribute(file, rule, selector, attribute) {
       : allSlots;
     if (!allowed.has(value)) {
       fail(file, rule, `unknown recipe slot "${value}"`);
+      return;
+    }
+    const parent = manifest.recipes[selectorRecipe]?.slotParents?.[value];
+    const expectedParentClass = parent === 'root'
+      ? `oi-recipe-${selectorRecipe}`
+      : `oi-recipe-${selectorRecipe}__${parent}`;
+    if (!selectorDirectSlotParentClasses(selector, attribute).has(expectedParentClass)) {
+      fail(
+        file,
+        rule,
+        `slot "${value}" must be selected as a direct child of .${expectedParentClass}`,
+      );
     }
     return;
   }
@@ -508,7 +618,7 @@ function hasExactMappingRoot(file, selectorRoot) {
   );
 }
 
-function validateSelectors(file, rule, primitiveMarginRules) {
+function validateSelectors(file, rule, primitiveMarginRules, recipeMarginRules) {
   if (isInsideKeyframes(rule)) return;
 
   let selectorRoot;
@@ -527,6 +637,7 @@ function validateSelectors(file, rule, primitiveMarginRules) {
   }
 
   let targetsPrimitiveRoot = false;
+  let targetsRecipeRoot = false;
   for (const selector of selectorRoot.nodes) {
     validateStateAttributeCardinality(file, rule, selector);
     let combinatorCount = 0;
@@ -584,6 +695,27 @@ function validateSelectors(file, rule, primitiveMarginRules) {
           }
         }
       }
+      if (
+        ownsDeclarations &&
+        (recipeClassToName.has(classNode.value) || recipePartClasses.has(classNode.value))
+      ) {
+        if (!isWithin(RECIPES_SOURCE, file)) {
+          fail(file, rule, `recipe selector ".${classNode.value}" is outside src/system/recipes`);
+        } else {
+          const fileOwner = basename(file, '.css');
+          const selectorOwner = recipeClassToName.get(classNode.value)
+            ?? recipePartClassToOwner.get(classNode.value);
+          if (selectorOwner !== fileOwner) {
+            fail(
+              file,
+              rule,
+              `recipe selector ".${classNode.value}" belongs in ${selectorOwner}.css`,
+            );
+          } else {
+            styledRecipeClasses.add(classNode.value);
+          }
+        }
+      }
     });
     selector.walkAttributes((attribute) =>
       validateAttribute(file, rule, selector, attribute),
@@ -603,9 +735,13 @@ function validateSelectors(file, rule, primitiveMarginRules) {
     if (selectorTargetsPrimitiveRoot(selector)) {
       targetsPrimitiveRoot = true;
     }
+    if (selectorTargetsRecipeRoot(selector)) {
+      targetsRecipeRoot = true;
+    }
   }
 
   if (targetsPrimitiveRoot) primitiveMarginRules.add(rule);
+  if (targetsRecipeRoot) recipeMarginRules.add(rule);
 }
 
 function parseValue(file, node, value, options = {}) {
@@ -700,6 +836,70 @@ function validateLayer(file, root) {
     }
   }
   if (!foundLayer) failPath(file, `missing @layer ${layer}`);
+}
+
+function validateRecipeConditionals(file, root) {
+  const owner = recipeOwnerForFile(file);
+  if (!owner) return;
+  const definition = manifest.recipes[owner];
+  if (!definition) return;
+
+  root.walkAtRules('media', (atRule) => {
+    if (
+      /(?:^|[\s(])(?:min-|max-)?(?:width|height|inline-size|block-size)\s*:|\borientation\s*:|\baspect-ratio\s*:/i.test(
+        atRule.params,
+      )
+    ) {
+      fail(file, atRule, 'viewport geometry media queries are prohibited in recipe CSS; use the named container');
+    }
+  });
+
+  const expectedName = `oi-${owner}`;
+  const allowedThresholds = new Set([
+    definition.widths.preferred,
+    definition.widths.wide,
+  ]);
+  root.walkAtRules('container', (atRule) => {
+    const match = /^([a-z][a-z0-9-]*)\s+\(\s*min-width\s*:\s*([^\s)]+)\s*\)$/.exec(
+      atRule.params.trim(),
+    );
+    if (!match) {
+      fail(
+        file,
+        atRule,
+        `container query must be exactly "${expectedName} (min-width: <preferred-or-wide>)"`,
+      );
+      return;
+    }
+    const [, containerName, threshold] = match;
+    if (containerName !== expectedName) {
+      fail(file, atRule, `container query must use the declared name "${expectedName}"`);
+    }
+    if (!allowedThresholds.has(threshold)) {
+      fail(
+        file,
+        atRule,
+        `container threshold "${threshold}" must equal preferred ${definition.widths.preferred} or wide ${definition.widths.wide}`,
+      );
+      return;
+    }
+    const seen = seenRecipeContainerThresholds.get(owner);
+    if (seen.has(threshold)) {
+      fail(file, atRule, `duplicate named container threshold "${threshold}"`);
+    }
+    seen.add(threshold);
+  });
+
+  root.walkDecls('container-name', (declaration) => {
+    if (declaration.value.trim() !== expectedName) {
+      fail(file, declaration, `recipe container-name must be exactly "${expectedName}"`);
+      return;
+    }
+    declaredRecipeContainerNames.add(owner);
+  });
+  root.walkDecls('container', (declaration) => {
+    fail(file, declaration, 'recipe containers must declare container-name and container-type separately');
+  });
 }
 
 function validateLayerOrder(file) {
@@ -801,6 +1001,16 @@ function recordPrimitiveHookUse(file, node, hook) {
   usedPrimitiveHooks.add(hook);
 }
 
+function recordRecipeHookUse(file, node, hook) {
+  const owner = recipeHookToOwner.get(hook);
+  if (!owner) return;
+  if (!isWithin(RECIPES_SOURCE, file) || basename(file, '.css') !== owner) {
+    fail(file, node, `recipe hook "${hook}" belongs in ${owner}.css`);
+    return;
+  }
+  usedRecipeHooks.add(hook);
+}
+
 function collectPrivateVariables(files) {
   const variables = new Set();
   for (const file of files) {
@@ -833,6 +1043,7 @@ function validateFile(file, mappingFiles, privateVariables) {
 
   validateLayer(file, root);
   validateForbiddenTerms(file, root);
+  validateRecipeConditionals(file, root);
 
   root.walkRules((rule) => {
     if (rule.parent?.type === 'rule') {
@@ -858,6 +1069,7 @@ function validateFile(file, mappingFiles, privateVariables) {
       );
     }
     recordPrimitiveHookUse(file, declaration, declaration.prop);
+    recordRecipeHookUse(file, declaration, declaration.prop);
   });
   root.walkAtRules('property', (atRule) => {
     const property = atRule.params.trim();
@@ -868,11 +1080,14 @@ function validateFile(file, mappingFiles, privateVariables) {
     ) {
       fail(file, atRule, `undocumented public variable definition "${property}"`);
     }
+    recordPrimitiveHookUse(file, atRule, property);
+    recordRecipeHookUse(file, atRule, property);
   });
 
   const primitiveMarginRules = new Set();
+  const recipeMarginRules = new Set();
   root.walkRules((rule) =>
-    validateSelectors(file, rule, primitiveMarginRules),
+    validateSelectors(file, rule, primitiveMarginRules, recipeMarginRules),
   );
 
   const roleDefinitionCounts = new Map(
@@ -907,6 +1122,13 @@ function validateFile(file, mappingFiles, privateVariables) {
     ) {
       fail(file, declaration, 'primitive roots must not own external margins');
     }
+    if (
+      recipeMarginRules.has(enclosingRule) &&
+      (property === 'margin' || property.startsWith('margin-')) &&
+      declaration.value.trim() !== '0'
+    ) {
+      fail(file, declaration, 'recipe roots must not own external margins');
+    }
     if (property.startsWith('--dr-') && !isDarkRoastMapping(file)) {
       fail(file, declaration, '--dr-* is allowed only in the Dark Roast mapping');
     }
@@ -928,6 +1150,7 @@ function validateFile(file, mappingFiles, privateVariables) {
         );
       }
       recordPrimitiveHookUse(file, declaration, reference);
+      recordRecipeHookUse(file, declaration, reference);
     }
 
     if (
@@ -988,6 +1211,7 @@ function validateFile(file, mappingFiles, privateVariables) {
         );
       }
       recordPrimitiveHookUse(file, atRule, reference);
+      recordRecipeHookUse(file, atRule, reference);
     }
 
     const parsed = valueParser(atRule.params);
@@ -1030,6 +1254,23 @@ for (const file of expectedPrimitiveSourceFiles) {
 for (const file of discoveredPrimitiveSourceFiles) {
   if (!expectedPrimitiveSourceSet.has(file)) {
     failPath(file, 'undeclared primitive CSS source');
+  }
+}
+
+const expectedRecipeSourceFiles = entries(manifest.recipes).map(([name]) =>
+  join(RECIPES_SOURCE, `${name}.css`),
+);
+const discoveredRecipeSourceFiles = collectCssFiles(RECIPES_SOURCE);
+const expectedRecipeSourceSet = new Set(expectedRecipeSourceFiles);
+const discoveredRecipeSourceSet = new Set(discoveredRecipeSourceFiles);
+for (const file of expectedRecipeSourceFiles) {
+  if (!discoveredRecipeSourceSet.has(file)) {
+    failPath(file, 'required recipe CSS source is missing');
+  }
+}
+for (const file of discoveredRecipeSourceFiles) {
+  if (!expectedRecipeSourceSet.has(file)) {
+    failPath(file, 'undeclared recipe CSS source');
   }
 }
 
@@ -1090,6 +1331,48 @@ for (const [hook, primitiveName] of primitiveHookToOwner) {
       join(PRIMITIVES_SOURCE, `${primitiveName}.css`),
       `declared primitive hook "${hook}" is unused`,
     );
+  }
+}
+for (const [className, recipeName] of recipeClassToName) {
+  if (!styledRecipeClasses.has(className)) {
+    failPath(
+      join(RECIPES_SOURCE, `${recipeName}.css`),
+      `missing required recipe root selector ".${className}"`,
+    );
+  }
+}
+for (const [className, recipeName] of recipePartClassToOwner) {
+  if (!styledRecipeClasses.has(className)) {
+    failPath(
+      join(RECIPES_SOURCE, `${recipeName}.css`),
+      `missing required recipe part selector ".${className}"`,
+    );
+  }
+}
+for (const [hook, recipeName] of recipeHookToOwner) {
+  if (!usedRecipeHooks.has(hook)) {
+    failPath(
+      join(RECIPES_SOURCE, `${recipeName}.css`),
+      `declared recipe hook "${hook}" is unused`,
+    );
+  }
+}
+for (const [recipeName, definition] of entries(manifest.recipes)) {
+  if (!declaredRecipeContainerNames.has(recipeName)) {
+    failPath(
+      join(RECIPES_SOURCE, `${recipeName}.css`),
+      `missing required container-name "oi-${recipeName}"`,
+    );
+  }
+  const expectedThresholds = [definition.widths.preferred, definition.widths.wide];
+  const seen = seenRecipeContainerThresholds.get(recipeName) ?? new Set();
+  for (const threshold of expectedThresholds) {
+    if (!seen.has(threshold)) {
+      failPath(
+        join(RECIPES_SOURCE, `${recipeName}.css`),
+        `missing named @container threshold "${threshold}"`,
+      );
+    }
   }
 }
 

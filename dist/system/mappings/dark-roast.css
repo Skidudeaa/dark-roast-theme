@@ -11,7 +11,7 @@
     --oi-surface-scrim: color-mix(in srgb, var(--dr-void) 82%, transparent);
     --oi-text-primary: var(--dr-crema);
     --oi-text-body: var(--dr-bone);
-    --oi-text-muted: var(--dr-mocha);
+    --oi-text-muted: color-mix(in srgb, var(--dr-bone) 80%, var(--dr-dark-cacao));
     --oi-text-inverse: var(--dr-void);
     --oi-text-link: var(--dr-teal);
     --oi-border-subtle: var(--dr-divider);

@@ -1,0 +1,130 @@
+/* AUTO-GENERATED from src/system/layers.css and src/system/recipes/*.css by scripts/build-system.js — DO NOT EDIT. */
+
+/* Public cascade order. Product overrides are last; the kernel ships no reset. */
+@layer oi.mapping, oi.contracts, oi.primitives, oi.recipes, oi.utilities, product;
+
+/* source: src/system/recipes/compact-monitor.css */
+@layer oi.recipes {
+  .oi-recipe-compact-monitor {
+    container-name: oi-compact-monitor;
+    container-type: inline-size;
+    display: grid;
+    min-inline-size: 0;
+    margin: 0;
+    gap: var(--oi-compact-monitor-gap, var(--_oi-density-gap));
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
+
+  .oi-recipe-compact-monitor__chrome {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    gap: var(--oi-compact-monitor-gap, var(--_oi-density-gap));
+  }
+
+  .oi-recipe-compact-monitor > [data-oi-slot],
+  .oi-recipe-compact-monitor__chrome > [data-oi-slot] {
+    min-inline-size: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .oi-recipe-compact-monitor__chrome > [data-oi-slot="actions"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: start;
+    gap: var(--_oi-density-gap);
+  }
+
+  .oi-recipe-compact-monitor > [data-oi-slot="focus"],
+  .oi-recipe-compact-monitor > [data-oi-slot="history"] {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .oi-recipe-compact-monitor > [data-oi-slot="status"] {
+    min-block-size: var(--_oi-density-control-size);
+    padding-block: var(--oi-geometry-space);
+    padding-inline-start: var(--_oi-density-gap);
+    border-inline-start-color: var(--_oi-status-color);
+    border-inline-start-style: var(--_oi-truth-completeness-border-style);
+    border-inline-start-width: var(--_oi-truth-completeness-border-width);
+    color: var(--oi-text-body);
+    font-style: var(--_oi-truth-font-style);
+    text-decoration-color: var(--oi-text-muted);
+    text-decoration-line: var(--_oi-truth-decoration-line);
+    text-decoration-style: var(--_oi-truth-decoration-style);
+    text-underline-offset: calc(var(--oi-geometry-space) / 2);
+  }
+
+  .oi-recipe-compact-monitor > [data-oi-slot="primary"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--oi-compact-monitor-primary-gap, var(--_oi-density-gap));
+  }
+
+  .oi-recipe-compact-monitor[data-oi-activity="loading"]
+    > [data-oi-slot="primary"] {
+    min-block-size: var(
+      --oi-compact-monitor-loading-min-block-size,
+      calc(var(--oi-interaction-pointer-target-min) * 3)
+    );
+    align-content: center;
+  }
+
+  .oi-recipe-compact-monitor > [data-oi-slot="settings"] {
+    padding-block-start: var(--_oi-density-gap);
+    border-block-start: 1px solid var(--oi-border-subtle);
+    color: var(--oi-text-muted);
+  }
+
+  .oi-recipe-compact-monitor__chrome[hidden],
+  .oi-recipe-compact-monitor > [data-oi-slot][hidden],
+  .oi-recipe-compact-monitor__chrome > [data-oi-slot][hidden],
+  .oi-recipe-compact-monitor__chrome:empty,
+  .oi-recipe-compact-monitor__chrome > [data-oi-slot="context"]:empty,
+  .oi-recipe-compact-monitor__chrome > [data-oi-slot="actions"]:empty,
+  .oi-recipe-compact-monitor > [data-oi-slot="focus"]:empty,
+  .oi-recipe-compact-monitor > [data-oi-slot="details"]:empty,
+  .oi-recipe-compact-monitor > [data-oi-slot="history"]:empty,
+  .oi-recipe-compact-monitor > [data-oi-slot="settings"]:empty {
+    display: none;
+  }
+
+  @container oi-compact-monitor (min-width: 36rem) {
+    .oi-recipe-compact-monitor__chrome {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+    }
+
+    .oi-recipe-compact-monitor__chrome > [data-oi-slot="context"] {
+      grid-column: 1;
+    }
+
+    .oi-recipe-compact-monitor__chrome > [data-oi-slot="actions"] {
+      grid-column: 2;
+      justify-content: end;
+      justify-self: end;
+    }
+
+    .oi-recipe-compact-monitor > [data-oi-slot="primary"] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container oi-compact-monitor (min-width: 52rem) {
+    .oi-recipe-compact-monitor > [data-oi-slot="primary"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (forced-colors: active) {
+    .oi-recipe-compact-monitor > [data-oi-slot="status"],
+    .oi-recipe-compact-monitor > [data-oi-slot="settings"] {
+      border-color: CanvasText;
+      color: CanvasText;
+    }
+  }
+}
