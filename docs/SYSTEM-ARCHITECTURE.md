@@ -284,17 +284,41 @@ further commits because nothing ran the gate.
 
 ---
 
-## 6. Not built yet
+## 6. Adoption status and remaining work
 
-Tranche 1 is complete. Remaining work is deliberately outside the kernel build:
+Tranche 2 landed in `/Users/thomasamosson/jan25/project-control` at consumer
+commit `f6a8563`. Its live Source Health cards consume the packed 5.10.0 package
+through the public palette, system, and Dark Roast mapping exports. Product code
+derives activity, severity, freshness, certainty, and completeness from persisted
+collector execution state; it classifies provenance as direct and applies
+surface/density presentation policy separately. The visible "Collection result"
+explicitly does not claim immutable-ledger completeness.
 
-- **Tranche 2:** first real adoption in a lower-risk nonclinical operational
-  surface; repair product leakage and obtain owner acceptance before promotion.
-- **Tranche 3:** a second materially different consumer or explicit architecture
-  review, remaining reserved recipes, then optional React/SwiftUI adapters.
-- **Manual/device gates:** actual 200% browser zoom, VoiceOver/NVDA announcement
-  quality, Safari/Firefox behavior, Windows High Contrast, touch ergonomics,
-  human no-color interpretation, and product acceptance.
+Evidence at the adoption boundary:
+
+- the isolated consumer commit passed 379 Python tests, 17 desktop/iPad-viewport
+  browser workflows, Ruff, and Pyright;
+- axe ran without suppression across healthy, degraded, stale, failed, missing,
+  long-label, forced-color, increased-contrast, and reduced-motion cases;
+- real 20/36/52rem allocations render one, two, and three primary tracks, with
+  Darwin visual baselines and a working JavaScript-disabled scan transition;
+- after the concurrent evidence-ledger migration, live loopback and private
+  tailnet probes passed `/`, `/health`, and all three package-derived CSS routes;
+  the live database is at `c4a72e91f6b3`, integrity `ok`, and refreshed machine
+  acceptance records 413 Python tests plus 17 browser workflows.
+
+This is a real consumer without kernel palette leakage, but it is not owner
+acceptance. `compact-monitor` therefore remains `experimental`. Remaining gates:
+
+- **Owner/manual acceptance:** hierarchy, terminology, operational usefulness,
+  actual iPad/touch behavior, actual 200% zoom, VoiceOver/NVDA announcement
+  quality, Safari/Firefox, Windows High Contrast, and human no-color review.
+- **Promotion review:** only after those checks may the recipe advance to
+  `proven`; Tranche 3, a second consumer, and React/SwiftUI adapters remain
+  deferred.
+- **Distribution:** a public-registry lookup currently resolves no package.
+  Project Control uses a repository-local packed tarball; first publication is
+  an explicit owner decision, not a completed release step.
 
 ---
 

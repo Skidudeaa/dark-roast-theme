@@ -1352,3 +1352,34 @@ The architecture is implemented when:
 - SwiftUI follows successful web integration.
 - Product adoption is separate from the kernel implementation.
 - External designs enter through documented studies, not direct transplantation.
+
+---
+
+## 27. First product adoption evidence
+
+Project Control Source Health is the first real `compact-monitor` consumer
+(`f6a8563`, 2026-08-27). It is a server-rendered nonclinical operational surface,
+not a fixture or framework adapter.
+
+- The product edge derives activity, severity, freshness, certainty, and
+  collection-result completeness from actual collector execution records;
+  source is a fixed direct-provenance classification, while surface and density
+  are product presentation policy. A refreshing scan retains the previous
+  primary values and exposes `aria-busy`.
+- The required status and primary slots remain visible. Context and native scan
+  form actions occupy the declared chrome; unused optional slots are omitted.
+- The consumer loads the palette, system CSS, and explicit mapping through
+  public package exports. Its Source Health CSS uses semantic roles and declared
+  hooks only. The operational-interface contract is scoped to Source Health;
+  the Dark Roast theme class remains product-wide.
+- Static DOM/pigment checks, Python mapping/security checks, axe, no-JavaScript
+  operation, 20/36/52rem allocation checks, media emulation, long-content stress,
+  and reviewed Darwin screenshots are executable in the consumer repository.
+- Localhost and private tailnet deployment probes cover the route, health, and
+  all package-derived stylesheets. The consumer uses a pinned packed tarball
+  because Dark Roast has not yet had a first npm publication.
+
+The integration satisfies the one-real-consumer prerequisite. It becomes
+eligible for a `proven` promotion review only after owner acceptance and the
+applicable manual accessibility/device checks. Tests and deployment are
+evidence; they are not owner judgment.
