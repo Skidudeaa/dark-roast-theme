@@ -1,6 +1,6 @@
 {
   "name": "operational-interface-doctrine",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "naming": {
     "cssClassPrefix": "oi-",
     "cssVariablePrefix": "--oi-",
@@ -766,6 +766,17 @@
         "details": "root",
         "history": "root",
         "settings": "root"
+      },
+      "slotSemantics": {
+        "status": {
+          "requiredAttributes": {
+            "role": [
+              "status"
+            ]
+          },
+          "visibleText": "required",
+          "rootReferenceAttribute": "aria-describedby"
+        }
       },
       "supportedDensities": [
         "compact",

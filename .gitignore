@@ -13,6 +13,7 @@ dark-roast-system-v1.json
 .agents/
 .preview/
 .playwright-cli/
+.adjudicate/
 output/playwright/
 playwright-report/
 test-results/

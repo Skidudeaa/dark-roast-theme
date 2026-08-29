@@ -701,6 +701,14 @@ function buildDts() {
   L.push('}');
   L.push('');
 
+  L.push('/** Additional semantic obligations owned by a recipe slot. */');
+  L.push('export interface OiRecipeSlotSemantics {');
+  L.push('  readonly requiredAttributes: Readonly<Record<string, readonly string[]>>;');
+  L.push("  readonly visibleText: 'required';");
+  L.push("  readonly rootReferenceAttribute: 'aria-describedby';");
+  L.push('}');
+  L.push('');
+
   L.push('export interface OiRecipeOverflowBehavior {');
   L.push("  readonly root: 'no-scroll-container';");
   L.push("  readonly text: 'wrap-anywhere';");
@@ -778,6 +786,7 @@ function buildDts() {
   L.push(`  readonly requiredSlots: readonly ${T.slot ?? 'OiSlot'}[];`);
   L.push(`  readonly optionalSlots: readonly ${T.slot ?? 'OiSlot'}[];`);
   L.push(`  readonly slotParents: Readonly<Partial<Record<${T.slot ?? 'OiSlot'}, 'root' | OiRecipePart>>>;`);
+  L.push(`  readonly slotSemantics: Readonly<Partial<Record<${T.slot ?? 'OiSlot'}, OiRecipeSlotSemantics>>>;`);
   L.push(`  readonly supportedDensities: readonly ${T.density ?? 'OiDensity'}[];`);
   L.push('  readonly widths: OiRecipeWidths;');
   L.push('  readonly overflowBehavior: OiRecipeOverflowBehavior;');

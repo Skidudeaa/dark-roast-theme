@@ -6,6 +6,46 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.10.1] — 2026-08-29
+
+Operational Interface Doctrine promotion hardening. **Dark Roast: Black Label
+and all companion palette values remain unchanged.** `compact-monitor` remains
+experimental; this release closes contract drift and makes any future maturity
+change fail closed on evidence.
+
+### Fixed
+
+- **Doctrine contract 0.4.1** — the documented status-slot contract is now
+  manifest-owned and generated: visible nonempty text, `role="status"`, a stable
+  ID, and a recipe-root `aria-describedby` reference to that ID. The validator's
+  undocumented status-to-child description requirement was removed.
+- The first Project Control consumer now conforms to those same semantics; its
+  prior root reference and visible status were retained and the missing live
+  region role was repaired.
+
+### Enforcement
+
+- Source-only manual-gate and adoption evidence records now block `proven`,
+  `stable`, or `deprecated` maturity without a full consumer SHA, artifact hash,
+  owner acceptance, resolvable evidence, and complete gate dispositions.
+- Adversarial mutation suites reject missing status semantics, structurally
+  incomplete or mismatched promotion evidence, reused manual-gate anchors,
+  reordered maturity stages, stale package pins, and unsupported stable-basis
+  claims. Mutable evidence lives in a schema-checked, repository-only governance
+  record excluded from package bytes; its manifest pointer and manual-gate
+  declaration are stripped from generated runtime and JSON artifacts.
+- A separate cross-repository verifier proves the recorded consumer commit
+  exists and contains the exact vendored tarball, dependency pin, lock integrity,
+  and doctrine-version pins. Manual evidence remains human-authored and must use
+  adoption-and-gate-specific anchors; the validator proves structure and
+  reference integrity, not the truth of a human claim.
+
+### Adoption
+
+- Owner acceptance of Project Control Source Health hierarchy, terminology, and
+  density is recorded on 2026-08-29. Manual device/accessibility gates remain
+  pending, so no promotion occurred and no compatibility guarantee changed.
+
 ## [5.10.0] — 2026-08-27
 
 Operational Interface Doctrine tranche 1 slice D. **Dark Roast: Black Label and

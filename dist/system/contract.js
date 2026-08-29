@@ -8,7 +8,7 @@
 // false quietly otherwise so callers can omit the attribute.
 
 export const CONTRACT_NAME = 'operational-interface-doctrine';
-export const CONTRACT_VERSION = '0.4.0';
+export const CONTRACT_VERSION = '0.4.1';
 
 // ── Naming contract (§6) ──
 export const cssClassPrefix = 'oi-';
@@ -635,6 +635,15 @@ export const recipeContracts = Object.freeze({
       "details": "root",
       "history": "root",
       "settings": "root",
+    }),
+    "slotSemantics": Object.freeze({
+      "status": Object.freeze({
+        "requiredAttributes": Object.freeze({
+          "role": Object.freeze(["status"]),
+        }),
+        "visibleText": "required",
+        "rootReferenceAttribute": "aria-describedby",
+      }),
     }),
     "supportedDensities": Object.freeze(["compact", "standard"]),
     "widths": Object.freeze({

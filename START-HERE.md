@@ -15,7 +15,8 @@ Two systems that share a package.
    primitives plus the experimental `compact-monitor` recipe. Namespace
    `--oi-*`, deliberately theme-neutral. Static, Playwright, axe, and visual
    proof are built; the first live adoption is Project Control Source Health.
-   Owner/manual acceptance remains open, so `compact-monitor` is still experimental.
+   Owner acceptance of hierarchy, terminology, and density is recorded. Manual
+   device/accessibility gates remain open, so `compact-monitor` is still experimental.
 
 ## The three things to do when you sit down
 

@@ -13,15 +13,26 @@
 // Contract validation failure aborts generation (§20).
 
 import Ajv from 'ajv';
-import { readFileSync, existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
+import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const REAL_ROOT = realpathSync(ROOT);
 const SYSTEM = join(ROOT, 'src', 'system');
 
-const manifest = JSON.parse(readFileSync(join(SYSTEM, 'contract.json'), 'utf8'));
+const manifestPath = process.argv[2]
+  ? resolve(process.argv[2])
+  : join(SYSTEM, 'contract.json');
+const evidenceOverridePath = process.argv[3] ? resolve(process.argv[3]) : null;
+const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+const packageVersion = JSON.parse(
+  readFileSync(join(ROOT, 'package.json'), 'utf8'),
+).version;
 const schema = JSON.parse(readFileSync(join(SYSTEM, 'contract.schema.json'), 'utf8'));
+const promotionEvidenceSchema = JSON.parse(
+  readFileSync(join(ROOT, 'governance', 'promotion-evidence.schema.json'), 'utf8'),
+);
 
 const failures = [];
 const isMeta = (k) => k.startsWith('$') || k.startsWith('_');
@@ -31,6 +42,7 @@ const entries = (o) => Object.entries(o).filter(([k]) => !isMeta(k));
 // ── 1. Structural ───────────────────────────────────────────
 const ajv = new Ajv({ allErrors: true, strict: false });
 const validate = ajv.compile(schema);
+const validatePromotionEvidenceSchema = ajv.compile(promotionEvidenceSchema);
 if (!validate(manifest)) {
   for (const err of validate.errors) {
     const where = err.instancePath || '(root)';
@@ -42,6 +54,17 @@ if (!validate(manifest)) {
 const axisNames = keys(manifest.axes);
 const axisSet = new Set(axisNames);
 const ladder = new Set(manifest.stabilityLadder.stages);
+const expectedStabilityLadder = [
+  'study',
+  'candidate',
+  'experimental',
+  'proven',
+  'stable',
+  'deprecated',
+];
+if (manifest.stabilityLadder.stages.join(',') !== expectedStabilityLadder.join(',')) {
+  failures.push(`stabilityLadder: stages must remain ${expectedStabilityLadder.join(' -> ')}`);
+}
 const semanticRoleVariables = new Set(
   entries(manifest.semanticRoles).flatMap(([category, roles]) =>
     roles.map((role) => `${manifest.naming.cssVariablePrefix}${category}-${role}`),
@@ -104,6 +127,136 @@ function formatMembers(values = []) {
 function remNumber(value) {
   const match = /^(\d+(?:\.\d+)?)rem$/.exec(value ?? '');
   return match ? Number(match[1]) : Number.NaN;
+}
+
+function validateEvidenceReference(context, reference, expectedAnchor) {
+  const [relativePath, anchor, ...extra] = (reference ?? '').split('#');
+  if (!relativePath || !anchor || extra.length) {
+    failures.push(`${context}: evidence reference must be a Markdown path with one explicit anchor`);
+    return;
+  }
+  if (expectedAnchor && anchor !== expectedAnchor) {
+    failures.push(
+      `${context}: evidence anchor must be "${expectedAnchor}", got "${anchor}"`,
+    );
+    return;
+  }
+  if (
+    relativePath === 'scripts/fixtures/VALIDATOR-PROMOTION-EVIDENCE.md' &&
+    !evidenceOverridePath
+  ) {
+    failures.push(`${context}: validator fixtures cannot serve as product evidence`);
+    return;
+  }
+  const lexicalPath = resolve(ROOT, relativePath);
+  if (lexicalPath !== ROOT && !lexicalPath.startsWith(`${ROOT}${sep}`)) {
+    failures.push(`${context}: evidence reference escapes the repository: "${reference}"`);
+    return;
+  }
+  if (!existsSync(lexicalPath)) {
+    failures.push(`${context}: evidence file does not exist: "${relativePath}"`);
+    return;
+  }
+  let evidencePath;
+  try {
+    evidencePath = realpathSync(lexicalPath);
+  } catch (error) {
+    failures.push(`${context}: evidence reference cannot be resolved: ${error.message}`);
+    return;
+  }
+  if (
+    evidencePath !== REAL_ROOT &&
+    !evidencePath.startsWith(`${REAL_ROOT}${sep}`)
+  ) {
+    failures.push(`${context}: evidence reference resolves outside the repository`);
+    return;
+  }
+  if (!statSync(evidencePath).isFile()) {
+    failures.push(`${context}: evidence reference must resolve to a regular file`);
+    return;
+  }
+  const expectedDouble = `<a id="${anchor}"></a>`;
+  const expectedSingle = `<a id='${anchor}'></a>`;
+  const hasExactAnchor = readFileSync(evidencePath, 'utf8')
+    .split(/\r?\n/)
+    .some((line) => {
+      const trimmed = line.trim();
+      return trimmed === expectedDouble || trimmed === expectedSingle;
+    });
+  if (!hasExactAnchor) {
+    failures.push(`${context}: evidence anchor "${anchor}" does not exist in "${relativePath}"`);
+  }
+}
+
+function validateIsoDate(context, value) {
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  if (Number.isNaN(parsed.valueOf()) || parsed.toISOString().slice(0, 10) !== value) {
+    failures.push(`${context}: "${value}" is not a real ISO calendar date`);
+  }
+}
+
+function readPromotionEvidence(context, reference, expectedRecipe) {
+  if (typeof reference !== 'string') return null;
+  const lexicalPath = evidenceOverridePath ?? resolve(ROOT, reference);
+  if (
+    !evidenceOverridePath &&
+    lexicalPath !== ROOT &&
+    !lexicalPath.startsWith(`${ROOT}${sep}`)
+  ) {
+    failures.push(`${context}: promotion evidence path escapes the repository`);
+    return null;
+  }
+  if (!existsSync(lexicalPath)) {
+    failures.push(`${context}: promotion evidence file does not exist: "${reference}"`);
+    return null;
+  }
+  let evidencePath;
+  try {
+    evidencePath = realpathSync(lexicalPath);
+  } catch (error) {
+    failures.push(`${context}: promotion evidence cannot be resolved: ${error.message}`);
+    return null;
+  }
+  if (
+    !evidenceOverridePath &&
+    evidencePath !== REAL_ROOT &&
+    !evidencePath.startsWith(`${REAL_ROOT}${sep}`)
+  ) {
+    failures.push(`${context}: promotion evidence resolves outside the repository`);
+    return null;
+  }
+  if (!statSync(evidencePath).isFile()) {
+    failures.push(`${context}: promotion evidence must be a regular file`);
+    return null;
+  }
+  let evidence;
+  try {
+    evidence = JSON.parse(readFileSync(evidencePath, 'utf8'));
+  } catch (error) {
+    failures.push(`${context}: promotion evidence is not valid JSON: ${error.message}`);
+    return null;
+  }
+  if (!validatePromotionEvidenceSchema(evidence)) {
+    for (const error of validatePromotionEvidenceSchema.errors) {
+      const where = error.instancePath || '(root)';
+      failures.push(
+        `${context} evidence schema ${where} ${error.message}`,
+      );
+    }
+    return null;
+  }
+  validateIsoDate(`${context} evidence asOf`, evidence.asOf);
+  const todayUtc = new Date().toISOString().slice(0, 10);
+  if (evidence.asOf > todayUtc) {
+    failures.push(`${context}: evidence asOf ${evidence.asOf} is later than UTC today ${todayUtc}`);
+  }
+  if (evidence.recipe !== expectedRecipe) {
+    failures.push(
+      `${context}: promotion evidence is bound to recipe "${evidence.recipe}", not "${expectedRecipe}"`,
+    );
+    return null;
+  }
+  return evidence;
 }
 
 // Every axis declares a stability, and no stability names a phantom axis.
@@ -356,6 +509,18 @@ for (const [name, def] of entries(manifest.recipes)) {
     }
   }
 
+  for (const [slot, semantics] of entries(def.slotSemantics ?? {})) {
+    if (!orderSet.has(slot)) {
+      failures.push(`${context}: slotSemantics names undeclared slot "${slot}"`);
+      continue;
+    }
+    validateAttributeContract(
+      `${context} slot "${slot}"`,
+      semantics.requiredAttributes,
+      [],
+    );
+  }
+
   const conditionalParts = def.optionalSlotCollapse?.conditionalParts ?? {};
   for (const [partName, slots] of entries(conditionalParts)) {
     if (!partSet.has(partName)) {
@@ -489,6 +654,134 @@ for (const [name, def] of entries(manifest.recipes)) {
     const studyPath = def.study.split('#')[0];
     if (!existsSync(join(ROOT, studyPath))) {
       failures.push(`recipe "${name}": study "${studyPath}" does not exist`);
+    }
+  }
+
+  const manualProofGates = def._manualProofGates ?? [];
+  const manualGateSet = new Set(manualProofGates);
+  const promotionEvidence = readPromotionEvidence(context, def._promotionEvidence, name);
+  const adoptionEntries = Object.entries(promotionEvidence?.adoptions ?? {});
+  const completeAdoptionIds = new Set();
+  const qualifyingAdoptionIds = new Set();
+
+  for (const [adoptionId, adoption] of adoptionEntries) {
+    const adoptionContext = `${context} adoption "${adoptionId}"`;
+    const manualGateNames = Object.keys(adoption.manualGates ?? {});
+    if (!sameMembers(manualGateNames, manualProofGates)) {
+      failures.push(
+        `${adoptionContext}: manualGates must name every declared manual proof gate exactly; got ${formatMembers(manualGateNames)}`,
+      );
+    }
+
+    validateEvidenceReference(
+      `${adoptionContext} automated proof`,
+      adoption.evidenceRef,
+      `evidence-${adoptionId}-automated`,
+    );
+    validateEvidenceReference(
+      `${adoptionContext} owner acceptance`,
+      adoption.ownerAcceptance?.evidenceRef,
+      `evidence-${adoptionId}-owner-acceptance`,
+    );
+    validateIsoDate(
+      `${adoptionContext} owner acceptance`,
+      adoption.ownerAcceptance?.acceptedOn,
+    );
+    if (adoption.ownerAcceptance?.acceptedOn > promotionEvidence.asOf) {
+      failures.push(`${adoptionContext}: owner acceptance is later than evidence asOf`);
+    }
+
+    const versionsMatch =
+      adoption.packageVersion === packageVersion &&
+      adoption.contractVersion === manifest.version;
+
+    let manualGatesComplete = manualGateNames.length === manualGateSet.size;
+    for (const [gate, disposition] of Object.entries(adoption.manualGates ?? {})) {
+      if (!manualGateSet.has(gate)) manualGatesComplete = false;
+      if (disposition.disposition === 'pending') {
+        manualGatesComplete = false;
+      } else if (disposition.disposition === 'passed') {
+        validateEvidenceReference(
+          `${adoptionContext} manual gate "${gate}"`,
+          disposition.evidenceRef,
+          `evidence-${adoptionId}-${gate}`,
+        );
+      } else if (disposition.disposition === 'not-applicable') {
+        validateEvidenceReference(
+          `${adoptionContext} manual gate "${gate}"`,
+          disposition.evidenceRef,
+          `evidence-${adoptionId}-${gate}`,
+        );
+        if (!(disposition.rationale ?? '').trim()) {
+          failures.push(`${adoptionContext} manual gate "${gate}": not-applicable requires rationale`);
+        }
+      }
+    }
+    if (manualGatesComplete) completeAdoptionIds.add(adoptionId);
+    if (manualGatesComplete && versionsMatch) qualifyingAdoptionIds.add(adoptionId);
+  }
+
+  const maturityIndex = expectedStabilityLadder.indexOf(def.stability);
+  const provenIndex = expectedStabilityLadder.indexOf('proven');
+  const stableIndex = expectedStabilityLadder.indexOf('stable');
+  if (maturityIndex >= provenIndex && qualifyingAdoptionIds.size === 0) {
+    failures.push(
+      `${context}: stability "${def.stability}" requires a qualifying adoption with owner acceptance and no pending manual proof gates (§18, §27)`,
+    );
+  }
+
+  if (maturityIndex >= stableIndex) {
+    const basis = promotionEvidence?.stableBasis;
+    if (!basis) {
+      failures.push(`${context}: stability "${def.stability}" requires stableBasis (§18)`);
+    } else {
+      validateEvidenceReference(
+        `${context} stableBasis`,
+        basis.evidenceRef,
+        `stable-${name}-${basis.kind}`,
+      );
+      validateIsoDate(`${context} stableBasis`, basis.decidedOn);
+      if (basis.decidedOn > promotionEvidence.asOf) {
+        failures.push(`${context} stableBasis: decision is later than evidence asOf`);
+      }
+      if (!(basis.rationale ?? '').trim()) {
+        failures.push(`${context} stableBasis: rationale must contain non-whitespace text`);
+      }
+      const referenced = basis.adoptionIds ?? [];
+      for (const adoptionId of referenced) {
+        if (!promotionEvidence.adoptions?.[adoptionId]) {
+          failures.push(`${context} stableBasis: unknown adoption "${adoptionId}"`);
+        } else if (!completeAdoptionIds.has(adoptionId)) {
+          failures.push(`${context} stableBasis: adoption "${adoptionId}" is not complete`);
+        }
+      }
+      if (basis.kind === 'second-consumer') {
+        const referencedAdoptions = referenced
+          .map((adoptionId) => promotionEvidence.adoptions?.[adoptionId])
+          .filter(Boolean);
+        const pairs = new Set(
+          referencedAdoptions
+            .map((adoption) => `${adoption.consumer}/${adoption.surface}`),
+        );
+        if (referenced.length < 2 || pairs.size < 2) {
+          failures.push(
+            `${context} stableBasis: second-consumer requires two materially different consumer/surface pairs`,
+          );
+        }
+        for (const [field, value] of [
+          ['verifiedCommit', (adoption) => adoption.verifiedCommit],
+          ['automated evidence', (adoption) => adoption.evidenceRef],
+          ['owner acceptance', (adoption) => adoption.ownerAcceptance?.evidenceRef],
+        ]) {
+          if (new Set(referencedAdoptions.map(value)).size < 2) {
+            failures.push(
+              `${context} stableBasis: second-consumer requires distinct ${field}`,
+            );
+          }
+        }
+      } else if (basis.kind === 'architecture-review' && referenced.length < 1) {
+        failures.push(`${context} stableBasis: architecture-review requires one qualifying adoption`);
+      }
     }
   }
 

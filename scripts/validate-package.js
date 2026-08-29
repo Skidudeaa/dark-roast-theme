@@ -4,19 +4,24 @@
 // check can safely join npm test without recursing through prepublishOnly.
 
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import {
   existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  realpathSync,
   rmSync,
+  statSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const REAL_ROOT = realpathSync(ROOT);
 const TEMP_PREFIX = join(tmpdir(), 'dark-roast-package-');
+const evidenceOverridePath = process.argv[2] ? resolve(process.argv[2]) : null;
 
 function run(command, args) {
   const result = spawnSync(command, args, {
@@ -112,6 +117,7 @@ function assertNoForbiddenFiles(files) {
         'output',
         'playwright-report',
         'test-results',
+        'governance',
       ].includes(parts[0]) ||
       file === 'playwright.config.js' ||
       parts.some((part) => part.endsWith('-snapshots')) ||
@@ -152,6 +158,9 @@ async function validateTarget(packageRoot, record) {
 let tempDirectory;
 try {
   const sourcePackage = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
+  const sourceContract = JSON.parse(
+    readFileSync(join(ROOT, 'src', 'system', 'contract.json'), 'utf8'),
+  );
   assertNoRuntimeDependencies(sourcePackage, 'package.json');
   const targets = exportTargets(sourcePackage);
   if (targets.length === 0) throw new Error('package.json exports no default or types targets');
@@ -173,6 +182,57 @@ try {
   if (filename !== basename(filename)) throw new Error(`npm pack returned an unsafe filename: ${filename}`);
   const tarball = join(tempDirectory, filename);
   if (!existsSync(tarball)) throw new Error(`npm pack did not create ${tarball}`);
+
+  const packedSha256 = createHash('sha256')
+    .update(readFileSync(tarball))
+    .digest('hex');
+  const currentArtifactPins = [];
+  for (const [recipeName, recipe] of Object.entries(sourceContract.recipes)) {
+    if (!recipe._promotionEvidence) continue;
+    const lexicalEvidencePath =
+      evidenceOverridePath ?? resolve(ROOT, recipe._promotionEvidence);
+    if (
+      !evidenceOverridePath &&
+      !lexicalEvidencePath.startsWith(`${resolve(ROOT)}${sep}`)
+    ) {
+      throw new Error(`recipe ${recipeName} promotion evidence escapes the repository`);
+    }
+    if (!existsSync(lexicalEvidencePath)) {
+      throw new Error(`recipe ${recipeName} promotion evidence does not exist`);
+    }
+    const evidencePath = realpathSync(lexicalEvidencePath);
+    if (
+      !evidenceOverridePath &&
+      evidencePath !== REAL_ROOT &&
+      !evidencePath.startsWith(`${REAL_ROOT}${sep}`)
+    ) {
+      throw new Error(`recipe ${recipeName} promotion evidence resolves outside the repository`);
+    }
+    if (!statSync(evidencePath).isFile()) {
+      throw new Error(`recipe ${recipeName} promotion evidence is not a regular file`);
+    }
+    const promotionEvidence = JSON.parse(readFileSync(evidencePath, 'utf8'));
+    const recipePins = Object.entries(promotionEvidence.adoptions)
+      .filter(([, adoption]) =>
+        adoption.packageVersion === sourcePackage.version &&
+        adoption.contractVersion === sourceContract.version
+      );
+    if (recipePins.length === 0) {
+      throw new Error(
+        `recipe ${recipeName} has no artifact pin for package ${sourcePackage.version} ` +
+          `and contract ${sourceContract.version}`,
+      );
+    }
+    for (const [adoptionId, adoption] of recipePins) {
+      if (adoption.artifactSha256 !== packedSha256) {
+        throw new Error(
+          `promotion evidence ${recipeName}/${adoptionId} pins ${adoption.artifactSha256}, ` +
+            `but ${filename} is ${packedSha256}`,
+        );
+      }
+      currentArtifactPins.push(`${recipeName}/${adoptionId}`);
+    }
+  }
 
   const files = archiveFiles(tarball);
   assertNoForbiddenFiles(files);
@@ -196,7 +256,8 @@ try {
 
   console.log(
     `PASS package: ${filename}; ${files.size} file(s); ` +
-      `${targets.length} default/types export target(s) resolve; zero runtime dependencies`,
+      `${targets.length} default/types export target(s) resolve; ` +
+      `${currentArtifactPins.length} adoption artifact pin(s) match; zero runtime dependencies`,
   );
 } catch (error) {
   console.error(`FAIL package integrity: ${error.message}`);

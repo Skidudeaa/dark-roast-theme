@@ -69,6 +69,16 @@ assert.equal(recipeContracts['compact-monitor'].widths.minimumViable, '20rem');
 assert.equal(recipeContracts['compact-monitor'].widths.preferred, '36rem');
 assert.equal(recipeContracts['compact-monitor'].widths.wide, '52rem');
 assert.equal(recipeContracts['compact-monitor'].slotParents.status, 'root');
+assert.equal(
+  recipeContracts['compact-monitor'].slotSemantics.status.requiredAttributes.role[0],
+  'status',
+);
+assert.equal(
+  recipeContracts['compact-monitor'].slotSemantics.status.rootReferenceAttribute,
+  'aria-describedby',
+);
+assert.equal('_manualProofGates' in recipeContracts['compact-monitor'], false);
+assert.equal('_promotionEvidence' in recipeContracts['compact-monitor'], false);
 assert.equal(recipeContracts['compact-monitor'].asyncBehavior.retainedSlotsOnRefresh[0], 'primary');
 assert.equal(recipePartClasses['compact-monitor'].chrome, 'oi-recipe-compact-monitor__chrome');
 assertDeepFrozen(recipeContracts);

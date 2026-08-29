@@ -130,6 +130,13 @@ export interface OiRecipeWidths {
   readonly wide: string;
 }
 
+/** Additional semantic obligations owned by a recipe slot. */
+export interface OiRecipeSlotSemantics {
+  readonly requiredAttributes: Readonly<Record<string, readonly string[]>>;
+  readonly visibleText: 'required';
+  readonly rootReferenceAttribute: 'aria-describedby';
+}
+
 export interface OiRecipeOverflowBehavior {
   readonly root: 'no-scroll-container';
   readonly text: 'wrap-anywhere';
@@ -200,6 +207,7 @@ export interface OiRecipeContract {
   readonly requiredSlots: readonly OiSlot[];
   readonly optionalSlots: readonly OiSlot[];
   readonly slotParents: Readonly<Partial<Record<OiSlot, 'root' | OiRecipePart>>>;
+  readonly slotSemantics: Readonly<Partial<Record<OiSlot, OiRecipeSlotSemantics>>>;
   readonly supportedDensities: readonly OiDensity[];
   readonly widths: OiRecipeWidths;
   readonly overflowBehavior: OiRecipeOverflowBehavior;

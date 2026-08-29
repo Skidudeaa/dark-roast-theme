@@ -1,6 +1,6 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.10.0",
+  "version": "5.10.1",
   "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions and the warm light-polarity Cold Brew, all with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",
@@ -89,7 +89,8 @@
     "build:system": "node scripts/build-system.js",
     "brew": "node scripts/reconcile-recipes.js",
     "report:apca": "node scripts/report-apca.js",
-    "test:static": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-skins.js && node scripts/validate-contract.js && node scripts/build-system.js --check && node scripts/validate-system-runtime.js && node scripts/validate-system-dom.js && node scripts/validate-system-recipe-dom.js && node scripts/validate-system-css.js && node scripts/validate-exports.js && node scripts/validate-package.js",
+    "verify:promotion-consumer": "node scripts/verify-promotion-consumer.js",
+    "test:static": "node scripts/check-black-label-contract.js && node scripts/reconcile-recipes.js --check && node scripts/validate-themes.js && node scripts/build-tokens.js --check && node scripts/build-cold-brew.js --check && node scripts/build-variants.js --check && node scripts/validate-platforms.js && node scripts/validate-gallery.js && node scripts/validate-skins.js && node scripts/validate-contract.js && node scripts/validate-contract-regressions.js && node scripts/build-system.js --check && node scripts/validate-system-runtime.js && node scripts/validate-system-dom.js && node scripts/validate-system-recipe-dom.js && node scripts/validate-system-recipe-dom-regressions.js && node scripts/validate-system-css.js && node scripts/validate-exports.js && node scripts/validate-package.js && node scripts/validate-package-regressions.js",
     "test:browser": "playwright test",
     "test:browser:update": "playwright test --update-snapshots",
     "test": "npm run test:static && npm run test:browser",

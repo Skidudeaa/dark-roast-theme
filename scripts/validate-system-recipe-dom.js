@@ -7,13 +7,15 @@
 // matrices start from.
 
 import { readFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'parse5';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CONTRACT = join(ROOT, 'src', 'system', 'contract.json');
-const FIXTURE = join(ROOT, 'spec', 'system', 'compact-monitor.html');
+const FIXTURE = process.argv[2]
+  ? resolve(process.argv[2])
+  : join(ROOT, 'spec', 'system', 'compact-monitor.html');
 
 const manifest = JSON.parse(readFileSync(CONTRACT, 'utf8'));
 const html = readFileSync(FIXTURE, 'utf8');
@@ -649,13 +651,39 @@ function validateSlots(root, recipe, definition, partInstances) {
   return instances;
 }
 
-function validateStatus(root, definition, slotInstances) {
-  if (!definition.slotOrder.includes('status')) return;
-  for (const status of slotInstances.get('status') ?? []) {
-    if (attribute(status, 'role') !== 'status') {
-      fail(status, 'status slot must declare role="status"');
+function validateSlotSemantics(root, definition, slotInstances) {
+  for (const [slot, semantics] of entries(definition.slotSemantics ?? {})) {
+    for (const node of slotInstances.get(slot) ?? []) {
+      const subject = `slot "${slot}"`;
+      validateAttributeContract(
+        node,
+        {
+          requiredAttributes: semantics.requiredAttributes,
+          forbiddenAttributes: [],
+          accessibleName: 'none',
+        },
+        subject,
+      );
+      if (semantics.visibleText === 'required' && !visibleText(node)) {
+        fail(node, `${subject} requires nonempty visible text`);
+      }
+      if (semantics.rootReferenceAttribute) {
+        const id = (attribute(node, 'id') ?? '').trim();
+        if (!id) {
+          fail(node, `${subject} must have a nonempty id for root ${semantics.rootReferenceAttribute}`);
+          continue;
+        }
+        const references = idReferences(root, semantics.rootReferenceAttribute, {
+          required: true,
+        });
+        if (!references.includes(id)) {
+          fail(
+            root,
+            `${semantics.rootReferenceAttribute} must reference ${subject} id "${id}"`,
+          );
+        }
+      }
     }
-    referencedVisibleText(status, 'aria-describedby', { required: true });
   }
 }
 
@@ -702,7 +730,7 @@ function validateRecipe(root, recipe, definition) {
 
   const partInstances = validateParts(root, recipe, definition);
   const slotInstances = validateSlots(root, recipe, definition, partInstances);
-  validateStatus(root, definition, slotInstances);
+  validateSlotSemantics(root, definition, slotInstances);
   validateBusyState(root, definition);
   return { partInstances, slotInstances };
 }

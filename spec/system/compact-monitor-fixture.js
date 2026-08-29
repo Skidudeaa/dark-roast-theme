@@ -548,7 +548,7 @@ function render() {
     : '';
 
   root.innerHTML = `${chrome}${focus}
-    <div id="proof-status" class="proof-status" data-oi-slot="status" role="status" aria-live="polite" aria-describedby="proof-status-detail">
+    <div id="proof-status" class="proof-status" data-oi-slot="status" role="status" aria-live="polite">
       <p class="proof-status-label" data-proof-status-text>${configuration.label}</p>
       <p id="proof-status-detail" class="proof-status-detail">${configuration.detail}</p>
     </div>

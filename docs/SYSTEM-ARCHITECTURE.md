@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-27 (package 5.10.0, doctrine contract 0.4.0)
+**Last updated:** 2026-08-29 (package 5.10.1, doctrine contract 0.4.1)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -80,9 +80,14 @@ Hand-edited source of truth (§14). It declares:
 - **The ten experimental structural primitives** with root elements, exact
   owner-qualified parts, cardinality/parentage, allowed tags, required and
   forbidden attributes, accessible-name obligations, axes, and public hooks.
-- **`compact-monitor`** as experimental, with axes, root/part/slot anatomy,
+- **`compact-monitor`** as experimental, with axes, root/part/slot anatomy and
+  manifest-owned status semantics, repository-only maturity evidence,
   20/36/52rem proof widths, overflow/truncation/collapse, density, async,
   keyboard/focus, declared proof matrices, and owner-scoped hooks (§11.1).
+- **`governance/compact-monitor-promotion.json`** records immutable consumer
+  SHAs, package hash, owner acceptance, and manual-gate dispositions. It is
+  schema-checked by the contract validator and forbidden from npm package bytes,
+  avoiding a self-referential artifact hash.
 - **Reserved recipe names**, including `conversation-shell` and
   `context-composer` proposed by `src/system/studies/phind-extension.md`.
 - **Axis stability**, so semver protection is machine-readable: adding a value to
@@ -189,8 +194,9 @@ that does exist rather than a placeholder.
   module applies only manifest-declared mappings, widths, densities, optional
   omission, async/state, direction, and stress cases.
 - `scripts/validate-system-recipe-dom.js` enforces the parse-time root, chrome,
-  eight flattened slots, accessibility relationships, required visibility,
-  optional collapse, and busy-state semantics.
+  eight flattened slots, manifest-owned accessibility relationships, required
+  visibility, optional collapse, and busy-state semantics. Its mutation suite
+  proves role, ID, root reference, and visible status text fail closed.
 - Playwright 1.62.1 runs 90 Chromium tests: exhaustive four-mapping × three-width
   × two-density layout, all async/state/stress values, native disclosure,
   DOM-order keyboard focus, focus retention, overflow, reduced motion,
@@ -225,7 +231,7 @@ version-correct somaCura adoption recorded in `docs/SOMACURA-MIGRATION.md`.
 
 ## 5. The validator suite
 
-`npm test` runs seventeen static gates followed by 90 Chromium tests. Each gate
+`npm test` runs twenty static gates followed by 90 Chromium tests. Each gate
 exists because something either did go wrong or provably could.
 
 **Theme family**
@@ -253,22 +259,36 @@ exists because something either did go wrong or provably could.
     ladder, anything above `candidate` needs a study that exists, generated type
     names must be present and unique, and the contract must not contain its own
     forbidden domain terms.
-11. `build-system.js --check` — every generated runtime, type, mapping, and CSS
+11. `validate-contract-regressions.js` — adversarial mutations prove promotion
+    and stable maturity claims cannot bypass pinned consumer, owner, manual-gate,
+    and repository-local evidence requirements.
+12. `build-system.js --check` — every generated runtime, type, mapping, and CSS
     artifact is byte-identical to source (§17.6).
-12. `validate-system-runtime.js` — development/production/browser assertions,
+13. `validate-system-runtime.js` — development/production/browser assertions,
     required slots, and provenance predicates behave as specified.
-13. `validate-system-dom.js` — executable native DOM/ARIA anatomy for both
+14. `validate-system-dom.js` — executable native DOM/ARIA anatomy for both
     mappings and all ten primitives.
-14. `validate-system-recipe-dom.js` — compact-monitor root/part/slot order,
+15. `validate-system-recipe-dom.js` — compact-monitor root/part/slot order,
     accessibility, visibility, collapse, and busy-state semantics.
-15. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
+16. `validate-system-recipe-dom-regressions.js` — mutated fixtures prove status
+    role, ID, visible content, and root-reference failures are detected.
+17. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
     mappings across all 54 roles.
 
 **Distribution**
-16. `validate-exports.js` — recursively proves every generated artifact is
+18. `validate-exports.js` — recursively proves every generated artifact is
     reachable, resolvable, typed where declared, and covered by `files`.
-17. `validate-package.js` — validates the actual packed/extracted tarball and
-    zero runtime dependencies.
+19. `validate-package.js` — validates the actual packed/extracted tarball and
+    zero runtime dependencies; the packed SHA must match every current-version
+    adoption artifact pin.
+20. `validate-package-regressions.js` — stale package versions and mismatched
+    artifact hashes are rejected against the real deterministic tarball.
+
+`npm run verify:promotion-consumer -- project-control=../../project-control` is an explicit
+cross-repository promotion-review gate. It proves the recorded consumer commit
+exists and contains the exact vendor bytes, dependency/lock integrity, and
+contract-version pins. Portable kernel CI cannot inspect another repository's
+Git object database, so this check is intentionally separate rather than faked.
 
 **Browser proof**
 
@@ -286,9 +306,10 @@ further commits because nothing ran the gate.
 
 ## 6. Adoption status and remaining work
 
-Tranche 2 landed in `/Users/thomasamosson/jan25/project-control` at consumer
-commit `f6a8563`. Its live Source Health cards consume the packed 5.10.0 package
-through the public palette, system, and Dark Roast mapping exports. Product code
+Tranche 2 first landed in `/Users/thomasamosson/jan25/project-control` at
+consumer commit `f6a8563`. The current live Source Health cards consume the
+packed 5.10.1 package through the public palette, system, and Dark Roast mapping
+exports. Product code
 derives activity, severity, freshness, certainty, and completeness from persisted
 collector execution state; it classifies provenance as direct and applies
 surface/density presentation policy separately. The visible "Collection result"
@@ -304,15 +325,18 @@ Evidence at the adoption boundary:
   Darwin visual baselines and a working JavaScript-disabled scan transition;
 - after the concurrent evidence-ledger migration, live loopback and private
   tailnet probes passed `/`, `/health`, and all three package-derived CSS routes;
-  the live database is at `c4a72e91f6b3`, integrity `ok`, and refreshed machine
-  acceptance records 413 Python tests plus 17 browser workflows.
+  the ledger database was at `c4a72e91f6b3` with integrity `ok`. Current mutable
+  database counts and full consumer-suite totals live in Project Control's own
+  status record and repository-only promotion evidence rather than package prose.
 
-This is a real consumer without kernel palette leakage, but it is not owner
-acceptance. `compact-monitor` therefore remains `experimental`. Remaining gates:
+This is a real consumer without kernel palette leakage. Owner acceptance of its
+hierarchy, terminology, and density was recorded on 2026-08-29, but
+`compact-monitor` remains `experimental`. Remaining gates:
 
-- **Owner/manual acceptance:** hierarchy, terminology, operational usefulness,
-  actual iPad/touch behavior, actual 200% zoom, VoiceOver/NVDA announcement
-  quality, Safari/Firefox, Windows High Contrast, and human no-color review.
+- **Manual acceptance:** actual iPad/touch behavior, actual 200% zoom,
+  VoiceOver/NVDA announcement quality, Safari/Firefox, Windows High Contrast,
+  and human no-color review. Each gate must pass or receive an explicit,
+  evidence-linked not-applicable disposition.
 - **Promotion review:** only after those checks may the recipe advance to
   `proven`; Tranche 3, a second consumer, and React/SwiftUI adapters remain
   deferred.

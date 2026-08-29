@@ -101,6 +101,19 @@
         "forbiddenAttributes": { "$ref": "#/definitions/attributeList" },
         "accessibleName": { "$ref": "#/definitions/accessibleName" }
       }
+    },
+    "recipeSlotSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requiredAttributes", "visibleText", "rootReferenceAttribute"],
+      "properties": {
+        "requiredAttributes": { "$ref": "#/definitions/attributeRules" },
+        "visibleText": { "type": "string", "const": "required" },
+        "rootReferenceAttribute": {
+          "type": "string",
+          "const": "aria-describedby"
+        }
+      }
     }
   },
   "properties": {
@@ -279,6 +292,8 @@
           "requiredSlots",
           "optionalSlots",
           "slotParents",
+          "slotSemantics",
+          "_manualProofGates",
           "supportedDensities",
           "widths",
           "overflowBehavior",
@@ -294,6 +309,11 @@
           "stability": { "$ref": "#/definitions/stability" },
           "study": { "type": "string" },
           "_studyNote": { "$ref": "#/definitions/note" },
+          "_manualProofGates": { "$ref": "#/definitions/kebabList" },
+          "_promotionEvidence": {
+            "type": "string",
+            "pattern": "^governance/[a-z][a-z0-9-]*\\.json$"
+          },
           "axes": { "$ref": "#/definitions/kebabList" },
           "root": { "$ref": "#/definitions/rootContract" },
           "partOrder": { "$ref": "#/definitions/kebabArray" },
@@ -320,6 +340,11 @@
               "type": "string",
               "pattern": "^(root|[a-z][a-z0-9]*(-[a-z0-9]+)*)$"
             }
+          },
+          "slotSemantics": {
+            "type": "object",
+            "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+            "additionalProperties": { "$ref": "#/definitions/recipeSlotSemantics" }
           },
           "supportedDensities": { "$ref": "#/definitions/kebabList" },
           "widths": {

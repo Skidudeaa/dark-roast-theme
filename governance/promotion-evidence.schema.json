@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Skidudeaa/dark-roast-theme/governance/promotion-evidence.schema.json",
+  "title": "Operational Interface recipe promotion evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "recipe", "asOf", "adoptions"],
+  "definitions": {
+    "kebabList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" }
+    },
+    "semanticVersion": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "isoDate": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-([0-2]\\d|3[01])$"
+    },
+    "gitSha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidenceReference": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._/-]*\\.md#[a-z][a-z0-9-]*$"
+    },
+    "safePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[a-zA-Z0-9._-]+(?:/[a-zA-Z0-9._-]+)*$"
+    },
+    "verificationCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["argv"],
+      "properties": {
+        "argv": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "outputContains": { "type": "string", "minLength": 1 }
+      }
+    },
+    "fileAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "contains"],
+      "properties": {
+        "path": { "$ref": "#/definitions/safePath" },
+        "contains": { "type": "string", "minLength": 1 }
+      }
+    },
+    "consumerVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commands", "fileAssertions"],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/verificationCommand" }
+        },
+        "fileAssertions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/fileAssertion" }
+        },
+        "npmFileDependency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["packageName", "manifestPath", "lockfilePath"],
+          "properties": {
+            "packageName": { "type": "string", "minLength": 1 },
+            "manifestPath": { "$ref": "#/definitions/safePath" },
+            "lockfilePath": { "$ref": "#/definitions/safePath" }
+          }
+        }
+      }
+    },
+    "manualGateDisposition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disposition"],
+          "properties": { "disposition": { "const": "pending" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disposition", "evidenceRef"],
+          "properties": {
+            "disposition": { "const": "passed" },
+            "evidenceRef": { "$ref": "#/definitions/evidenceReference" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disposition", "evidenceRef", "rationale"],
+          "properties": {
+            "disposition": { "const": "not-applicable" },
+            "evidenceRef": { "$ref": "#/definitions/evidenceReference" },
+            "rationale": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "adoptionEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consumer",
+        "surface",
+        "repository",
+        "consumerCommit",
+        "verifiedCommit",
+        "packageVersion",
+        "contractVersion",
+        "artifactPath",
+        "artifactSha256",
+        "verification",
+        "evidenceRef",
+        "ownerAcceptance",
+        "manualGates"
+      ],
+      "properties": {
+        "consumer": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+        "surface": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+        "repository": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+        "consumerCommit": { "$ref": "#/definitions/gitSha" },
+        "verifiedCommit": { "$ref": "#/definitions/gitSha" },
+        "packageVersion": { "$ref": "#/definitions/semanticVersion" },
+        "contractVersion": { "$ref": "#/definitions/semanticVersion" },
+        "artifactPath": { "$ref": "#/definitions/safePath" },
+        "artifactSha256": { "$ref": "#/definitions/sha256" },
+        "verification": { "$ref": "#/definitions/consumerVerification" },
+        "evidenceRef": { "$ref": "#/definitions/evidenceReference" },
+        "ownerAcceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["acceptedOn", "evidenceRef"],
+          "properties": {
+            "acceptedOn": { "$ref": "#/definitions/isoDate" },
+            "evidenceRef": { "$ref": "#/definitions/evidenceReference" }
+          }
+        },
+        "manualGates": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+          "additionalProperties": { "$ref": "#/definitions/manualGateDisposition" }
+        }
+      }
+    },
+    "stableBasis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "adoptionIds", "decidedOn", "evidenceRef", "rationale"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["second-consumer", "architecture-review"] },
+        "adoptionIds": { "$ref": "#/definitions/kebabList" },
+        "decidedOn": { "$ref": "#/definitions/isoDate" },
+        "evidenceRef": { "$ref": "#/definitions/evidenceReference" },
+        "rationale": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "properties": {
+    "$schema": { "const": "./promotion-evidence.schema.json" },
+    "recipe": { "type": "string", "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+    "asOf": { "$ref": "#/definitions/isoDate" },
+    "adoptions": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+      "additionalProperties": { "$ref": "#/definitions/adoptionEvidence" }
+    },
+    "stableBasis": { "$ref": "#/definitions/stableBasis" }
+  }
+}

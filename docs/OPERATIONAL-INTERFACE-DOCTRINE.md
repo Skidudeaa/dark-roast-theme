@@ -1,6 +1,6 @@
 # Operational Interface Doctrine
 
-**Version:** 0.4.0
+**Version:** 0.4.1
 **Status:** APPROVED ARCHITECTURE  
 **Date:** 2026-08-27
 **Repository role:** Dark Roast is the first reference implementation; the doctrine is theme-neutral.  
@@ -622,7 +622,7 @@ The first implementation is native-first:
 Every recipe declares:
 
 - Stability: `study`, `candidate`, `experimental`, `proven`, `stable`, or `deprecated`
-- Required and optional slots
+- Required and optional slots, plus any slot-owned semantic obligations
 - Slot order
 - Supported axes
 - Supported densities
@@ -668,7 +668,7 @@ DOM contract:
   </header>
 
   <div class="oi-inset" data-oi-slot="focus"></div>
-  <p id="monitor-status" data-oi-slot="status" role="status"></p>
+  <p id="monitor-status" data-oi-slot="status" role="status">Ready</p>
   <div data-oi-slot="primary"></div>
   <div data-oi-slot="details"></div>
   <div data-oi-slot="history"></div>
@@ -706,6 +706,9 @@ Public hooks:
 Invariants:
 
 - `status` and `primary` are always visible.
+- `status` appears exactly once with nonempty visible text, a stable `id`, and
+  `role="status"`; the root's `aria-describedby` references that ID. The status
+  slot does not describe itself through a redundant child reference.
 - `details` and `history` may use disclosure.
 - `settings` is separated from the operational scan path.
 - Missing optional slots collapse without empty spacing.
@@ -713,6 +716,9 @@ Invariants:
 - Narrow layout is one column.
 - Wide layout may place primary metrics in multiple columns while retaining DOM order.
 - Refreshing retains primary data and marks activity and freshness independently.
+- Dynamic adapters create the status region before an update and mutate its
+  contents in place. Full-page navigation does not depend on a live-region
+  announcement.
 - Failed detail regions do not erase healthy primary regions.
 - DOM order remains the reading and keyboard order at every width.
 - Loading and refreshing set `aria-busy`; refreshing and stale states retain the
@@ -822,7 +828,7 @@ Normative shape:
 ```json
 {
   "name": "operational-interface-doctrine",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "axes": {
     "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
     "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
@@ -837,8 +843,26 @@ Normative shape:
   "recipes": {
     "compact-monitor": {
       "stability": "experimental",
+      "_manualProofGates": [
+        "actual-ipad-touch",
+        "actual-zoom-200",
+        "voiceover",
+        "nvda",
+        "safari",
+        "firefox",
+        "windows-high-contrast",
+        "no-color-human"
+      ],
+      "_promotionEvidence": "governance/compact-monitor-promotion.json",
       "requiredSlots": ["status", "primary"],
       "optionalSlots": ["context", "actions", "focus", "details", "history", "settings"],
+      "slotSemantics": {
+        "status": {
+          "requiredAttributes": { "role": ["status"] },
+          "visibleText": "required",
+          "rootReferenceAttribute": "aria-describedby"
+        }
+      },
       "supportedDensities": ["compact", "standard"]
     }
   }
@@ -1195,6 +1219,9 @@ Initial design study:
 - Repository: `https://github.com/renatoaug/claude-usage-monitor`
 - Reference commit: `205121163c47cda83548dde87ddba71f0ec3be5f`
 - Study target: compact operational hierarchy and visual infrastructure
+- Legal boundary: the referenced package metadata declares MIT. This study
+  extracts relationships only; the kernel independently reimplements them and
+  copies no upstream source, selectors, application behavior, or assets.
 
 Extracted relationships:
 
@@ -1357,9 +1384,17 @@ The architecture is implemented when:
 
 ## 27. First product adoption evidence
 
+<a id="compact-monitor-project-control-evidence"></a>
+
+<a id="evidence-project-control-source-health-automated"></a>
+
 Project Control Source Health is the first real `compact-monitor` consumer
 (`f6a8563`, 2026-08-27). It is a server-rendered nonclinical operational surface,
 not a fixture or framework adapter.
+
+Contract hardening and the reproducible 5.10.1 vendor pin are recorded in the
+repository-only `governance/` record, never in package bytes, packaged prose, or
+runtime exports.
 
 - The product edge derives activity, severity, freshness, certainty, and
   collection-result completeness from actual collector execution records;
@@ -1383,3 +1418,25 @@ The integration satisfies the one-real-consumer prerequisite. It becomes
 eligible for a `proven` promotion review only after owner acceptance and the
 applicable manual accessibility/device checks. Tests and deployment are
 evidence; they are not owner judgment.
+
+At promotion review, run
+`npm run verify:promotion-consumer -- project-control=../../project-control`.
+Each adoption declares its repository ID, artifact path, file assertions, and
+clean-archive verification commands, so a second materially different consumer
+can use its own repository and executable contract without kernel-specific
+hardcoding. Portable
+kernel CI validates evidence structure and local references; this explicit
+cross-repository gate proves that the recorded external commit actually contains
+the pinned package bytes and version locks. Human-authored manual evidence must
+use the exact adoption-and-gate-specific anchor declared by the validator.
+
+<a id="compact-monitor-owner-acceptance"></a>
+
+<a id="evidence-project-control-source-health-owner-acceptance"></a>
+
+### 27.1 Owner acceptance
+
+On 2026-08-29, the owner accepted the Source Health hierarchy, terminology, and
+density. This closes the product-judgment gate only. Actual device and manual
+accessibility gates remain separately dispositioned in the repository-only
+promotion evidence; pending gates keep `compact-monitor` experimental.
