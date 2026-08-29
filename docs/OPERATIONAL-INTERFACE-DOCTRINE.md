@@ -612,7 +612,9 @@ The first implementation is native-first:
 - `disclosure` uses `details` with the first `summary` child and MUST NOT mirror
   native state into authored `role`, `tabindex`, or `aria-expanded` attributes.
 - `history-strip` uses an accessible chronological `ol` with `li`/`time`, a
-  non-color visible value, and a presentational intensity bar.
+  legible non-color value with its denominator or scale context, and a
+  presentational intensity bar. The bar exposes a full-range track and encodes
+  intensity by filled length; hue is never the sole channel.
 - `divider` uses nonfocusable `hr`; a resizable separator is a different widget.
 
 ---
@@ -716,9 +718,11 @@ Invariants:
 - Narrow layout is one column.
 - Wide layout may place primary metrics in multiple columns while retaining DOM order.
 - Refreshing retains primary data and marks activity and freshness independently.
-- Dynamic adapters create the status region before an update and mutate its
-  contents in place. Full-page navigation does not depend on a live-region
-  announcement.
+- Dynamic adapters create the visible status region before an update and mutate
+  its contents in place. When the recipe root remains `aria-busy="true"`, entry
+  into loading or refreshing is announced through a pre-existing polite,
+  atomic live region outside the busy subtree. Full-page navigation does not
+  depend on a live-region announcement.
 - Failed detail regions do not erase healthy primary regions.
 - DOM order remains the reading and keyboard order at every width.
 - Loading and refreshing set `aria-busy`; refreshing and stale states retain the

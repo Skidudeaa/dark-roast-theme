@@ -56,13 +56,13 @@
     "minimumPlatformAccentChromaAverage": 0.09
   },
   "generator": "brew-engine",
-  "version": "5.10.2",
+  "version": "5.10.3",
   "shortName": "Flash Chilled",
   "baseVersion": "5.0.0",
   "baseFingerprint": "sha256:39e77426e88feb611bf25677d5ecd9d5e33ae73e101b6147dccf5b33831b0030",
   "selector": "dark-roast-flash-chilled",
   "className": "dark-roast-flash-chilled",
-  "sourceVersion": "5.10.2",
+  "sourceVersion": "5.10.3",
   "targets": [
     "web",
     "editor",

@@ -9,7 +9,7 @@ import {
 
 async function expectAxeClean(page) {
   const results = await new AxeBuilder({ page })
-    .include('[data-proof-root]')
+    .include('.proof-mapping')
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
     .analyze();
   expect(results.violations, axeFailureMessage(results.violations)).toEqual([]);

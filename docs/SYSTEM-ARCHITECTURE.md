@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-29 (package 5.10.2, doctrine contract 0.4.1)
+**Last updated:** 2026-08-29 (package 5.10.3, doctrine contract 0.4.1)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -308,7 +308,7 @@ further commits because nothing ran the gate.
 
 Tranche 2 first landed in `/Users/thomasamosson/jan25/project-control` at
 consumer commit `f6a8563`. The current live Source Health cards consume the
-packed 5.10.2 package through the public palette, system, and Dark Roast mapping
+packed 5.10.3 package through the public palette, system, and Dark Roast mapping
 exports. Product code
 derives activity, severity, freshness, certainty, and completeness from persisted
 collector execution state; it classifies provenance as direct and applies
@@ -326,8 +326,13 @@ Evidence at the adoption boundary:
 - a signed XCUITest on a physical iPad Pro found a hybrid-pointer touch target
   below 44 points. Package 5.10.2 and the consumer assembly repair the geometry;
   a repeat physical run reaches a 48-point target, submits Scan, exposes
-  `Scan started`, and retains prior values. Human finger attestation remains a
-  separate manual gate;
+  `Scan started`, and retains prior values. The owner then repeated that action
+  with a finger and passed the separate human gate;
+- package 5.10.3 repairs two manual-gate failures without changing palette or
+  doctrine version: busy refresh entry now announces outside the busy subtree,
+  and history uses explicit scale text plus full-range patterned proportional
+  tracks. The repaired grayscale artifact passed exact human interpretation;
+  actual VoiceOver rerun remains pending;
 - after the concurrent evidence-ledger migration, live loopback and private
   tailnet probes passed `/`, `/health`, and all three package-derived CSS routes;
   the ledger database was at `c4a72e91f6b3` with integrity `ok`. Current mutable

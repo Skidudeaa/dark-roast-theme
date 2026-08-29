@@ -6,6 +6,33 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.10.3] — 2026-08-29
+
+Compact-monitor accessibility hardening. **Dark Roast: Black Label and all
+companion palette values remain unchanged.** The recipe remains experimental;
+the repaired VoiceOver path still requires a fresh actual-assistive-technology
+run before promotion.
+
+### Fixed
+
+- Refresh entry now mirrors its visible status through a pre-existing polite,
+  atomic live region outside the busy recipe subtree. Actual VoiceOver exposed
+  that a descendant `role="status"` can be suppressed indefinitely while its
+  ancestor remains `aria-busy="true"`.
+- History strips now show a full-scale track with proportional patterned fill,
+  larger slashed-zero `n / 10` values, and explicit scale context. A human
+  grayscale review had correctly read every other element but misread all four
+  denominators and judged the prior bars color-dependent.
+
+### Evidence
+
+- The repaired no-color artifact was read exactly as `2 / 10`, `5 / 10`,
+  `8 / 10`, and `4 / 10`, with the proportional lengths ranked correctly
+  without hue.
+- Browser coverage now proves the out-of-busy announcer topology, retained
+  primary identity/value, preserved focus, exact non-color history values,
+  full-range tracks, patterned fills, and forced-color behavior.
+
 ## [5.10.2] — 2026-08-29
 
 Physical-device touch hardening. **Dark Roast: Black Label and all companion

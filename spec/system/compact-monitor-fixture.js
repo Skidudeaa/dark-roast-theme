@@ -412,26 +412,27 @@ function primaryMarkup(configuration, stress) {
 
 function historyMarkup() {
   return `
-    <ol class="oi-history-strip" data-oi-severity="neutral" data-oi-freshness="recent" aria-label="Four-interval history, oldest to newest">
+    <p class="proof-history-caption" data-proof-history-caption>Four intervals on a zero-to-ten intensity scale. Bar length and text encode the same value.</p>
+    <ol class="oi-history-strip" data-oi-severity="neutral" data-oi-freshness="recent" aria-label="Four-interval history on a zero-to-ten intensity scale, oldest to newest">
       <li class="oi-history-strip__item" style="--oi-history-intensity: 0.2">
         <time class="oi-history-strip__time" datetime="2026-08-23">August 23</time>
         <span class="oi-history-strip__bar" aria-hidden="true"></span>
-        <span class="oi-history-strip__value">2 of 10</span>
+        <span class="oi-history-strip__value">2 / 10</span>
       </li>
       <li class="oi-history-strip__item" style="--oi-history-intensity: 0.5">
         <time class="oi-history-strip__time" datetime="2026-08-24">August 24</time>
         <span class="oi-history-strip__bar" aria-hidden="true"></span>
-        <span class="oi-history-strip__value">5 of 10</span>
+        <span class="oi-history-strip__value">5 / 10</span>
       </li>
       <li class="oi-history-strip__item" style="--oi-history-intensity: 0.8">
         <time class="oi-history-strip__time" datetime="2026-08-25">August 25</time>
         <span class="oi-history-strip__bar" aria-hidden="true"></span>
-        <span class="oi-history-strip__value">8 of 10</span>
+        <span class="oi-history-strip__value">8 / 10</span>
       </li>
       <li class="oi-history-strip__item" style="--oi-history-intensity: 0.4">
         <time class="oi-history-strip__time" datetime="2026-08-26">August 26</time>
         <span class="oi-history-strip__bar" aria-hidden="true"></span>
-        <span class="oi-history-strip__value">4 of 10</span>
+        <span class="oi-history-strip__value">4 / 10</span>
       </li>
     </ol>`;
 }
@@ -439,6 +440,9 @@ function historyMarkup() {
 function render() {
   const root = document.querySelector('[data-proof-root]');
   const mappingRoot = root.closest('.oi-root');
+  const refreshAnnouncement = document.querySelector(
+    '[data-proof-refresh-announcement]',
+  );
   const stage = document.querySelector('[data-proof-stage]');
   const base = SCENARIOS[selection.scenario];
   const state = selection.state ? STATES[selection.state] : null;
@@ -452,6 +456,10 @@ function render() {
   const hasContext = optionalSlots.has('context');
   const hasActions = optionalSlots.has('actions');
   const long = selection.stress === 'long-labels-2x';
+
+  if (!refreshAnnouncement || root.contains(refreshAnnouncement)) {
+    throw new Error('refresh announcement must exist outside the busy recipe root');
+  }
 
   if (hasContext) {
     root.setAttribute('aria-labelledby', 'proof-title');
@@ -562,10 +570,13 @@ function render() {
   root.querySelector('[data-proof-refresh]')?.addEventListener('click', (event) => {
     const primary = root.querySelector('[data-oi-slot="primary"]');
     const identity = primary;
+    const refreshingLabel = SCENARIOS['refreshing-retained'].label;
     root.dataset.oiActivity = 'refreshing';
     root.setAttribute('aria-busy', 'true');
-    root.querySelector('[data-proof-status-text]').textContent =
-      'Refreshing retained result';
+    root.querySelector('[data-proof-status-text]').textContent = refreshingLabel;
+    const announcement = document.createElement('span');
+    announcement.textContent = refreshingLabel;
+    refreshAnnouncement.replaceChildren(announcement);
     root.dataset.proofRefresh = 'active';
     if (root.querySelector('[data-oi-slot="primary"]') !== identity) {
       throw new Error('refresh replaced the primary node');

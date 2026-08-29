@@ -142,9 +142,22 @@ for (const [index, state] of compactMonitor.proofFixtures.states.entries()) {
   });
 }
 
-test('refresh preserves primary node, retained data, and focus', async ({ page }) => {
+test('refresh preserves primary data, focus, and an outside-busy announcement', async ({
+  page,
+}) => {
   const root = await openProof(page, { scenario: 'ready-complete' });
   const primary = root.locator('[data-oi-slot="primary"]');
+  const refreshAnnouncement = page.locator('[data-proof-refresh-announcement]');
+  await expect(refreshAnnouncement).toHaveCount(1);
+  await expect(refreshAnnouncement).toHaveAttribute('role', 'status');
+  await expect(refreshAnnouncement).toHaveAttribute('aria-live', 'polite');
+  await expect(refreshAnnouncement).toHaveAttribute('aria-atomic', 'true');
+  await expect(refreshAnnouncement).toBeEmpty();
+  expect(
+    await refreshAnnouncement.evaluate(
+      (element) => !document.querySelector('[data-proof-root]').contains(element),
+    ),
+  ).toBe(true);
   await primary.evaluate((element) => {
     window.__proofPrimaryIdentity = element;
   });
@@ -155,6 +168,11 @@ test('refresh preserves primary node, retained data, and focus', async ({ page }
   await expect(refresh).toBeFocused();
   await expect(root).toHaveAttribute('data-oi-activity', 'refreshing');
   await expect(root).toHaveAttribute('aria-busy', 'true');
+  await expect(root.locator('[data-proof-status-text]')).toHaveText(
+    'Refreshing retained result',
+  );
+  await expect(refreshAnnouncement).toHaveText('Refreshing retained result');
+  await expect(refreshAnnouncement.locator(':scope > span')).toHaveCount(1);
   expect(await primary.textContent()).toBe(retainedText);
   expect(
     await primary.evaluate((element) => element === window.__proofPrimaryIdentity),
@@ -194,6 +212,51 @@ for (const stress of [
         'grayscale',
       );
       await expect(root.locator('[data-proof-status-text]')).not.toBeEmpty();
+      await expect(root.locator('[data-proof-history-caption]')).toContainText(
+        'zero-to-ten intensity scale',
+      );
+      const history = root.locator('.oi-history-strip');
+      await expect(history.locator('.oi-history-strip__value')).toHaveText([
+        '2 / 10',
+        '5 / 10',
+        '8 / 10',
+        '4 / 10',
+      ]);
+      const report = await history.locator('.oi-history-strip__bar').evaluateAll((bars) =>
+        bars.map((bar) => {
+          const track = bar.getBoundingClientRect();
+          const trackStyle = getComputedStyle(bar);
+          const fillStyle = getComputedStyle(bar, '::before');
+          const valueStyle = getComputedStyle(
+            bar.parentElement.querySelector('.oi-history-strip__value'),
+          );
+          const rootStyle = getComputedStyle(bar.closest('.oi-root'));
+          return {
+            expected: Number.parseFloat(
+              getComputedStyle(bar.parentElement).getPropertyValue(
+                '--oi-history-intensity',
+              ),
+            ),
+            trackWidth: track.width,
+            trackBorderWidth: Number.parseFloat(trackStyle.borderInlineStartWidth),
+            fillWidth: Number.parseFloat(fillStyle.width),
+            fillPattern: fillStyle.backgroundImage,
+            valueFontSize: Number.parseFloat(valueStyle.fontSize),
+            rootFontSize: Number.parseFloat(rootStyle.fontSize),
+            valueFontWeight: Number.parseFloat(valueStyle.fontWeight),
+            numericVariant: valueStyle.fontVariantNumeric,
+          };
+        }),
+      );
+      for (const item of report) {
+        expect(item.trackWidth).toBeGreaterThan(0);
+        expect(item.trackBorderWidth).toBeGreaterThanOrEqual(1);
+        expect(item.fillPattern).toContain('repeating-linear-gradient');
+        expect(item.fillWidth / item.trackWidth).toBeCloseTo(item.expected, 1);
+        expect(item.valueFontSize).toBeGreaterThanOrEqual(item.rootFontSize);
+        expect(item.valueFontWeight).toBeGreaterThanOrEqual(600);
+        expect(item.numericVariant).toContain('slashed-zero');
+      }
     }
     await expectNoInlineOverflow(page, root);
   });

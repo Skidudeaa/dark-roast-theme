@@ -117,6 +117,13 @@
     gap: var(--oi-geometry-space);
   }
 
+  .proof-history-caption {
+    margin: 0 0 var(--oi-geometry-space);
+    color: var(--oi-text-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-reading);
+  }
+
   .proof-status-label {
     color: var(--oi-text-primary);
     font-weight: 700;

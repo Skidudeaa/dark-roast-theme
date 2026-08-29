@@ -224,11 +224,11 @@ requiresProvenanceDisclosure({ freshness: 'stale' });    // true
 TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
 
 Tranche 1 is built, and Project Control Source Health is the first live
-nonclinical adoption. It consumes package `5.10.2` through public exports from a
+nonclinical adoption. It consumes package `5.10.3` through public exports from a
 pinned local tarball because the package has not been published to npm. The
 consumer is source/static/browser/live green; owner acceptance of hierarchy,
-terminology, and density is recorded. Applicable manual accessibility/device
-checks remain open, so `compact-monitor` stays
+terminology, and density is recorded. The repaired actual VoiceOver check is the
+only applicable manual gate still open, so `compact-monitor` stays
 experimental and framework adapters remain premature.
 
 Contributor validation requires the pinned browser once per machine:

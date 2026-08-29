@@ -50,12 +50,26 @@
   .oi-history-strip__bar {
     box-sizing: border-box;
     display: block;
-    inline-size: calc(clamp(0, var(--oi-history-intensity, 0), 1) * 100%);
+    inline-size: 100%;
     max-inline-size: 100%;
     block-size: calc(var(--oi-geometry-space) * 2);
-    background-color: var(--_oi-status-color);
-    border: 1px solid var(--_oi-status-color);
+    overflow: hidden;
+    background-color: var(--oi-surface-inset);
+    border: 1px solid var(--oi-border-strong);
     border-radius: var(--oi-geometry-radius-control);
+  }
+
+  .oi-history-strip__bar::before {
+    content: "";
+    display: block;
+    inline-size: calc(clamp(0, var(--oi-history-intensity, 0), 1) * 100%);
+    block-size: 100%;
+    background-color: var(--_oi-status-color);
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--_oi-status-color) 0 2px,
+      var(--oi-text-primary) 2px 3px
+    );
   }
 
   .oi-history-strip__value {
@@ -63,17 +77,28 @@
     padding-block-start: var(--oi-geometry-space);
     color: var(--oi-text-primary);
     font-family: var(--oi-typography-mono);
-    font-size: var(--oi-typography-size-label);
-    font-variant-numeric: lining-nums tabular-nums;
+    font-size: var(--oi-typography-size-body);
+    font-weight: 600;
+    font-variant-numeric: lining-nums tabular-nums slashed-zero;
     line-height: var(--oi-typography-line-compact);
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    white-space: nowrap;
   }
 
   @media (forced-colors: active) {
     .oi-history-strip__bar {
       forced-color-adjust: none;
-      background-color: Highlight;
+      background-color: Canvas;
       border-color: CanvasText;
+    }
+
+    .oi-history-strip__bar::before {
+      background-color: Highlight;
+      background-image: repeating-linear-gradient(
+        135deg,
+        Highlight 0 2px,
+        CanvasText 2px 3px
+      );
     }
   }
 }
