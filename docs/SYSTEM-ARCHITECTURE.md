@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-29 (package 5.10.1, doctrine contract 0.4.1)
+**Last updated:** 2026-08-29 (package 5.10.2, doctrine contract 0.4.1)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -197,7 +197,7 @@ that does exist rather than a placeholder.
   eight flattened slots, manifest-owned accessibility relationships, required
   visibility, optional collapse, and busy-state semantics. Its mutation suite
   proves role, ID, root reference, and visible status text fail closed.
-- Playwright 1.62.1 runs 90 Chromium tests: exhaustive four-mapping × three-width
+- Playwright 1.62.1 runs 91 Chromium tests: exhaustive four-mapping × three-width
   × two-density layout, all async/state/stress values, native disclosure,
   DOM-order keyboard focus, focus retention, overflow, reduced motion,
   increased contrast, forced colors, RTL, 200%-equivalent reflow, axe WCAG
@@ -231,7 +231,7 @@ version-correct somaCura adoption recorded in `docs/SOMACURA-MIGRATION.md`.
 
 ## 5. The validator suite
 
-`npm test` runs twenty static gates followed by 90 Chromium tests. Each gate
+`npm test` runs twenty static gates followed by 91 Chromium tests. Each gate
 exists because something either did go wrong or provably could.
 
 **Theme family**
@@ -292,7 +292,7 @@ Git object database, so this check is intentionally separate rather than faked.
 
 **Browser proof**
 
-- `playwright test` executes 90 Chromium assertions and axe scans after the
+- `playwright test` executes 91 Chromium assertions and axe scans after the
   static chain. Nine locator baselines are platform-qualified for Darwin and
   Linux Chromium with a bounded 1% pixel-difference allowance; CI never updates
   them.
@@ -308,7 +308,7 @@ further commits because nothing ran the gate.
 
 Tranche 2 first landed in `/Users/thomasamosson/jan25/project-control` at
 consumer commit `f6a8563`. The current live Source Health cards consume the
-packed 5.10.1 package through the public palette, system, and Dark Roast mapping
+packed 5.10.2 package through the public palette, system, and Dark Roast mapping
 exports. Product code
 derives activity, severity, freshness, certainty, and completeness from persisted
 collector execution state; it classifies provenance as direct and applies
@@ -323,6 +323,11 @@ Evidence at the adoption boundary:
   long-label, forced-color, increased-contrast, and reduced-motion cases;
 - real 20/36/52rem allocations render one, two, and three primary tracks, with
   Darwin visual baselines and a working JavaScript-disabled scan transition;
+- a signed XCUITest on a physical iPad Pro found a hybrid-pointer touch target
+  below 44 points. Package 5.10.2 and the consumer assembly repair the geometry;
+  a repeat physical run reaches a 48-point target, submits Scan, exposes
+  `Scan started`, and retains prior values. Human finger attestation remains a
+  separate manual gate;
 - after the concurrent evidence-ledger migration, live loopback and private
   tailnet probes passed `/`, `/health`, and all three package-derived CSS routes;
   the ledger database was at `c4a72e91f6b3` with integrity `ok`. Current mutable

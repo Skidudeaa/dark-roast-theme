@@ -135,6 +135,33 @@ test('200 percent equivalent reflow has no document inline overflow', async ({ p
   await expect(root.locator('[data-oi-slot="primary"]')).toBeVisible();
 });
 
+test('touch-capable hybrid devices retain touch-sized controls', async ({ browser }) => {
+  const context = await browser.newContext({
+    baseURL: 'http://127.0.0.1:4173',
+    colorScheme: 'dark',
+    hasTouch: true,
+    viewport: { width: 1024, height: 1366 },
+  });
+  const page = await context.newPage();
+  const root = await openProof(page);
+  const report = await root.locator('button').first().evaluate((element) => {
+    const rootStyle = getComputedStyle(document.querySelector('.oi-root'));
+    const box = element.getBoundingClientRect();
+    return {
+      anyCoarse: matchMedia('(any-pointer: coarse)').matches,
+      height: box.height,
+      touchMinimum: Number.parseFloat(
+        rootStyle.getPropertyValue('--oi-interaction-touch-target-min'),
+      ),
+      width: box.width,
+    };
+  });
+  expect(report.anyCoarse).toBe(true);
+  expect(report.width).toBeGreaterThanOrEqual(report.touchMinimum);
+  expect(report.height).toBeGreaterThanOrEqual(report.touchMinimum);
+  await context.close();
+});
+
 const visualCases = [
   ['dark-ready', { mapping: 'dark-roast', width: 'preferred', density: 'standard' }],
   ['night-shift-ready', { mapping: 'night-shift', width: 'preferred', density: 'standard' }],

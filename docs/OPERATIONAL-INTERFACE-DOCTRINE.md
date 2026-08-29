@@ -1392,7 +1392,7 @@ Project Control Source Health is the first real `compact-monitor` consumer
 (`f6a8563`, 2026-08-27). It is a server-rendered nonclinical operational surface,
 not a fixture or framework adapter.
 
-Contract hardening and the reproducible 5.10.1 vendor pin are recorded in the
+Contract hardening and the reproducible 5.10.2 vendor pin are recorded in the
 repository-only `governance/` record, never in package bytes, packaged prose, or
 runtime exports.
 

@@ -36,7 +36,7 @@ try {
     (adoption) => {
       adoption.packageVersion = '5.10.0';
     },
-    /has no artifact pin for package 5\.10\.1 and contract 0\.4\.1/,
+    /has no artifact pin for package 5\.10\.2 and contract 0\.4\.1/,
   );
   rejectMutation(
     'mismatched-artifact-hash',

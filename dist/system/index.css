@@ -155,7 +155,7 @@
     border-color: var(--oi-accent-primary);
   }
 
-  @media (pointer: coarse) {
+  @media (pointer: coarse), (any-pointer: coarse) {
     .oi-root :where(
       a,
       button,

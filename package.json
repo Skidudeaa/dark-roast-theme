@@ -1,6 +1,6 @@
 {
   "name": "dark-roast-theme",
-  "version": "5.10.1",
+  "version": "5.10.2",
   "description": "The Dark Roast theme family: unchanged OLED-first Black Label plus accessible House Blend and Copper Roast companions and the warm light-polarity Cold Brew, all with saturated kiln-enamel color.",
   "type": "module",
   "main": "index.js",

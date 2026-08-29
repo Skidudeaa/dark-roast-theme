@@ -104,6 +104,14 @@
     cursor: pointer;
   }
 
+  @media (pointer: coarse), (any-pointer: coarse) {
+    .proof-button,
+    .proof-link {
+      min-block-size: var(--oi-interaction-touch-target-min);
+      min-inline-size: var(--oi-interaction-touch-target-min);
+    }
+  }
+
   .proof-status {
     display: grid;
     gap: var(--oi-geometry-space);

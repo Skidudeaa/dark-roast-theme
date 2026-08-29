@@ -6,6 +6,27 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.10.2] — 2026-08-29
+
+Physical-device touch hardening. **Dark Roast: Black Label and all companion
+palette values remain unchanged.** `compact-monitor` remains experimental.
+
+### Fixed
+
+- Touch-capable hybrid devices now receive the declared touch target minimum
+  even when a mouse or trackpad is the primary pointer. A signed XCUITest on a
+  physical iPad Pro exposed the prior `pointer: coarse` blind spot.
+- The compact-monitor proof assembly now preserves touch-sized controls under
+  the same hybrid-pointer condition, with an executable regression using a
+  touch-enabled desktop context.
+
+### Adoption evidence
+
+- Project Control separately hardens Source Health action sizing and bounds its
+  pathological long-source action column; the physical iPad test now reaches a
+  touch-operable target, submits a real scan form, observes `Scan started`, and
+  retains prior source values.
+
 ## [5.10.1] — 2026-08-29
 
 Operational Interface Doctrine promotion hardening. **Dark Roast: Black Label
