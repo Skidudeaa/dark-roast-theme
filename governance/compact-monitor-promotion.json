@@ -64,8 +64,14 @@
         "evidenceRef": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md#evidence-project-control-source-health-owner-acceptance"
       },
       "manualGates": {
-        "actual-ipad-touch": { "disposition": "pending" },
-        "actual-zoom-200": { "disposition": "pending" },
+        "actual-ipad-touch": {
+          "disposition": "passed",
+          "evidenceRef": "governance/compact-monitor-manual-evidence.md#evidence-project-control-source-health-actual-ipad-touch"
+        },
+        "actual-zoom-200": {
+          "disposition": "passed",
+          "evidenceRef": "governance/compact-monitor-manual-evidence.md#evidence-project-control-source-health-actual-zoom-200"
+        },
         "voiceover": { "disposition": "pending" },
         "nvda": {
           "disposition": "not-applicable",

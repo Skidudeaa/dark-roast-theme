@@ -10,7 +10,7 @@ Target: Project Control Source Health and the sanitized compact-monitor fixture
 
 <a id="evidence-project-control-source-health-actual-ipad-touch"></a>
 
-## Actual iPad touch — pending human finger attestation
+## Actual iPad touch — passed
 
 Supporting machine evidence passed on a physical iPad Pro 13-inch (M4), iPadOS
 27.0, over the private tailnet. A signed XCUITest measured the pre-fix Scan
@@ -22,15 +22,27 @@ local`, observed `Scan started`, and confirmed retained primary values.
 - `evidence/physical-ipad-after-touch.png` — SHA-256 `b140299433d938a3bfd86bcb99884903946123963625ed014f9304135f05e249`
 - `evidence/physical-ipad-xcresult-manifest.json` — SHA-256 `310e3e081919ceccd51016aa8973ec071a21423f726a3591cf51d70697403df5`
 
-This section does not claim a pass until a human performs the same tap with a
-finger and confirms no adjacent activation.
+On 2026-08-29, after loopback and tailnet health both returned `200 ready`, the
+owner repeated the test with a finger in actual iPad Safari. `Scan local`
+activated on the first attempt, the page reported `Scan started`, no adjacent
+control activated, and the Source Health layout remained intact.
+
+- `evidence/physical-ipad-human-touch-confirmed.png` — SHA-256 `975819a8dcbded707db8cca5dfa8bf8d380ee3b89190d43407f44ae1270debca`
+- Verdict: passed.
 
 <a id="evidence-project-control-source-health-actual-zoom-200"></a>
 
-## Actual 200 percent zoom — pending
+## Actual 200 percent zoom — passed
 
-The existing narrow-viewport test remains supporting evidence only. Actual
-Safari page zoom must be exercised and restored before this gate passes.
+Actual Firefox 154.0.1 was opened in a dedicated UI window at 100 percent,
+advanced through the browser's real zoom control until its accessibility tree
+reported exactly `200%`, and restored to 100 percent afterward. At 200 percent,
+the recipe retained the named context, Refresh action, nonempty status, all three
+labelled metrics, native disclosure, and settings. The page exposed only vertical
+scrolling; no horizontal scrollbar or inline clipping appeared.
+
+- `evidence/firefox-154-exact-200-percent.png` — SHA-256 `28af810a48b07c76b9d8bb12b88d4afb6fc99341c110e7d564302901a3c665c0`
+- Verdict: passed.
 
 <a id="evidence-project-control-source-health-voiceover"></a>
 
