@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001E68A23663801C",
+        "deviceName" : "Thomas’s iPad",
+        "exportedFileName" : "F018623C-4399-4DF2-BDE9-D007743702FF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "physical-ipad-source-health-after-touch_0_01458CEC-36C9-45D0-B6C8-29BD4F439C4D.png",
+        "timestamp" : 1788030979.991
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "00008132-001E68A23663801C",
+        "deviceName" : "Thomas’s iPad",
+        "exportedFileName" : "AF1CA197-B562-4BE6-A785-03FCE5146A04.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "physical-ipad-source-health-before-touch_0_3F781736-9F5F-43B8-9B6E-C2169E09D00C.png",
+        "timestamp" : 1788030976.973
+      }
+    ],
+    "testIdentifier" : "DeviceProofUITests/testProjectControlSourceHealthTouchOnPhysicalIPad()",
+    "testIdentifierURL" : "test://com.apple.xcode/DarkRoastDeviceProof/DeviceProofUITests/DeviceProofUITests/testProjectControlSourceHealthTouchOnPhysicalIPad"
+  }
+]
