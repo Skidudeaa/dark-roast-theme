@@ -14,7 +14,17 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const VALIDATOR = join(ROOT, 'scripts', 'validate-package.js');
 const SOURCE = join(ROOT, 'governance', 'compact-monitor-promotion.json');
 const base = JSON.parse(readFileSync(SOURCE, 'utf8'));
+const packageVersion = JSON.parse(
+  readFileSync(join(ROOT, 'package.json'), 'utf8'),
+).version;
+const contractVersion = JSON.parse(
+  readFileSync(join(ROOT, 'src', 'system', 'contract.json'), 'utf8'),
+).version;
 const temporaryDirectory = mkdtempSync(join(tmpdir(), 'oi-package-regressions-'));
+
+function escapePattern(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 function rejectMutation(name, mutate, expected) {
   const evidence = structuredClone(base);
@@ -34,9 +44,11 @@ try {
   rejectMutation(
     'old-package-version',
     (adoption) => {
-      adoption.packageVersion = '5.10.0';
+      adoption.packageVersion = '0.0.0';
     },
-    /has no artifact pin for package 5\.10\.2 and contract 0\.4\.1/,
+    new RegExp(
+      `has no artifact pin for package ${escapePattern(packageVersion)} and contract ${escapePattern(contractVersion)}`,
+    ),
   );
   rejectMutation(
     'mismatched-artifact-hash',
