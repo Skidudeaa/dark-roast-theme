@@ -4,8 +4,8 @@ Evidence date: 2026-08-29
 
 Kernel: `a1930ed`, package `5.10.3`, doctrine `0.4.1`
 
-Consumer: Project Control `707a6f0` (`46f3662` touch assembly, `d6516b1`
-support boundary, `707a6f0` package pin)
+Consumer: Project Control `f3fa200` (`46f3662` touch assembly, `d6516b1`
+support boundary, `707a6f0` package pin, `f3fa200` deployed verification)
 
 Target: Project Control Source Health and the sanitized compact-monitor fixture
 

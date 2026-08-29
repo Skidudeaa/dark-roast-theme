@@ -8,7 +8,7 @@
       "surface": "source-health",
       "repository": "project-control",
       "consumerCommit": "f6a8563438db4a5e038ce8513f149266cd258f05",
-      "verifiedCommit": "707a6f06062a9bcad3751cde8ec32de2f0b173f1",
+      "verifiedCommit": "f3fa20081697223b0e0dc92d8637955647b57b8b",
       "packageVersion": "5.10.3",
       "contractVersion": "0.4.1",
       "artifactPath": "vendor/dark-roast-theme-5.10.3.tgz",
@@ -23,7 +23,7 @@
           },
           {
             "argv": ["uv", "run", "pytest", "-o", "addopts=", "-q"],
-            "outputContains": "486 passed"
+            "outputContains": "496 passed"
           },
           {
             "argv": ["npm", "run", "test:browser"],
@@ -45,7 +45,7 @@
           },
           {
             "path": "docs/STATUS.md",
-            "contains": "Committed-tree Python suite: 486 tests. Browser suite: 21"
+            "contains": "Committed-tree Python suite: 496 tests. Browser suite: 21"
           },
           {
             "path": "docs/STATUS.md",
