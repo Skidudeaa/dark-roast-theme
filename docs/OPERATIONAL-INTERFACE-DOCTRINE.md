@@ -1,6 +1,6 @@
 # Operational Interface Doctrine
 
-**Version:** 0.4.1
+**Version:** 0.5.0
 **Status:** APPROVED ARCHITECTURE  
 **Date:** 2026-08-27
 **Repository role:** Dark Roast is the first reference implementation; the doctrine is theme-neutral.  
@@ -639,7 +639,7 @@ Every recipe declares:
 
 ### 11.1 Compact monitor
 
-`compact-monitor` is the first experimental recipe.
+`compact-monitor` is the first proven recipe.
 
 Slot order:
 
@@ -732,7 +732,11 @@ Invariants:
   focus, Escape behavior, or responsive reordering; async updates preserve the
   existing focused node.
 
-The recipe remains experimental until it survives one real product integration and the complete proof matrix. Stable promotion requires a second materially different use or an explicit architecture review accepting one high-stakes consumer as sufficient evidence.
+The recipe is proven after the Project Control integration completed its
+source, static, browser, deployment, owner, and adoption-scoped manual proof
+matrix. Stable promotion still requires a materially different second use or an
+explicit architecture review accepting one high-stakes consumer as sufficient
+evidence.
 
 ### 11.2 Candidate recipe names
 
@@ -832,7 +836,7 @@ Normative shape:
 ```json
 {
   "name": "operational-interface-doctrine",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "axes": {
     "surface": ["canvas", "base", "raised", "interactive", "inset", "overlay", "scrim"],
     "activity": ["idle", "loading", "refreshing", "live", "ready", "failed"],
@@ -846,7 +850,7 @@ Normative shape:
   },
   "recipes": {
     "compact-monitor": {
-      "stability": "experimental",
+      "stability": "proven",
       "_manualProofGates": [
         "actual-ipad-touch",
         "actual-zoom-200",
@@ -1074,7 +1078,8 @@ Data-bearing fixtures prove:
 
 ### 17.4 Visual and content proof matrix
 
-Every stable recipe, and every experimental recipe proposed for product use, renders across:
+Every proven or stable recipe, and every experimental recipe proposed for
+product use, renders across:
 
 ```text
 Mappings
@@ -1441,6 +1446,9 @@ use the exact adoption-and-gate-specific anchor declared by the validator.
 ### 27.1 Owner acceptance
 
 On 2026-08-29, the owner accepted the Source Health hierarchy, terminology, and
-density. This closes the product-judgment gate only. Actual device and manual
-accessibility gates remain separately dispositioned in the repository-only
-promotion evidence; pending gates keep `compact-monitor` experimental.
+density. Actual device and manual gates remain separately dispositioned in the
+repository-only promotion evidence. Every gate applicable to Project Control is
+passed; VoiceOver/screen-reader certification, NVDA, and Windows High Contrast
+are evidence-linked not applicable under the consumer's committed support
+boundary. Those gates reopen before any corresponding support claim. This
+complete adoption record advances `compact-monitor` to `proven`, not `stable`.

@@ -1,7 +1,7 @@
 {
   "$schema": "./contract.schema.json",
   "name": "operational-interface-doctrine",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "_doctrine": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
   "_note": "Machine-readable source of truth for the doctrine's public contract (§14). Hand-edited. scripts/build-system.js generates dist/system/* from this file; scripts/validate-contract.js enforces the schema and cross-references. Changing a stable axis value is a MAJOR version bump (§19) because domain adapters may switch exhaustively.",
 
@@ -374,7 +374,7 @@
   "recipes": {
     "_note": "Recipes are the primary unit of reusable design intelligence (§5.15). They define region order, slot anatomy, relationships, density, responsive transformation, surface nesting, optionality, overflow, and disclosure — never business logic, product actions, data fetching, domain language, or palette selection.",
     "compact-monitor": {
-      "stability": "experimental",
+      "stability": "proven",
       "study": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
       "_studyNote": "Recorded inline as doctrine §21 (Clauddy). §15 reserves src/system/studies/claude-usage-monitor.md for the extracted standalone study; that file is not yet written, so the reference points at the section that exists rather than a placeholder.",
       "_manualProofGates": [

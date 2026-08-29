@@ -100,8 +100,11 @@ try {
   );
   runMutation(
     'proven-with-pending-manual-gates',
-    (_manifest, recipe) => {
+    (_manifest, recipe, evidence) => {
       recipe.stability = 'proven';
+      evidence.adoptions['project-control-source-health'].manualGates.safari = {
+        disposition: 'pending',
+      };
     },
     /requires a qualifying adoption/,
   );

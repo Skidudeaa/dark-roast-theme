@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-29 (package 5.10.3, doctrine contract 0.4.1)
+**Last updated:** 2026-08-29 (package 5.11.0, doctrine contract 0.5.0)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -80,7 +80,7 @@ Hand-edited source of truth (§14). It declares:
 - **The ten experimental structural primitives** with root elements, exact
   owner-qualified parts, cardinality/parentage, allowed tags, required and
   forbidden attributes, accessible-name obligations, axes, and public hooks.
-- **`compact-monitor`** as experimental, with axes, root/part/slot anatomy and
+- **`compact-monitor`** as proven, with axes, root/part/slot anatomy and
   manifest-owned status semantics, repository-only maturity evidence,
   20/36/52rem proof widths, overflow/truncation/collapse, density, async,
   keyboard/focus, declared proof matrices, and owner-scoped hooks (§11.1).
@@ -304,11 +304,11 @@ further commits because nothing ran the gate.
 
 ---
 
-## 6. Adoption status and remaining work
+## 6. Adoption and promotion status
 
 Tranche 2 first landed in `/Users/thomasamosson/jan25/project-control` at
 consumer commit `f6a8563`. The current live Source Health cards consume the
-packed 5.10.3 package through the public palette, system, and Dark Roast mapping
+packed 5.11.0 package through the public palette, system, and Dark Roast mapping
 exports. Product code
 derives activity, severity, freshness, certainty, and completeness from persisted
 collector execution state; it classifies provenance as direct and applies
@@ -331,8 +331,15 @@ Evidence at the adoption boundary:
 - package 5.10.3 repairs two manual-gate failures without changing palette or
   doctrine version: busy refresh entry now announces outside the busy subtree,
   and history uses explicit scale text plus full-range patterned proportional
-  tracks. The repaired grayscale artifact passed exact human interpretation;
-  actual VoiceOver rerun remains pending;
+  tracks. The repaired grayscale artifact passed exact human interpretation.
+  The pre-fix VoiceOver finding remains internal kernel evidence; Project
+  Control makes no VoiceOver or screen-reader certification claim, so that gate
+  is evidence-linked not applicable for this adoption;
+- package 5.11.0 and doctrine 0.5.0 record the completed proof matrix and advance
+  `compact-monitor` to `proven`. Actual iPad touch, actual 200% zoom, Safari,
+  Firefox, and human no-color interpretation passed. VoiceOver/screen-reader
+  certification, NVDA, and Windows High Contrast are adoption-specific N/A
+  outcomes that reopen before any corresponding support claim;
 - after the concurrent evidence-ledger migration, live loopback and private
   tailnet probes passed `/`, `/health`, and all three package-derived CSS routes;
   the ledger database was at `c4a72e91f6b3` with integrity `ok`. Current mutable
@@ -340,16 +347,14 @@ Evidence at the adoption boundary:
   status record and repository-only promotion evidence rather than package prose.
 
 This is a real consumer without kernel palette leakage. Owner acceptance of its
-hierarchy, terminology, and density was recorded on 2026-08-29, but
-`compact-monitor` remains `experimental`. Remaining gates:
+hierarchy, terminology, and density was recorded on 2026-08-29.
+`compact-monitor` is `proven`. Remaining boundaries:
 
-- **Manual acceptance:** actual iPad/touch behavior, actual 200% zoom,
-  VoiceOver/NVDA announcement quality, Safari/Firefox, Windows High Contrast,
-  and human no-color review. Each gate must pass or receive an explicit,
-  evidence-linked not-applicable disposition.
-- **Promotion review:** only after those checks may the recipe advance to
-  `proven`; Tranche 3, a second consumer, and React/SwiftUI adapters remain
-  deferred.
+- **Stable basis:** `stable` still requires a materially different second
+  consumer or an explicit architecture review accepting the existing
+  high-stakes consumer as sufficient evidence.
+- **Adapters:** React/SwiftUI adapters remain separate, deliberately selected
+  work; proven web evidence does not silently authorize them.
 - **Distribution:** a public-registry lookup currently resolves no package.
   Project Control uses a repository-local packed tarball; first publication is
   an explicit owner decision, not a completed release step.

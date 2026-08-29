@@ -4,10 +4,14 @@ Evidence date: 2026-08-29
 
 Kernel: `a1930ed`, package `5.10.3`, doctrine `0.4.1`
 
-Consumer: Project Control `f3fa200` (`46f3662` touch assembly, `d6516b1`
-support boundary, `707a6f0` package pin, `f3fa200` deployed verification)
+Consumer: Project Control `f1e942f` (`46f3662` touch assembly, `d6516b1`
+support boundary, `f1e942f` proven package pin)
 
 Target: Project Control Source Health and the sanitized compact-monitor fixture
+
+Promotion: package `5.11.0` / doctrine `0.5.0` carries this completed evidence
+forward without changing the accepted palette, geometry, interaction, or
+history presentation shipped in `5.10.3`.
 
 <a id="evidence-project-control-source-health-actual-ipad-touch"></a>
 
@@ -47,15 +51,25 @@ scrolling; no horizontal scrollbar or inline clipping appeared.
 
 <a id="evidence-project-control-source-health-voiceover"></a>
 
-## VoiceOver — pending
+## VoiceOver — not applicable to Project Control
 
-The first controlled run failed. VoiceOver announced the focused controls and
-the recipe as a busy website region, but did not announce `Refreshing retained
-result`; the busy recipe root was suppressing its descendant live-region
-mutation. The fixture now mirrors the visible refresh label through a
-pre-existing polite, atomic live region outside the busy subtree. Automated
-topology and focus coverage pass, but actual VoiceOver must repeat the repaired
-announcement before this gate passes.
+On 2026-08-29, the owner clarified that Project Control's committed Source
+Health acceptance boundary does not include VoiceOver compatibility or
+screen-reader certification. Browser and platform support do not imply
+certification of every assistive-technology pairing. This adoption makes no
+VoiceOver or general screen-reader conformance claim; the gate reopens before
+any such Project Control support claim.
+
+Historical Dark Roast fixture finding, retained as non-gating internal evidence:
+the first controlled VoiceOver run announced the focused controls and the recipe
+as a busy website region, but did not announce `Refreshing retained result`.
+The busy recipe root suppressed its descendant live-region mutation. Dark Roast
+5.10.3 now mirrors the visible refresh label through a pre-existing polite,
+atomic live region outside the busy subtree, and automated topology/focus
+coverage passes. No post-repair actual VoiceOver pass is claimed. This remains
+kernel interoperability evidence, not a pending Project Control acceptance item.
+
+- Verdict: not applicable to Project Control.
 
 <a id="evidence-project-control-source-health-nvda"></a>
 

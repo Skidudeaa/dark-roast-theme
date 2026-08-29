@@ -1,6 +1,6 @@
 {
   "name": "operational-interface-doctrine",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "naming": {
     "cssClassPrefix": "oi-",
     "cssVariablePrefix": "--oi-",
@@ -683,7 +683,7 @@
   },
   "recipes": {
     "compact-monitor": {
-      "stability": "experimental",
+      "stability": "proven",
       "study": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
       "axes": [
         "surface",

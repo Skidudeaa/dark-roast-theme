@@ -6,12 +6,39 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.11.0] — 2026-08-29
+
+`compact-monitor` proven promotion. **Dark Roast: Black Label and all companion
+palette values remain unchanged.** The package remains local and unpublished.
+
+### Promoted
+
+- **Doctrine contract 0.5.0** advances `compact-monitor` from `experimental` to
+  `proven` after the Project Control Source Health adoption completed its
+  source, static, browser, live-deployment, owner, and in-scope manual evidence.
+- Project Control passes actual iPad touch, actual 200% zoom, Safari, Firefox,
+  and human no-color interpretation. VoiceOver/screen-reader certification,
+  NVDA, and Windows High Contrast are evidence-linked not-applicable outcomes
+  under the consumer's committed support boundary; those gates reopen before
+  any corresponding support claim.
+- The generic kernel continues to declare the full manual proof matrix for
+  future consumers. An adoption-specific N/A does not become global
+  compatibility or screen-reader certification.
+
+### Evidence
+
+- The exact consumer commit pins the packed `5.11.0` artifact and doctrine
+  `0.5.0`; clean-archive Python/browser proof, local and tailnet deployment
+  probes, and cross-repository artifact attestation remain fail-closed.
+- `stable` remains intentionally unavailable until a materially different
+  second consumer or an explicit architecture review supplies the separate
+  stable-basis record.
+
 ## [5.10.3] — 2026-08-29
 
 Compact-monitor accessibility hardening. **Dark Roast: Black Label and all
-companion palette values remain unchanged.** The recipe remains experimental;
-the repaired VoiceOver path still requires a fresh actual-assistive-technology
-run before promotion.
+companion palette values remain unchanged.** The recipe remained experimental;
+at this patch release no post-repair actual VoiceOver pass had been recorded.
 
 ### Fixed
 

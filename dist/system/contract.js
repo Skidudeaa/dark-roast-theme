@@ -8,7 +8,7 @@
 // false quietly otherwise so callers can omit the attribute.
 
 export const CONTRACT_NAME = 'operational-interface-doctrine';
-export const CONTRACT_VERSION = '0.4.1';
+export const CONTRACT_VERSION = '0.5.0';
 
 // ── Naming contract (§6) ──
 export const cssClassPrefix = 'oi-';
@@ -596,7 +596,7 @@ export const recipes = Object.freeze(['compact-monitor']);
 
 export const recipeContracts = Object.freeze({
   'compact-monitor': Object.freeze({
-    "stability": "experimental",
+    "stability": "proven",
     "study": "docs/OPERATIONAL-INTERFACE-DOCTRINE.md",
     "axes": Object.freeze(["surface", "activity", "severity", "freshness", "certainty", "completeness", "source", "density"]),
     "root": Object.freeze({

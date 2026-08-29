@@ -12,11 +12,12 @@ Two systems that share a package.
    and in production, but not yet published to the public npm registry.
 2. **The operational interface system** answers *what does this element mean?*
    Nine orthogonal state axes, 54 semantic roles, and ten implemented structural
-   primitives plus the experimental `compact-monitor` recipe. Namespace
+   primitives plus the proven `compact-monitor` recipe. Namespace
    `--oi-*`, deliberately theme-neutral. Static, Playwright, axe, and visual
    proof are built; the first live adoption is Project Control Source Health.
-   Owner acceptance of hierarchy, terminology, and density is recorded. Manual
-   device/accessibility gates remain open, so `compact-monitor` is still experimental.
+   Owner acceptance of hierarchy, terminology, and density is recorded. Every
+   in-scope manual gate is passed or evidence-linked not applicable, so
+   `compact-monitor` is proven.
 
 ## The three things to do when you sit down
 

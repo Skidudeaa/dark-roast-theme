@@ -135,7 +135,7 @@ Skins deliberately contain no build-tool directives, so they parse under any too
 
 ### Operational interface contract
 
-The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 54 semantic roles, ten structural primitives, and the experimental `compact-monitor` recipe — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
+The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 54 semantic roles, ten structural primitives, and the proven `compact-monitor` recipe — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
 
 Load a palette, the ordered semantic contracts, and one explicit mapping:
 
@@ -224,12 +224,13 @@ requiresProvenanceDisclosure({ freshness: 'stale' });    // true
 TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
 
 Tranche 1 is built, and Project Control Source Health is the first live
-nonclinical adoption. It consumes package `5.10.3` through public exports from a
+nonclinical adoption. It consumes package `5.11.0` through public exports from a
 pinned local tarball because the package has not been published to npm. The
 consumer is source/static/browser/live green; owner acceptance of hierarchy,
-terminology, and density is recorded. The repaired actual VoiceOver check is the
-only applicable manual gate still open, so `compact-monitor` stays
-experimental and framework adapters remain premature.
+terminology, and density is recorded. Every in-scope manual gate is passed or
+evidence-linked not applicable, so `compact-monitor` is proven. VoiceOver and
+general screen-reader certification are outside this consumer's committed
+acceptance boundary and reopen before any such support claim.
 
 Contributor validation requires the pinned browser once per machine:
 
