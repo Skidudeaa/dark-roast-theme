@@ -2,9 +2,10 @@
 
 Evidence date: 2026-08-29
 
-Kernel: `d5e7199`, package `5.10.2`, doctrine `0.4.1`
+Kernel: `a1930ed`, package `5.10.3`, doctrine `0.4.1`
 
-Consumer: Project Control `d6516b1` (`46f3662` touch assembly, `06679e2` package pin)
+Consumer: Project Control `707a6f0` (`46f3662` touch assembly, `d6516b1`
+support boundary, `707a6f0` package pin)
 
 Target: Project Control Source Health and the sanitized compact-monitor fixture
 
@@ -48,9 +49,13 @@ scrolling; no horizontal scrollbar or inline clipping appeared.
 
 ## VoiceOver — pending
 
-Safari exposes the expected headings, source regions, status text, metric
-labels/values, and unique Scan buttons through the macOS accessibility tree.
-Actual VoiceOver focus and live-region phrases still require a controlled run.
+The first controlled run failed. VoiceOver announced the focused controls and
+the recipe as a busy website region, but did not announce `Refreshing retained
+result`; the busy recipe root was suppressing its descendant live-region
+mutation. The fixture now mirrors the visible refresh label through a
+pre-existing polite, atomic live region outside the busy subtree. Automated
+topology and focus coverage pass, but actual VoiceOver must repeat the repaired
+announcement before this gate passes.
 
 <a id="evidence-project-control-source-health-nvda"></a>
 
@@ -101,10 +106,21 @@ support claim.
 
 <a id="evidence-project-control-source-health-no-color-human"></a>
 
-## Human no-color interpretation — pending
+## Human no-color interpretation — passed
 
-The sanitized Safari fixture was converted to a true grayscale PNG. Automated
-inspection confirms persistent text labels and structure, but only a human can
-close this gate.
+The original sanitized Safari fixture was converted to a true grayscale PNG.
+Automated inspection confirmed persistent text labels and structure, but only a
+human could close this gate.
 
 - `evidence/safari-27-compact-monitor-grayscale.png` — SHA-256 `ff5c78e7b0cfef736e3489465dd540e03d41567b161cbc0aea467d548c7816da`
+
+The first human review correctly recovered every status, metric, provenance
+line, action, disclosure, and date, but misread every `of 10` denominator as
+`of 18` and judged the intensity bars color-dependent. That review is failed
+evidence, not a pass. The repair adds a visible zero-to-ten scale, full-width
+tracks, patterned proportional fills, and larger slashed-zero `n / 10` values.
+
+- `evidence/firefox-154-compact-monitor-grayscale-repaired.png` — SHA-256 `31ad21eccbb0b72804dab628166ca98f423a4849e06aa766ef4311792ce28768`
+- Owner retest, 2026-08-29: correctly read `2 / 10`, `5 / 10`, `8 / 10`, and
+  `4 / 10`, then ranked the patterned bar lengths `8 > 5 > 4 > 2` without hue.
+- Verdict: passed.
