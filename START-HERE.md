@@ -74,6 +74,15 @@ repo, and the ordering correction it needs.
   being asked for. The formal, evidence-cited version of that extraction is in
   this repo at `src/system/studies/phind-extension.md`; the doctrine wins where
   they disagree.
+- **`~/jan25/codecompanion-src/`** — sanitized extraction of the CodeCompanion
+  Electron app (proprietary; reference only, never copy files verbatim). The
+  `codecompanion-src` symlink at this repo's root points at it. Its findings are
+  already recorded in `src/system/studies/codecompanion-ai.md`; go back to the
+  source only when the study is silent on something.
+- **`~/jan25/darkRoastTheme/`** — the folder this repo used to live inside. Now
+  only pre-repo snapshots (v1–v4 JSON, Termius caches, an old Swift theme) and an
+  unrelated Python OKLCH generator (`darkroast/`). Read-only history; do not
+  consume values from it.
 - **`Skidudeaa/somaNotes`** — carries a `CRITICAL` warning in its root `CLAUDE.md`
   and a banner on `packages/dark-roast/README.md` about the stale vendored copy.
   That repo has no CI.
