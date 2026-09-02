@@ -51,11 +51,11 @@ try {
     ),
   );
   rejectMutation(
-    'mismatched-artifact-hash',
+    'mismatched-artifact-tar-digest',
     (adoption) => {
-      adoption.artifactSha256 = '0'.repeat(64);
+      adoption.artifactTarSha256 = '0'.repeat(64);
     },
-    /pins 0000000000000000000000000000000000000000000000000000000000000000/,
+    /pins tar digest 0000000000000000000000000000000000000000000000000000000000000000/,
   );
 } finally {
   rmSync(temporaryDirectory, { recursive: true, force: true });

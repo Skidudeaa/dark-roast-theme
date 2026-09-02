@@ -5,6 +5,7 @@
 
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import {
   existsSync,
   mkdirSync,
@@ -184,9 +185,12 @@ try {
   const tarball = join(tempDirectory, filename);
   if (!existsSync(tarball)) throw new Error(`npm pack did not create ${tarball}`);
 
-  const packedSha256 = createHash('sha256')
-    .update(readFileSync(tarball))
-    .digest('hex');
+  // The gzip layer is not reproducible across platforms: Linux and macOS Node
+  // builds compress the identical tar stream into different bytes. The consumer
+  // pins the exact bytes it vendored (artifactSha256, attested by its lockfile
+  // and verify-promotion-consumer.js); this portable gate pins the tar stream.
+  const packedBytes = readFileSync(tarball);
+  const packedTarSha256 = createHash('sha256').update(gunzipSync(packedBytes)).digest('hex');
   const currentArtifactPins = [];
   for (const [recipeName, recipe] of Object.entries(sourceContract.recipes)) {
     if (!recipe._promotionEvidence) continue;
@@ -225,10 +229,10 @@ try {
       );
     }
     for (const [adoptionId, adoption] of recipePins) {
-      if (adoption.artifactSha256 !== packedSha256) {
+      if (adoption.artifactTarSha256 !== packedTarSha256) {
         throw new Error(
-          `promotion evidence ${recipeName}/${adoptionId} pins ${adoption.artifactSha256}, ` +
-            `but ${filename} is ${packedSha256}`,
+          `promotion evidence ${recipeName}/${adoptionId} pins tar digest ${adoption.artifactTarSha256}, ` +
+            `but the tar stream inside ${filename} is ${packedTarSha256}`,
         );
       }
       currentArtifactPins.push(`${recipeName}/${adoptionId}`);

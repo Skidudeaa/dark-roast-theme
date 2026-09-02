@@ -344,8 +344,13 @@ exists because something either did go wrong or provably could.
 20. `validate-exports.js` — recursively proves every generated artifact is
     reachable, resolvable, typed where declared, and covered by `files`.
 21. `validate-package.js` — validates the actual packed/extracted tarball and
-    zero runtime dependencies; the packed SHA must match every current-version
-    adoption artifact pin; generated starter assets never ship.
+    zero runtime dependencies; the SHA-256 of the packed **tar stream** must
+    match every current-version adoption pin (`artifactTarSha256`); generated
+    starter assets never ship. The gzip bytes are deliberately not compared:
+    Linux and macOS Node builds compress the identical tar stream differently,
+    which the first CI run of this gate exposed. The consumer's exact vendored
+    bytes (`artifactSha256`) are attested by its lockfile and by
+    `verify-promotion-consumer.js`, which checks both digests.
 22. `validate-package-regressions.js` — stale package versions and mismatched
     artifact hashes are rejected against the real deterministic tarball.
 

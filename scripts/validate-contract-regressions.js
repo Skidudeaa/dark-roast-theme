@@ -34,6 +34,7 @@ function syntheticAdoption(adoptionId, consumer, surface, commitSeed) {
     contractVersion: source.contractVersion,
     artifactPath: source.artifactPath,
     artifactSha256: source.artifactSha256,
+    artifactTarSha256: source.artifactTarSha256,
     verification: structuredClone(source.verification),
     evidenceRef: fixtureReference(`evidence-${adoptionId}-automated`),
     ownerAcceptance: {

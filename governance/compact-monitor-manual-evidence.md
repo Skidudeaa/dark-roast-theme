@@ -13,7 +13,7 @@ Promotion: package `5.11.0` / doctrine `0.5.0` carries this completed evidence
 forward without changing the accepted palette, geometry, interaction, or
 history presentation shipped in `5.10.3`.
 
-Release `5.12.0` (2026-09-02, consumer `de663d3`): machine re-verification
+Release `5.12.0` (2026-09-02, consumer `03d6d59`): machine re-verification
 only. The adoption contract, 496 Python tests, 21 browser tests, and live
 deployment probes passed against the new artifact. The manual gates above were
 not repeated. The one presentation change in `5.12.0` is that the history

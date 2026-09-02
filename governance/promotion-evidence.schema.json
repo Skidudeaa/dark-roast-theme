@@ -127,6 +127,7 @@
         "contractVersion",
         "artifactPath",
         "artifactSha256",
+        "artifactTarSha256",
         "verification",
         "evidenceRef",
         "ownerAcceptance",
@@ -142,6 +143,7 @@
         "contractVersion": { "$ref": "#/definitions/semanticVersion" },
         "artifactPath": { "$ref": "#/definitions/safePath" },
         "artifactSha256": { "$ref": "#/definitions/sha256" },
+        "artifactTarSha256": { "$ref": "#/definitions/sha256" },
         "verification": { "$ref": "#/definitions/consumerVerification" },
         "evidenceRef": { "$ref": "#/definitions/evidenceReference" },
         "ownerAcceptance": {

@@ -3,6 +3,7 @@
 // cannot inspect consumer Git objects; run this explicitly at promotion review.
 
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import {
   existsSync,
   mkdtempSync,
@@ -185,6 +186,12 @@ for (const [recipeName, recipe] of Object.entries(contract.recipes)) {
     if (sha256 !== adoption.artifactSha256) {
       throw new Error(
         `${adoptionId} ${adoption.artifactPath} is ${sha256}, expected ${adoption.artifactSha256}`,
+      );
+    }
+    const tarSha256 = createHash('sha256').update(gunzipSync(tarball)).digest('hex');
+    if (tarSha256 !== adoption.artifactTarSha256) {
+      throw new Error(
+        `${adoptionId} ${adoption.artifactPath} tar stream is ${tarSha256}, expected ${adoption.artifactTarSha256}`,
       );
     }
 

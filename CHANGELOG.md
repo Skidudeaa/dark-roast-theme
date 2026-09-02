@@ -56,7 +56,11 @@ recipe, or slot changed. The package remains local and unpublished.
 ### Evidence
 
 - Project Control re-verified against the packed `5.12.0` artifact; the
-  promotion evidence pins the new SHA-256. `compact-monitor` remains `proven`;
+  promotion evidence pins the new SHA-256 of the vendored bytes and, new in
+  this release, the SHA-256 of the gunzipped tar stream. The first CI run of
+  the package gate showed that macOS and Linux Node builds gzip the identical
+  tar stream into different bytes, so the portable gate now compares the tar
+  stream and the consumer-side attestation compares both. `compact-monitor` remains `proven`;
   `stable` still awaits a materially different second consumer or an explicit
   architecture review.
 
