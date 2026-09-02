@@ -6,6 +6,60 @@ treats token-value changes as evolving under minor releases and reserves major
 releases for breaking changes — token renames/removals (see the v3 → v4
 migration) or changes to the package's public import paths (see v5.0.0).
 
+## [5.12.0] — 2026-09-02
+
+Adoption kit. **Dark Roast: Black Label and all companion palette values remain
+unchanged.** Doctrine contract stays at 0.5.0; no axis, role, primitive, part,
+recipe, or slot changed. The package remains local and unpublished.
+
+### Added
+
+- `dark-roast-theme/system/conformance`: a zero-dependency conformance checker
+  (`checkConformance`, `fromDom`, `fromParse5`, `formatFindings`) that judges any
+  primitive or recipe root against the generated contract and returns findings
+  with stable codes. It is the check the first consumer had to hand-write; a
+  subtree can be checked while ancestors and ID references resolve
+  document-wide. Also exported from the `dark-roast-theme/system` barrel.
+- `dark-roast-theme` command line: `init <dir>` scaffolds a starter page,
+  product stylesheet, README, and generated theme assets; `assets <dir>`
+  copies the palette, system, and mapping stylesheets with a hash manifest and
+  `--check` fails on drift; `check <html>` reports conformance findings with
+  line numbers; `themes` lists palette ids. `init --theme <id>` selects any
+  companion.
+- `starter/`: a complete `compact-monitor` page plus the primitives it uses,
+  styled only through `--oi-*` roles. Shipped in the package; its generated
+  `theme/` directory never is.
+- `docs/ADOPTION.md`: the drop-in path for fresh and server-rendered projects.
+- Static gates `validate-system-conformance.js` (fixtures clean, 39 mutations
+  rejected with expected codes) and `validate-starter.js` (the CLI run as a
+  consumer would, plus product-CSS discipline). Twenty-two static gates now
+  precede the browser suite.
+- Browser proof `conformance.spec.js`: the shipped checker against a live
+  Chromium DOM for the primitive fixture, every async scenario, every slot
+  mode, a runtime refresh mutation, an injected regression, a subtree, and the
+  starter page with axe at 1280px and 360px. Axe now also runs at every
+  contracted recipe width. 111 Chromium tests.
+
+### Fixed
+
+- The history strip wraps to further rows when its container cannot fit every
+  item at the preferred size instead of becoming an inline scroll region. At
+  the 20rem allocation the old strip clipped the fourth interval and failed
+  axe `scrollable-region-focusable`; the preferred-width axe scan had never
+  seen it. Bars stay equal-width and comparable. The two narrow-width visual
+  baselines were reviewed and updated for this change.
+- The compact-monitor proof fixture leaked the recipe's `activity` axis onto
+  metrics, which do not consume it, and rendered numeric substitutes on
+  secondary metrics under `missing` and `unavailable` completeness. Both were
+  invisible to the static validators and were found by the live-DOM checker.
+
+### Evidence
+
+- Project Control re-verified against the packed `5.12.0` artifact; the
+  promotion evidence pins the new SHA-256. `compact-monitor` remains `proven`;
+  `stable` still awaits a materially different second consumer or an explicit
+  architecture review.
+
 ## [5.11.0] — 2026-08-29
 
 `compact-monitor` proven promotion. **Dark Roast: Black Label and all companion

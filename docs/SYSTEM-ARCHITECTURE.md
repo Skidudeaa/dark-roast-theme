@@ -1,7 +1,7 @@
 # System Architecture
 
 **Status:** implementation record, updated as tranches land
-**Last updated:** 2026-08-29 (package 5.11.0, doctrine contract 0.5.0)
+**Last updated:** 2026-09-02 (package 5.12.0, doctrine contract 0.5.0)
 
 `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` is the *specification*. This document
 records what is **actually built**, where it lives, and how the pieces depend on
@@ -110,7 +110,8 @@ validator instead.
 | `contract.js` | Frozen constants, axis→attribute map, semantic role variable names, and three runtime helpers |
 | `contract.d.ts` | `Oi*` unions/interfaces, including primitive-specific part maps and DOM contracts |
 | `contract.json` | The manifest with documentation keys stripped |
-| `index.js`, `index.d.ts` | Package-level runtime and type barrels |
+| `conformance.js`, `conformance.d.ts` | The public conformance checker, copied byte-for-byte from `src/system/runtime/` |
+| `index.js`, `index.d.ts` | Package-level runtime and type barrels (contract plus conformance) |
 | `contracts.css` | Ordered, theme-neutral semantic contract CSS; no palette is implicit |
 | `primitives.css` | The ten structural primitives in manifest order |
 | `recipes.css`, `recipes/compact-monitor.css` | Aggregate and focused recipe bundles |
@@ -129,6 +130,54 @@ Three runtime helpers are worth knowing:
   freshness, or completeness is outside direct/confirmed/live-or-recent/complete.
   Guards against "truth laundering" (§23): generated, inferred, stale, or partial
   information wearing the visual authority of confirmed data.
+
+### `src/system/runtime/conformance.js` — the shipped checker
+
+The first adoption had to re-implement the recipe DOM rules in its own
+repository (`validate-dark-roast-adoption.mjs` in Project Control) before it
+could trust its template. That is exactly the kind of duplicated rule that rots,
+so the check now ships. `checkConformance(tree)` judges every primitive and
+recipe root against the generated contract: root element and classes, required
+and forbidden attributes, accessible names, consumed axes and closed values,
+part parent/element/cardinality/order, slot declaration/parent/visibility/order,
+required and optional slot rules, conditional chrome, status-slot semantics,
+busy state, metric provenance and textual missing values, meter native/visual
+agreement, disclosure summary ownership, history chronology and intensity,
+divider orientation, undeclared `oi-*` classes, orphaned parts and slots,
+inline `--oi-*` hooks outside their owner, and `--dr-*` leakage on operational
+elements. Each finding carries a stable kebab-case code, a message, and the
+subject element with line and column when parsed from a file.
+
+Two adapters feed it: `fromDom(node)` for a live browser DOM and
+`fromParse5(node)` for Node. Passing an element judges only that subtree while
+ancestors and ID references still resolve document-wide. The module has zero
+dependencies and never throws for markup problems; it returns findings.
+
+It is not the exhaustive fixture gate. `validate-system-dom.js` and
+`validate-system-recipe-dom.js` remain the in-repo validators with their
+fixture-specific obligations (stylesheet order, dual mappings, proof roots).
+`validate-system-conformance.js` proves the two agree: the canonical fixtures
+produce zero findings and 39 mutations the kernel rejects are rejected by the
+shipped checker with the expected codes. `tests/system/conformance.spec.js`
+proves the same in a real Chromium DOM across every async scenario and slot
+mode, including runtime mutations the static fixture never contains. That
+browser proof is what found three latent defects in 5.12.0: the fixture leaked
+recipe activity onto metrics, the `missing`/`unavailable` scenarios rendered
+numeric substitutes on secondary metrics, and the history strip became an
+inline scroll region with no keyboard access below its preferred width.
+
+### `bin/dark-roast-theme.js` and `starter/` — the drop-in path
+
+`dark-roast-theme init <dir>` copies `starter/` (a complete `compact-monitor`
+page, a product stylesheet under `@layer product`, and a README of the rules)
+and runs `assets` into `<dir>/theme`. `assets` copies the palette, system, and
+mapping stylesheets with a hash manifest; `--check` fails when they drift.
+`check <html>` runs the shipped checker with parse5 resolved from the consumer's
+project. `validate-starter.js` runs all three exactly as a consumer would on
+every `npm test`, and holds `starter.css` to the fixture discipline: one product
+layer, `--oi-*` roles only, no raw colors, no domain vocabulary. `starter/theme/`
+is generated, gitignored, and excluded from the tarball. `docs/ADOPTION.md` is
+the consumer-facing guide.
 
 ### `src/system/studies/` — the intake pipeline
 
@@ -192,16 +241,24 @@ that does exist rather than a placeholder.
   widths; only focus/history own local scrolling.
 - `spec/system/compact-monitor.html` is a static valid baseline. Its fixture
   module applies only manifest-declared mappings, widths, densities, optional
-  omission, async/state, direction, and stress cases.
+  omission, async/state, direction, and stress cases. Metrics it renders carry
+  only the axes the metric primitive consumes, and every metric under
+  `missing` or `unavailable` completeness renders a textual value.
 - `scripts/validate-system-recipe-dom.js` enforces the parse-time root, chrome,
   eight flattened slots, manifest-owned accessibility relationships, required
   visibility, optional collapse, and busy-state semantics. Its mutation suite
   proves role, ID, root reference, and visible status text fail closed.
-- Playwright 1.62.1 runs 91 Chromium tests: exhaustive four-mapping × three-width
+- Playwright 1.62.1 runs 111 Chromium tests: exhaustive four-mapping × three-width
   × two-density layout, all async/state/stress values, native disclosure,
   DOM-order keyboard focus, focus retention, overflow, reduced motion,
   increased contrast, forced colors, RTL, 200%-equivalent reflow, axe WCAG
-  scans without suppression, and nine reviewed locator screenshots.
+  scans without suppression at every contracted width, live-DOM conformance of
+  every scenario and slot mode plus the starter page, and nine reviewed locator
+  screenshots.
+- The history strip wraps to further rows when its container cannot fit every
+  item at the preferred size, instead of scrolling inline. A scroll region
+  without keyboard access failed axe at the 20rem allocation once axe ran there;
+  wrapping keeps bars equal-width and comparable and removes the region.
 - The dedicated localhost server accepts GET/HEAD only, confines real paths to
   the repository, disables caching, rejects traversal, and never shares an
   unrelated listener. Browser artifacts and tests are excluded from the package.
@@ -231,7 +288,7 @@ version-correct somaCura adoption recorded in `docs/SOMACURA-MIGRATION.md`.
 
 ## 5. The validator suite
 
-`npm test` runs twenty static gates followed by 91 Chromium tests. Each gate
+`npm test` runs twenty-two static gates followed by 111 Chromium tests. Each gate
 exists because something either did go wrong or provably could.
 
 **Theme family**
@@ -274,14 +331,22 @@ exists because something either did go wrong or provably could.
     role, ID, visible content, and root-reference failures are detected.
 17. `validate-system-css.js` — AST enforcement and complete Dark Roast/alien
     mappings across all 54 roles.
+18. `validate-system-conformance.js` — the shipped checker produces zero
+    findings on both canonical fixtures and rejects 22 recipe and 17 primitive
+    mutations with stable codes; it never throws on hostile markup.
+19. `validate-starter.js` — runs the shipped CLI as a consumer would: assets
+    written and `--check`ed, the starter page checked, `init` scaffolded into
+    an empty directory and checked, overwrite refused without `--force`, and
+    the product stylesheet held to one `@layer product`, roles only, no raw
+    colors, no domain vocabulary.
 
 **Distribution**
-18. `validate-exports.js` — recursively proves every generated artifact is
+20. `validate-exports.js` — recursively proves every generated artifact is
     reachable, resolvable, typed where declared, and covered by `files`.
-19. `validate-package.js` — validates the actual packed/extracted tarball and
+21. `validate-package.js` — validates the actual packed/extracted tarball and
     zero runtime dependencies; the packed SHA must match every current-version
-    adoption artifact pin.
-20. `validate-package-regressions.js` — stale package versions and mismatched
+    adoption artifact pin; generated starter assets never ship.
+22. `validate-package-regressions.js` — stale package versions and mismatched
     artifact hashes are rejected against the real deterministic tarball.
 
 `npm run verify:promotion-consumer -- project-control=../../project-control` is an explicit
@@ -292,7 +357,7 @@ Git object database, so this check is intentionally separate rather than faked.
 
 **Browser proof**
 
-- `playwright test` executes 91 Chromium assertions and axe scans after the
+- `playwright test` executes 111 Chromium assertions and axe scans after the
   static chain. Nine locator baselines are platform-qualified for Darwin and
   Linux Chromium with a bounded 1% pixel-difference allowance; CI never updates
   them.
@@ -358,6 +423,10 @@ hierarchy, terminology, and density was recorded on 2026-08-29.
 - **Distribution:** a public-registry lookup currently resolves no package.
   Project Control uses a repository-local packed tarball; first publication is
   an explicit owner decision, not a completed release step.
+- **Fresh adoption:** 5.12.0 ships the drop-in path (`init`, `assets`,
+  `check`, the conformance runtime, and `starter/`) so a second consumer no
+  longer starts by re-implementing the kernel's rules. It supplies the path,
+  not the evidence; a second consumer's own gates still decide `stable`.
 
 ---
 

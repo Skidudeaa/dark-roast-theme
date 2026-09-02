@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operational monitor starter</title>
+  <link rel="icon" href="data:,">
+  <!-- Order matters: palette, then the theme-neutral system, then the one
+       mapping that binds them, then your own product stylesheet last. -->
+  <link rel="stylesheet" href="./theme/dark-roast.css">
+  <link rel="stylesheet" href="./theme/oi-system.css">
+  <link rel="stylesheet" href="./theme/oi-mapping-dark-roast.css">
+  <link rel="stylesheet" href="./starter.css">
+</head>
+<body class="dark-roast oi-root" data-oi-surface="canvas" data-oi-density="standard">
+  <main class="starter-page">
+    <header class="starter-masthead">
+      <p class="starter-kicker">Starter</p>
+      <h1 class="starter-title">Operational monitor</h1>
+      <p class="starter-lede">
+        One proven compact-monitor card plus the structural primitives it is
+        built from. Replace the copy, keep the anatomy, and run
+        <code>dark-roast-theme check index.html</code> after every edit.
+      </p>
+    </header>
+
+    <div class="oi-stack starter-columns" data-oi-density="standard">
+      <section
+        id="monitor"
+        class="oi-surface oi-recipe-compact-monitor starter-monitor"
+        data-oi-surface="raised"
+        data-oi-density="standard"
+        data-oi-activity="ready"
+        data-oi-severity="informational"
+        data-oi-freshness="recent"
+        data-oi-certainty="confirmed"
+        data-oi-completeness="complete"
+        data-oi-source="direct"
+        aria-labelledby="monitor-title"
+        aria-describedby="monitor-status"
+      >
+        <header class="oi-recipe-compact-monitor__chrome">
+          <div class="starter-context" data-oi-slot="context">
+            <p class="starter-context-kicker">Current run</p>
+            <h2 id="monitor-title" class="starter-context-title">Collector health</h2>
+          </div>
+          <div data-oi-slot="actions">
+            <button class="starter-button" type="button">Refresh</button>
+            <button class="starter-button" type="button">Acknowledge</button>
+          </div>
+        </header>
+
+        <div id="monitor-status" class="starter-status" data-oi-slot="status" role="status">
+          <p class="starter-status-label">Ready and complete</p>
+          <p class="starter-status-detail">Confirmed direct result updated two minutes ago.</p>
+        </div>
+
+        <div class="starter-primary" data-oi-slot="primary">
+          <dl
+            class="oi-metric"
+            data-oi-severity="positive"
+            data-oi-source="direct"
+            data-oi-freshness="recent"
+            data-oi-certainty="confirmed"
+            data-oi-completeness="complete"
+          >
+            <dt class="oi-metric__label">Throughput</dt>
+            <dd class="oi-metric__value">37.5</dd>
+            <dd class="oi-metric__unit">per minute</dd>
+            <dd class="oi-metric__trend">Up 2.5 from the previous interval</dd>
+          </dl>
+
+          <dl
+            class="oi-metric"
+            data-oi-severity="warning"
+            data-oi-source="derived"
+            data-oi-freshness="recent"
+            data-oi-certainty="inferred"
+            data-oi-completeness="partial"
+            aria-describedby="monitor-backlog-provenance"
+          >
+            <dt class="oi-metric__label">Backlog</dt>
+            <dd class="oi-metric__value">18 of 24</dd>
+            <dd class="oi-metric__unit">inputs</dd>
+            <dd class="oi-metric__trend">Six expected inputs are absent</dd>
+            <dd id="monitor-backlog-provenance" class="oi-metric__provenance">
+              Derived and inferred from partial inputs; not a direct measurement.
+            </dd>
+          </dl>
+
+          <div
+            class="oi-meter"
+            data-oi-severity="informational"
+            data-oi-activity="ready"
+            style="--oi-meter-value: 64%"
+          >
+            <label class="oi-meter__label" for="monitor-capacity">Capacity used</label>
+            <meter id="monitor-capacity" class="oi-meter__control" min="0" max="100" value="64">64 of 100</meter>
+            <div class="oi-meter__track" aria-hidden="true"><span class="oi-meter__fill"></span></div>
+            <span class="oi-meter__value">64 percent</span>
+            <small class="oi-meter__description">Bounded from zero through one hundred.</small>
+          </div>
+        </div>
+
+        <div data-oi-slot="details">
+          <details class="oi-disclosure" data-oi-density="standard">
+            <summary class="oi-disclosure__summary">Additional details</summary>
+            <div class="oi-disclosure__content">
+              <p class="starter-copy">Native disclosure owns expansion, keyboard behavior, focus, and announcement. Put secondary evidence here; never the status or primary regions.</p>
+            </div>
+          </details>
+        </div>
+
+        <div data-oi-slot="history">
+          <p class="starter-caption">Four intervals on a zero-to-ten intensity scale. Bar length and text encode the same value.</p>
+          <ol
+            class="oi-history-strip"
+            data-oi-severity="neutral"
+            data-oi-freshness="recent"
+            aria-label="Four-interval history on a zero-to-ten intensity scale, oldest to newest"
+          >
+            <li class="oi-history-strip__item" style="--oi-history-intensity: 0.2">
+              <time class="oi-history-strip__time" datetime="2026-08-29">Aug 29</time>
+              <span class="oi-history-strip__bar" aria-hidden="true"></span>
+              <span class="oi-history-strip__value">2 / 10</span>
+            </li>
+            <li class="oi-history-strip__item" style="--oi-history-intensity: 0.5">
+              <time class="oi-history-strip__time" datetime="2026-08-30">Aug 30</time>
+              <span class="oi-history-strip__bar" aria-hidden="true"></span>
+              <span class="oi-history-strip__value">5 / 10</span>
+            </li>
+            <li class="oi-history-strip__item" style="--oi-history-intensity: 0.8">
+              <time class="oi-history-strip__time" datetime="2026-08-31">Aug 31</time>
+              <span class="oi-history-strip__bar" aria-hidden="true"></span>
+              <span class="oi-history-strip__value">8 / 10</span>
+            </li>
+            <li class="oi-history-strip__item" style="--oi-history-intensity: 0.4">
+              <time class="oi-history-strip__time" datetime="2026-09-01">Sep 1</time>
+              <span class="oi-history-strip__bar" aria-hidden="true"></span>
+              <span class="oi-history-strip__value">4 / 10</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="starter-settings" data-oi-slot="settings">
+          <p class="starter-copy">Settings sit after the operational scan path.</p>
+          <button class="starter-button" type="button">Open settings</button>
+        </div>
+      </section>
+
+      <aside class="oi-surface starter-notes" data-oi-surface="base" aria-labelledby="notes-title">
+        <h2 id="notes-title" class="starter-notes-title">How to extend this page</h2>
+        <p class="starter-copy">Every visible state is an attribute, never a class name: activity, severity, freshness, certainty, completeness, and source are separate axes on the card root.</p>
+        <hr class="oi-divider" data-oi-emphasis="quiet" aria-orientation="horizontal">
+        <p class="starter-copy">Anything not direct, confirmed, fresh, and complete must show its provenance. The second metric above is the pattern.</p>
+        <hr class="oi-divider" data-oi-emphasis="quiet" aria-orientation="horizontal">
+        <p class="starter-copy">Your own styles go in <code>starter.css</code> under <code>@layer product</code> and read only <code>--oi-*</code> roles. The palette stays behind the mapping.</p>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

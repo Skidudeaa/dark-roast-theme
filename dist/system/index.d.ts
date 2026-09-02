@@ -2,3 +2,4 @@
 // Edit src/system/contract.json and run `npm run build:system`.
 
 export * from './contract.js';
+export * from './conformance.js';

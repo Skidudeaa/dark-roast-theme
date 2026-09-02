@@ -62,6 +62,7 @@ repo, and the ordering correction it needs.
 | What are the syntax highlighting rules? | `docs/SYNTAX-COLOR-SPEC.md` |
 | What *should* an operational interface do? | `docs/OPERATIONAL-INTERFACE-DOCTRINE.md` |
 | What of that is actually built? | `docs/SYSTEM-ARCHITECTURE.md` |
+| How do I drop the kernel into a fresh project? | `docs/ADOPTION.md`, then `npx dark-roast-theme init` |
 | How do I get Dark Roast into somaCura? | `docs/SOMACURA-MIGRATION.md` |
 | What changed and when? | `CHANGELOG.md` |
 

@@ -119,6 +119,7 @@ function assertNoForbiddenFiles(files) {
         'test-results',
         'governance',
       ].includes(parts[0]) ||
+      file.startsWith('starter/theme/') ||
       file === 'playwright.config.js' ||
       parts.some((part) => part.endsWith('-snapshots')) ||
       parts.includes('node_modules') ||

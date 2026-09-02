@@ -1,25 +1,28 @@
 @layer oi.primitives {
+  /* Items share one width so bar lengths stay comparable. When the container
+     cannot fit every item at its preferred size, the strip wraps to further
+     rows (still oldest to newest, reading order) instead of becoming an
+     inline scroll region that keyboard users cannot reach. */
   .oi-history-strip {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(
-      min(
-        100%,
-        var(--oi-history-item-size, calc(var(--oi-geometry-space) * 28))
-      ),
-      1fr
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(
+        min(
+          100%,
+          var(--oi-history-item-size, calc(var(--oi-geometry-space) * 28))
+        ),
+        1fr
+      )
     );
     min-inline-size: 0;
     margin: 0;
     padding-block: var(--_oi-density-gap);
     padding-inline-start: var(--_oi-density-inset);
     gap: var(--oi-history-gap, var(--_oi-density-gap));
-    overflow-block: hidden;
-    overflow-inline: auto;
-    overscroll-behavior-inline: contain;
+    overflow: visible;
     list-style-position: outside;
     list-style-type: decimal;
-    scrollbar-gutter: stable;
     border: 1px solid var(--_oi-status-color);
   }
 

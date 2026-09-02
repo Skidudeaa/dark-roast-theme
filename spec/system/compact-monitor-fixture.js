@@ -1,4 +1,4 @@
-import { recipeContracts } from '../../dist/system/contract.js';
+import { primitiveContracts, recipeContracts } from '../../dist/system/contract.js';
 
 const contract = recipeContracts['compact-monitor'];
 if (!contract) throw new Error('compact-monitor contract is not generated');
@@ -311,8 +311,13 @@ function attributes(values) {
 }
 
 function metric({ id, label, value, unit, trend, provenance, axes }) {
+  // A metric consumes only its contracted axes; recipe-level activity never
+  // leaks onto it. The shipped conformance checker enforces this in a live DOM.
+  const consumed = Object.fromEntries(
+    Object.entries(axes).filter(([axis]) => primitiveContracts.metric.axes.includes(axis)),
+  );
   return `
-    <dl class="oi-metric"${attributes(axes)} aria-describedby="${id}-provenance">
+    <dl class="oi-metric"${attributes(consumed)} aria-describedby="${id}-provenance">
       <dt class="oi-metric__label">${label}</dt>
       <dd class="oi-metric__value">${value}</dd>
       ${unit ? `<dd class="oi-metric__unit">${unit}</dd>` : ''}
@@ -367,6 +372,9 @@ function primaryMarkup(configuration, stress) {
 
   const long = stress === 'long-labels-2x';
   const pathological = stress === 'large-negative-numbers';
+  // Missing or unavailable completeness forbids numeric substitutes on every
+  // metric that carries that axis, not only the first.
+  const textual = ['missing', 'unavailable'].includes(configuration.axes.completeness);
   const firstLabel = long
     ? 'Current operational measure with a deliberately doubled explanatory label that must wrap without hiding meaning or displacing adjacent values'
     : 'Current measure';
@@ -374,7 +382,7 @@ function primaryMarkup(configuration, stress) {
   const firstUnit = pathological
     ? 'microunits per extraordinarily long reporting interval'
     : configuration.unit;
-  const secondValue = pathological ? '+1.7976931348623157e+308' : '98.25';
+  const secondValue = textual ? configuration.value : pathological ? '+1.7976931348623157e+308' : '98.25';
   const identifier = long
     ? 'MONITOR_REFERENCE_IDENTIFIER_WITHOUT_BREAKS_0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     : 'Reference interval';
@@ -393,7 +401,7 @@ function primaryMarkup(configuration, stress) {
       id: 'proof-primary-b',
       label: identifier,
       value: secondValue,
-      unit: 'units',
+      unit: textual ? '' : 'units',
       trend: 'Stable across the current interval',
       provenance: configuration.provenance,
       axes: configuration.axes,
@@ -401,8 +409,8 @@ function primaryMarkup(configuration, stress) {
     metric({
       id: 'proof-primary-c',
       label: 'Bounded comparison',
-      value: pathological ? '−0.00000000000000000042' : '64',
-      unit: 'percent',
+      value: textual ? configuration.value : pathological ? '−0.00000000000000000042' : '64',
+      unit: textual ? '' : 'percent',
       trend: 'Visible without relying on color',
       provenance: configuration.provenance,
       axes: configuration.axes,

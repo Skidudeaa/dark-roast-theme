@@ -1,0 +1,159 @@
+/* Product stylesheet for the starter page.
+   Everything here reads semantic --oi-* roles and public hooks. It never names
+   a palette token; the mapping stylesheet is the only place --dr-* is read.
+   The `product` layer is declared last by the system, so these rules win over
+   kernel defaults without specificity games. */
+@layer product {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    min-block-size: 100vh;
+    margin: 0;
+    background: var(--oi-surface-canvas);
+    color: var(--oi-text-body);
+    font-family: var(--oi-typography-body);
+    font-size: var(--oi-typography-size-body);
+    line-height: var(--oi-typography-line-reading);
+  }
+
+  .starter-page {
+    display: grid;
+    max-inline-size: 72rem;
+    margin-inline: auto;
+    padding: calc(var(--oi-geometry-space) * 6) calc(var(--oi-geometry-space) * 4);
+    gap: calc(var(--oi-geometry-space) * 6);
+  }
+
+  .starter-masthead {
+    display: grid;
+    gap: var(--oi-geometry-space);
+  }
+
+  .starter-masthead > *,
+  .starter-context > *,
+  .starter-status > *,
+  .starter-settings > *,
+  .starter-notes > * {
+    margin: 0;
+  }
+
+  .starter-kicker,
+  .starter-context-kicker {
+    color: var(--oi-accent-primary);
+    font-size: var(--oi-typography-size-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .starter-title {
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-display);
+    font-size: var(--oi-typography-size-display);
+    line-height: var(--oi-typography-line-compact);
+  }
+
+  .starter-lede,
+  .starter-copy,
+  .starter-status-detail,
+  .starter-caption {
+    color: var(--oi-text-muted);
+    max-inline-size: 60ch;
+    overflow-wrap: anywhere;
+  }
+
+  .starter-caption {
+    font-size: var(--oi-typography-size-label);
+  }
+
+  code {
+    font-family: var(--oi-typography-mono);
+    font-size: 0.95em;
+    color: var(--oi-text-primary);
+  }
+
+  .starter-columns {
+    --oi-stack-gap: calc(var(--oi-geometry-space) * 4);
+  }
+
+  .starter-monitor {
+    --oi-surface-padding: calc(var(--oi-geometry-space) * 4);
+  }
+
+  .starter-context {
+    display: grid;
+    gap: var(--oi-geometry-space);
+  }
+
+  .starter-context-title {
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-heading);
+    font-size: var(--oi-typography-size-title);
+    line-height: var(--oi-typography-line-compact);
+    overflow-wrap: anywhere;
+  }
+
+  .starter-status {
+    display: grid;
+    gap: calc(var(--oi-geometry-space) / 2);
+  }
+
+  .starter-status-label {
+    color: var(--oi-text-primary);
+    font-weight: 600;
+  }
+
+  .starter-settings {
+    display: grid;
+    justify-items: start;
+    gap: var(--oi-geometry-space);
+  }
+
+  .starter-button {
+    min-block-size: var(--oi-interaction-pointer-target-min);
+    padding-block: var(--oi-geometry-space);
+    padding-inline: calc(var(--oi-geometry-space) * 3);
+    border: 1px solid var(--oi-border-default);
+    border-radius: var(--oi-geometry-radius-control);
+    background: var(--oi-surface-interactive);
+    color: var(--oi-text-primary);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--oi-motion-duration-fast) var(--oi-motion-ease-standard);
+  }
+
+  .starter-button:hover {
+    background: var(--oi-surface-hover);
+  }
+
+  .starter-button:focus-visible {
+    outline: var(--oi-interaction-focus-ring-width) solid var(--oi-border-focus);
+    outline-offset: var(--oi-interaction-focus-ring-offset);
+  }
+
+  .starter-notes {
+    --oi-surface-padding: calc(var(--oi-geometry-space) * 4);
+    display: grid;
+    gap: calc(var(--oi-geometry-space) * 2);
+  }
+
+  .starter-notes-title {
+    color: var(--oi-text-primary);
+    font-family: var(--oi-typography-heading);
+    font-size: var(--oi-typography-size-title);
+    line-height: var(--oi-typography-line-compact);
+  }
+
+  @media (pointer: coarse), (any-pointer: coarse) {
+    .starter-button {
+      min-block-size: var(--oi-interaction-touch-target-min);
+    }
+  }
+}

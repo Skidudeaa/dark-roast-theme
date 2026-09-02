@@ -133,6 +133,22 @@ A **skin** is the concrete look of one application built on a companion theme. I
 
 Skins deliberately contain no build-tool directives, so they parse under any toolchain. If you use Tailwind, keep `@tailwind base/components/utilities` in your own entry file above the imports.
 
+### Drop it into a fresh project
+
+```bash
+npm install --save-dev dark-roast-theme parse5   # unpublished: use a packed tarball, see docs/ADOPTION.md
+npx dark-roast-theme init ui                    # index.html, starter.css, README.md, theme/
+npx dark-roast-theme check ui/index.html        # PASS ui/index.html: 9 primitive root(s), 1 recipe root(s) ...
+npx dark-roast-theme assets ui/theme --check    # fails when copied stylesheets drift from the package
+```
+
+`init` scaffolds a working `compact-monitor` page on the Dark Roast palette (or
+any companion with `--theme <id>`). `check` runs the shipped conformance checker,
+the same manifest-driven root/part/slot/axis/ARIA rules the kernel's own
+fixtures are held to, and reports each violation with a stable code and line
+number. The full path, including server-rendered projects and browser-side
+checking, is in `docs/ADOPTION.md`.
+
 ### Operational interface contract
 
 The theme answers *what color is this?* The doctrine contract answers *what does this element mean?* It is theme-neutral — nine orthogonal state axes, 54 semantic roles, ten structural primitives, and the proven `compact-monitor` recipe — and is specified in `docs/OPERATIONAL-INTERFACE-DOCTRINE.md`, with implementation status in `docs/SYSTEM-ARCHITECTURE.md`.
@@ -221,7 +237,17 @@ requiresProvenanceDisclosure({ source: 'generated' });   // true
 requiresProvenanceDisclosure({ freshness: 'stale' });    // true
 ```
 
-TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
+```js
+import { checkConformance, fromDom, formatFindings } from 'dark-roast-theme/system/conformance';
+
+// Judge a live DOM (or one subtree of it) against the contract. Zero dependencies;
+// in Node, parse with parse5 and use fromParse5 instead.
+const report = checkConformance(fromDom(document));
+report.findings;                           // [] when every primitive and recipe root conforms
+formatFindings(report.findings);           // ['[slot-required] required slot "primary" ...']
+```
+
+TypeScript types ship alongside (`OiSeverity`, `OiState`, `OiRecipeContract`, `OiFinding`, and the rest). Import the barrel from `dark-roast-theme/system`; the raw manifest remains available at `dark-roast-theme/system/contract.json`.
 
 Tranche 1 is built, and Project Control Source Health is the first live
 nonclinical adoption. It consumes package `5.11.0` through public exports from a
@@ -468,7 +494,10 @@ src/system/layers.css       SOURCE — public cascade order, no reset
 src/system/contracts/*.css  SOURCE — theme-neutral semantic CSS
 src/system/primitives/*.css SOURCE — ten native-first structural primitives
 src/system/recipes/*.css    SOURCE — composition recipes
+src/system/runtime/         SOURCE — hand-authored conformance checker, copied verbatim into dist/system
 src/system/studies/*.md     Pattern studies — the only intake path for an external design
+starter/                    What `dark-roast-theme init` copies into a fresh project (theme/ is generated)
+bin/dark-roast-theme.js     CLI: init, assets, check, themes
 spec/system/mappings/alien.css Cold, flat mapping proof fixture; not an export
 spec/system/primitives.html Dual-mapping primitive DOM and rendered proof fixture
 spec/system/compact-monitor.html Dynamic compact-monitor proof fixture
@@ -490,6 +519,8 @@ scripts/validate-system-runtime.js Browser/runtime contract predicates
 scripts/validate-system-dom.js parse5 primitive DOM/ARIA contract enforcement
 scripts/validate-system-recipe-dom.js Recipe root/part/slot DOM enforcement
 scripts/validate-system-css.js PostCSS selector/value AST enforcement
+scripts/validate-system-conformance.js Shipped checker agrees with the kernel validators on fixtures and mutations
+scripts/validate-starter.js  Starter scaffolds, checks, and product-CSS discipline via the shipped CLI
 scripts/validate-package.js Actual npm tarball and zero-runtime-dependency integrity
 scripts/serve-system-fixtures.js Hardened localhost browser-test server
 playwright.config.js        Exclusive Chromium proof configuration

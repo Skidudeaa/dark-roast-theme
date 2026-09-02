@@ -7,6 +7,7 @@
 //   dist/system/contract.js    frozen constants + development assertions
 //   dist/system/contract.d.ts  string-literal unions and interfaces
 //   dist/system/contract.json  published manifest, comments stripped
+//   dist/system/conformance.*  hand-authored src/system/runtime copied verbatim
 //
 //   node scripts/build-system.js          # write generated files
 //   node scripts/build-system.js --check  # exit 1 if any output is stale
@@ -37,6 +38,7 @@ const LAYERS_SRC = join(ROOT, 'src', 'system', 'layers.css');
 const CONTRACTS_SRC = join(ROOT, 'src', 'system', 'contracts');
 const PRIMITIVES_SRC = join(ROOT, 'src', 'system', 'primitives');
 const RECIPES_SRC = join(ROOT, 'src', 'system', 'recipes');
+const RUNTIME_SRC = join(ROOT, 'src', 'system', 'runtime');
 const OUT_DIR = join(ROOT, 'dist', 'system');
 const CHECK = process.argv.includes('--check');
 const CONTRACT_SOURCE_ORDER = [
@@ -365,6 +367,7 @@ function buildIndexJs() {
     BANNER,
     '',
     "export * from './contract.js';",
+    "export * from './conformance.js';",
     '',
   ].join('\n');
 }
@@ -850,6 +853,10 @@ const outputs = {
   'contract.js': buildJs(),
   'contract.d.ts': buildDts(),
   'contract.json': `${JSON.stringify(strip(manifest), null, 2)}\n`,
+  // Hand-authored runtime shipped beside the generated contract (§20): copied
+  // byte-for-byte so --check proves dist never drifts from src.
+  'conformance.js': readRequired(join(RUNTIME_SRC, 'conformance.js'), 'conformance runtime'),
+  'conformance.d.ts': readRequired(join(RUNTIME_SRC, 'conformance.d.ts'), 'conformance types'),
   'contracts.css': contractsCss,
   'primitives.css': primitivesCss,
   'recipes.css': recipesCss,

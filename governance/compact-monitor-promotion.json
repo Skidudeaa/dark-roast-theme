@@ -1,36 +1,67 @@
 {
   "$schema": "./promotion-evidence.schema.json",
   "recipe": "compact-monitor",
-  "asOf": "2026-08-29",
+  "asOf": "2026-09-02",
   "adoptions": {
     "project-control-source-health": {
       "consumer": "project-control",
       "surface": "source-health",
       "repository": "project-control",
       "consumerCommit": "f6a8563438db4a5e038ce8513f149266cd258f05",
-      "verifiedCommit": "f1e942f3bd6fe591f0d151c099591418efa184e8",
-      "packageVersion": "5.11.0",
+      "verifiedCommit": "de663d3114fbf98edb28bfad445b96cb88033188",
+      "packageVersion": "5.12.0",
       "contractVersion": "0.5.0",
-      "artifactPath": "vendor/dark-roast-theme-5.11.0.tgz",
-      "artifactSha256": "004d612227ef4fb2569336fb37d9ede958514aacfd7fce502f584b82cd90b99e",
+      "artifactPath": "vendor/dark-roast-theme-5.12.0.tgz",
+      "artifactSha256": "e87a68b04b47c23327b3b8358b2a1ff92bac4d5a0637d52833f0361ca5c4a4ba",
       "verification": {
         "commands": [
-          { "argv": ["npm", "ci", "--ignore-scripts"] },
-          { "argv": ["npm", "run", "build:theme-assets"] },
           {
-            "argv": ["npm", "run", "check:theme-adoption"],
+            "argv": [
+              "npm",
+              "ci",
+              "--ignore-scripts"
+            ]
+          },
+          {
+            "argv": [
+              "npm",
+              "run",
+              "build:theme-assets"
+            ]
+          },
+          {
+            "argv": [
+              "npm",
+              "run",
+              "check:theme-adoption"
+            ],
             "outputContains": "PASS Source Health compact-monitor adoption contract"
           },
           {
-            "argv": ["uv", "run", "pytest", "-o", "addopts=", "-q"],
+            "argv": [
+              "uv",
+              "run",
+              "pytest",
+              "-o",
+              "addopts=",
+              "-q"
+            ],
             "outputContains": "496 passed"
           },
           {
-            "argv": ["npm", "run", "test:browser"],
+            "argv": [
+              "npm",
+              "run",
+              "test:browser"
+            ],
             "outputContains": "21 passed"
           },
           {
-            "argv": ["npm", "run", "check:theme-deployment"],
+            "argv": [
+              "npm",
+              "run",
+              "check:theme-deployment"
+            ],
             "outputContains": "PASS Dark Roast deployment probes"
           }
         ],
@@ -49,7 +80,7 @@
           },
           {
             "path": "docs/STATUS.md",
-            "contains": "Source Health is pinned to Dark Roast `5.11.0` / doctrine `0.5.0`"
+            "contains": "Source Health is pinned to Dark Roast `5.12.0` / doctrine `0.5.0`"
           },
           {
             "path": "docs/PRODUCT.md",

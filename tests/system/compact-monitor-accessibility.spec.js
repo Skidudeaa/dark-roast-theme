@@ -35,6 +35,17 @@ for (const [index, scenario] of compactMonitor.proofFixtures.asyncScenarios.entr
   });
 }
 
+// The 20rem allocation is a real consumer width. A strip that overflowed
+// there became an inline scroll region with no keyboard access; axe at the
+// preferred width never saw it.
+for (const width of compactMonitor.proofFixtures.widths) {
+  test(`axe width ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width: 640, height: 1000 });
+    await openProof(page, { width, density: 'compact', slots: 'full' });
+    await expectAxeClean(page);
+  });
+}
+
 test('native disclosure supports click, Space, and Enter', async ({ page }) => {
   const root = await openProof(page);
   const details = root.locator('details.oi-disclosure');
